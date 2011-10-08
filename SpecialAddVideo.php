@@ -133,7 +133,7 @@ class AddVideo extends SpecialPage {
 			$video = Video::newFromName( $title );
 
 			// Page title for Video has already been taken
-			if( $video->exists() && !$destination ) {
+			if( ( $video instanceof Video && $video->exists() ) && !$destination ) {
 				$error = '<div class="video-error">' .
 					wfMsgHtml( 'video-addvideo-exists' ) . '</div>';
 				$wgOut->addHTML( $error );

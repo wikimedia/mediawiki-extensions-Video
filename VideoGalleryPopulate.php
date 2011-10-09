@@ -70,7 +70,7 @@ function VideoGalleryPopulate( $input, $args, $parser ) {
 	$gallery->setShowFilename( true );
 
 	foreach ( $res as $row ) {
-		$video = Video::newFromName( $row->page_title );
+		$video = Video::newFromName( $row->page_title, RequestContext::getMain() );
 		$gallery->add( $video );
 	}
 

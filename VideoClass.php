@@ -69,17 +69,24 @@ class Video {
 	var $dataLoaded;
 
 	/**
+	 * @var IContextSource
+	 */
+	protected $context;
+
+	/**
 	 * Constructor -- create a new Video object from the given Title and set
 	 * some member variables
 	 *
 	 * @param $title Object: Title object associated with the Video
+	 * @param $context IContextSource nearest context object
 	 */
-	public function __construct( $title ) {
+	public function __construct( $title, IContextSource $context ) {
 		if( !is_object( $title ) ) {
 			throw new MWException( 'Video constructor given bogus title.' );
 		}
 		$this->title =& $title;
 		$this->name = $title->getDBkey();
+		$this->context = $context;
 		$this->height = 400;
 		$this->width = 400;
 		$this->ratio = 1;
@@ -90,11 +97,13 @@ class Video {
 	 * Create a Video object from a video name
 	 *
 	 * @param $name Mixed: name of the video, used to create a title object using Title::makeTitleSafe
+	 * @param $context IContextSource nearest context object
+	 * @return Video|null returns a Video object on success, null if the title is invalid
 	 */
-	public static function newFromName( $name ) {
+	public static function newFromName( $name, IContextSource $context ) {
 		$title = Title::makeTitleSafe( NS_VIDEO, $name );
 		if ( is_object( $title ) ) {
-			return new Video( $title );
+			return new Video( $title, $context );
 		} else {
 			return null;
 		}
@@ -108,9 +117,8 @@ class Video {
 	 * @param $categories String: pipe-separated list of categories
 	 * @param $watch Boolean: add the new video page to the user's watchlist?
 	 */
-	public function addVideo( $url, $type, $categories, $watch = '' ) {
-		global $wgUser, $wgContLang;
-
+	public function addVideo( $url, $type, $categories, $watch = false ) {
+		$user = $this->context->getUser();
 		$dbw = wfGetDB( DB_MASTER );
 
 		$now = $dbw->timestamp();
@@ -128,8 +136,8 @@ class Video {
 				'video_name' => $this->getName(),
 				'video_url' => $url,
 				'video_type' => $type,
-				'video_user_id' => $wgUser->getID(),
-				'video_user_name' => $wgUser->getName(),
+				'video_user_id' => $user->getID(),
+				'video_user_name' => $user->getName(),
 				'video_timestamp' => $now
 			),
 			__METHOD__,
@@ -172,8 +180,8 @@ class Video {
 				array( /* SET */
 					'video_url'=> $url,
 					'video_type' => $type,
-					'video_user_id' => $wgUser->getID(),
-					'video_user_name' => $wgUser->getName(),
+					'video_user_id' => $user->getID(),
+					'video_user_name' => $user->getName(),
 					'video_timestamp' => $now
 				),
 				array( /* WHERE */
@@ -185,7 +193,7 @@ class Video {
 
 		$descTitle = $this->getTitle();
 		$article = new Article( $descTitle );
-		$watch = $watch || $wgUser->isWatched( $descTitle );
+		$watch = $watch || $user->isWatched( $descTitle );
 
 		// Get the localized category name
 		$videoCategoryName = wfMsgForContent( 'video-category-name' );
@@ -202,7 +210,7 @@ class Video {
 			foreach( $categories_array as $ctg ) {
 				$ctg = trim( $ctg );
 				if( $ctg ) {
-					$catName = $wgContLang->getNsText( NS_CATEGORY );
+					$catName = $this->context->getLang()->getNsText( NS_CATEGORY );
 					$tag = "[[{$catName}:{$ctg}]]";
 					if( strpos( $categoryWikiText, $tag ) === false ) {
 						$categoryWikiText .= "\n{$tag}";
@@ -222,7 +230,7 @@ class Video {
 		}
 
 		if( $watch ) {
-			$wgUser->addWatch( $descTitle );
+			$user->addWatch( $descTitle );
 		}
 
 		// Add the log entry

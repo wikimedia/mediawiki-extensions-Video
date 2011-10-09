@@ -22,19 +22,23 @@ class NewVideos extends IncludableSpecialPage {
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
 	public function execute( $par ) {
-		global $wgUser, $wgOut, $wgLang, $wgRequest, $wgGroupPermissions;
+		global $wgGroupPermissions;
 
-		$wgOut->setPageTitle( wfMsgHtml( 'newvideos' ) );
+		$out = $this->getOutput();
+		$request = $this->getRequest();
+		$lang = $this->getLang();
+		
+		$out->setPageTitle( wfMsgHtml( 'newvideos' ) );
 
-		$wpIlMatch = $wgRequest->getText( 'wpIlMatch' );
+		$wpIlMatch = $request->getText( 'wpIlMatch' );
 		$dbr = wfGetDB( DB_SLAVE );
-		$sk = $wgUser->getSkin();
+		$sk = $this->getSkin();
 		$shownav = !$this->including();
-		$hidebots = $wgRequest->getBool( 'hidebots', 1 );
+		$hidebots = $request->getBool( 'hidebots', 1 );
 
 		$hidebotsql = '';
 		if( $hidebots ) {
-			/**
+			/*
 			 * Make a list of group names which have the 'bot' flag
 			 * set.
 			 */
@@ -49,7 +53,7 @@ class NewVideos extends IncludableSpecialPage {
 			if( $botconds ) {
 				$isbotmember = $dbr->makeList( $botconds, LIST_OR );
 
-				/**
+				/*
 				 * This join, in conjunction with WHERE ug_group
 				 * IS NULL, returns only those rows from IMAGE
 				 * where the uploading user is not a member of
@@ -102,10 +106,10 @@ class NewVideos extends IncludableSpecialPage {
 		}
 
 		$invertSort = false;
-		if( $until = $wgRequest->getVal( 'until' ) ) {
+		if( $until = $request->getVal( 'until' ) ) {
 			$where[] = 'video_timestamp < ' . $dbr->timestamp( $until );
 		}
-		if( $from = $wgRequest->getVal( 'from' ) ) {
+		if( $from = $request->getVal( 'from' ) ) {
 			$where[] = 'video_timestamp >= ' . $dbr->timestamp( $from );
 			$invertSort = true;
 		}
@@ -123,9 +127,7 @@ class NewVideos extends IncludableSpecialPage {
 		$sql.= ' LIMIT ' . ( $limit + 1 );
 		$res = $dbr->query( $sql, __METHOD__ );
 
-		/**
-		 * We have to flip things around to get the last N after a certain date
-		 */
+		// We have to flip things around to get the last N after a certain date
 		$videos = array();
 		foreach( $res as $s ) {
 			if( $invertSort ) {
@@ -150,13 +152,13 @@ class NewVideos extends IncludableSpecialPage {
 			$ut = $s->video_user_name;
 
 			$nt = Title::newFromText( $name, NS_VIDEO );
-			$vid = new Video( $nt );
+			$vid = new Video( $nt, $this->getContext() );
 			$ul = $sk->makeLinkObj( Title::makeTitle( NS_USER, $ut ), $ut );
 
 			$gallery->add(
 				$vid,
 				"$ul<br />\n<i>" .
-					$wgLang->timeanddate( $s->video_timestamp, true ) .
+					$lang->timeanddate( $s->video_timestamp, true ) .
 					"</i><br />\n"
 			);
 
@@ -168,17 +170,17 @@ class NewVideos extends IncludableSpecialPage {
 		}
 
 		$bydate = wfMsg( 'bydate' );
-		$lt = $wgLang->formatNum( min( $shownVideos, $limit ) );
+		$lt = $lang->formatNum( min( $shownVideos, $limit ) );
 		if( $shownav ) {
 			$text = wfMsgExt( 'imagelisttext', 'parse', $lt, $bydate );
-			$wgOut->addHTML( $text . "\n" );
+			$out->addHTML( $text . "\n" );
 		}
 
 		$sub = wfMsg( 'ilsubmit' );
 		$titleObj = SpecialPage::getTitleFor( 'NewVideos' );
 		$action = $titleObj->escapeLocalURL( $hidebots ? '' : 'hidebots=0' );
 		if( $shownav ) {
-			$wgOut->addHTML(
+			$out->addHTML(
 				"<form id=\"imagesearch\" method=\"post\" action=\"{$action}\">" .
 				Xml::input( 'wpIlMatch', 20, $wpIlMatch ) . ' ' .
 				Xml::submitButton( $sub, array( 'name' => 'wpIlSubmit' ) ) .
@@ -186,9 +188,7 @@ class NewVideos extends IncludableSpecialPage {
 			);
 		}
 
-		/**
-		 * Paging controls...
-		 */
+		// Paging controls...
 
 		# If we change bot visibility, this needs to be carried along.
 		if( !$hidebots ) {
@@ -197,8 +197,8 @@ class NewVideos extends IncludableSpecialPage {
 			$botpar = array();
 		}
 		$now = wfTimestampNow();
-		$date = $wgLang->date( $now, true );
-		$time = $wgLang->time( $now, true );
+		$date = $lang->date( $now, true );
+		$time = $lang->time( $now, true );
 		$query = array_merge(
 			array( 'from' => $now ),
 			$botpar,
@@ -227,7 +227,7 @@ class NewVideos extends IncludableSpecialPage {
 		);
 
 		$opts = array( 'parsemag', 'escapenoentities' );
-		$prevLink = wfMsgExt( 'pager-newer-n', $opts, $wgLang->formatNum( $limit ) );
+		$prevLink = wfMsgExt( 'pager-newer-n', $opts, $lang->formatNum( $limit ) );
 		if( $firstTimestamp && $firstTimestamp != $latestTimestamp ) {
 			$query = array_merge(
 				array( 'from' => $firstTimestamp ),
@@ -242,7 +242,7 @@ class NewVideos extends IncludableSpecialPage {
 			);
 		}
 
-		$nextLink = wfMsgExt( 'pager-older-n', $opts, $wgLang->formatNum( $limit ) );
+		$nextLink = wfMsgExt( 'pager-older-n', $opts, $lang->formatNum( $limit ) );
 		if( $shownVideos > $limit && $lastTimestamp ) {
 			$query = array_merge(
 				array( 'until' => $lastTimestamp ),
@@ -263,16 +263,16 @@ class NewVideos extends IncludableSpecialPage {
 			'</p>';
 
 		if( $shownav ) {
-			$wgOut->addHTML( $prevnext );
+			$out->addHTML( $prevnext );
 		}
 
 		if( count( $videos ) ) {
-			$wgOut->addHTML( $gallery->toHTML() );
+			$out->addHTML( $gallery->toHTML() );
 			if( $shownav ) {
-				$wgOut->addHTML( $prevnext );
+				$out->addHTML( $prevnext );
 			}
 		} else {
-			$wgOut->addWikiMsg( 'video-no-videos' );
+			$out->addWikiMsg( 'video-no-videos' );
 		}
 	}
 }

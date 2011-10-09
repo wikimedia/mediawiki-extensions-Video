@@ -1,4 +1,10 @@
 <?php
+/**
+ * Special:AddVideo - special page for adding Videos
+ *
+ * @ingroup extensions
+ * @file
+ */
 
 class AddVideo extends SpecialPage {
 
@@ -20,15 +26,17 @@ class AddVideo extends SpecialPage {
 	 * Show the special page
 	 *
 	 * @param $par Mixed: parameter passed to the page or null
+	 * @return bool|null
 	 */
 	public function execute( $par ) {
-		global $wgRequest, $wgOut, $wgUser, $wgScriptPath;
+		global $wgExtensionAssetsPath;
 
+		$out = $this->getRequest();
 		// Add CSS
 		if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
-			$wgOut->addModuleStyles( 'ext.video' );
+			$out->addModuleStyles( 'ext.video' );
 		} else {
-			$wgOut->addExtensionStyle( $wgScriptPath . '/extensions/Video/Video.css' );
+			$out->addExtensionStyle( $wgExtensionAssetsPath . '/Video/Video.css' );
 		}
 
 		// If the user doesn't have the required 'addvideo' permission, display an error
@@ -43,8 +51,8 @@ class AddVideo extends SpecialPage {
 		}
 
 		// If user is blocked, s/he doesn't need to access this page
-		if( $wgUser->isBlocked() ) {
-			$wgOut->blockedPage( false );
+		if( $this->getUser()->isBlocked() ) {
+			throw new UserBlockedError( $this->getUser()->mBlock );
 			return false;
 		}
 
@@ -63,6 +71,12 @@ class AddVideo extends SpecialPage {
 		$form->show();
 	}
 
+	/**
+	 * Extracts the URL and provider type from a raw string
+	 *
+	 * @param string $value Value form the Video input
+	 * @return array Element 0 is the URL, 1 is the provider
+	 */
 	protected function getUrlAndProvider( $value ) {
 		$url = $value;
 		if ( !Video::isURL( $url ) ) {
@@ -72,6 +86,16 @@ class AddVideo extends SpecialPage {
 		return array( $url, Video::getProviderByURL( $url ) );
 	}
 
+	/**
+	 * Custom validator for the Video field
+	 *
+	 * Checks to see if the string given is a valid URL and corresponds
+	 * to a supported provider.
+	 *
+	 * @param $value Array
+	 * @param $allData Array
+	 * @return bool|String
+	 */
 	public function validateVideoField( $value, $allData ) {
 		list( , $provider ) = $this->getUrlAndProvider( $value );
 
@@ -82,8 +106,18 @@ class AddVideo extends SpecialPage {
 		return true;
 	}
 
+	/**
+	 * Custom validator for the Title field
+	 *
+	 * Just checks that it's a valid title name and that it doesn't already
+	 * exist (unless it's an overwrite)
+	 *
+	 * @param $value Array
+	 * @param $allData Array
+	 * @return bool|String
+	 */
 	public function validateTitleField( $value, $allData ) {
-		$video = Video::newFromName( $value );
+		$video = Video::newFromName( $value, $this->getContext() );
 
 		if ( $video === null || !( $video instanceof Video ) ) {
 			return wfMsg( 'badtitle' );
@@ -99,6 +133,12 @@ class AddVideo extends SpecialPage {
 		return true;
 	}
 
+	/**
+	 * Actually inserts the Video into the DB if validation passes
+	 *
+	 * @param $data Array
+	 * @return bool
+	 */
 	public function submit( array $data ) {
 		list( $url, $provider ) = $this->getUrlAndProvider( $data['Video'] );
 
@@ -109,6 +149,11 @@ class AddVideo extends SpecialPage {
 		return true;
 	}
 
+	/**
+	 * Fields for HTMLForm
+	 *
+	 * @return array
+	 */
 	protected function getFormFields() {
 		$fields = array(
 			'Title' => array(

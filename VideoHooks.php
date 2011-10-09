@@ -38,7 +38,7 @@ class VideoHooks {
 		$name = $matches[2];
 		$params = explode( '|', $name );
 		$video_name = $params[0];
-		$video = Video::newFromName( $video_name );
+		$video = Video::newFromName( $video_name, RequestContext::getMain() );
 		$x = 1;
 
 		foreach( $params as $param ) {
@@ -84,7 +84,7 @@ class VideoHooks {
 		if ( $title->getNamespace() == NS_VIDEO ) {
 			if( $wgRequest->getVal( 'action' ) == 'edit' ) {
 				$addTitle = SpecialPage::getTitleFor( 'AddVideo' );
-				$video = Video::newFromName( $title->getText() );
+				$video = Video::newFromName( $title->getText(), $article->getContext() );
 				if( !$video->exists() ) {
 					global $wgOut;
 					$wgOut->redirect(
@@ -146,7 +146,7 @@ class VideoHooks {
 		}
 
 		$output = '';
-		$video = Video::newFromName( $video_name );
+		$video = Video::newFromName( $video_name, RequestContext::getMain() );
 		if( $video->exists() ) {
 			$video->setWidth( $width );
 			$video->setHeight( $height );
@@ -162,7 +162,7 @@ class VideoHooks {
 	/**
 	 * Injects Video Gallery into Category pages
 	 *
-	 * @param $cat Object: CategoryPage object
+	 * @param $cat CategoryPage object
 	 * @return Boolean: false
 	 */
 	public static function categoryPageWithVideo( &$cat ) {
@@ -176,7 +176,7 @@ class VideoHooks {
 			// here to prevent an E_NOTICE about an undefined variable...
 			$until = $wgRequest->getVal( 'until' );
 
-			$viewer = new CategoryWithVideoViewer( $cat->mTitle, $from, $until );
+			$viewer = new CategoryWithVideoViewer( $cat->mTitle, $cat->getContext(), $from, $until );
 			$wgOut->addHTML( $viewer->getHTML() );
 		}
 
@@ -187,7 +187,7 @@ class VideoHooks {
 	 * Called on video deletion; this is the main logic for deleting videos.
 	 * There is no logic related to video deletion on the VideoPage class.
 	 *
-	 * @param $articleObj Object: instance of Article or its subclass
+	 * @param $articleObj Article: instance of Article or its subclass
 	 * @param $user Object: current User object ($wgUser)
 	 * @param $reason String: reason for the deletion [unused]
 	 * @param $error String: error message, if any [unused]
@@ -197,7 +197,7 @@ class VideoHooks {
 		if ( $articleObj->getTitle()->getNamespace() == NS_VIDEO ) {
 			global $wgRequest;
 
-			$videoObj = new Video( $articleObj->getTitle() );
+			$videoObj = new Video( $articleObj->getTitle(), $articleObj->getContext() );
 			$videoName = $videoObj->getName();
 			$oldVideo = $wgRequest->getVal( 'wpOldVideo', false );
 			$where = array(

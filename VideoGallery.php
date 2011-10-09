@@ -70,7 +70,8 @@ function wfRenderVideoGallery( $input, $argv, $parser ) {
 		$html = $pout->getText();
 		*/
 
-		$vg->add( new Video( $nt ), $html );
+		// Gah, there should be a better way to get context here
+		$vg->add( new Video( $nt, RequestContext::getMain() ), $html );
 
 	}
 	return $vg->toHTML();

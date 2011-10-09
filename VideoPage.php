@@ -16,31 +16,30 @@ class VideoPage extends Article {
 	 * Called on every video page view.
 	 */
 	public function view() {
-		global $wgOut, $wgUser, $wgRequest;
-
-		$this->video = new Video( $this->getTitle() );
+		$this->video = new Video( $this->getTitle(), $this->getContext() );
+		$out = $this->getContext()->getOutput();
 
 		$videoLinksHTML = '<br />' . Xml::element( 'h2',
 			array( 'id' => 'filelinks' ), wfMsg( 'video-links' ) ) . "\n";
-		$sk = $wgUser->getSkin();
+		$sk = $this->getContext()->getSkin();
 
 		// No need to display noarticletext, we use our own message
 		if ( $this->getID() ) {
 			parent::view();
 		} else {
 			// Just need to set the right headers
-			$wgOut->setArticleFlag( true );
-			$wgOut->setRobotPolicy( 'index,follow' );
-			$wgOut->setPageTitle( $this->mTitle->getPrefixedText() );
+			$out->setArticleFlag( true );
+			$out->setRobotPolicy( 'index,follow' );
+			$out->setPageTitle( $this->mTitle->getPrefixedText() );
 		}
 
 		if( $this->video->exists() ) {
 			// Display flash video
-			$wgOut->addHTML( $this->video->getEmbedCode() );
+			$out->addHTML( $this->video->getEmbedCode() );
 
 			// Force embed this code to have width of 300
 			$this->video->setWidth( 300 ); 
-			$wgOut->addHTML( $this->getEmbedThisTag() );
+			$out->addHTML( $this->getEmbedThisTag() );
 
 			$this->videoHistory();
 
@@ -55,7 +54,7 @@ class VideoPage extends Article {
 				array(),
 				array( 'wpTitle' => $this->video->getName() )
 			);
-			$wgOut->addHTML( wfMsgWikiHtml( 'video-novideo', $link ) );
+			$out->addHTML( wfMsgWikiHtml( 'video-novideo', $link ) );
 
 			//$wgOut->addHTML( $videoLinksHTML );
 			//$this->videoLinks();
@@ -293,7 +292,7 @@ class VideoPage extends Article {
 		//$oldver = wfTimestampNow() . "!{$name}";
 
 		// Record upload and update metadata cache
-		$video = Video::newFromName( $name );
+		$video = Video::newFromName( $name, $this->getContext() );
 		$video->addVideo( $url, $type, '' );
 
 		$wgOut->setPageTitle( wfMsgHtml( 'actioncomplete' ) );
@@ -444,7 +443,7 @@ class CategoryWithVideoViewer extends CategoryViewer {
 	 * Add a page in the video namespace
 	 */
 	function addVideo( $title, $sortkey, $pageLength ) {
-		$video = new Video( $title );
+		$video = new Video( $title, $this->context );
 		if( $this->flip ) {
 			$this->videogallery->insert( $video );
 		} else {

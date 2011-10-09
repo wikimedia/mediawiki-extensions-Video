@@ -53,7 +53,7 @@ class VideoPage extends Article {
 				$title,
 				wfMsgHtml( 'video-novideo-linktext' ),
 				array(),
-				array( 'wpDestName' => $this->video->getName() )
+				array( 'wpTitle' => $this->video->getName() )
 			);
 			$wgOut->addHTML( wfMsgWikiHtml( 'video-novideo', $link ) );
 
@@ -221,7 +221,10 @@ class VideoPage extends Article {
 				SpecialPage::getTitleFor( 'AddVideo' ),
 				wfMsg( 'uploadnewversion-linktext' ),
 				array(),
-				array( 'wpDestName' => $this->video->getName() )
+				array(
+					'wpTitle' => $this->video->getName(),
+					'wpForReUpload' => 1,
+				)
 			);
 			$wgOut->addHTML( "<li>{$ulink}</li>" );
 		}

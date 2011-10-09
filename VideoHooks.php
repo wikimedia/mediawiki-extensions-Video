@@ -90,7 +90,7 @@ class VideoHooks {
 					$wgOut->redirect(
 						// escapeFullURL() converts & to &amp; which causes the
 						// destName parameter not to work correctly
-						$addTitle->getFullURL( 'destName=' . $video->getName() )
+						$addTitle->getFullURL( 'wpTitle=' . $video->getName() )
 					);
 				}
 			}

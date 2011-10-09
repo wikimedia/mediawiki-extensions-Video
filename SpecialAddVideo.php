@@ -3,6 +3,13 @@
 class AddVideo extends SpecialPage {
 
 	/**
+	 * New video object created when the title field is validated
+	 *
+	 * @var Video
+	 */
+	protected $video;
+
+	/**
 	 * Constructor -- set up the new special page
 	 */
 	public function __construct() {
@@ -25,15 +32,14 @@ class AddVideo extends SpecialPage {
 		}
 
 		// If the user doesn't have the required 'addvideo' permission, display an error
-		if( !$wgUser->isAllowed( 'addvideo' ) ) {
-			$wgOut->permissionRequired( 'addvideo' );
+		if( !$this->userCanExecute( $this->getUser() ) ) {
+			$this->displayRestrictionError();
 			return;
 		}
 
 		// Show a message if the database is in read-only mode
 		if ( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
-			return;
+			throw new ReadOnlyError;
 		}
 
 		// If user is blocked, s/he doesn't need to access this page
@@ -42,126 +48,91 @@ class AddVideo extends SpecialPage {
 			return false;
 		}
 
-		$categories = $wgRequest->getVal( 'wpCategories' );
+		$this->setHeaders();
 
-		// wpDestName URL parameter is set in VideoPage.php; when viewing a
-		// video page of a video that does not yet exist, there is a link to
-		// Special:AddVideo and the wpDestName parameter will be set to the
-		// name of the video
-		$destination = $wgRequest->getVal( 'destName' );
-		if( !$destination ) {
-			$destination = $wgRequest->getVal( 'wpDestName' );
+		$form = new HTMLForm( $this->getFormFields(), $this->getContext() );
+		$form->setIntro( wfMsgExt( 'video-addvideo-instructions', 'parse' ) );
+		$form->setWrapperLegend( wfMsg( 'video-addvideo-title' ) );
+		$form->setSubmitText( wfMsg( 'video-addvideo-button' ) );
+		$form->setSubmitCallback( array( $this, 'submit' ) );
+
+		if ( $this->getRequest()->getCheck( 'forReUpload' ) ) {
+			$form->addHiddenField( 'forReUpload', true );
 		}
 
-		// Posted items
-		$video_code = $wgRequest->getVal( 'wpVideo' );
-		$title = str_replace( '#', '', $wgRequest->getVal( 'wpTitle' ) );
+		$form->show();
+	}
 
-		$pageTitle = wfMsg( 'video-addvideo-title' );
-		if( $destination ) {
-			$pageTitle = wfMsg( 'video-addvideo-dest', str_replace( '_', ' ', $destination ) );
+	protected function getUrlAndProvider( $value ) {
+		$url = $value;
+		if ( !Video::isURL( $url ) ) {
+			$url = Video::getURLfromEmbedCode( $value );
 		}
 
-		$wgOut->setPageTitle( $pageTitle );
+		return array( $url, Video::getProviderByURL( $url ) );
+	}
 
-		if( $destination ) {
-			$title = $destination;
+	public function validateVideoField( $value, $allData ) {
+		list( , $provider ) = $this->getUrlAndProvider( $value );
+
+		if ( $provider == 'unknown' ) {
+			return wfMsg( 'video-addvideo-invalidcode' );
 		}
 
-		$output = '<div class="add-video-container">
-		<form name="videoadd" action="" method="post">';
+		return true;
+	}
 
-		$output .= '<p class="addvideo-subtitle">' .
-			wfMsgExt( 'video-addvideo-instructions', 'parse' ) . '</p>';
-		$output .= '<table border="0" cellpadding="3" cellspacing="5">';
-		$output .= '<tr>';
+	public function validateTitleField( $value, $allData ) {
+		$video = Video::newFromName( $value );
 
-		// If we're not adding a new version of a pre-existing video, allow the
-		// user to supply the video's title, obviously...
-		if( !$destination ) {
-			$output .= '<td><label for="wpTitle">' .
-				wfMsgHtml( 'video-addvideo-title-label' ) .
-				'</label></td><td>';
-
-			$output .= Xml::element( 'input',
-				array(
-					'type' => 'text',
-					'name' => 'wpTitle',
-					'size' => '30',
-					'value' => $wgRequest->getVal( 'wpTitle' ),
-				)
-			);
-			$output .= '</td></tr>';
+		if ( $video === null || !( $video instanceof Video ) ) {
+			return wfMsg( 'badtitle' );
 		}
 
-		$watchChecked = $wgUser->getOption( 'watchdefault' )
-			? ' checked="checked"'
-			: '';
-
-		$output .= '<tr>
-			<td valign="top">' . wfMsg( 'video-addvideo-embed-label' ) . '</td>
-			<td><textarea rows="5" cols="65" name="wpVideo" id="wpVideo">' .
-				$wgRequest->getVal( 'wpVideo' ) .
-			'</textarea></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td>
-				<input type="checkbox" name="wpWatchthis" id="wpWatchthis"' . $watchChecked . ' value="true" />
-				<label for="wpWatchthis">' . wfMsgHtml( 'watchthisupload' ) . '</label>
-
-			</td>
-	</tr>';
-
-		$output .= '<tr>
-				<td></td>
-				<td>';
-				$output .= Xml::element( 'input',
-					array(
-						'type' => 'button',
-						'value' => wfMsg( 'video-addvideo-button' ),
-						'onclick' => 'document.videoadd.submit();',
-					)
-				);
-				$output .= '</td>
-			</tr>
-			</table>
-		</form>
-		</div>';
-
-		if( $wgRequest->wasPosted() ) {
-			$video = Video::newFromName( $title );
-
-			// Page title for Video has already been taken
-			if( ( $video instanceof Video && $video->exists() ) && !$destination ) {
-				$error = '<div class="video-error">' .
-					wfMsgHtml( 'video-addvideo-exists' ) . '</div>';
-				$wgOut->addHTML( $error );
-			} else {
-				// Get URL based on user input
-				// It could be a straight URL to the page or the embed code
-				if ( $video->isURL( $video_code ) ) {
-					$url = $video_code;
-				} else {
-					$urlFromEmbed = $video->getURLfromEmbedCode( $video_code );
-					if ( $video->isURL( $urlFromEmbed ) ) {
-						$url = $urlFromEmbed;
-					}
-				}
-				$provider = $video->getProviderByURL( $url );
-				if( !$url || $provider == 'unknown' ) {
-					$error = '<div class="video-error">' .
-						wfMsg( 'video-addvideo-invalidcode' ) . '</div>';
-					$wgOut->addHTML( $error );
-				} else {
-					$video->addVideo(
-						$url, $provider, $categories,
-						$wgRequest->getVal( 'wpWatchthis' )
-					);
-					$wgOut->redirect( $video->title->getFullURL() );
-				}
-			}
+		// TODO: Check to see if this is a new version
+		if ( $video->exists() && !$this->getRequest()->getCheck( 'forReUpload' ) ) {
+			return wfMsgHtml( 'video-addvideo-exists' );
 		}
-		$wgOut->addHTML( $output );
+
+		$this->video = $video;
+
+		return true;
+	}
+
+	public function submit( array $data ) {
+		list( $url, $provider ) = $this->getUrlAndProvider( $data['Video'] );
+
+		$this->video->addVideo( $url, $provider, false, $data['Watch'] );
+
+		$this->getOutput()->redirect( $this->video->getTitle()->getFullURL() );
+
+		return true;
+	}
+
+	protected function getFormFields() {
+		$fields = array(
+			'Title' => array(
+				'type' => 'text',
+				'label-message' => 'video-addvideo-title-label',
+				'size' => '30',
+				'required' => true,
+				'validation-callback' => array( $this, 'validateTitleField' ),
+			),
+			'Video' => array(
+				'type' => 'textarea',
+				'label-message' => 'video-addvideo-embed-label',
+				'rows' => '5',
+				'cols' => '65',
+				'required' => true,
+				'validation-callback' => array( $this, 'validateVideoField' ),
+			),
+			'Watch' => array(
+				'type' => 'check',
+				'label-message' => 'watchthisupload',
+				'default' => $this->getUser()->getOption( 'watchdefault' ),
+			),
+		);
+
+		return $fields;
 	}
 }

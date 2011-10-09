@@ -86,6 +86,8 @@ Below is an example of a video's URL from YouTube:
 	'video-histlegend' => 'Legend: ({{int:cur}}) = this is the current video, ({{int:video-revert}}) = revert to this old version.
 <br /><i>Click on date to see the video URL on that date</i>.',
 	'video-revert-success' => 'Revert to earlier version was successful.',
+	'video-revert-legend' => 'Revert Video',
+	'video-revert-intro' => "You are about to revert the video '''[[:Video:$1|$1]]''' to the [$4 version as of $3, $2].",
 
 	'video-category-name' => 'Videos', // name of the category where videos will be stored
 
@@ -98,6 +100,19 @@ Below is an example of a video's URL from YouTube:
 
 	// For Special:ListGroupRights
 	'right-addvideo' => 'Add videos from external services into the site',
+);
+
+/** Message Documentation
+ * @author John Du Hart <john@compwhizii.net>
+ */
+$messages['qqq'] = array(
+	'video-revert-legend' => 'Legend of the fieldset for the revert form',
+	'video-revert-intro' => "Message displayed when you try to revert a version of a video.
+* $1 is the name of the media
+* $2 is a date
+* $3 is a hour
+* $4 is a URL and must follow square bracket: [$4
+{{Identical|Revert}}",
 );
 
 /** Finnish (Suomi)

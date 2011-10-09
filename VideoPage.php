@@ -13,6 +13,16 @@ class VideoPage extends Article {
 	}
 
 	/**
+	 * Overridden to return WikiVideoPage
+	 *
+	 * @param Title $title
+	 * @return WikiVideoPage
+	 */
+	protected function newPage( Title $title ) {
+		return new WikiVideoPage( $title );
+	}
+
+	/**
 	 * Called on every video page view.
 	 */
 	public function view() {
@@ -230,79 +240,6 @@ class VideoPage extends Article {
 
 		$wgOut->addHTML( '</ul>' );
 	}
-
-	/**
-	 * Reverts a video to its earlier state
-	 */
-	function revert() {
-		global $wgOut, $wgRequest, $wgUser;
-
-		$oldvideo = $wgRequest->getText( 'oldvideo' );
-		if ( strlen( $oldvideo ) < 16 ) {
-			$wgOut->showUnexpectedValueError( 'oldvideo', htmlspecialchars( $oldvideo ) );
-			return;
-		}
-
-		// Can't do anything during DB locks
-		if ( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
-			return;
-		}
-
-		// Must be logged in to revert videos
-		if( $wgUser->isAnon() ) {
-			$wgOut->showErrorPage( 'uploadnologin', 'uploadnologintext' );
-			return;
-		}
-
-		// Must be able to edit in order to revert
-		if ( !$this->mTitle->userCan( 'edit' ) ) {
-			$wgOut->readOnlyPage( $this->getContent(), true );
-			return;
-		}
-
-		// Must not be blocked
-		if ( $wgUser->isBlocked() ) {
-			return $this->blockedIPpage();
-		}
-
-		// And finally edit tokens must match in order to prevent cross-site request forgery
-		if( !$wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ), $oldvideo ) ) {
-			$wgOut->showErrorPage( 'internalerror', 'sessionfailure' );
-			return;
-		}
-
-		$dbr = wfGetDB( DB_MASTER );
-		$s = $dbr->selectRow(
-			'oldvideo',
-			array( 'ov_url', 'ov_type' ),
-			array( 'ov_archive_name' => urldecode( $oldvideo ) ),
-			__METHOD__
-		);
-		if ( $s !== false ) {
-			$url = $s->ov_url;
-			$type = $s->ov_type;
-		} else {
-			$wgOut->showUnexpectedValueError( 'oldvideo', htmlspecialchars( $oldvideo ) );
-			return;
-		}
-
-		$name = substr( $oldvideo, 15 );
-
-		//$oldver = wfTimestampNow() . "!{$name}";
-
-		// Record upload and update metadata cache
-		$video = Video::newFromName( $name, $this->getContext() );
-		$video->addVideo( $url, $type, '' );
-
-		$wgOut->setPageTitle( wfMsgHtml( 'actioncomplete' ) );
-		$wgOut->setRobotPolicy( 'noindex,nofollow' );
-		$wgOut->addHTML( wfMsg( 'video-revert-success' ) );
-
-		$descTitle = $video->getTitle();
-		$wgOut->returnToMain( false, $descTitle->getPrefixedText() );
-	}
-
 }
 
 /**
@@ -340,15 +277,13 @@ class VideoHistoryList {
 				$rlink = $this->skin->makeKnownLinkObj(
 					$wgTitle,
 					wfMsgHtml( 'video-revert' ),
-					'action=revert&oldvideo=' . urlencode( $video ) .
-						"&wpEditToken=$token"
+					'action=revert&oldvideo=' . urlencode( $video )
 				);
 			} else {
 				# Having live active links for non-logged in users
 				# means that bots and spiders crawling our site can
 				# inadvertently change content. Baaaad idea.
 				$rlink = wfMsgHtml( 'video-revert' );
-				$dlink = $del;
 			}
 		}
 

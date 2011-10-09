@@ -55,7 +55,7 @@ class VimeoVideo extends FlashVideo {
 
 		$id = '';
 		$text = strpos( $fixed_url, 'VIMEO.COM' );
-		if( $text !=== false ) {
+		if( $text !== false ) {
 			$parsed = explode( '/', $url );
 			if( is_array( $parsed ) ) {
 				$id = array_pop( $parsed );

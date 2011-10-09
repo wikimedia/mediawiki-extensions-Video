@@ -84,7 +84,7 @@ class VideoHooks {
 		if ( $title->getNamespace() == NS_VIDEO ) {
 			if( $wgRequest->getVal( 'action' ) == 'edit' ) {
 				$addTitle = SpecialPage::getTitleFor( 'AddVideo' );
-				$video = Video::newFromName( $title->getText(), $article->getContext() );
+				$video = Video::newFromName( $title->getText(), RequestContext::getMain() );
 				if( !$video->exists() ) {
 					global $wgOut;
 					$wgOut->redirect(

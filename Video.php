@@ -82,6 +82,8 @@ $wgAutoloadClasses['YouTubeVideo'] = $dir . 'providers/YouTubeVideo.php';
 
 // User Interface stuff
 $wgAutoloadClasses['VideoPage'] = $dir . 'VideoPage.php';
+$wgAutoloadClasses['WikiVideoPage'] = $dir . 'WikiVideoPage.php';
+$wgAutoloadClasses['RevertVideoAction'] = $dir . 'RevertVideoAction.php';
 $wgAutoloadClasses['VideoHistoryList'] = $dir . 'VideoPage.php';
 $wgAutoloadClasses['CategoryWithVideoViewer'] = $dir . 'VideoPage.php';
 

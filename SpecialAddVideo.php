@@ -31,7 +31,7 @@ class AddVideo extends SpecialPage {
 	public function execute( $par ) {
 		global $wgExtensionAssetsPath;
 
-		$out = $this->getRequest();
+		$out = $this->getOutput();
 		// Add CSS
 		if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
 			$out->addModuleStyles( 'ext.video' );

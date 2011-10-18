@@ -1,27 +1,15 @@
 <?php
 
-class MetaCafeVideo extends FlashVideo {
+class MetaCafeVideoProvider extends BaseVideoProvider {
+	protected $videoIdRegex = '#/watch/(\d+)/#';
+	// heh, the URL needed some text to work :)
+	protected $embedTemplate = '<embed flashVars="playerVars=autoPlay=no" src="http://www.metacafe.com/fplayer/$video_id/johnduhart_was_here.swf" width="$width" height="$height" wmode="transparent" allowFullScreen="true" allowScriptAccess="always" name="Metacafe_$video_id" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash"></embed>';
 
-	public function __construct( &$video ) {
-		parent::__construct( $video );
-		$this->video->ratio = 400/345;
-		$this->url = $this->video->getURL();
-		$this->extractID( $this->video->getURL() );
+	protected function getRatio() {
+		return 400 / 345;
 	}
 
-	private function extractID() {
-		// Standard Metacafe browser URL
-		$url = $this->video->getURL();
-		$standard_inurl = strpos( strtoupper( $url ), 'HTTP://WWW.METACAFE.COM/WATCH/' );
-
-		if( $standard_inurl !== false ) {
-			$id = substr( $url, $standard_inurl + strlen( 'HTTP://WWW.METACAFE.COM/WATCH/' ), strlen( $url ) );
-			$last_char = substr( $id, -1 ,1 );
-
-			if( $last_char == '/' ) {
-				$id = substr( $id, 0, strlen( $id )-1 );
-			}
-			$this->url = "http://www.metacafe.com/fplayer/{$id}.swf";
-		}
+	public static function getDomains() {
+		return array( 'metacafe.com' );
 	}
 }

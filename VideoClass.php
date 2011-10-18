@@ -74,6 +74,42 @@ class Video {
 	protected $context;
 
 	/**
+	 * Array of providers codes to classes
+	 *
+	 * @var array
+	 */
+	static $providers = array(
+		//'archiveorg' => 'ArchiveOrgVideoProvider', // broken/dont know how this works
+		'bliptv' => 'BlipTVVideoProvider',
+		'dailymotion' => 'DailyMotionVideoProvider',
+		'gametrailers' => 'GametrailersVideoProvider',
+		//'gamevideos' => 'GamevideosVideoProvider', // broken
+		//'gogreentube' => 'GoGreenTubeVideoProvider', // Down
+		'google' => 'GoogleVideoProvider',
+		'hulu' => 'HuluVideoProvider',
+		'metacafe' => 'MetaCafeVideoProvider',
+		'movieclips' => 'MovieClipsVideoProvider',
+		// I'd rather not wade through the shit that is MySpace to figure out
+		// how videos work, someone else can do that..
+		//'myspace' => 'MySpaceVideoProvider',
+		'myvideo' => 'MyVideoVideoProvider',
+		//'thenewsroom' => 'NewsRoomVideoProvider', // Website sucks too much
+		'sevenload' => 'SevenloadVideoProvider',
+		'southparkstudios' => 'SouthParkStudiosVideoProvider',
+		'youtube' => 'YouTubeVideoProvider',
+		'viddler' => 'ViddlerVideoProvider',
+		'vimeo' => 'VimeoVideoProvider',
+		'wegame' => 'WeGameVideoProvider',
+	);
+
+	/**
+	 * Array of domain name to provider codes
+	 *
+	 * @var null
+	 */
+	static protected $providerDomains = null;
+
+	/**
 	 * Constructor -- create a new Video object from the given Title and set
 	 * some member variables
 	 *
@@ -398,68 +434,12 @@ class Video {
 	 * @return String: video embed code
 	 */
 	public function getEmbedCode() {
-		switch( $this->getType() ) {
-			case 'youtube':
-				$provider = new YouTubeVideo( $this );
-				break;
-			case 'google':
-				$provider = new GoogleVideo( $this );
-				break;
-			case 'metacafe':
-				$provider = new MetaCafeVideo( $this );
-				break;
-			case 'myspace':
-				$provider = new MySpaceVideo( $this );
-				break;
-			case 'dailymotion':
-				$provider = new DailyMotionVideo( $this );
-				break;
-			case 'thenewsroom':
-				$provider = new NewsRoomVideo( $this );
-				break;
-			case 'archiveorg':
-				$provider = new ArchiveOrgVideo( $this );
-				break;
-			case 'bliptv':
-				$provider = new BlipTVVideo( $this );
-				break;
-			case 'hulu':
-				$provider = new HuluVideo( $this );
-				break;
-			case 'gametrailers':
-				$provider = new GametrailersVideo( $this );
-				break;
-			case 'gamevideos':
-				$provider = new GamevideosVideo( $this );
-				break;
-			case 'gogreentube':
-				$provider = new GoGreenTubeVideo( $this );
-				break;
-			case 'movieclips':
-				$provider = new MovieClipsVideo( $this );
-				break;
-			case 'myvideo':
-				$provider = new MyVideoVideo( $this );
-				break;
-			case 'sevenload':
-				$provider = new SevenloadVideo( $this );
-				break;
-			case 'southparkstudios':
-				$provider = new SouthParkStudiosVideo( $this );
-				break;
-			case 'viddler':
-				$provider = new ViddlerVideo( $this );
-				break;
-			case 'vimeo':
-				$provider = new VimeoVideo( $this );
-				break;
-			case 'wegame':
-				$provider = new WeGameVideo( $this );
-				break;
-			default:
-				$provider = new FlashVideo( $this );
-				break;
+		if ( !isset( self::$providers[$this->type] ) ) {
+			return '';
 		}
+
+		$class = self::$providers[$this->type];
+		$provider = new $class( $this );
 
 		return $provider->getEmbedCode();
 	}
@@ -509,6 +489,36 @@ class Video {
 	}
 
 	/**
+	 * Populates the $providerDomains variable
+	 *
+	 * @return void
+	 */
+	protected static function getDomainsForProviders() {
+		if ( self::$providerDomains !== null ) {
+			return;
+		}
+
+		self::$providerDomains = array();
+		foreach ( self::$providers as $name => $class ) {
+			$domains = $class::getDomains();
+			foreach ( $domains as $domain ) {
+				self::$providerDomains[$domain] = $name;
+			}
+		}
+	}
+
+	/**
+	 * Returns if $haystack ends with $needle
+	 *
+	 * @param $haystack String
+	 * @param $needle String
+	 * @return bool
+	 */
+	protected static function endsWith( $haystack, $needle ) {
+		return ( substr( $haystack, ( strlen( $needle ) * -1 ) ) === $needle );
+	}
+
+	/**
 	 * Figure out the provider's name (lowercased) from a given URL.
 	 *
 	 * @param $url String: URL to check
@@ -516,85 +526,16 @@ class Video {
 	 *                 it out
 	 */
 	public static function getProviderByURL( $url ) {
-		$text = preg_match( '/youtube\.com/i', $url );
-		if( $text ) {
-			return 'youtube';
+		$host = parse_url( $url, PHP_URL_HOST );
+
+		self::getDomainsForProviders();
+		foreach ( self::$providerDomains as $domain => $provider ) {
+			if ( self::endsWith( $host, $domain ) ) {
+				return $provider;
+			}
 		}
-		$text = preg_match( '/metacafe\.com/i', $url );
-		if( $text ) {
-			return 'metacafe';
-		}
-		$text = preg_match( '/google\.com/i', $url );
-		if( $text ) {
-			return 'google';
-		}
-		$text = preg_match( '/myspace(tv)?\.com/i', $url );
-		if( $text ) {
-			return 'myspace';
-		}
-		$text = preg_match( '/dailymotion\.com/i', $url );
-		if( $text ) {
-			return 'dailymotion';
-		}
-		$text = preg_match( '/thenewsroom\.com/i', $url );
-		if( $text ) {
-			return 'thenewsroom';
-		}
-		$text = preg_match( '/archive\.org/i', $url );
-		if( $text ) {
-			return 'archiveorg';
-		}
-		$text = preg_match( '/blip\.tv/i', $url );
-		if( $text ) {
-			return 'bliptv';
-		}
-		$text = preg_match( '/gametrailers\.com/i', $url );
-		if( $text ) {
-			return 'gametrailers';
-		}
-		$text = preg_match( '/gamevideos\.1up\.com/i', $url );
-		if( $text ) {
-			return 'gamevideos';
-		}
-		$text = preg_match( '/gogreentube\.com/i', $url );
-		if( $text ) {
-			return 'gogreentube';
-		}
-		$text = preg_match( '/hulu\.com/i', $url );
-		if( $text ) {
-			return 'hulu';
-		}
-		$text = preg_match( '/movieclips\.com/i', $url );
-		if( $text ) {
-			return 'movieclips';
-		}
-		$text = preg_match( '/myvideo\.de/i', $url );
-		if( $text ) {
-			return 'myvideo';
-		}
-		$text = preg_match( '/sevenload\.com/i', $url );
-		if( $text ) {
-			return 'sevenload';
-		}
-		$text = preg_match( '/southparkstudios\.com/i', $url );
-		if( $text ) {
-			return 'southparkstudios';
-		}
-		$text = preg_match( '/viddler\.com/i', $url );
-		if( $text ) {
-			return 'viddler';
-		}
-		$text = preg_match( '/vimeo\.com/i', $url );
-		if( $text ) {
-			return 'vimeo';
-		}
-		$text = preg_match( '/wegame\.com/i', $url );
-		if( $text ) {
-			return 'wegame';
-		}
-		if( !$text ) {
-			return 'unknown';
-		}
+
+		return 'unknown';
 	}
 
 	public function setWidth( $width ) {

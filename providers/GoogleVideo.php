@@ -1,36 +1,15 @@
 <?php
 
-class GoogleVideo extends FlashVideo {
+class GoogleVideoProvider extends BaseVideoProvider {
 
-	var $video,
-		$id,
-		$url;
+	protected $videoIdRegex = '#docid=(-?\d+)#i';
+	protected $embedTemplate = '<embed id=VideoPlayback src=http://video.google.com/googleplayer.swf?docid=-5227581495321189338&hl=en&fs=true style=width:$widthpx;height:$heightpx allowFullScreen=true allowScriptAccess=always type=application/x-shockwave-flash> </embed>';
 
-	public function __construct( $video ) {
-		if( !is_object( $video ) ) {
-			throw new MWException( 'GoogleVideo constructor given bogus video object.' );
-		}
-		$this->video =& $video;
-		$this->video->ratio = 425/355;
-		$this->id = $this->extractID( $this->video->getURL() );
-		$this->url = "http://video.google.com/googleplayer.swf?docId={$this->id}";
-		return $this;
+	public static function getDomains() {
+		return array( 'video.google.com' );
 	}
 
-	private function extractID() {
-		// Standard Google browser URL
-		$url = $this->video->getURL();
-		$standard_inurl = strpos( strtoupper( $url ), 'VIDEOPLAY?DOCID=' );
-
-		if( $standard_inurl !== false ) {
-			$id = substr( $url, $standard_inurl + strlen( 'VIDEOPLAY?DOCID=' ), strlen( $url ) );
-		}
-		if( !$id ) {
-			$id_test = preg_replace( "%http\:\/\/video\.google\.com\/googleplayer\.swf\?docId=%i", '', $url );
-			if( $id_test != $url ) {
-				$id = $id_test;
-			}
-		}
-		return $id;
+	protected function getRatio() {
+		return 425 / 355;
 	}
 }

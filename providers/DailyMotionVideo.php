@@ -1,26 +1,15 @@
 <?php
 
-class DailyMotionVideo extends FlashVideo {
+class DailyMotionVideoProvider extends BaseVideoProvider {
 
-	var $video,
-		$id,
-		$url;
+	protected $videoIdRegex = '#/video/([a-zA-Z0-9]+)_.*#';
+	protected $embedTemplate = '<iframe frameborder="0" width="$width" height="$height" src="http://www.dailymotion.com/embed/video/$video_id"></iframe>';
 
-	public function __construct( $video ) {
-		if( !is_object( $video ) ) {
-			throw new MWException( 'DailyMotionVideo constructor given bogus video object.' );
-		}
-		$this->video =& $video;
-		$this->video->ratio = 425/335;
-		$this->id = $this->extractID( $this->video->getURL() );
-		$this->url = "http://www.dailymotion.com/swf/{$this->id}";
-		return $this;
+	protected function getRatio() {
+		return 425 / 355;
 	}
 
-	private function extractID() {
-		$url = $this->video->getURL();
-		$id = preg_replace( '%http\:\/\/www\.dailymotion\.com\/(swf|video)\/%i', '', $url );
-		return $id;
+	public static function getDomains() {
+		return array( 'dailymotion.com' );
 	}
-
 }

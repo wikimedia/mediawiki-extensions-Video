@@ -1,50 +1,14 @@
 <?php
 
-class WeGameVideo extends FlashVideo {
+class WeGameVideoProvider extends BaseVideoProvider {
+	protected $videoIdRegex = '#/watch/([a-zA-Z0-9_\-]+)/#';
+	protected $embedTemplate = '<object width="$width" height="$height"><param name="movie" value="http://www.wegame.com/static/flash/player.swf?xmlrequest=http://www.wegame.com/player/video/$video_id"></param><param name="flashVars" value="xmlrequest=http://www.wegame.com/player/video/$video_id&embedPlayer=true"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.wegame.com/static/flash/player.swf?xmlrequest=http://www.wegame.com/player/video/$video_id&embedPlayer=true" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="$width" height="$height"></embed></object>';
 
-	var $video,
-		$id,
-		$url;
-
-	public function __construct( $video ) {
-		if( !is_object( $video ) ) {
-			throw new MWException( 'WeGameVideo constructor given bogus video object.' );
-		}
-
-		$this->video =& $video;
-		$this->video->ratio = 488 / 387; // or the other way around...
-		$this->id = $this->extractID( $this->video->getURL() );
-		$this->url = 'http://www.wegame.com/watch/' . $this->id;
-		return $this;
+	public static function getDomains() {
+		return array( 'wegame.com' );
 	}
 
-	public function getEmbedCode() {
-		$height = $this->video->getHeight();
-		$width = $this->video->getWidth();
-		$weid = $this->extractID();
-		$output = "<object type=\"application/x-shockwave-flash\" data=\"http://www.wegame.com/static/flash/player2.swf\" width=\"{$width}\" height=\"{$height}\">";
-		$output .= "<param name=\"flashvars\" value=\"tag={$weid}\"/></object>";
-		return $output;
+	protected function getRatio() {
+		return 488 / 387;
 	}
-
-	/**
-	 * Extract the video ID from its URL.
-	 *
-	 * @return Integer: video ID
-	 */
-	private function extractID() {
-		$url = $this->video->getURL();
-
-		$id = $url;
-
-		if ( preg_match( '/^http:\/\/www\.wegame\.com\/watch\/(.+)\/$/', $url, $preg ) ) {
-			$id = $preg[1];
-		}
-
-		preg_match( '/([0-9A-Za-z_-]+)/', $id, $preg );
-		$id = $preg[1];
-
-		return $id;
-	}
-
 }

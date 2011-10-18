@@ -232,7 +232,7 @@ class VideoPage extends Article {
 				array(),
 				array(
 					'wpTitle' => $this->video->getName(),
-					'wpForReUpload' => 1,
+					'forReUpload' => 1,
 				)
 			);
 			$wgOut->addHTML( "<li>{$ulink}</li>" );

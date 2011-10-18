@@ -21,8 +21,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 // Extension credits that show up on Special:Version
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Video',
-	'version' => '1.3',
-	'author' => array( 'David Pean', 'Jack Phoenix' ),
+	'version' => '1.4',
+	'author' => array( 'David Pean', 'Jack Phoenix', 'John Du Hart' ),
 	'description' => 'Allows new Video namespace for embeddable media on supported sites',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:Video',
 );
@@ -59,26 +59,27 @@ $wgExtensionMessagesFiles['VideoNamespaces'] = $dir . 'Video.namespaces.php';
 $wgAutoloadClasses['Video'] = $dir . 'VideoClass.php';
 
 // ...and the dozen different provider classes
-$wgAutoloadClasses['ArchiveOrgVideo'] = $dir . 'providers/ArchiveOrgVideo.php';
-$wgAutoloadClasses['BlipTVVideo'] = $dir . 'providers/BlipTVVideo.php';
-$wgAutoloadClasses['DailyMotionVideo'] = $dir . 'providers/DailyMotionVideo.php';
-$wgAutoloadClasses['FlashVideo'] = $dir . 'providers/FlashVideo.php';
-$wgAutoloadClasses['GametrailersVideo'] = $dir . 'providers/GametrailersVideo.php';
-$wgAutoloadClasses['GamevideosVideo'] = $dir . 'providers/GamevideosVideo.php';
-$wgAutoloadClasses['GoGreenTubeVideo'] = $dir . 'providers/GoGreenTubeVideo.php';
-$wgAutoloadClasses['GoogleVideo'] = $dir . 'providers/GoogleVideo.php';
-$wgAutoloadClasses['HuluVideo'] = $dir . 'providers/HuluVideo.php';
-$wgAutoloadClasses['MetaCafeVideo'] = $dir . 'providers/MetaCafeVideo.php';
-$wgAutoloadClasses['MySpaceVideo'] = $dir . 'providers/MySpaceVideo.php';
-$wgAutoloadClasses['MovieClipsVideo'] = $dir . 'providers/MovieClipsVideo.php';
-$wgAutoloadClasses['MyVideoVideo'] = $dir . 'providers/MyVideoVideo.php';
-$wgAutoloadClasses['NewsRoomVideo'] = $dir . 'providers/NewsRoomVideo.php';
-$wgAutoloadClasses['SevenloadVideo'] = $dir . 'providers/SevenloadVideo.php';
-$wgAutoloadClasses['SouthParkStudiosVideo'] = $dir . 'providers/SouthParkStudiosVideo.php';
-$wgAutoloadClasses['ViddlerVideo'] = $dir . 'providers/ViddlerVideo.php';
-$wgAutoloadClasses['VimeoVideo'] = $dir . 'providers/VimeoVideo.php';
-$wgAutoloadClasses['WeGameVideo'] = $dir . 'providers/WeGameVideo.php';
-$wgAutoloadClasses['YouTubeVideo'] = $dir . 'providers/YouTubeVideo.php';
+$wgAutoloadClasses['ArchiveOrgVideoProvider'] = $dir . 'providers/ArchiveOrgVideo.php';
+$wgAutoloadClasses['BlipTVVideoProvider'] = $dir . 'providers/BlipTVVideo.php';
+$wgAutoloadClasses['DailyMotionVideoProvider'] = $dir . 'providers/DailyMotionVideo.php';
+$wgAutoloadClasses['BaseVideoProvider'] = $dir . 'providers/BaseVideoProvider.php';
+$wgAutoloadClasses['GametrailersVideoProvider'] = $dir . 'providers/GametrailersVideo.php';
+$wgAutoloadClasses['GamevideosVideoProvider'] = $dir . 'providers/GamevideosVideo.php';
+$wgAutoloadClasses['GoGreenTubeVideoProvider'] = $dir . 'providers/GoGreenTubeVideo.php';
+$wgAutoloadClasses['GoogleVideoProvider'] = $dir . 'providers/GoogleVideo.php';
+$wgAutoloadClasses['HuluVideoProvider'] = $dir . 'providers/HuluVideo.php';
+$wgAutoloadClasses['MetaCafeVideoProvider'] = $dir . 'providers/MetaCafeVideo.php';
+$wgAutoloadClasses['MySpaceVideoProvider'] = $dir . 'providers/MySpaceVideo.php';
+$wgAutoloadClasses['MovieClipsVideoProvider'] = $dir . 'providers/MovieClipsVideo.php';
+$wgAutoloadClasses['MTVNetworksVideoProvider'] = $dir . 'providers/MTVNetworksVideo.php';
+$wgAutoloadClasses['MyVideoVideoProvider'] = $dir . 'providers/MyVideoVideo.php';
+$wgAutoloadClasses['NewsRoomVideoProvider'] = $dir . 'providers/NewsRoomVideo.php';
+$wgAutoloadClasses['SevenloadVideoProvider'] = $dir . 'providers/SevenloadVideo.php';
+$wgAutoloadClasses['SouthParkStudiosVideoProvider'] = $dir . 'providers/SouthParkStudiosVideo.php';
+$wgAutoloadClasses['ViddlerVideoProvider'] = $dir . 'providers/ViddlerVideo.php';
+$wgAutoloadClasses['VimeoVideoProvider'] = $dir . 'providers/VimeoVideo.php';
+$wgAutoloadClasses['WeGameVideoProvider'] = $dir . 'providers/WeGameVideo.php';
+$wgAutoloadClasses['YouTubeVideoProvider'] = $dir . 'providers/YouTubeVideo.php';
 
 // User Interface stuff
 $wgAutoloadClasses['VideoPage'] = $dir . 'VideoPage.php';

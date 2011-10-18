@@ -526,7 +526,8 @@ class Video {
 	 *                 it out
 	 */
 	public static function getProviderByURL( $url ) {
-		$host = parse_url( $url, PHP_URL_HOST );
+		$host = wfParseUrl( $url );
+		$host = $host['host'];
 
 		self::getDomainsForProviders();
 		foreach ( self::$providerDomains as $domain => $provider ) {

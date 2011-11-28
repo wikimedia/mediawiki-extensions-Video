@@ -53,7 +53,6 @@ class AddVideo extends SpecialPage {
 		// If user is blocked, s/he doesn't need to access this page
 		if( $this->getUser()->isBlocked() ) {
 			throw new UserBlockedError( $this->getUser()->mBlock );
-			return false;
 		}
 
 		$this->setHeaders();

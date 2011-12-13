@@ -24,7 +24,7 @@ $wgExtensionCredits['other'][] = array(
 	'version' => '1.4',
 	'author' => array( 'David Pean', 'Jack Phoenix', 'John Du Hart' ),
 	'description' => 'Allows new Video namespace for embeddable media on supported sites',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Video',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Video',
 );
 
 // ResourceLoader support for MediaWiki 1.17+

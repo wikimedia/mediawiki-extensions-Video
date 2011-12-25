@@ -51,7 +51,7 @@ $wgGroupPermissions['user']['addvideo'] = true;
 // Set up i18n and autoload the gazillion different classes we have
 $dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['Video'] = $dir . 'Video.i18n.php';
-$wgExtensionAliasesFiles['Video'] = $dir . 'Video.alias.php';
+$wgExtensionMessagesFiles['VideoAlias'] = $dir . 'Video.alias.php';
 // Namespace translations
 $wgExtensionMessagesFiles['VideoNamespaces'] = $dir . 'Video.namespaces.php';
 

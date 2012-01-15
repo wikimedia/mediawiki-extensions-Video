@@ -13,14 +13,12 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgHooks['ParserFirstCallInit'][] = 'wfVideoGalleryPopulate';
 
-function wfVideoGalleryPopulate( &$parser ) {
+function wfVideoGalleryPopulate( $parser ) {
 	$parser->setHook( 'videogallerypopulate', 'VideoGalleryPopulate' );
 	return true;
 }
 
 function VideoGalleryPopulate( $input, $args, $parser ) {
-	global $wgOut;
-
 	$parser->disableCache();
 
 	$category = ( isset( $args['category'] ) ) ? $args['category'] : '';
@@ -30,9 +28,13 @@ function VideoGalleryPopulate( $input, $args, $parser ) {
 		return '';
 	}
 
-	// Why do we initialize a new instance of Parser here, I wonder?
-	$parser = new Parser();
-	$category = $parser->transformMsg( $category, $wgOut->parserOptions() );
+	// Use Parser::recursivePreprocess() if available instead of creating another Parser instance
+	if ( is_callable( array( $parser, 'recursivePreprocess' ) ) ) {
+		$category = $parser->recursivePreprocess( $category );
+	} else {
+		$newParser = new Parser();
+		$category = $newParser->preprocess( $category, $parser->getTitle(), $parser->getOptions() );
+	}
 	$category_title = Title::newFromText( $category );
 	if( !( $category_title instanceof Title ) ) {
 		return '';

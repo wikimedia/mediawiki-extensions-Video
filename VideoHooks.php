@@ -78,7 +78,7 @@ class VideoHooks {
 	 * @param $article Object: Article object for the current page
 	 * @return Boolean: true
 	 */
-	function videoFromTitle( &$title, &$article ) {
+	public static function videoFromTitle( &$title, &$article ) {
 		global $wgRequest;
 
 		if ( $title->getNamespace() == NS_VIDEO ) {

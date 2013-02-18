@@ -468,15 +468,15 @@ class Video {
 		);
 
 		$embedCode = '';
-		if( $matches[2] ) {
+		if( isset( $matches[2] ) ) {
 			$embedCode = $matches[2];
 		}
 
 		// Some providers (such as MySpace) have flashvars='' in the embed
 		// code, and the base URL in the src='' so we need to grab the
 		// flashvars and append it to get the real URL
-		$flash_vars = $matches[6];
-		if( $flash_vars ) {
+		if( isset( $matches[6] ) ) {
+			$flash_vars = $matches[6];
 			if( strpos( '?', $flash_vars ) !== false ) {
 				$embedCode .= '&';
 			} else {

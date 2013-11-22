@@ -18,10 +18,8 @@ function wfVideoGallery( &$parser ) {
 }
 
 function wfRenderVideoGallery( $input, $argv, $parser ) {
-	global $wgTitle;
-
 	$vg = new VideoGallery();
-	$vg->setContextTitle( $wgTitle->getText() );
+	$vg->setContextTitle( $parser->getTitle()->getText() );
 	$vg->setShowFilename( true );
 	$vg->setParsing();
 

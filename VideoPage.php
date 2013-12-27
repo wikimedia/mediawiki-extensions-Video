@@ -426,7 +426,11 @@ class CategoryWithVideoViewer extends CategoryViewer {
 			$title = Title::makeTitle( $x->page_namespace, $x->page_title );
 
 			if( $title->getNamespace() == NS_CATEGORY ) {
-				$this->addSubcategory( $title, $x->cl_sortkey, $x->page_len );
+				$this->addSubcategoryObject(
+					Category::newFromTitle( $title ),
+					$x->cl_sortkey,
+					$x->page_len
+				);
 			} elseif( $title->getNamespace() == NS_FILE ) {
 				$this->addImage( $title, $x->cl_sortkey, $x->page_len );
 			} elseif( $title->getNamespace() == NS_VIDEO ) {

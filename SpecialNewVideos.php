@@ -26,7 +26,7 @@ class NewVideos extends IncludableSpecialPage {
 
 		$out = $this->getOutput();
 		$request = $this->getRequest();
-		$lang = $this->getLang();
+		$lang = $this->getLanguage();
 		
 		$out->setPageTitle( wfMsgHtml( 'newvideos' ) );
 

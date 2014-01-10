@@ -48,7 +48,7 @@ class VideoPage extends Article {
 			$out->addHTML( $this->video->getEmbedCode() );
 
 			// Force embed this code to have width of 300
-			$this->video->setWidth( 300 ); 
+			$this->video->setWidth( 300 );
 			$out->addHTML( $this->getEmbedThisTag() );
 
 			$this->videoHistory();
@@ -220,13 +220,11 @@ class VideoPage extends Article {
 	function uploadLinksBox() {
 		global $wgUser, $wgOut;
 
-		$sk = $wgUser->getSkin();
-		
 		$wgOut->addHTML( '<br /><ul>' );
 
 		// "Upload a new version of this video" link
 		if( $wgUser->isAllowed( 'reupload' ) ) {
-			$ulink = $sk->link(
+			$ulink = Linker::link(
 				SpecialPage::getTitleFor( 'AddVideo' ),
 				wfMsg( 'uploadnewversion-linktext' ),
 				array(),
@@ -289,7 +287,7 @@ class VideoHistoryList {
 
 		$userlink = $this->skin->userLink( $user_id, $user_name ) .
 					$this->skin->userToolLinks( $user_id, $user_name );
- 
+
 		$style = $this->skin->getInternalLinkAttributes( $url, $datetime );
 
 		$s = "<li>({$rlink}) <a href=\"{$url}\"{$style}>{$datetime}</a> . . ({$type}) . . {$userlink}";

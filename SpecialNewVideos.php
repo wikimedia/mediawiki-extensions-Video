@@ -27,12 +27,11 @@ class NewVideos extends IncludableSpecialPage {
 		$out = $this->getOutput();
 		$request = $this->getRequest();
 		$lang = $this->getLanguage();
-		
+
 		$out->setPageTitle( wfMsgHtml( 'newvideos' ) );
 
 		$wpIlMatch = $request->getText( 'wpIlMatch' );
 		$dbr = wfGetDB( DB_SLAVE );
-		$sk = $this->getSkin();
 		$shownav = !$this->including();
 		$hidebots = $request->getBool( 'hidebots', 1 );
 
@@ -153,7 +152,7 @@ class NewVideos extends IncludableSpecialPage {
 
 			$nt = Title::newFromText( $name, NS_VIDEO );
 			$vid = new Video( $nt, $this->getContext() );
-			$ul = $sk->makeLinkObj( Title::makeTitle( NS_USER, $ut ), $ut );
+			$ul = Linker::makeLinkObj( Title::makeTitle( NS_USER, $ut ), $ut );
 
 			$gallery->add(
 				$vid,
@@ -205,7 +204,7 @@ class NewVideos extends IncludableSpecialPage {
 			$searchpar
 		);
 
-		$dateLink = $sk->linkKnown(
+		$dateLink = Linker::linkKnown(
 			$titleObj,
 			htmlspecialchars( wfMsgHtml( 'sp-newimages-showfrom', $date, $time ) ),
 			array(),
@@ -219,7 +218,7 @@ class NewVideos extends IncludableSpecialPage {
 
 		$showhide = $hidebots ? wfMsg( 'show' ) : wfMsg( 'hide' );
 
-		$botLink = $sk->linkKnown(
+		$botLink = Linker::linkKnown(
 			$titleObj,
 			htmlspecialchars( wfMsg( 'showhidebots', $showhide ) ),
 			array(),
@@ -234,7 +233,7 @@ class NewVideos extends IncludableSpecialPage {
 				$botpar,
 				$searchpar
 			);
-			$prevLink = $sk->linkKnown(
+			$prevLink = Linker::linkKnown(
 				$titleObj,
 				$prevLink,
 				array(),
@@ -250,7 +249,7 @@ class NewVideos extends IncludableSpecialPage {
 				$searchpar
 			);
 
-			$nextLink = $sk->linkKnown(
+			$nextLink = Linker::linkKnown(
 				$titleObj,
 				$nextLink,
 				array(),

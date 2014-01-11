@@ -12,7 +12,7 @@ class BlipTVVideoProvider extends BaseVideoProvider {
 	protected function getRatio() {
 		return 480 / 350;
 	}
-	
+
 	protected function extractVideoId( $url ) {
 		global $wgMemc;
 

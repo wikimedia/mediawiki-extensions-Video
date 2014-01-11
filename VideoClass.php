@@ -113,8 +113,8 @@ class Video {
 	 * Constructor -- create a new Video object from the given Title and set
 	 * some member variables
 	 *
-	 * @param $title Object: Title object associated with the Video
-	 * @param $context IContextSource nearest context object
+	 * @param Title $title Title object associated with the Video
+	 * @param IContextSource $context Nearest context object
 	 */
 	public function __construct( $title, IContextSource $context ) {
 		if( !is_object( $title ) ) {

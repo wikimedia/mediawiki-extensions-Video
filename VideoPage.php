@@ -6,7 +6,7 @@ class VideoPage extends Article {
 
 	/**
 	 * Constructor and clear the article
-	 * @param $title Object: reference to a Title object.
+	 * @param Title $title
 	 */
 	public function __construct( $title ) {
 		parent::__construct( $title );
@@ -29,10 +29,6 @@ class VideoPage extends Article {
 		$this->video = new Video( $this->getTitle(), $this->getContext() );
 		$out = $this->getContext()->getOutput();
 
-		$videoLinksHTML = '<br />' . Xml::element( 'h2',
-			array( 'id' => 'filelinks' ), wfMsg( 'video-links' ) ) . "\n";
-		$sk = $this->getContext()->getSkin();
-
 		// No need to display noarticletext, we use our own message
 		if ( $this->getID() ) {
 			parent::view();
@@ -52,13 +48,10 @@ class VideoPage extends Article {
 			$out->addHTML( $this->getEmbedThisTag() );
 
 			$this->videoHistory();
-
-			//$wgOut->addHTML( $videoLinksHTML );
-			//$this->videoLinks();
 		} else {
 			// Video doesn't exist, so give a link allowing user to add one with this name
 			$title = SpecialPage::getTitleFor( 'AddVideo' );
-			$link = $sk->linkKnown(
+			$link = Linker::linkKnown(
 				$title,
 				wfMsgHtml( 'video-novideo-linktext' ),
 				array(),
@@ -82,7 +75,7 @@ class VideoPage extends Article {
 	 *              parser hooks, like <video name="Foo" />...how to fix this?
 	 */
 	function videoLinks() {
-		global $wgOut, $wgUser;
+		global $wgOut;
 
 		$limit = 100;
 
@@ -116,7 +109,6 @@ class VideoPage extends Article {
 		$wgOut->addWikiMsg( 'video-links-to-video', $count );
 		$wgOut->addHTML( '<ul class="mw-imagepage-linktoimage">' . "\n" );
 
-		$sk = $wgUser->getSkin();
 		$count = 0;
 		while ( $s = $res->fetchObject() ) {
 			$count++;
@@ -124,7 +116,7 @@ class VideoPage extends Article {
 				// We have not yet reached the extra one that tells us there is
 				// more to fetch
 				$name = Title::makeTitle( $s->page_namespace, $s->page_title );
-				$link = $sk->makeKnownLinkObj( $name, '' );
+				$link = Linker::linkKnown( $name );
 				$wgOut->addHTML( "<li>{$link}</li>\n" );
 			}
 		}
@@ -175,14 +167,12 @@ class VideoPage extends Article {
 	 * we follow it with an upload history of the video and its usage.
 	 */
 	function videoHistory() {
-		global $wgUser, $wgOut;
-
-		$sk = $wgUser->getSkin();
+		global $wgOut;
 
 		$line = $this->video->nextHistoryLine();
 
 		if ( $line ) {
-			$list = new VideoHistoryList( $sk );
+			$list = new VideoHistoryList();
 			$s = $list->beginVideoHistoryList() .
 				$list->videoHistoryLine(
 					true,
@@ -244,11 +234,6 @@ class VideoPage extends Article {
  * @todo document
  */
 class VideoHistoryList {
-
-	function __construct( &$skin ) {
-		$this->skin =& $skin;
-	}
-
 	function beginVideoHistoryList() {
 		$s = "\n" .
 			Xml::element( 'h2', array( 'id' => 'filehistory' ), wfMsgHtml( 'video-history' ) ) .
@@ -262,7 +247,7 @@ class VideoHistoryList {
 	}
 
 	function videoHistoryLine( $iscur, $timestamp, $video, $user_id, $user_name, $url, $type ) {
-		global $wgUser, $wgLang, $wgTitle, $wgContLang;
+		global $wgUser, $wgLang, $wgTitle;
 
 		$datetime = $wgLang->timeanddate( $timestamp, true );
 		$cur = wfMsgHtml( 'cur' );
@@ -271,8 +256,7 @@ class VideoHistoryList {
 			$rlink = $cur;
 		} else {
 			if( $wgUser->getID() != 0 && $wgTitle->userCan( 'edit' ) ) {
-				$token = urlencode( $wgUser->editToken( $video ) );
-				$rlink = $this->skin->makeKnownLinkObj(
+				$rlink = Linker::linkKnown(
 					$wgTitle,
 					wfMsgHtml( 'video-revert' ),
 					'action=revert&oldvideo=' . urlencode( $video )
@@ -285,14 +269,14 @@ class VideoHistoryList {
 			}
 		}
 
-		$userlink = $this->skin->userLink( $user_id, $user_name ) .
-					$this->skin->userToolLinks( $user_id, $user_name );
+		$userlink = Linker::userLink( $user_id, $user_name ) .
+			Linker::userToolLinks( $user_id, $user_name );
 
-		$style = $this->skin->getInternalLinkAttributes( $url, $datetime );
+		$style = Linker::getInternalLinkAttributes( $url, $datetime );
 
 		$s = "<li>({$rlink}) <a href=\"{$url}\"{$style}>{$datetime}</a> . . ({$type}) . . {$userlink}";
 
-		$s .= $this->skin->commentBlock( /*$description*/'', $wgTitle );
+		$s .= Linker::commentBlock( /*$description*/'', $wgTitle );
 		$s .= "</li>\n";
 		return $s;
 	}
@@ -323,10 +307,7 @@ class CategoryWithVideoViewer extends CategoryViewer {
 	/**
 	 * Format the category data list.
 	 *
-	 * @param $from String: return only sort keys from this item on
-	 * @param $until String: don't return keys after this point.
-	 * @return String: HTML output
-	 * @private
+	 * @return string HTML output
 	 */
 	function getHTML() {
 		global $wgOut, $wgCategoryMagicGallery;
@@ -376,7 +357,7 @@ class CategoryWithVideoViewer extends CategoryViewer {
 	 * Add a page in the video namespace
 	 */
 	function addVideo( $title, $sortkey, $pageLength ) {
-		$video = new Video( $title, $this->context );
+		$video = new Video( $title, $this->getContext() );
 		if( $this->flip ) {
 			$this->videogallery->insert( $video );
 		} else {

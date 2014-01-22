@@ -178,7 +178,7 @@ class NewVideos extends IncludableSpecialPage {
 
 		$sub = wfMsg( 'ilsubmit' );
 		$titleObj = SpecialPage::getTitleFor( 'NewVideos' );
-		$action = $titleObj->escapeLocalURL( $hidebots ? '' : 'hidebots=0' );
+		$action = htmlspecialchars( $titleObj->getLocalURL( $hidebots ? '' : 'hidebots=0' ) );
 		if( $shownav ) {
 			$out->addHTML(
 				"<form id=\"imagesearch\" method=\"post\" action=\"{$action}\">" .

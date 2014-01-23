@@ -82,7 +82,6 @@ function wfRenderVideoGallery( $input, $argv, $parser ) {
  */
 class VideoGallery {
 	var $mVideos, $mShowFilename;
-	var $mSkin = false;
 
 	/**
 	 * Is the gallery on a wiki page (i.e. not a special page)
@@ -167,30 +166,6 @@ class VideoGallery {
 	}
 
 	/**
-	 * Instruct the class to use a specific skin for rendering
-	 *
-	 * @param $skin Skin object
-	 */
-	function useSkin( $skin ) {
-		$this->mSkin = $skin;
-	}
-
-	/**
-	 * Return the skin that should be used
-	 *
-	 * @return Skin object
-	 */
-	function getSkin() {
-		if( !$this->mSkin ) {
-			global $wgUser;
-			$skin = $wgUser->getSkin();
-		} else {
-			$skin = $this->mSkin;
-		}
-		return $skin;
-	}
-
-	/**
 	 * Add a video to the gallery.
 	 *
 	 * @param $video Video object that is added to the gallery
@@ -240,8 +215,6 @@ class VideoGallery {
 	function toHTML() {
 		global $wgLang;
 
-		$sk = $this->getSkin();
-
 		$s = '<table class="gallery" cellspacing="0" cellpadding="0">';
 		if( $this->getCaption() )
 			$s .= "\n\t<caption>{$this->mCaption}</caption>";
@@ -268,7 +241,7 @@ class VideoGallery {
 			$nb = '';
 
 			$textlink = $this->mShowFilename ?
-				$sk->makeKnownLinkObj( $nt, htmlspecialchars( $wgLang->truncate( $nt->getText(), 30, '...' ) ) ) . "<br />\n" :
+				Linker::makeKnownLinkObj( $nt, htmlspecialchars( $wgLang->truncate( $nt->getText(), 30, '...' ) ) ) . "<br />\n" :
 				'';
 
 			# ATTENTION: The newline after <div class="gallerytext"> is needed to accommodate htmltidy which

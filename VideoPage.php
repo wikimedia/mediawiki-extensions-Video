@@ -181,13 +181,15 @@ class VideoPage extends Article {
 					$line->video_user_id,
 					$line->video_user_name,
 					strip_tags( $line->video_url ),
-					$line->video_type
+					$line->video_type,
+					$this->getTitle()
 				);
 
 			while ( $line = $this->video->nextHistoryLine() ) {
 				$s .= $list->videoHistoryLine( false, $line->video_timestamp,
 			  		$line->ov_archive_name, $line->video_user_id,
-			  		$line->video_user_name, strip_tags( $line->video_url ), $line->video_type
+					$line->video_user_name, strip_tags( $line->video_url ), $line->video_type,
+					$this->getTitle()
 				);
 			}
 			$s .= $list->endVideoHistoryList();
@@ -246,8 +248,8 @@ class VideoHistoryList {
 		return $s;
 	}
 
-	function videoHistoryLine( $iscur, $timestamp, $video, $user_id, $user_name, $url, $type ) {
-		global $wgUser, $wgLang, $wgTitle;
+	function videoHistoryLine( $iscur, $timestamp, $video, $user_id, $user_name, $url, $type, $title ) {
+		global $wgUser, $wgLang;
 
 		$datetime = $wgLang->timeanddate( $timestamp, true );
 		$cur = wfMsgHtml( 'cur' );
@@ -255,9 +257,9 @@ class VideoHistoryList {
 		if ( $iscur ) {
 			$rlink = $cur;
 		} else {
-			if( $wgUser->getID() != 0 && $wgTitle->userCan( 'edit' ) ) {
+			if( $wgUser->getID() != 0 && $title->userCan( 'edit' ) ) {
 				$rlink = Linker::linkKnown(
-					$wgTitle,
+					$title,
 					wfMsgHtml( 'video-revert' ),
 					'action=revert&oldvideo=' . urlencode( $video )
 				);
@@ -276,7 +278,7 @@ class VideoHistoryList {
 
 		$s = "<li>({$rlink}) <a href=\"{$url}\"{$style}>{$datetime}</a> . . ({$type}) . . {$userlink}";
 
-		$s .= Linker::commentBlock( /*$description*/'', $wgTitle );
+		$s .= Linker::commentBlock( /*$description*/'', $title );
 		$s .= "</li>\n";
 		return $s;
 	}

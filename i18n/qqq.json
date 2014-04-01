@@ -1,0 +1,9 @@
+{
+    "@metadata": {
+        "authors": [
+            "John Du Hart <john@compwhizii.net>"
+        ]
+    },
+    "video-revert-legend": "Legend of the fieldset for the revert form",
+    "video-revert-intro": "Message displayed when you try to revert a version of a video.\n* $1 is the name of the media\n* $2 is a date\n* $3 is a hour\n* $4 is a URL and must follow square bracket: [$4\n{{Identical|Revert}}"
+}

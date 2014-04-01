@@ -4,7 +4,6 @@
  *
  * @file
  * @ingroup Extensions
- * @version 1.3
  * @author David Pean <david.pean@gmail.com> - original code/ideas
  * @author Jack Phoenix <jack@countervandalism.net>
  * @copyright Copyright © 2007 David Pean, Wikia Inc.
@@ -21,7 +20,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 // Extension credits that show up on Special:Version
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Video',
-	'version' => '1.4',
+	'version' => '1.5.0',
 	'author' => array( 'David Pean', 'Jack Phoenix', 'John Du Hart' ),
 	'description' => 'Allows new Video namespace for embeddable media on supported sites',
 	'url' => 'https://www.mediawiki.org/wiki/Extension:Video',
@@ -50,6 +49,7 @@ $wgGroupPermissions['user']['addvideo'] = true;
 
 // Set up i18n and autoload the gazillion different classes we have
 $dir = dirname( __FILE__ ) . '/';
+$wgMessagesDirs['Video'] = __DIR__ . '/i18n';
 $wgExtensionMessagesFiles['Video'] = $dir . 'Video.i18n.php';
 $wgExtensionMessagesFiles['VideoAlias'] = $dir . 'Video.alias.php';
 // Namespace translations

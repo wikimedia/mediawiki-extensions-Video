@@ -220,7 +220,7 @@ class NewVideos extends IncludableSpecialPage {
 
 		$botLink = Linker::linkKnown(
 			$titleObj,
-			htmlspecialchars( wfMsg( 'showhidebots', $showhide ) ),
+			htmlspecialchars( wfMsg( 'video-showhidebots', $showhide ) ),
 			array(),
 			$query
 		);

@@ -246,7 +246,7 @@ class Video {
 			foreach( $categories_array as $ctg ) {
 				$ctg = trim( $ctg );
 				if( $ctg ) {
-					$catName = $this->context->getLang()->getNsText( NS_CATEGORY );
+					$catName = $this->context->getLanguage()->getNsText( NS_CATEGORY );
 					$tag = "[[{$catName}:{$ctg}]]";
 					if( strpos( $categoryWikiText, $tag ) === false ) {
 						$categoryWikiText .= "\n{$tag}";

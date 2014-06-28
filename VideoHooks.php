@@ -88,8 +88,6 @@ class VideoHooks {
 				if( !$video->exists() ) {
 					global $wgOut;
 					$wgOut->redirect(
-						// escapeFullURL() converts & to &amp; which causes the
-						// destName parameter not to work correctly
 						$addTitle->getFullURL( 'wpTitle=' . $video->getName() )
 					);
 				}

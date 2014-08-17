@@ -5,68 +5,68 @@ class Video {
 	/**
 	 * @var String: database key of the video
 	 */
-	var	$name;
+	public	$name;
 
 	/**
 	 * @var Title: Title object associated with the current Video
 	 */
-	var $title;
+	public $title;
 
 	/**
 	 * @var Boolean: does this video exist? True = exists, false = doesn't.
 	 */
-	var $exists;
+	public $exists;
 
 	/**
 	 * @var Integer: height of the video, is set to 400 in this class'
 	 *               constructor
 	 */
-	var $height;
+	public $height;
 
 	/**
 	 * @var Integer: width of the video, is set to 400 in this class'
 	 *               constructor
 	 */
-	var $width;
+	public $width;
 
 	/**
 	 * @var Integer: is set to 1 in this class' constructor. Provider classes
 	 *               should calculate this by diving width by height.
 	 */
-	var $ratio;
+	public $ratio;
 
 	/**
 	 * @var String: URL to the video on the provider service
 	 */
-	var $url;
+	public $url;
 
 	/**
 	 * @var String: username of the person who added the current video to the
 	 *              wiki
 	 */
-	var $submitter_user_name;
+	public $submitter_user_name;
 
 	/**
 	 * @var Integer: user ID number of the person who added the current video
 	 *               to the wiki
 	 */
-	var $submitter_user_id;
+	public $submitter_user_id;
 
 	/**
 	 * @var Integer: timestamp when this video was added to the wiki
 	 */
-	var $create_date;
+	public $create_date;
 
 	/**
 	 * @var String: lowercase/internal name of the video provider service, such
 	 *              as 'youtube' or 'archiveorg'
 	 */
-	var $type;
+	public $type;
 
 	/**
 	 * @var Boolean: has all the metadata been loaded into the cache?
 	 */
-	var $dataLoaded;
+	public $dataLoaded;
 
 	/**
 	 * @var IContextSource

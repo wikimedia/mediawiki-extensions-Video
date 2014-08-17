@@ -81,12 +81,12 @@ function wfRenderVideoGallery( $input, $argv, $parser ) {
  * Add videos to the gallery using add(), then render that list to HTML using toHTML().
  */
 class VideoGallery {
-	var $mVideos, $mShowFilename;
+	public $mVideos, $mShowFilename;
 
 	/**
 	 * Is the gallery on a wiki page (i.e. not a special page)
 	 */
-	var $mParsing;
+	public $mParsing;
 
 	private $mPerRow = 3; // How many videos wide should the gallery be?
 	private $mWidths = 200, $mHeights = 200; // How wide/tall each thumbnail should be

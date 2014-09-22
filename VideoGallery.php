@@ -23,13 +23,13 @@ function wfRenderVideoGallery( $input, $argv, $parser ) {
 	$vg->setShowFilename( true );
 	$vg->setParsing();
 
-	if( isset( $argv['perrow'] ) ) {
+	if ( isset( $argv['perrow'] ) ) {
 		$vg->setPerRow( $argv['perrow'] );
 	}
-	if( isset( $params['widths'] ) ) {
+	if ( isset( $params['widths'] ) ) {
 		$vg->setWidths( $argv['widths'] );
 	}
-	if( isset( $params['heights'] ) ) {
+	if ( isset( $params['heights'] ) ) {
 		$vg->setHeights( $argv['heights'] );
 	}
 
@@ -40,6 +40,7 @@ function wfRenderVideoGallery( $input, $argv, $parser ) {
 		// Video:Some video name|This is some video
 		$matches = array();
 		preg_match( "/^([^|]+)(\\|(.*))?$/", $line, $matches );
+
 		// Skip empty lines
 		if ( count( $matches ) == 0 ) {
 			continue;
@@ -47,10 +48,11 @@ function wfRenderVideoGallery( $input, $argv, $parser ) {
 
 		$tp = Title::newFromText( $matches[1] );
 		$nt =& $tp;
-		if( is_null( $nt ) ) {
+		if ( is_null( $nt ) ) {
 			// Bogus title. Ignore these so we don't bomb out later.
 			continue;
 		}
+
 		if ( isset( $matches[3] ) ) {
 			$label = $matches[3];
 		} else {
@@ -92,7 +94,7 @@ class VideoGallery {
 	private $mWidths = 200, $mHeights = 200; // How wide/tall each thumbnail should be
 
 	/**
-	 * Create a new image gallery object.
+	 * Create a new video gallery object.
 	 */
 	function __construct() {
 		$this->mVideos = array();
@@ -117,7 +119,7 @@ class VideoGallery {
 	/**
 	 * Set the caption (as plain text)
 	 *
-	 * @param $caption Caption
+	 * @param string $caption Caption
 	 */
 	function setCaption( $caption ) {
 		$this->mCaption = htmlspecialchars( $caption );
@@ -126,41 +128,41 @@ class VideoGallery {
 	/**
 	 * Set the caption (as HTML)
 	 *
-	 * @param $caption Caption
+	 * @param string $caption Caption
 	 */
 	public function setCaptionHtml( $caption ) {
 		$this->mCaption = $caption;
 	}
 
 	/**
-	 * Set how many images will be displayed per row.
+	 * Set how many videos will be displayed per row.
 	 *
 	 * @param int $num > 0; invalid numbers will be rejected
 	 */
 	public function setPerRow( $num ) {
-		if( $num > 0 ) {
+		if ( $num > 0 ) {
 			$this->mPerRow = (int)$num;
 		}
 	}
 
 	/**
-	 * Set how wide each image will be, in pixels.
+	 * Set how wide each video will be, in pixels.
 	 *
 	 * @param int $num > 0; invalid numbers will be ignored
 	 */
 	public function setWidths( $num ) {
-		if( $num > 0 ) {
+		if ( $num > 0 ) {
 			$this->mWidths = (int)$num;
 		}
 	}
 
 	/**
-	 * Set how high each image will be, in pixels.
+	 * Set how high each video will be, in pixels.
 	 *
 	 * @param int $num > 0; invalid numbers will be ignored
 	 */
 	public function setHeights( $num ) {
-		if( $num > 0 ) {
+		if ( $num > 0 ) {
 			$this->mHeights = (int)$num;
 		}
 	}
@@ -169,7 +171,7 @@ class VideoGallery {
 	 * Add a video to the gallery.
 	 *
 	 * @param $video Video object that is added to the gallery
-	 * @param $html String: additional HTML text to be shown. The name and size of the image are always shown.
+	 * @param $html String: additional HTML text to be shown. The name and size of the video are always shown.
 	 */
 	function add( $video, $html = '' ) {
 		$this->mVideos[] = array( &$video, $html );
@@ -177,27 +179,27 @@ class VideoGallery {
 	}
 
 	/**
- 	* Add an image at the beginning of the gallery.
- 	*
- 	* @param $image Image object that is added to the gallery
- 	* @param $html String: Additional HTML text to be shown. The name and size of the image are always shown.
- 	*/
+ 	 * Add a video at the beginning of the gallery.
+ 	 *
+ 	 * @param $video Video object that is added to the gallery
+ 	 * @param $html String: Additional HTML text to be shown. The name and size of the video are always shown.
+ 	 */
 	function insert( $video, $html = '' ) {
 		array_unshift( $this->mVideos, array( &$video, $html ) );
 	}
 
 	/**
-	 * @return true if the gallery contains no videos
+	 * @return bool True if the gallery contains no videos
 	 */
 	function isEmpty() {
 		return empty( $this->mVideos );
 	}
 
 	/**
-	 * Enable/Disable showing of the filename of an image in the gallery.
+	 * Enable/Disable showing of the filename of a video in the gallery.
 	 * Enabled by default.
 	 *
-	 * @param $f Boolean: set to false to disable.
+	 * @param bool $f Set to false to disable.
 	 */
 	function setShowFilename( $f ) {
 		$this->mShowFilename = ( $f == true );
@@ -216,8 +218,9 @@ class VideoGallery {
 		global $wgLang;
 
 		$s = '<table class="gallery" cellspacing="0" cellpadding="0">';
-		if( $this->getCaption() )
+		if ( $this->getCaption() ) {
 			$s .= "\n\t<caption>{$this->mCaption}</caption>";
+		}
 
 		$i = 0;
 		foreach ( $this->mVideos as $pair ) {
@@ -226,14 +229,15 @@ class VideoGallery {
 
 			$nt = $video->getTitle();
 
-			if( $nt->getNamespace() != NS_VIDEO ) {
+			if ( $nt->getNamespace() != NS_VIDEO ) {
 				# We're dealing with a non-video, spit out the name and be done with it.
 				$thumbhtml = "\n\t\t\t" . '<div style="height: ' . ( $this->mHeights * 1.25 + 2 ) . 'px;">'
 					. htmlspecialchars( $nt->getText() ) . '</div>';
  			} else {
+				$video->load(); // Just in case to ensure that all the fields we need are populated, etc.
 				$video->setWidth( $this->mWidths );
 				$video->setHeight( $this->mHeights );
-				$vpad = floor( ( 1.25*  $this->mHeights - $this->mWidths ) / 2 ) - 2;
+				$vpad = floor( ( 1.25 * $this->mHeights - $this->mWidths ) / 2 ) - 2;
 				$thumbhtml = "\n\t\t\t" . '<div class="thumb" style="padding: ' . $vpad . 'px 0; width: ' . ( $this->mWidths + 30 ) . 'px;">'
 					. $video->getEmbedCode() . '</div>';
 			}
@@ -241,7 +245,7 @@ class VideoGallery {
 			$nb = '';
 
 			$textlink = $this->mShowFilename ?
-				Linker::makeKnownLinkObj( $nt, htmlspecialchars( $wgLang->truncate( $nt->getText(), 30, '...' ) ) ) . "<br />\n" :
+				Linker::linkKnown( $nt, htmlspecialchars( $wgLang->truncate( $nt->getText(), 30, '...' ) ) ) . "<br />\n" :
 				'';
 
 			# ATTENTION: The newline after <div class="gallerytext"> is needed to accommodate htmltidy which
@@ -263,7 +267,7 @@ class VideoGallery {
 			}
 			++$i;
 		}
-		if( $i % $this->mPerRow != 0 ) {
+		if ( $i % $this->mPerRow != 0 ) {
 			$s .= "\n\t</tr>";
 		}
 		$s .= "\n</table>";

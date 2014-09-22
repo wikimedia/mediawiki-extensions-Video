@@ -17,9 +17,18 @@ class NewVideos extends IncludableSpecialPage {
 	}
 
 	/**
+	 * Group this special page under the correct header in Special:SpecialPages.
+	 *
+	 * @return string
+	 */
+	function getGroupName() {
+		return 'changes';
+	}
+
+	/**
 	 * Show the special page
 	 *
-	 * @param $par Mixed: parameter passed to the page or null
+	 * @param mixed|null $par Parameter passed to the page or null
 	 */
 	public function execute( $par ) {
 		global $wgGroupPermissions;
@@ -28,7 +37,7 @@ class NewVideos extends IncludableSpecialPage {
 		$request = $this->getRequest();
 		$lang = $this->getLanguage();
 
-		$out->setPageTitle( wfMsgHtml( 'newvideos' ) );
+		$out->setPageTitle( $this->msg( 'newvideos' ) );
 
 		$wpIlMatch = $request->getText( 'wpIlMatch' );
 		$dbr = wfGetDB( DB_SLAVE );
@@ -36,20 +45,20 @@ class NewVideos extends IncludableSpecialPage {
 		$hidebots = $request->getBool( 'hidebots', 1 );
 
 		$hidebotsql = '';
-		if( $hidebots ) {
+		if ( $hidebots ) {
 			/*
 			 * Make a list of group names which have the 'bot' flag
 			 * set.
 			 */
 			$botconds = array();
-			foreach( $wgGroupPermissions as $groupname => $perms ) {
-				if( array_key_exists( 'bot', $perms ) && $perms['bot'] ) {
+			foreach ( $wgGroupPermissions as $groupname => $perms ) {
+				if ( array_key_exists( 'bot', $perms ) && $perms['bot'] ) {
 					$botconds[] = "ug_group='$groupname'";
 				}
 			}
 
 			/* If not bot groups, do not set $hidebotsql */
-			if( $botconds ) {
+			if ( $botconds ) {
 				$isbotmember = $dbr->makeList( $botconds, LIST_OR );
 
 				/*
@@ -66,13 +75,13 @@ class NewVideos extends IncludableSpecialPage {
 		$video = $dbr->tableName( 'video' );
 
 		$sql = "SELECT video_timestamp FROM $video";
-		if( $hidebotsql ) {
+		if ( $hidebotsql ) {
 			$sql .= "$hidebotsql WHERE ug_group IS NULL";
 		}
-		$sql.= ' ORDER BY video_timestamp DESC LIMIT 1';
+		$sql .= ' ORDER BY video_timestamp DESC LIMIT 1';
 		$res = $dbr->query( $sql, __METHOD__ );
 		$row = $dbr->fetchRow( $res );
-		if( $row !== false ) {
+		if ( $row !== false ) {
 			$ts = $row[0];
 		} else {
 			$ts = false;
@@ -85,7 +94,8 @@ class NewVideos extends IncludableSpecialPage {
 		/** Hardcode this for now. */
 		$limit = 48;
 
-		if ( $parval = intval( $par ) ) {
+		$parval = intval( $par );
+		if ( $parval ) {
 			if ( $parval <= $limit && $parval > 0 ) {
 				$limit = $parval;
 			}
@@ -95,7 +105,7 @@ class NewVideos extends IncludableSpecialPage {
 		$searchpar = array();
 		if ( $wpIlMatch != '' ) {
 			$nt = Title::newFromUrl( $wpIlMatch );
-			if( $nt ) {
+			if ( $nt ) {
 				$m = $dbr->strencode( strtolower( $nt->getDBkey() ) );
 				$m = str_replace( '%', "\\%", $m );
 				$m = str_replace( '_', "\\_", $m );
@@ -115,11 +125,11 @@ class NewVideos extends IncludableSpecialPage {
 		$sql = 'SELECT video_name, video_url, video_user_name, video_user_id, '.
 				" video_timestamp FROM $video";
 
-		if( $hidebotsql ) {
+		if ( $hidebotsql ) {
 			$sql .= $hidebotsql;
 			$where[] = 'ug_group IS NULL';
 		}
-		if( count( $where ) ) {
+		if ( count( $where ) ) {
 			$sql.= ' WHERE ' . $dbr->makeList( $where, LIST_AND );
 		}
 		$sql.= ' ORDER BY video_timestamp '. ( $invertSort ? '' : ' DESC' );
@@ -128,8 +138,8 @@ class NewVideos extends IncludableSpecialPage {
 
 		// We have to flip things around to get the last N after a certain date
 		$videos = array();
-		foreach( $res as $s ) {
-			if( $invertSort ) {
+		foreach ( $res as $s ) {
+			if ( $invertSort ) {
 				array_unshift( $videos, $s );
 			} else {
 				array_push( $videos, $s );
@@ -140,8 +150,8 @@ class NewVideos extends IncludableSpecialPage {
 		$firstTimestamp = null;
 		$lastTimestamp = null;
 		$shownVideos = 0;
-		foreach( $videos as $s ) {
-			if( ++$shownVideos > $limit ) {
+		foreach ( $videos as $s ) {
+			if ( ++$shownVideos > $limit ) {
 				// One extra just to test for whether to show a page link;
 				// don't actually show it.
 				break;
@@ -152,7 +162,7 @@ class NewVideos extends IncludableSpecialPage {
 
 			$nt = Title::newFromText( $name, NS_VIDEO );
 			$vid = new Video( $nt, $this->getContext() );
-			$ul = Linker::makeLinkObj( Title::makeTitle( NS_USER, $ut ), $ut );
+			$ul = Linker::linkKnown( Title::makeTitle( NS_USER, $ut ), $ut );
 
 			$gallery->add(
 				$vid,
@@ -162,20 +172,20 @@ class NewVideos extends IncludableSpecialPage {
 			);
 
 			$timestamp = wfTimestamp( TS_MW, $s->video_timestamp );
-			if( empty( $firstTimestamp ) ) {
+			if ( empty( $firstTimestamp ) ) {
 				$firstTimestamp = $timestamp;
 			}
 			$lastTimestamp = $timestamp;
 		}
 
-		$bydate = wfMsg( 'bydate' );
+		$bydate = $this->msg( 'bydate' )->escaped();
 		$lt = $lang->formatNum( min( $shownVideos, $limit ) );
-		if( $shownav ) {
-			$text = wfMsgExt( 'imagelisttext', 'parse', $lt, $bydate );
+		if ( $shownav ) {
+			$text = $this->msg( 'imagelisttext', $lt, $bydate )->parse();
 			$out->addHTML( $text . "\n" );
 		}
 
-		$sub = wfMsg( 'ilsubmit' );
+		$sub = $this->msg( 'ilsubmit' )->escaped();
 		$titleObj = SpecialPage::getTitleFor( 'NewVideos' );
 		$action = htmlspecialchars( $titleObj->getLocalURL( $hidebots ? '' : 'hidebots=0' ) );
 		if( $shownav ) {
@@ -190,7 +200,7 @@ class NewVideos extends IncludableSpecialPage {
 		// Paging controls...
 
 		# If we change bot visibility, this needs to be carried along.
-		if( !$hidebots ) {
+		if ( !$hidebots ) {
 			$botpar = array( 'hidebots' => 0 );
 		} else {
 			$botpar = array();
@@ -206,7 +216,7 @@ class NewVideos extends IncludableSpecialPage {
 
 		$dateLink = Linker::linkKnown(
 			$titleObj,
-			htmlspecialchars( wfMsgHtml( 'sp-newimages-showfrom', $date, $time ) ),
+			htmlspecialchars( $this->msg( 'sp-newimages-showfrom', $date, $time )->escaped() ),
 			array(),
 			$query
 		);
@@ -216,18 +226,17 @@ class NewVideos extends IncludableSpecialPage {
 			$searchpar
 		);
 
-		$showhide = $hidebots ? wfMsg( 'show' ) : wfMsg( 'hide' );
+		$showhide = $hidebots ? $this->msg( 'show' )->escaped() : $this->msg( 'hide' )->escaped();
 
 		$botLink = Linker::linkKnown(
 			$titleObj,
-			htmlspecialchars( wfMsg( 'video-showhidebots', $showhide ) ),
+			htmlspecialchars( $this->msg( 'video-showhidebots', $showhide )->escaped() ),
 			array(),
 			$query
 		);
 
-		$opts = array( 'parsemag', 'escapenoentities' );
-		$prevLink = wfMsgExt( 'pager-newer-n', $opts, $lang->formatNum( $limit ) );
-		if( $firstTimestamp && $firstTimestamp != $latestTimestamp ) {
+		$prevLink = $this->msg( 'pager-newer-n', $lang->formatNum( $limit ) )->parse();
+		if ( $firstTimestamp && $firstTimestamp != $latestTimestamp ) {
 			$query = array_merge(
 				array( 'from' => $firstTimestamp ),
 				$botpar,
@@ -241,8 +250,8 @@ class NewVideos extends IncludableSpecialPage {
 			);
 		}
 
-		$nextLink = wfMsgExt( 'pager-older-n', $opts, $lang->formatNum( $limit ) );
-		if( $shownVideos > $limit && $lastTimestamp ) {
+		$nextLink = $this->msg( 'pager-older-n', $lang->formatNum( $limit ) )->parse();
+		if ( $shownVideos > $limit && $lastTimestamp ) {
 			$query = array_merge(
 				array( 'until' => $lastTimestamp ),
 				$botpar,
@@ -258,16 +267,16 @@ class NewVideos extends IncludableSpecialPage {
 		}
 
 		$prevnext = '<p>' . $botLink . ' ' .
-			wfMsgHtml( 'viewprevnext', $prevLink, $nextLink, $dateLink ) .
+			$this->msg( 'viewprevnext', $prevLink, $nextLink, $dateLink )->text() .
 			'</p>';
 
-		if( $shownav ) {
+		if ( $shownav ) {
 			$out->addHTML( $prevnext );
 		}
 
-		if( count( $videos ) ) {
+		if ( count( $videos ) ) {
 			$out->addHTML( $gallery->toHTML() );
-			if( $shownav ) {
+			if ( $shownav ) {
 				$out->addHTML( $prevnext );
 			}
 		} else {

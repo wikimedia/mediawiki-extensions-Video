@@ -24,7 +24,7 @@ function VideoGalleryPopulate( $input, $args, $parser ) {
 	$category = ( isset( $args['category'] ) ) ? $args['category'] : '';
 	$limit = ( isset( $args['limit'] ) ) ? intval( $args['limit'] ) : 10;
 
-	if( empty( $category ) ) {
+	if ( empty( $category ) ) {
 		return '';
 	}
 
@@ -36,18 +36,18 @@ function VideoGalleryPopulate( $input, $args, $parser ) {
 		$category = $newParser->preprocess( $category, $parser->getTitle(), $parser->getOptions() );
 	}
 	$category_title = Title::newFromText( $category );
-	if( !( $category_title instanceof Title ) ) {
+	if ( !( $category_title instanceof Title ) ) {
 		return '';
 	}
 
 	// @todo FIXME: not overly i18n-friendly here...
 	$category_title_secondary = Title::newFromText( $category . ' Videos' );
-	if( !( $category_title_secondary instanceof Title ) ) {
+	if ( !( $category_title_secondary instanceof Title ) ) {
 		return '';
 	}
 
 	$params['ORDER BY'] = 'page_id';
-	if( $limit ) {
+	if ( $limit ) {
 		$params['LIMIT'] = $limit;
 	}
 

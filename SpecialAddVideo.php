@@ -23,24 +23,24 @@ class AddVideo extends SpecialPage {
 	}
 
 	/**
+	 * Group this special page under the correct header in Special:SpecialPages.
+	 *
+	 * @return string
+	 */
+	function getGroupName() {
+		return 'media';
+	}
+
+	/**
 	 * Show the special page
 	 *
-	 * @param $par Mixed: parameter passed to the page or null
-	 * @return bool|null
+	 * @param mixed|null $par Parameter passed to the page or null
 	 */
 	public function execute( $par ) {
-		global $wgExtensionAssetsPath;
-
 		$out = $this->getOutput();
-		// Add CSS
-		if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
-			$out->addModuleStyles( 'ext.video' );
-		} else {
-			$out->addExtensionStyle( $wgExtensionAssetsPath . '/Video/Video.css' );
-		}
 
 		// If the user doesn't have the required 'addvideo' permission, display an error
-		if( !$this->userCanExecute( $this->getUser() ) ) {
+		if ( !$this->userCanExecute( $this->getUser() ) ) {
 			$this->displayRestrictionError();
 			return;
 		}
@@ -51,16 +51,19 @@ class AddVideo extends SpecialPage {
 		}
 
 		// If user is blocked, s/he doesn't need to access this page
-		if( $this->getUser()->isBlocked() ) {
+		if ( $this->getUser()->isBlocked() ) {
 			throw new UserBlockedError( $this->getUser()->mBlock );
 		}
+
+		// Add CSS
+		$out->addModuleStyles( 'ext.video' );
 
 		$this->setHeaders();
 
 		$form = new HTMLForm( $this->getFormFields(), $this->getContext() );
-		$form->setIntro( wfMsgExt( 'video-addvideo-instructions', 'parse' ) );
-		$form->setWrapperLegend( wfMsg( 'video-addvideo-title' ) );
-		$form->setSubmitText( wfMsg( 'video-addvideo-button' ) );
+		$form->setIntro( $this->msg( 'video-addvideo-instructions' )->parse() );
+		$form->setWrapperLegend( $this->msg( 'video-addvideo-title' )->plain() );
+		$form->setSubmitText( $this->msg( 'video-addvideo-button' )->plain() );
 		$form->setSubmitCallback( array( $this, 'submit' ) );
 
 		if ( $this->getRequest()->getCheck( 'forReUpload' ) ) {
@@ -73,7 +76,7 @@ class AddVideo extends SpecialPage {
 	/**
 	 * Extracts the URL and provider type from a raw string
 	 *
-	 * @param string $value Value form the Video input
+	 * @param string $value Value from the Video input
 	 * @return array Element 0 is the URL, 1 is the provider
 	 */
 	protected function getUrlAndProvider( $value ) {
@@ -91,15 +94,15 @@ class AddVideo extends SpecialPage {
 	 * Checks to see if the string given is a valid URL and corresponds
 	 * to a supported provider.
 	 *
-	 * @param $value Array
-	 * @param $allData Array
-	 * @return bool|String
+	 * @param array $value
+	 * @param array $allData
+	 * @return bool|string
 	 */
 	public function validateVideoField( $value, $allData ) {
 		list( , $provider ) = $this->getUrlAndProvider( $value );
 
 		if ( $provider == 'unknown' ) {
-			return wfMsg( 'video-addvideo-invalidcode' );
+			return $this->msg( 'video-addvideo-invalidcode' )->plain();
 		}
 
 		return true;
@@ -119,12 +122,12 @@ class AddVideo extends SpecialPage {
 		$video = Video::newFromName( $value, $this->getContext() );
 
 		if ( $video === null || !( $video instanceof Video ) ) {
-			return wfMsg( 'badtitle' );
+			return $this->msg( 'badtitle' )->plain();
 		}
 
 		// TODO: Check to see if this is a new version
 		if ( $video->exists() && !$this->getRequest()->getCheck( 'forReUpload' ) ) {
-			return wfMsgHtml( 'video-addvideo-exists' );
+			return $this->msg( 'video-addvideo-exists' )->escaped();
 		}
 
 		$this->video = $video;
@@ -135,7 +138,7 @@ class AddVideo extends SpecialPage {
 	/**
 	 * Actually inserts the Video into the DB if validation passes
 	 *
-	 * @param $data Array
+	 * @param array $data
 	 * @return bool
 	 */
 	public function submit( array $data ) {

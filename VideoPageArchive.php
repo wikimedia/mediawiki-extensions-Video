@@ -44,7 +44,9 @@ class VideoPageArchive extends PageArchive {
 	 * @return array(number of file revisions restored, number of video revisions restored, log message)
 	 *         on success, false on failure
 	 */
-	function undelete( $timestamps, $comment = '', $fileVersions = array(), $unsuppress = false ) {
+	function undelete( $timestamps, $comment = '', $fileVersions = array(),
+		$unsuppress = false, User $user = null
+	) {
 		// We currently restore only whole deleted videos, a restore link from
 		// log could take us here...
 		if ( $this->title->exists() ) {
@@ -67,7 +69,7 @@ class VideoPageArchive extends PageArchive {
 		$first = true;
 
 		foreach ( $result as $row ) {
-			if( $first ) { // this is our new current revision
+			if ( $first ) { // this is our new current revision
 				$insertCurrent = array(
 					'video_name' => $row->ov_name,
 					'video_url' => $row->ov_url,
@@ -105,5 +107,4 @@ class VideoPageArchive extends PageArchive {
 
 		return array( '', '', '' );
 	}
-
 }

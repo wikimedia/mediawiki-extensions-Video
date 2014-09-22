@@ -7,9 +7,9 @@
  * @author David Pean <david.pean@gmail.com> - original code/ideas
  * @author Jack Phoenix <jack@countervandalism.net>
  * @copyright Copyright © 2007 David Pean, Wikia Inc.
- * @copyright Copyright © 2008-2011 Jack Phoenix
+ * @copyright Copyright © 2008-2014 Jack Phoenix
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
- * @link http://www.mediawiki.org/wiki/Extension:Video Documentation
+ * @link https://www.mediawiki.org/wiki/Extension:Video Documentation
  */
 
 // Bail out if we're not inside MediaWiki
@@ -29,16 +29,16 @@ $wgExtensionCredits['other'][] = array(
 // ResourceLoader support for MediaWiki 1.17+
 $wgResourceModules['ext.video'] = array(
 	'styles' => 'Video.css',
-	'localBasePath' => dirname( __FILE__ ),
+	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'Video'
 );
 
 // Global video namespace reference
-if( !defined( 'NS_VIDEO' ) ) {
+if ( !defined( 'NS_VIDEO' ) ) {
 	define( 'NS_VIDEO', 400 );
 }
 
-if( !defined( 'NS_VIDEO_TALK' ) ) {
+if ( !defined( 'NS_VIDEO_TALK' ) ) {
 	define( 'NS_VIDEO_TALK', 401 );
 }
 
@@ -48,62 +48,58 @@ $wgGroupPermissions['*']['addvideo'] = false;
 $wgGroupPermissions['user']['addvideo'] = true;
 
 // Set up i18n and autoload the gazillion different classes we have
-$dir = dirname( __FILE__ ) . '/';
 $wgMessagesDirs['Video'] = __DIR__ . '/i18n';
-$wgExtensionMessagesFiles['Video'] = $dir . 'Video.i18n.php';
-$wgExtensionMessagesFiles['VideoAlias'] = $dir . 'Video.alias.php';
+$wgExtensionMessagesFiles['VideoAlias'] = __DIR__ . '/Video.alias.php';
 // Namespace translations
-$wgExtensionMessagesFiles['VideoNamespaces'] = $dir . 'Video.namespaces.php';
+$wgExtensionMessagesFiles['VideoNamespaces'] = __DIR__ . '/Video.namespaces.php';
 
 // Base Video class
-$wgAutoloadClasses['Video'] = $dir . 'VideoClass.php';
+$wgAutoloadClasses['Video'] = __DIR__ . '/VideoClass.php';
 
 // ...and the dozen different provider classes
-$wgAutoloadClasses['ArchiveOrgVideoProvider'] = $dir . 'providers/ArchiveOrgVideo.php';
-$wgAutoloadClasses['BlipTVVideoProvider'] = $dir . 'providers/BlipTVVideo.php';
-$wgAutoloadClasses['DailyMotionVideoProvider'] = $dir . 'providers/DailyMotionVideo.php';
-$wgAutoloadClasses['BaseVideoProvider'] = $dir . 'providers/BaseVideoProvider.php';
-$wgAutoloadClasses['GametrailersVideoProvider'] = $dir . 'providers/GametrailersVideo.php';
-$wgAutoloadClasses['GamevideosVideoProvider'] = $dir . 'providers/GamevideosVideo.php';
-$wgAutoloadClasses['GoGreenTubeVideoProvider'] = $dir . 'providers/GoGreenTubeVideo.php';
-$wgAutoloadClasses['GoogleVideoProvider'] = $dir . 'providers/GoogleVideo.php';
-$wgAutoloadClasses['HuluVideoProvider'] = $dir . 'providers/HuluVideo.php';
-$wgAutoloadClasses['MetaCafeVideoProvider'] = $dir . 'providers/MetaCafeVideo.php';
-$wgAutoloadClasses['MySpaceVideoProvider'] = $dir . 'providers/MySpaceVideo.php';
-$wgAutoloadClasses['MovieClipsVideoProvider'] = $dir . 'providers/MovieClipsVideo.php';
-$wgAutoloadClasses['MTVNetworksVideoProvider'] = $dir . 'providers/MTVNetworksVideo.php';
-$wgAutoloadClasses['MyVideoVideoProvider'] = $dir . 'providers/MyVideoVideo.php';
-$wgAutoloadClasses['NewsRoomVideoProvider'] = $dir . 'providers/NewsRoomVideo.php';
-$wgAutoloadClasses['SevenloadVideoProvider'] = $dir . 'providers/SevenloadVideo.php';
-$wgAutoloadClasses['SouthParkStudiosVideoProvider'] = $dir . 'providers/SouthParkStudiosVideo.php';
-$wgAutoloadClasses['ViddlerVideoProvider'] = $dir . 'providers/ViddlerVideo.php';
-$wgAutoloadClasses['VimeoVideoProvider'] = $dir . 'providers/VimeoVideo.php';
-$wgAutoloadClasses['WeGameVideoProvider'] = $dir . 'providers/WeGameVideo.php';
-$wgAutoloadClasses['YouTubeVideoProvider'] = $dir . 'providers/YouTubeVideo.php';
+$wgAutoloadClasses['ArchiveOrgVideoProvider'] = __DIR__ . '/providers/ArchiveOrgVideo.php';
+$wgAutoloadClasses['BlipTVVideoProvider'] = __DIR__ . '/providers/BlipTVVideo.php';
+$wgAutoloadClasses['DailyMotionVideoProvider'] = __DIR__ . '/providers/DailyMotionVideo.php';
+$wgAutoloadClasses['BaseVideoProvider'] = __DIR__ . '/providers/BaseVideoProvider.php';
+$wgAutoloadClasses['GametrailersVideoProvider'] = __DIR__ . '/providers/GametrailersVideo.php';
+$wgAutoloadClasses['GamevideosVideoProvider'] = __DIR__ . '/providers/GamevideosVideo.php';
+$wgAutoloadClasses['GoGreenTubeVideoProvider'] = __DIR__ . '/providers/GoGreenTubeVideo.php';
+$wgAutoloadClasses['GoogleVideoProvider'] = __DIR__ . '/providers/GoogleVideo.php';
+$wgAutoloadClasses['HuluVideoProvider'] = __DIR__ . '/providers/HuluVideo.php';
+$wgAutoloadClasses['MetaCafeVideoProvider'] = __DIR__ . '/providers/MetaCafeVideo.php';
+$wgAutoloadClasses['MySpaceVideoProvider'] = __DIR__ . '/providers/MySpaceVideo.php';
+$wgAutoloadClasses['MovieClipsVideoProvider'] = __DIR__ . '/providers/MovieClipsVideo.php';
+$wgAutoloadClasses['MTVNetworksVideoProvider'] = __DIR__ . '/providers/MTVNetworksVideo.php';
+$wgAutoloadClasses['MyVideoVideoProvider'] = __DIR__ . '/providers/MyVideoVideo.php';
+$wgAutoloadClasses['NewsRoomVideoProvider'] = __DIR__ . '/providers/NewsRoomVideo.php';
+$wgAutoloadClasses['SevenloadVideoProvider'] = __DIR__ . '/providers/SevenloadVideo.php';
+$wgAutoloadClasses['SouthParkStudiosVideoProvider'] = __DIR__ . '/providers/SouthParkStudiosVideo.php';
+$wgAutoloadClasses['ViddlerVideoProvider'] = __DIR__ . '/providers/ViddlerVideo.php';
+$wgAutoloadClasses['VimeoVideoProvider'] = __DIR__ . '/providers/VimeoVideo.php';
+$wgAutoloadClasses['WeGameVideoProvider'] = __DIR__ . '/providers/WeGameVideo.php';
+$wgAutoloadClasses['YouTubeVideoProvider'] = __DIR__ . '/providers/YouTubeVideo.php';
 
 // User Interface stuff
-$wgAutoloadClasses['VideoPage'] = $dir . 'VideoPage.php';
-$wgAutoloadClasses['WikiVideoPage'] = $dir . 'WikiVideoPage.php';
-$wgAutoloadClasses['RevertVideoAction'] = $dir . 'RevertVideoAction.php';
-$wgAutoloadClasses['VideoHistoryList'] = $dir . 'VideoPage.php';
-$wgAutoloadClasses['CategoryWithVideoViewer'] = $dir . 'VideoPage.php';
+$wgAutoloadClasses['VideoPage'] = __DIR__ . '/VideoPage.php';
+$wgAutoloadClasses['WikiVideoPage'] = __DIR__ . '/WikiVideoPage.php';
+$wgAutoloadClasses['RevertVideoAction'] = __DIR__ . '/RevertVideoAction.php';
+$wgAutoloadClasses['VideoHistoryList'] = __DIR__ . '/VideoPage.php';
+$wgAutoloadClasses['CategoryWithVideoViewer'] = __DIR__ . '/VideoPage.php';
 
-$wgAutoloadClasses['VideoGallery'] = $dir . 'VideoGallery.php';
+$wgAutoloadClasses['VideoGallery'] = __DIR__ . '/VideoGallery.php';
 
 // Class for undeleting previously deleted videos
-$wgAutoloadClasses['VideoPageArchive'] = $dir . 'VideoPageArchive.php';
+$wgAutoloadClasses['VideoPageArchive'] = __DIR__ . '/VideoPageArchive.php';
+$wgAutoloadClasses['ArchivedVideo'] = __DIR__ . '/ArchivedVideo.php';
 
 // New special pages
-$wgAutoloadClasses['AddVideo'] = $dir . 'SpecialAddVideo.php';
-$wgAutoloadClasses['NewVideos'] = $dir . 'SpecialNewVideos.php';
+$wgAutoloadClasses['AddVideo'] = __DIR__ . '/SpecialAddVideo.php';
+$wgAutoloadClasses['NewVideos'] = __DIR__ . '/SpecialNewVideos.php';
 $wgSpecialPages['AddVideo'] = 'AddVideo';
 $wgSpecialPages['NewVideos'] = 'NewVideos';
-// Special page groups for MW 1.13+
-$wgSpecialPageGroups['AddVideo'] = 'media';
-$wgSpecialPageGroups['NewVideos'] = 'changes';
 
 // Hook things up
-$wgAutoloadClasses['VideoHooks'] = $dir . 'VideoHooks.php';
+$wgAutoloadClasses['VideoHooks'] = __DIR__ . '/VideoHooks.php';
 
 $wgHooks['ArticleFromTitle'][] = 'VideoHooks::videoFromTitle';
 $wgHooks['CategoryPageView'][] = 'VideoHooks::categoryPageWithVideo';

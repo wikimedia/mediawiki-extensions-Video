@@ -5,7 +5,7 @@ class Video {
 	/**
 	 * @var String: database key of the video
 	 */
-	public	$name;
+	public $name;
 
 	/**
 	 * @var Title: Title object associated with the current Video
@@ -117,7 +117,7 @@ class Video {
 	 * @param IContextSource $context Nearest context object
 	 */
 	public function __construct( $title, IContextSource $context ) {
-		if( !is_object( $title ) ) {
+		if ( !is_object( $title ) ) {
 			throw new MWException( 'Video constructor given bogus title.' );
 		}
 		$this->title =& $title;
@@ -132,9 +132,9 @@ class Video {
 	/**
 	 * Create a Video object from a video name
 	 *
-	 * @param $name Mixed: name of the video, used to create a title object using Title::makeTitleSafe
-	 * @param $context IContextSource nearest context object
-	 * @return Video|null returns a Video object on success, null if the title is invalid
+	 * @param mixed $name Name of the video, used to create a title object using Title::makeTitleSafe
+	 * @param IContextSource $context Nearest context object
+	 * @return Video|null A Video object on success, null if the title is invalid
 	 */
 	public static function newFromName( $name, IContextSource $context ) {
 		$title = Title::makeTitleSafe( NS_VIDEO, $name );
@@ -148,10 +148,10 @@ class Video {
 	/**
 	 * Add the video into the database
 	 *
-	 * @param $url String: URL to the video on the provider service
-	 * @param $type String: (internal) provider name in lowercase
-	 * @param $categories String: pipe-separated list of categories
-	 * @param $watch Boolean: add the new video page to the user's watchlist?
+	 * @param string $url URL to the video on the provider service
+	 * @param string $type (internal) provider name in lowercase
+	 * @param string $categories Pipe-separated list of categories
+	 * @param bool $watch Add the new video page to the user's watchlist?
 	 */
 	public function addVideo( $url, $type, $categories, $watch = false ) {
 		$user = $this->context->getUser();
@@ -159,10 +159,10 @@ class Video {
 
 		$now = $dbw->timestamp();
 
-		$desc = wfMsgForContent(
+		$desc = wfMessage(
 			'video-log-added-entry',
 			Title::makeTitle( NS_VIDEO, $this->getName() )->getPrefixedText()
-		);
+		)->inContentLanguage()->text();
 		// Test to see if the row exists using INSERT IGNORE
 		// This avoids race conditions by locking the row until the commit, and also
 		// doesn't deadlock. SELECT FOR UPDATE causes a deadlock for every race condition.
@@ -182,11 +182,11 @@ class Video {
 
 		$categoryWikiText = '';
 
-		if( $dbw->affectedRows() == 0 ) {
-			$desc = wfMsgForContent(
+		if ( $dbw->affectedRows() == 0 ) {
+			$desc = wfMessage(
 				'video-log-updated-entry',
 				Title::makeTitle( NS_VIDEO, $this->getName() )->getPrefixedText()
-			);
+			)->inContentLanguage()->text();
 
 			// Clear cache
 			global $wgMemc;
@@ -232,30 +232,30 @@ class Video {
 		$watch = $watch || $user->isWatched( $descTitle );
 
 		// Get the localized category name
-		$videoCategoryName = wfMsgForContent( 'video-category-name' );
+		$videoCategoryName = wfMessage( 'video-category-name' )->inContentLanguage()->text();
 
-		if( $categories ) {
+		if ( $categories ) {
 			$categories .= "|$videoCategoryName";
 		} else {
-			$categories = "$videoCategoryName";
+			$categories = $videoCategoryName;
 		}
 
 		// Loop through category variable and individually build Category Tab for Wiki text
-		if( $categories ) {
+		if ( $categories ) {
 			$categories_array = explode( '|', $categories );
-			foreach( $categories_array as $ctg ) {
+			foreach ( $categories_array as $ctg ) {
 				$ctg = trim( $ctg );
-				if( $ctg ) {
+				if ( $ctg ) {
 					$catName = $this->context->getLanguage()->getNsText( NS_CATEGORY );
 					$tag = "[[{$catName}:{$ctg}]]";
-					if( strpos( $categoryWikiText, $tag ) === false ) {
+					if ( strpos( $categoryWikiText, $tag ) === false ) {
 						$categoryWikiText .= "\n{$tag}";
 					}
 				}
 			}
 		}
 
-		if( $descTitle->exists() ) {
+		if ( $descTitle->exists() ) {
 			# Invalidate the cache for the description page
 			$descTitle->invalidateCache();
 			$descTitle->purgeSquid();
@@ -265,7 +265,7 @@ class Video {
 			$article->doEdit( $categoryWikiText, $desc, EDIT_SUPPRESS_RC );
 		}
 
-		if( $watch ) {
+		if ( $watch ) {
 			$user->addWatch( $descTitle );
 		}
 
@@ -280,7 +280,8 @@ class Video {
 
 	/**
 	 * Try to load video metadata from memcached.
-	 * @return Boolean: true on success.
+	 *
+	 * @return bool True on success.
 	 */
 	private function loadFromCache() {
 		global $wgMemc;
@@ -291,7 +292,7 @@ class Video {
 		$key = $this->getCacheKey();
 		$data = $wgMemc->get( $key );
 
-		if( !empty( $data ) && is_array( $data ) ) {
+		if ( !empty( $data ) && is_array( $data ) ) {
 			$this->url = $data['url'];
 			$this->type = $data['type'];
 			$this->submitter_user_id = $data['user_id'];
@@ -421,7 +422,7 @@ class Video {
 	}
 
 	/**
-	 * @return Boolean: true if the Video exists
+	 * @return bool True if the Video exists
 	 */
 	public function exists() {
 		$this->load();
@@ -431,7 +432,7 @@ class Video {
 	/**
 	 * Get the embed code for this Video
 	 *
-	 * @return String: video embed code
+	 * @return string Video embed code
 	 */
 	public function getEmbedCode() {
 		if ( !isset( self::$providers[$this->type] ) ) {
@@ -447,7 +448,7 @@ class Video {
 	/**
 	 * Is the supplied value a URL?
 	 *
-	 * @return Boolean: true if it is, otherwise false
+	 * @return bool True if it is, otherwise false
 	 */
 	public static function isURL( $code ) {
 		return preg_match( '%^(?:http|https|ftp)://(?:www\.)?.*$%i', $code ) ? true : false;
@@ -457,8 +458,8 @@ class Video {
 	 * Try to figure out the video's URL from the embed code that the provider
 	 * allows users to copy & paste on their own sites.
 	 *
-	 * @param $code String: the video's HTML embedding code
-	 * @return String: URL of the video
+	 * @param string $code The video's HTML embedding code
+	 * @return string URL of the video
 	 */
 	public static function getURLfromEmbedCode( $code ) {
 		preg_match(
@@ -468,16 +469,16 @@ class Video {
 		);
 
 		$embedCode = '';
-		if( isset( $matches[2] ) ) {
+		if ( isset( $matches[2] ) ) {
 			$embedCode = $matches[2];
 		}
 
 		// Some providers (such as MySpace) have flashvars='' in the embed
 		// code, and the base URL in the src='' so we need to grab the
 		// flashvars and append it to get the real URL
-		if( isset( $matches[6] ) ) {
+		if ( isset( $matches[6] ) ) {
 			$flash_vars = $matches[6];
-			if( strpos( '?', $flash_vars ) !== false ) {
+			if ( strpos( '?', $flash_vars ) !== false ) {
 				$embedCode .= '&';
 			} else {
 				$embedCode .= '?';
@@ -510,8 +511,8 @@ class Video {
 	/**
 	 * Returns if $haystack ends with $needle
 	 *
-	 * @param $haystack String
-	 * @param $needle String
+	 * @param string $haystack
+	 * @param string $needle
 	 * @return bool
 	 */
 	protected static function endsWith( $haystack, $needle ) {
@@ -521,8 +522,8 @@ class Video {
 	/**
 	 * Figure out the provider's name (lowercased) from a given URL.
 	 *
-	 * @param $url String: URL to check
-	 * @return String: provider name or 'unknown' if we were unable to figure
+	 * @param string $url URL to check
+	 * @return string Provider name or 'unknown' if we were unable to figure
 	 *                 it out
 	 */
 	public static function getProviderByURL( $url ) {
@@ -540,13 +541,13 @@ class Video {
 	}
 
 	public function setWidth( $width ) {
-		if( is_numeric( $width ) ) {
+		if ( is_numeric( $width ) ) {
 			$this->width = $width;
 		}
 	}
 
 	public function setHeight( $height ) {
-		if( is_numeric( $height ) ) {
+		if ( is_numeric( $height ) ) {
 			$this->height = $height;
 		}
 	}
@@ -563,7 +564,7 @@ class Video {
 	/**
 	 * Get the code for embedding the current video on a wiki page.
 	 *
-	 * @return String: wikitext to insert on a wiki page
+	 * @return string Wikitext to insert on a wiki page
 	 */
 	public function getEmbedThisCode() {
 		$videoName = htmlspecialchars( $this->getName(), ENT_QUOTES );
@@ -583,11 +584,13 @@ class Video {
 		$dbr = wfGetDB( DB_SLAVE );
 
 		if ( empty( $this->historyLine ) ) { // called for the first time, return line from cur
-			$this->historyRes = $dbr->select( 'video',
+			$this->historyRes = $dbr->select(
+				'video',
 				array(
 					'video_url',
 					'video_type',
-					'video_user_id','video_user_name',
+					'video_user_id',
+					'video_user_name',
 					'video_timestamp',
 					"'' AS ov_archive_name"
 				),

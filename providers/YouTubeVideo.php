@@ -11,6 +11,13 @@ class YouTubeVideoProvider extends BaseVideoProvider {
 	}
 
 	public static function getDomains() {
-		return array( 'youtube.com' );
+		return array(
+			'youtube.com',
+			// YouTube's "enhanced privacy mode", in which "YouTube won’t
+			// store information about visitors on your web page unless they
+			// play the video"
+			// @see https://support.google.com/youtube/answer/171780?expand=PrivacyEnhancedMode#privacy
+			'youtube-nocookie.com'
+		);
 	}
 }

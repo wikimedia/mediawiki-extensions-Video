@@ -8,11 +8,11 @@
 $namespaceNames = array();
 
 // For wikis where the Video extension is not installed.
-if( !defined( 'NS_VIDEO' ) ) {
+if ( !defined( 'NS_VIDEO' ) ) {
 	define( 'NS_VIDEO', 400 );
 }
 
-if( !defined( 'NS_VIDEO_TALK' ) ) {
+if ( !defined( 'NS_VIDEO_TALK' ) ) {
 	define( 'NS_VIDEO_TALK', 401 );
 }
 

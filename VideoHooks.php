@@ -12,8 +12,8 @@ class VideoHooks {
 	 * Convert [[Video:Video Name]] tags to <video/> hook; calls
 	 * VideoHooks::renderVideo to do that.
 	 *
-	 * @param $parser Object: instance of Parser
-	 * @param $text String: input text to search for [[Video:]] tags
+	 * @param Parser $parser
+	 * @param string $text Input text to search for [[Video:]] tags
 	 * @param $strip_state [unused]
 	 * @return Boolean: true
 	 */
@@ -41,11 +41,11 @@ class VideoHooks {
 		$video = Video::newFromName( $video_name, RequestContext::getMain() );
 		$x = 1;
 
-		foreach( $params as $param ) {
-			if( $x > 1 ) {
+		foreach ( $params as $param ) {
+			if ( $x > 1 ) {
 				$width_check = preg_match( '/px/i', $param );
 
-				if( $width_check ) {
+				if ( $width_check ) {
 					$width = preg_replace( '/px/i', '', $param );
 				} else {
 					$align = $param;
@@ -55,7 +55,7 @@ class VideoHooks {
 		}
 
 		if ( is_object( $video ) ) {
-			if( $video->exists() ) {
+			if ( $video->exists() ) {
 				$widthTag = $alignTag = '';
 				if ( !empty( $width ) ) {
 					$widthTag = " width=\"{$width}\"";
@@ -74,18 +74,18 @@ class VideoHooks {
 	 * Calls VideoPage instead of standard Article for pages in the NS_VIDEO
 	 * namespace.
 	 *
-	 * @param $title Object: Title object for the current page
-	 * @param $article Object: Article object for the current page
-	 * @return Boolean: true
+	 * @param Title $title Title object for the current page
+	 * @param Article $article Article object for the current page
+	 * @return bool
 	 */
 	public static function videoFromTitle( &$title, &$article ) {
 		global $wgRequest;
 
 		if ( $title->getNamespace() == NS_VIDEO ) {
-			if( $wgRequest->getVal( 'action' ) == 'edit' ) {
+			if ( $wgRequest->getVal( 'action' ) == 'edit' ) {
 				$addTitle = SpecialPage::getTitleFor( 'AddVideo' );
 				$video = Video::newFromName( $title->getText(), RequestContext::getMain() );
-				if( !$video->exists() ) {
+				if ( !$video->exists() ) {
 					global $wgOut;
 					$wgOut->redirect(
 						$addTitle->getFullURL( 'wpTitle=' . $video->getName() )
@@ -101,8 +101,8 @@ class VideoHooks {
 	/**
 	 * Register the new <video> hook with MediaWiki's parser.
 	 *
-	 * @param $parser Object: instance of Parser
-	 * @return Boolean: true
+	 * @param Parser $parser
+	 * @return bool
 	 */
 	public static function registerVideoHook( &$parser ) {
 		$parser->setHook( 'video', 'VideoHooks::videoEmbed' );
@@ -112,15 +112,15 @@ class VideoHooks {
 	/**
 	 * Callback function for VideoHooks::registerVideoHook.
 	 *
-	 * @param $input [unused]
-	 * @param $argv Array: array or user-supplied arguments; name must be present.
+	 * @param string $input [unused]
+	 * @param array $argv Array of user-supplied arguments; name must be present.
 	 *                     Optional args include width, height and align.
-	 * @param $parser Object: instance of parser
-	 * @return String
+	 * @param Parser $parser
+	 * @return string Video HTML code suitable for outputting
 	 */
-	public static function videoEmbed( $input, $argv, $parser ) {
+	public static function videoEmbed( $input, $argv, Parser $parser ) {
 		$video_name = $argv['name'];
-		if( !$video_name ) {
+		if ( !$video_name ) {
 			return '';
 		}
 
@@ -128,24 +128,24 @@ class VideoHooks {
 		$height = $height_max = 350;
 		$validAlign = array( 'LEFT', 'CENTER', 'RIGHT' );
 
-		if( !empty( $argv['width'] ) && ( $width_max >= $argv['width'] ) ) {
+		if ( !empty( $argv['width'] ) && ( $width_max >= $argv['width'] ) ) {
 			$width = $argv['width'];
 		}
 
-		if( !empty( $argv['height'] ) && ( $height_max >= $argv['height'] ) ) {
+		if ( !empty( $argv['height'] ) && ( $height_max >= $argv['height'] ) ) {
 			$height = $argv['height'];
 		}
 
 		$align = isset( $argv['align'] ) ? $argv['align'] : 'left';
 		$alignTag = '';
 
-		if( in_array( strtoupper( $align ), $validAlign ) ) {
+		if ( in_array( strtoupper( $align ), $validAlign ) ) {
 			$alignTag = " class=\"float{$align}\" ";
 		}
 
 		$output = '';
 		$video = Video::newFromName( $video_name, RequestContext::getMain() );
-		if( $video->exists() ) {
+		if ( $video->exists() ) {
 			$video->setWidth( $width );
 			$video->setHeight( $height );
 
@@ -160,8 +160,8 @@ class VideoHooks {
 	/**
 	 * Injects Video Gallery into Category pages
 	 *
-	 * @param $cat CategoryPage object
-	 * @return Boolean: false
+	 * @param CategoryPage $cat
+	 * @return bool
 	 */
 	public static function categoryPageWithVideo( &$cat ) {
 		$article = new Article( $cat->mTitle );
@@ -185,17 +185,18 @@ class VideoHooks {
 	 * Called on video deletion; this is the main logic for deleting videos.
 	 * There is no logic related to video deletion on the VideoPage class.
 	 *
-	 * @param $articleObj Article: instance of Article or its subclass
-	 * @param $user Object: current User object ($wgUser)
-	 * @param $reason String: reason for the deletion [unused]
-	 * @param $error String: error message, if any [unused]
-	 * @return Boolean: true
+	 * @param Article $articleObj Instance of Article or its subclass
+	 * @param User $user Current User object ($wgUser)
+	 * @param string $reason Reason for the deletion [unused]
+	 * @param string $error Error message, if any [unused]
+	 * @return bool
 	 */
 	public static function onVideoDelete( &$articleObj, &$user, &$reason, &$error ) {
 		if ( $articleObj->getTitle()->getNamespace() == NS_VIDEO ) {
 			global $wgRequest;
 
-			$videoObj = new Video( $articleObj->getTitle(), $articleObj->getContext() );
+			$context = ( is_callable( $articleObj, 'getContext' ) ? $articleObj->getContext() : RequestContext::getMain() );
+			$videoObj = new Video( $articleObj->getTitle(), $context );
 			$videoName = $videoObj->getName();
 			$oldVideo = $wgRequest->getVal( 'wpOldVideo', false );
 			$where = array(
@@ -267,10 +268,10 @@ class VideoHooks {
 	 * Standard PageArchive allows only to restore the wiki page, not the
 	 * associated video.
 	 *
-	 * @param $archive Object: PageArchive object or a child class
-	 * @param $title Object: Title object for the current page that we're about
-	 *                       to undelete or view
-	 * @return Boolean: true
+	 * @param PageArchive|VideoPageArchive $archive PageArchive object or a child class
+	 * @param Title $title Title for the current page that we're about to
+	 *                     undelete or view
+	 * @return bool
 	 */
 	public static function specialUndeleteSwitchArchive( $archive, $title ) {
 		if ( $title->getNamespace() == NS_VIDEO ) {
@@ -282,28 +283,22 @@ class VideoHooks {
 	/**
 	 * Applies the schema changes when the user runs maintenance/update.php.
 	 *
-	 * @param $updater
-	 * @return Boolean: true
+	 * @param DatabaseUpdater $updater
+	 * @return bool
 	 */
-	public static function addTables( $updater = null ) {
-		$dir = dirname( __FILE__ );
+	public static function addTables( $updater ) {
+		$dir = __DIR__;
 		$file = "$dir/video.sql";
-		if ( $updater === null ) {
-			global $wgExtNewTables;
-			$wgExtNewTables[] = array( 'video', $file );
-			$wgExtNewTables[] = array( 'oldvideo', $file );
-		} else {
-			$updater->addExtensionUpdate( array( 'addTable', 'video', $file, true ) );
-			$updater->addExtensionUpdate( array( 'addTable', 'oldvideo', $file, true ) );
-		}
+		$updater->addExtensionUpdate( array( 'addTable', 'video', $file, true ) );
+		$updater->addExtensionUpdate( array( 'addTable', 'oldvideo', $file, true ) );
 		return true;
 	}
 
 	/**
 	 * For the Renameuser extension.
 	 *
-	 * @param $renameUserSQL
-	 * @return Boolean: true
+	 * @param RenameuserSQL $renameUserSQL
+	 * @return bool
 	 */
 	public static function onUserRename( $renameUserSQL ) {
 		$renameUserSQL->tables['oldvideo'] = array( 'ov_user_name', 'ov_user_id' );
@@ -314,9 +309,9 @@ class VideoHooks {
 	/**
 	 * Register the canonical names for our namespace and its talkspace.
 	 *
-	 * @param $list Array: array of namespace numbers with corresponding
+	 * @param array $list Array of namespace numbers with corresponding
 	 *                     canonical names
-	 * @return Boolean: true
+	 * @return bool
 	 */
 	public static function onCanonicalNamespaces( &$list ) {
 		$list[NS_VIDEO] = 'Video';

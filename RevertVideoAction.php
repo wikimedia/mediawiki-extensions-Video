@@ -40,7 +40,7 @@ class RevertVideoAction extends FormAction {
 			throw new ErrorPageError( 'internalerror', 'unexpected', array( 'oldvideo', $oldvideo ) );
 		}
 
-		$dbr = wfGetDB( DB_READ );
+		$dbr = wfGetDB( DB_SLAVE );
 		$row = $dbr->selectRow(
 			'oldvideo',
 			array( 'ov_url', 'ov_type', 'ov_timestamp', 'ov_url', 'ov_name' ),
@@ -54,14 +54,14 @@ class RevertVideoAction extends FormAction {
 	}
 
 	protected function alterForm( HTMLForm $form ) {
-		$form->setWrapperLegend( wfMsgHtml( 'video-revert-legend' ) );
-		$form->setSubmitText( wfMsg( 'filerevert-submit' ) );
+		$form->setWrapperLegend( wfMessage( 'video-revert-legend' )->escaped() );
+		$form->setSubmitText( wfMessage( 'filerevert-submit' )->escaped() );
 		$form->addHiddenField( 'oldvideo', $this->getRequest()->getText( 'oldvideo' ) );
 	}
 
 	/**
 	 * Get an HTMLForm descriptor array
-	 * @return Array
+	 * @return array
 	 */
 	protected function getFormFields() {
 		$timestamp = $this->oldvideo->ov_timestamp;
@@ -71,19 +71,19 @@ class RevertVideoAction extends FormAction {
 				'type' => 'info',
 				'vertical-label' => true,
 				'raw' => true,
-				'default' => wfMsgExt( 'video-revert-intro', 'parse', $this->getTitle()->getText(),
+				'default' => wfMessage( 'video-revert-intro', $this->getTitle()->getText(),
 					$this->getLang()->date( $timestamp, true ), $this->getLang()->time( $timestamp, true ),
-					$this->oldvideo->ov_url )
+					$this->oldvideo->ov_url )->parse()
 			),
 		);
 	}
 
 	/**
-	 * Process the form on POST submission.  If you return false from getFormFields(),
-	 * this will obviously never be reached.  If you don't want to do anything with the
+	 * Process the form on POST submission. If you return false from getFormFields(),
+	 * this will obviously never be reached. If you don't want to do anything with the
 	 * form, just return false here
-	 * @param  $data Array
-	 * @return Bool|Array true for success, false for didn't-try, array of errors on failure
+	 * @param array $data
+	 * @return bool|array True for success, false for didn't-try, array of errors on failure
 	 */
 	public function onSubmit( $data ) {
 		// Record upload and update metadata cache
@@ -94,28 +94,27 @@ class RevertVideoAction extends FormAction {
 	}
 
 	/**
-	 * Do something exciting on successful processing of the form.  This might be to show
-	 * a confirmation message (watch, rollback, etc) or to redirect somewhere else (edit,
-	 * protect, etc).
+	 * Do something exciting on successful processing of the form.
+	 * This might be to show a confirmation message (watch, rollback, etc.) or
+	 * to redirect somewhere else (edit, protect, etc).
 	 */
 	public function onSuccess() {
 		$out = $this->getOutput();
-		$out->setPageTitle( wfMsgHtml( 'actioncomplete' ) );
+		$out->setPageTitle( wfMessage( 'actioncomplete' )->escaped() );
 		$out->setRobotPolicy( 'noindex,nofollow' );
-		$out->addHTML( wfMsg( 'video-revert-success' ) );
+		$out->addHTML( wfMessage( 'video-revert-success' )->escaped() );
 
 		$descTitle = $this->video->getTitle();
 		$out->returnToMain( null, $descTitle->getPrefixedText() );
 	}
 
 	protected function getPageTitle() {
-		return wfMsg( 'filerevert', $this->getTitle()->getText() );
+		return wfMessage( 'filerevert', $this->getTitle()->getText() )->escaped();
 	}
 
 	protected function getDescription() {
 		$this->getOutput()->addBacklinkSubtitle( $this->getTitle() );
 		return '';
 	}
-
 
 }

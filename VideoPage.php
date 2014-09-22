@@ -39,7 +39,7 @@ class VideoPage extends Article {
 			$out->setPageTitle( $this->mTitle->getPrefixedText() );
 		}
 
-		if( $this->video->exists() ) {
+		if ( $this->video->exists() ) {
 			// Display flash video
 			$out->addHTML( $this->video->getEmbedCode() );
 
@@ -53,11 +53,11 @@ class VideoPage extends Article {
 			$title = SpecialPage::getTitleFor( 'AddVideo' );
 			$link = Linker::linkKnown(
 				$title,
-				wfMsgHtml( 'video-novideo-linktext' ),
+				$this->msg( 'video-novideo-linktext' )->plain(),
 				array(),
 				array( 'wpTitle' => $this->video->getName() )
 			);
-			$out->addHTML( wfMsgWikiHtml( 'video-novideo', $link ) );
+			$out->addHTML( $this->msg( 'video-novideo', $link )->text() );
 
 			//$wgOut->addHTML( $videoLinksHTML );
 			//$this->videoLinks();
@@ -75,7 +75,7 @@ class VideoPage extends Article {
 	 *              parser hooks, like <video name="Foo" />...how to fix this?
 	 */
 	function videoLinks() {
-		global $wgOut;
+		$out = $this->getContext()->getOutput();
 
 		$limit = 100;
 
@@ -99,15 +99,15 @@ class VideoPage extends Article {
 		$count = $dbr->numRows( $res );
 
 		if ( $count == 0 ) {
-			$wgOut->addHTML( '<div id="mw-imagepage-nolinkstoimage">' . "\n" );
-			$wgOut->addWikiMsg( 'video-no-links-to-video' );
-			$wgOut->addHTML( "</div>\n" );
+			$out->addHTML( '<div id="mw-imagepage-nolinkstoimage">' . "\n" );
+			$out->addWikiMsg( 'video-no-links-to-video' );
+			$out->addHTML( "</div>\n" );
 			return;
 		}
 
-		$wgOut->addHTML( '<div id="mw-imagepage-section-linkstoimage">' . "\n" );
-		$wgOut->addWikiMsg( 'video-links-to-video', $count );
-		$wgOut->addHTML( '<ul class="mw-imagepage-linktoimage">' . "\n" );
+		$out->addHTML( '<div id="mw-imagepage-section-linkstoimage">' . "\n" );
+		$out->addWikiMsg( 'video-links-to-video', $count );
+		$out->addHTML( '<ul class="mw-imagepage-linktoimage">' . "\n" );
 
 		$count = 0;
 		while ( $s = $res->fetchObject() ) {
@@ -117,15 +117,15 @@ class VideoPage extends Article {
 				// more to fetch
 				$name = Title::makeTitle( $s->page_namespace, $s->page_title );
 				$link = Linker::linkKnown( $name );
-				$wgOut->addHTML( "<li>{$link}</li>\n" );
+				$out->addHTML( "<li>{$link}</li>\n" );
 			}
 		}
-		$wgOut->addHTML( "</ul></div>\n" );
+		$out->addHTML( "</ul></div>\n" );
 		$res->free();
 
 		// Add a link to [[Special:WhatLinksHere]]
 		if ( $count > $limit ) {
-			$wgOut->addWikiMsg(
+			$out->addWikiMsg(
 				'video-more-links-to-video',
 				$this->mTitle->getPrefixedDBkey()
 			);
@@ -141,7 +141,7 @@ class VideoPage extends Article {
 	 * Get the HTML table that contains the code for embedding the current
 	 * video on a wiki page.
 	 *
-	 * @return String: HTML
+	 * @return string HTML
 	 */
 	public function getEmbedThisTag() {
 		$code = $this->video->getEmbedThisCode();
@@ -151,7 +151,7 @@ class VideoPage extends Article {
 		<table cellpadding="0" cellspacing="2" border="0">
 			<tr>
 				<td>
-					<b>' . wfMsg( 'video-embed' ) . '</b>
+					<b>' . wfMessage( 'video-embed' )->plain() . '</b>
 				</td>
 				<td>
 				<form name="embed_video" action="">
@@ -167,8 +167,6 @@ class VideoPage extends Article {
 	 * we follow it with an upload history of the video and its usage.
 	 */
 	function videoHistory() {
-		global $wgOut;
-
 		$line = $this->video->nextHistoryLine();
 
 		if ( $line ) {
@@ -196,11 +194,11 @@ class VideoPage extends Article {
 		} else {
 			$s = '';
 		}
-		$wgOut->addHTML( $s );
+		$this->getContext()->getOutput()->addHTML( $s );
 
 		// Exist check because we don't want to show this on pages where a video
 		// doesn't exist along with the novideo message, that would suck.
-		if( $this->video->exists() ) {
+		if ( $this->video->exists() ) {
 			$this->uploadLinksBox();
 		}
 	}
@@ -210,12 +208,11 @@ class VideoPage extends Article {
 	 * users.
 	 */
 	function uploadLinksBox() {
-		global $wgUser, $wgOut;
-
-		$wgOut->addHTML( '<br /><ul>' );
+		$out = $this->getContext()->getOutput();
+		$out->addHTML( '<br /><ul>' );
 
 		// "Upload a new version of this video" link
-		if( $wgUser->isAllowed( 'reupload' ) ) {
+		if ( $this->getContext()->getUser()->isAllowed( 'reupload' ) ) {
 			$ulink = Linker::link(
 				SpecialPage::getTitleFor( 'AddVideo' ),
 				wfMsg( 'uploadnewversion-linktext' ),
@@ -225,10 +222,10 @@ class VideoPage extends Article {
 					'forReUpload' => 1,
 				)
 			);
-			$wgOut->addHTML( "<li>{$ulink}</li>" );
+			$out->addHTML( "<li>{$ulink}</li>" );
 		}
 
-		$wgOut->addHTML( '</ul>' );
+		$out->addHTML( '</ul>' );
 	}
 }
 
@@ -238,8 +235,8 @@ class VideoPage extends Article {
 class VideoHistoryList {
 	function beginVideoHistoryList() {
 		$s = "\n" .
-			Xml::element( 'h2', array( 'id' => 'filehistory' ), wfMsgHtml( 'video-history' ) ) .
-			"\n<p>" . wfMsg( 'video-histlegend' ) . "</p>\n" . '<ul class="special">';
+			Xml::element( 'h2', array( 'id' => 'filehistory' ), wfMessage( 'video-history' )->plain() ) .
+			"\n<p>" . wfMessage( 'video-histlegend' )->parse() . "</p>\n" . '<ul class="special">';
 		return $s;
 	}
 
@@ -248,26 +245,27 @@ class VideoHistoryList {
 		return $s;
 	}
 
-	function videoHistoryLine( $iscur, $timestamp, $video, $user_id, $user_name, $url, $type, $title ) {
+	function videoHistoryLine( $isCur, $timestamp, $video, $user_id, $user_name, $url, $type, $title ) {
 		global $wgUser, $wgLang;
 
 		$datetime = $wgLang->timeanddate( $timestamp, true );
-		$cur = wfMsgHtml( 'cur' );
+		$cur = wfMessage( 'cur' )->plain();
 
-		if ( $iscur ) {
+		if ( $isCur ) {
 			$rlink = $cur;
 		} else {
-			if( $wgUser->getID() != 0 && $title->userCan( 'edit' ) ) {
+			if ( $wgUser->getId() != 0 && $title->userCan( 'edit' ) ) {
 				$rlink = Linker::linkKnown(
 					$title,
-					wfMsgHtml( 'video-revert' ),
-					'action=revert&oldvideo=' . urlencode( $video )
+					wfMessage( 'video-revert' )->plain(),
+					array(),
+					array( 'action' => 'revert', 'oldvideo' => $video )
 				);
 			} else {
 				# Having live active links for non-logged in users
 				# means that bots and spiders crawling our site can
 				# inadvertently change content. Baaaad idea.
-				$rlink = wfMsgHtml( 'video-revert' );
+				$rlink = wfMessage( 'video-revert' )->plain();
 			}
 		}
 
@@ -297,10 +295,10 @@ class CategoryWithVideoViewer extends CategoryViewer {
 		$this->articles_start_char = array();
 		$this->children = array();
 		$this->children_start_char = array();
-		if( $this->showGallery ) {
+		if ( $this->showGallery ) {
 			$this->gallery = new ImageGallery();
 		}
-		#if( $this->showVideoGallery ) {
+		#if ( $this->showVideoGallery ) {
 			$this->videogallery = new VideoGallery();
 			$this->videogallery->setParsing();
 		#}
@@ -336,20 +334,19 @@ class CategoryWithVideoViewer extends CategoryViewer {
 	 * If there are videos on the category, display a message indicating how
 	 * many videos are in the category and render the gallery of videos.
 	 *
-	 * @return String: HTML when there are videos on the category
+	 * @return string HTML when there are videos on the category
 	 */
 	function getVideoSection() {
-		if( !$this->videogallery->isEmpty() ) {
+		if ( !$this->videogallery->isEmpty() ) {
 			return "<div id=\"mw-category-media\">\n" . '<h2>' .
-				wfMsg(
+				wfMessage(
 					'category-video-header',
 					htmlspecialchars( $this->title->getText() )
-				) . "</h2>\n" .
-				wfMsgExt(
+				)->text() . "</h2>\n" .
+				wfMessage(
 					'category-video-count',
-					'parsemag',
 					$this->videogallery->count()
-				) . $this->videogallery->toHTML() . "\n</div>";
+				)->parse() . $this->videogallery->toHTML() . "\n</div>";
 		} else {
 			return '';
 		}
@@ -360,7 +357,7 @@ class CategoryWithVideoViewer extends CategoryViewer {
 	 */
 	function addVideo( $title, $sortkey, $pageLength ) {
 		$video = new Video( $title, $this->getContext() );
-		if( $this->flip ) {
+		if ( $this->flip ) {
 			$this->videogallery->insert( $video );
 		} else {
 			$this->videogallery->add( $video );
@@ -368,57 +365,82 @@ class CategoryWithVideoViewer extends CategoryViewer {
 	}
 
 	function doCategoryQuery() {
-		$dbr = wfGetDB( DB_SLAVE );
-		if( $this->from != '' ) {
-			$pageCondition = 'cl_sortkey >= ' . $dbr->addQuotes( $this->from );
-			$this->flip = false;
-		} elseif( $this->until != '' ) {
-			$pageCondition = 'cl_sortkey < ' . $dbr->addQuotes( $this->until );
-			$this->flip = true;
-		} else {
-			$pageCondition = '1 = 1';
-			$this->flip = false;
-		}
-		$res = $dbr->select(
-			array( 'page', 'categorylinks' ),
-			array( 'page_title', 'page_namespace', 'page_len', 'cl_sortkey' ),
-			array(
-				$pageCondition,
-				'cl_from = page_id',
-				'cl_to' => $this->title->getDBKey()
-			),
-			__METHOD__,
-			array(
-				'ORDER BY' => $this->flip ? 'cl_sortkey DESC' : 'cl_sortkey',
-				'LIMIT' => $this->limit + 1
-			)
-		);
+		$dbr = wfGetDB( DB_SLAVE, 'category' );
 
-		$count = 0;
-		$this->nextPage = null;
-		foreach( $res as $x ) {
-			if( ++$count > $this->limit ) {
-				// We've reached the one extra which shows that there are
-				// additional pages to be had. Stop here...
-				$this->nextPage = $x->cl_sortkey;
-				break;
+		$this->nextPage = array(
+			'page' => null,
+			'subcat' => null,
+			'file' => null,
+		);
+		$this->flip = array( 'page' => false, 'subcat' => false, 'file' => false );
+
+		foreach ( array( 'page', 'subcat', 'file' ) as $type ) {
+			# Get the sortkeys for start/end, if applicable.  Note that if
+			# the collation in the database differs from the one
+			# set in $wgCategoryCollation, pagination might go totally haywire.
+			$extraConds = array( 'cl_type' => $type );
+			if ( isset( $this->from[$type] ) && $this->from[$type] !== null ) {
+				$extraConds[] = 'cl_sortkey >= '
+					. $dbr->addQuotes( $this->collation->getSortKey( $this->from[$type] ) );
+			} elseif ( isset( $this->until[$type] ) && $this->until[$type] !== null ) {
+				$extraConds[] = 'cl_sortkey < '
+					. $dbr->addQuotes( $this->collation->getSortKey( $this->until[$type] ) );
+				$this->flip[$type] = true;
 			}
 
-			$title = Title::makeTitle( $x->page_namespace, $x->page_title );
+			$res = $dbr->select(
+				array( 'page', 'categorylinks', 'category' ),
+				array( 'page_id', 'page_title', 'page_namespace', 'page_len',
+					'page_is_redirect', 'cl_sortkey', 'cat_id', 'cat_title',
+					'cat_subcats', 'cat_pages', 'cat_files',
+					'cl_sortkey_prefix', 'cl_collation' ),
+				array_merge( array( 'cl_to' => $this->title->getDBkey() ), $extraConds ),
+				__METHOD__,
+				array(
+					'USE INDEX' => array( 'categorylinks' => 'cl_sortkey' ),
+					'LIMIT' => $this->limit + 1,
+					'ORDER BY' => $this->flip[$type] ? 'cl_sortkey DESC' : 'cl_sortkey',
+				),
+				array(
+					'categorylinks' => array( 'INNER JOIN', 'cl_from = page_id' ),
+					'category' => array( 'LEFT JOIN', array(
+						'cat_title = page_title',
+						'page_namespace' => NS_CATEGORY
+					) )
+				)
+			);
 
-			if( $title->getNamespace() == NS_CATEGORY ) {
-				$this->addSubcategoryObject(
-					Category::newFromTitle( $title ),
-					$x->cl_sortkey,
-					$x->page_len
-				);
-			} elseif( $title->getNamespace() == NS_FILE ) {
-				$this->addImage( $title, $x->cl_sortkey, $x->page_len );
-			} elseif( $title->getNamespace() == NS_VIDEO ) {
-				$this->addVideo( $title, $x->cl_sortkey, $x->page_len );
-			} else {
-				$this->addPage( $title, $x->cl_sortkey, $x->page_len );
+			$count = 0;
+			foreach ( $res as $row ) {
+				$title = Title::newFromRow( $row );
+				if ( $row->cl_collation === '' ) {
+					// Hack to make sure that while updating from 1.16 schema
+					// and db is inconsistent, that the sky doesn't fall.
+					// See r83544. Could perhaps be removed in a couple decades...
+					$humanSortkey = $row->cl_sortkey;
+				} else {
+					$humanSortkey = $title->getCategorySortkey( $row->cl_sortkey_prefix );
+				}
+
+				if ( ++$count > $this->limit ) {
+					# We've reached the one extra which shows that there
+					# are additional pages to be had. Stop here...
+					$this->nextPage[$type] = $humanSortkey;
+					break;
+				}
+
+				if ( $title->getNamespace() == NS_CATEGORY ) {
+					$cat = Category::newFromRow( $row, $title );
+					$this->addSubcategoryObject( $cat, $humanSortkey, $row->page_len );
+				} elseif ( $title->getNamespace() == NS_FILE ) {
+					$this->addImage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
+				} elseif ( $title->getNamespace() == NS_VIDEO ) {
+					$this->addVideo( $title, $row->cl_sortkey, $row->page_len, $row->page_is_redirect );
+				} else {
+					$this->addPage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
+				}
 			}
 		}
 	}
+
 }

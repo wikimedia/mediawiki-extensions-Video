@@ -38,5 +38,6 @@
 	"video-no-links-to-video": "There are no pages that link to this video.",
 	"video-more-links-to-video": "View [[Special:WhatLinksHere/$1|more links]] to this video.",
 	"video-showhidebots": "($1 bots)",
+	"action-addvideo": "add videos from external services into the site",
 	"right-addvideo": "Add videos from external services into the site"
 }

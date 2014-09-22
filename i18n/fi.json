@@ -33,5 +33,6 @@
     "video-links-to-video": "{{PLURAL:$1|Seuraava sivu linkittää|Seuraavat $1 sivua linkittävät}} tähän videoon:",
     "video-no-links-to-video": "Mikään sivu ei linkitä tähän videoon.",
     "video-more-links-to-video": "Katso [[Special:WhatLinksHere/$1|lisää linkkejä]] tähän videoon.",
+	"action-addvideo": "lisätä videoita ulkoisista palveluista sivustolle",
     "right-addvideo": "Lisätä videoita ulkoisista palveluista sivustolle"
 }

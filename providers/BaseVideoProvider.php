@@ -31,7 +31,7 @@ abstract class BaseVideoProvider {
 	protected $embedTemplate = null;
 
 	public function __construct( $video ) {
-		if ( !($video instanceof Video) ) {
+		if ( !( $video instanceof Video ) ) {
 			throw new MWException( 'Video Provider constructor given bogus video object.' );
 		}
 
@@ -52,7 +52,7 @@ abstract class BaseVideoProvider {
 	}
 
 	/**
-	 * Function to extract the video id
+	 * Function to extract the video ID
 	 *
 	 * Override to use instead of regular expression
 	 *

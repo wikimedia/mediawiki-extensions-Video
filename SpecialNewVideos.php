@@ -106,10 +106,8 @@ class NewVideos extends IncludableSpecialPage {
 		if ( $wpIlMatch != '' ) {
 			$nt = Title::newFromUrl( $wpIlMatch );
 			if ( $nt ) {
-				$m = $dbr->strencode( strtolower( $nt->getDBkey() ) );
-				$m = str_replace( '%', "\\%", $m );
-				$m = str_replace( '_', "\\_", $m );
-				$where[] = "LCASE(video_name) LIKE '%{$m}%'";
+				$where[] = 'LCASE(video_name)' . $dbr->buildLike(
+					$dbr->anyString(), strtolower( $nt->getDBkey() ), $dbr->anyString() );
 				$searchpar['wpIlMatch'] = $wpIlMatch;
 			}
 		}

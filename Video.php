@@ -57,21 +57,21 @@ $wgExtensionMessagesFiles['VideoNamespaces'] = __DIR__ . '/Video.namespaces.php'
 $wgAutoloadClasses['Video'] = __DIR__ . '/VideoClass.php';
 
 // ...and the dozen different provider classes
-$wgAutoloadClasses['ArchiveOrgVideoProvider'] = __DIR__ . '/providers/ArchiveOrgVideo.php';
+//$wgAutoloadClasses['ArchiveOrgVideoProvider'] = __DIR__ . '/providers/ArchiveOrgVideo.php';
 $wgAutoloadClasses['BlipTVVideoProvider'] = __DIR__ . '/providers/BlipTVVideo.php';
 $wgAutoloadClasses['DailyMotionVideoProvider'] = __DIR__ . '/providers/DailyMotionVideo.php';
 $wgAutoloadClasses['BaseVideoProvider'] = __DIR__ . '/providers/BaseVideoProvider.php';
 $wgAutoloadClasses['GametrailersVideoProvider'] = __DIR__ . '/providers/GametrailersVideo.php';
-$wgAutoloadClasses['GamevideosVideoProvider'] = __DIR__ . '/providers/GamevideosVideo.php';
-$wgAutoloadClasses['GoGreenTubeVideoProvider'] = __DIR__ . '/providers/GoGreenTubeVideo.php';
+//$wgAutoloadClasses['GamevideosVideoProvider'] = __DIR__ . '/providers/GamevideosVideo.php';
+//$wgAutoloadClasses['GoGreenTubeVideoProvider'] = __DIR__ . '/providers/GoGreenTubeVideo.php';
 $wgAutoloadClasses['GoogleVideoProvider'] = __DIR__ . '/providers/GoogleVideo.php';
 $wgAutoloadClasses['HuluVideoProvider'] = __DIR__ . '/providers/HuluVideo.php';
 $wgAutoloadClasses['MetaCafeVideoProvider'] = __DIR__ . '/providers/MetaCafeVideo.php';
-$wgAutoloadClasses['MySpaceVideoProvider'] = __DIR__ . '/providers/MySpaceVideo.php';
+//$wgAutoloadClasses['MySpaceVideoProvider'] = __DIR__ . '/providers/MySpaceVideo.php';
 $wgAutoloadClasses['MovieClipsVideoProvider'] = __DIR__ . '/providers/MovieClipsVideo.php';
 $wgAutoloadClasses['MTVNetworksVideoProvider'] = __DIR__ . '/providers/MTVNetworksVideo.php';
 $wgAutoloadClasses['MyVideoVideoProvider'] = __DIR__ . '/providers/MyVideoVideo.php';
-$wgAutoloadClasses['NewsRoomVideoProvider'] = __DIR__ . '/providers/NewsRoomVideo.php';
+//$wgAutoloadClasses['NewsRoomVideoProvider'] = __DIR__ . '/providers/NewsRoomVideo.php';
 $wgAutoloadClasses['SevenloadVideoProvider'] = __DIR__ . '/providers/SevenloadVideo.php';
 $wgAutoloadClasses['SouthParkStudiosVideoProvider'] = __DIR__ . '/providers/SouthParkStudiosVideo.php';
 $wgAutoloadClasses['ViddlerVideoProvider'] = __DIR__ . '/providers/ViddlerVideo.php';

@@ -221,31 +221,33 @@ class VideoHooks {
 			// Delicious copypasta from Article.php, function doDeleteArticle()
 			// with some modifications
 			$archiveName = gmdate( 'YmdHis' ) . "!{$videoName}";
-			$dbw->begin();
-			$dbw->insertSelect(
-				'oldvideo',
-				'video',
-				array(
-					'ov_name' => 'video_name',
-					'ov_archive_name' => $dbw->addQuotes( $archiveName ),
-					'ov_url' => 'video_url',
-					'ov_type' => 'video_type',
-					'ov_user_id' => 'video_user_id',
-					'ov_user_name' => 'video_user_name',
-					'ov_timestamp' => 'video_timestamp'
-				),
-				$where,
-				__METHOD__
-			);
+			if ( !empty( $videoName ) ) {
+				$dbw->begin();
+				$dbw->insertSelect(
+					'oldvideo',
+					'video',
+					array(
+						'ov_name' => 'video_name',
+						'ov_archive_name' => $dbw->addQuotes( $archiveName ),
+						'ov_url' => 'video_url',
+						'ov_type' => 'video_type',
+						'ov_user_id' => 'video_user_id',
+						'ov_user_name' => 'video_user_name',
+						'ov_timestamp' => 'video_timestamp'
+					),
+					$where,
+					__METHOD__
+				);
 
-			// Now that it's safely backed up, delete it
-			$dbw->delete(
-				'video',
-				$where,
-				__METHOD__
-			);
+				// Now that it's safely backed up, delete it
+				$dbw->delete(
+					'video',
+					$where,
+					__METHOD__
+				);
 
-			$dbw->commit();
+				$dbw->commit();
+			}
 
 			// Purge caches
 			// None of these help, the video is still displayed on pages where

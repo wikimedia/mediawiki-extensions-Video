@@ -26,8 +26,9 @@ class VideoPage extends Article {
 	 * Called on every video page view.
 	 */
 	public function view() {
-		$this->video = new Video( $this->getTitle(), $this->getContext() );
-		$out = $this->getContext()->getOutput();
+		$ctx = $this->getContext();
+		$this->video = new Video( $this->getTitle(), $ctx );
+		$out = $ctx->getOutput();
 
 		// No need to display noarticletext, we use our own message
 		if ( $this->getID() ) {
@@ -53,15 +54,15 @@ class VideoPage extends Article {
 			$title = SpecialPage::getTitleFor( 'AddVideo' );
 			$link = Linker::linkKnown(
 				$title,
-				$this->msg( 'video-novideo-linktext' )->plain(),
+				$ctx->msg( 'video-novideo-linktext' )->plain(),
 				array(),
 				array( 'wpTitle' => $this->video->getName() )
 			);
-			$out->addHTML( $this->msg( 'video-novideo', $link )->text() );
+			$out->addHTML( $ctx->msg( 'video-novideo', $link )->text() );
 
 			//$wgOut->addHTML( $videoLinksHTML );
 			//$this->videoLinks();
-			$this->viewUpdates();
+			$this->mPage->doViewUpdates( $ctx->getUser() );
 		}
 	}
 
@@ -215,7 +216,7 @@ class VideoPage extends Article {
 		if ( $this->getContext()->getUser()->isAllowed( 'reupload' ) ) {
 			$ulink = Linker::link(
 				SpecialPage::getTitleFor( 'AddVideo' ),
-				wfMsg( 'uploadnewversion-linktext' ),
+				$this->getContext()->msg( 'video-upload-new-version' )->plain(),
 				array(),
 				array(
 					'wpTitle' => $this->video->getName(),

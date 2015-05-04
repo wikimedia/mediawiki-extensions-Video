@@ -96,6 +96,12 @@ class VideoPageArchive extends PageArchive {
 
 		if ( $insertCurrent ) {
 			$dbw->insert( 'video', $insertCurrent, __METHOD__ );
+			// At this point there are two entries for our video, in both tables,
+			// even if the video had only one (video) history entry.
+			// We need to delete the oldvideo entry here so that "duplicate"
+			// entries won't show up under "Video History" on the appropriate Video:
+			// page.
+			$dbw->delete( 'oldvideo', array( 'ov_name' => $this->title->getDBkey() ), __METHOD__ );
 		}
 		if ( $insertBatch ) {
 			$dbw->insert( 'oldvideo', $insertBatch, __METHOD__ );

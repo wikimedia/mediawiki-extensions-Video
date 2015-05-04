@@ -72,7 +72,7 @@ class RevertVideoAction extends FormAction {
 				'vertical-label' => true,
 				'raw' => true,
 				'default' => wfMessage( 'video-revert-intro', $this->getTitle()->getText(),
-					$this->getLang()->date( $timestamp, true ), $this->getLang()->time( $timestamp, true ),
+					$this->getLanguage()->date( $timestamp, true ), $this->getLanguage()->time( $timestamp, true ),
 					$this->oldvideo->ov_url )->parse()
 			),
 		);

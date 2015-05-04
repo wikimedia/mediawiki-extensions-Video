@@ -10,7 +10,7 @@ VIDEO NAMESPACE FOR MEDIAWIKI
 
 ==1. Overview==
 The video namespace facilitates creation and displaying of new video
-description pages that contain embeddable flash videos. 
+description pages that contain embeddable flash videos.
 
 It introduces the [[Video:Name]] MediaWiki markup (and <video name="Name"/>)
 
@@ -18,28 +18,22 @@ Also allows functionality for Video Galleries (similar to <gallery>) and
 showing Videos in category pages.
 
 ==2. Requirements==
-The '''Video Namespace''' extension requires MediaWiki 1.16.0 or greater.
-
-r88235 (or greater) is required for proper undeletion support. Without that
-revision, videos cannot be undeleted properly; only the video page is
-undeleted, the actual video will be gone forever without that patch.
+The '''Video Namespace''' extension requires MediaWiki 1.24.1 or greater.
 
 ==3. Installing Video Extension==
 Installing the Video extension is very easy if you have shell (SSH) access to
 your server.
 
-You should run video.sql against the database with a command like
-mysql -u DATABASE_USER -p DATABASE_NAME < video.sql
-in your terminal window to generate the two necessary tables, oldvideo and video.
-Alternatively, you can add the require_once() line below into the wiki's
-LocalSettings.php and then run maintenance/update.php to create the two tables.
+You should add the require_once() line below into the wiki's
+LocalSettings.php and then re-run maintenance/update.php to create the two
+necessary database tables.
 
 If you don't have shell access, you should copy the contents of video.sql and
 paste them into phpMyAdmin's SQL prompt to create the tables.
 
 Then add the following into your wiki's LocalSettings.php:
 
-require_once("$IP/extensions/Video/Video.php");
+require_once "$IP/extensions/Video/Video.php";
 
 ==4. New Special Pages==
 Video extension introduces two new special pages, Special:AddVideo and Special:NewVideos.
@@ -60,11 +54,11 @@ In addition, everyone is able to view Special:NewVideos special page.
 ==6. Bug Reports and More==
 You can report software bugs on this extension's talk page at MediaWiki.org:
 
-http://www.mediawiki.org/w/index.php?title=Extension_talk:Video&action=edit&section=new
+https://www.mediawiki.org/w/index.php?title=Extension_talk:Video&action=edit&section=new
 
 The most up-to-date Video extension documentation can always be found at MediaWiki.org:
 
-http://www.mediawiki.org/wiki/Extension:Video
+https://www.mediawiki.org/wiki/Extension:Video
 
 ==7. Credits==
 The initial idea and coding was done by David Pean <david.pean@gmail.com>.

@@ -4,6 +4,10 @@
             "John Du Hart <john@compwhizii.net>"
         ]
     },
+	"video-upload-new-version": "Like [[MediaWiki:Uploadnewversion-linktext]], but \"file\" changed to \"video\".",
+	"video-newvideos-showfrom": "Like [[MediaWiki:Sp-newimages-showfrom]], but \"file\" changed to \"video\".",
+	"video-newvideos-list-text": "Like [[MediaWiki:Imagelisttext]], but \"file\" changed to \"video\".",
+	"video-addvideo-watchlist": "Like [[MediaWiki:Watchthisupload]], just reworded for clarity and \"file\" changed to \"video\".",
     "video-revert-legend": "Legend of the fieldset for the revert form",
     "video-revert-intro": "Message displayed when you try to revert a version of a video.\n* $1 is the name of the media\n* $2 is a date\n* $3 is a hour\n* $4 is a URL and must follow square bracket: [$4\n{{Identical|Revert}}",
 	"video-showhidebots": "This is shown on the special page [[Special:NewVideos]]. The format is \"{{int:video-showhidebots|[[MediaWiki:Hide/{{SUBPAGENAME}}|{{int:hide}}]]}}\" or \"{{int:showhidebots|[[MediaWiki:Show/{{SUBPAGENAME}}|{{int:show}}]]}}\"\n\n{{Identical|$1 bots}}"

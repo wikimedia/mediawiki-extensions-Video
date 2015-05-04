@@ -179,7 +179,7 @@ class NewVideos extends IncludableSpecialPage {
 		$bydate = $this->msg( 'bydate' )->escaped();
 		$lt = $lang->formatNum( min( $shownVideos, $limit ) );
 		if ( $shownav ) {
-			$text = $this->msg( 'imagelisttext', $lt, $bydate )->parse();
+			$text = $this->msg( 'video-newvideos-list-text', $lt, $bydate )->parse();
 			$out->addHTML( $text . "\n" );
 		}
 
@@ -214,7 +214,7 @@ class NewVideos extends IncludableSpecialPage {
 
 		$dateLink = Linker::linkKnown(
 			$titleObj,
-			htmlspecialchars( $this->msg( 'sp-newimages-showfrom', $date, $time )->escaped() ),
+			htmlspecialchars( $this->msg( 'video-newvideos-showfrom', $date, $time )->escaped() ),
 			array(),
 			$query
 		);

@@ -6,10 +6,6 @@
  * @ingroup Extensions
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) {
-	die( 1 );
-}
-
 $wgHooks['ParserFirstCallInit'][] = 'wfVideoGallery';
 
 function wfVideoGallery( &$parser ) {

@@ -7,10 +7,6 @@
  * @ingroup Extensions
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) {
-	die( "This is not a valid entry point.\n" );
-}
-
 $wgHooks['ParserFirstCallInit'][] = 'wfVideoGalleryPopulate';
 
 function wfVideoGalleryPopulate( $parser ) {

@@ -114,9 +114,9 @@ class AddVideo extends SpecialPage {
 	 * Just checks that it's a valid title name and that it doesn't already
 	 * exist (unless it's an overwrite)
 	 *
-	 * @param $value Array
-	 * @param $allData Array
-	 * @return bool|String
+	 * @param string $value User-supplied video name passed to Video::newFromName()
+	 * @param array $allData Unused
+	 * @return bool|string Error message on failure, bool true on success
 	 */
 	public function validateTitleField( $value, $allData ) {
 		$video = Video::newFromName( $value, $this->getContext() );
@@ -175,7 +175,7 @@ class AddVideo extends SpecialPage {
 			),
 			'Watch' => array(
 				'type' => 'check',
-				'label-message' => 'watchthisupload',
+				'label-message' => 'video-addvideo-watchlist',
 				'default' => $this->getUser()->getOption( 'watchdefault' ),
 			),
 		);

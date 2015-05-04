@@ -7,20 +7,15 @@
  * @author David Pean <david.pean@gmail.com> - original code/ideas
  * @author Jack Phoenix <jack@countervandalism.net>
  * @copyright Copyright © 2007 David Pean, Wikia Inc.
- * @copyright Copyright © 2008-2014 Jack Phoenix
+ * @copyright Copyright © 2008-2015 Jack Phoenix
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  * @link https://www.mediawiki.org/wiki/Extension:Video Documentation
  */
 
-// Bail out if we're not inside MediaWiki
-if ( !defined( 'MEDIAWIKI' ) ) {
-	die( "This is not a valid entry point.\n" );
-}
-
 // Extension credits that show up on Special:Version
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Video',
-	'version' => '1.5.0',
+	'version' => '1.5.1',
 	'author' => array( 'David Pean', 'Jack Phoenix', 'John Du Hart' ),
 	'description' => 'Allows new Video namespace for embeddable media on supported sites',
 	'url' => 'https://www.mediawiki.org/wiki/Extension:Video',
@@ -98,6 +93,10 @@ $wgAutoloadClasses['NewVideos'] = __DIR__ . '/SpecialNewVideos.php';
 $wgSpecialPages['AddVideo'] = 'AddVideo';
 $wgSpecialPages['NewVideos'] = 'NewVideos';
 
+// ...and overriding one core special page (this is so nasty)
+$wgAutoloadClasses['SpecialUndeleteWithVideoSupport'] = __DIR__ . '/SpecialUndeleteWithVideoSupport.php';
+$wgSpecialPages['Undelete'] = 'SpecialUndeleteWithVideoSupport';
+
 // Hook things up
 $wgAutoloadClasses['VideoHooks'] = __DIR__ . '/VideoHooks.php';
 
@@ -114,7 +113,4 @@ $wgHooks['RenameUserSQL'][] = 'VideoHooks::onUserRename'; // For the Renameuser 
 $wgHooks['CanonicalNamespaces'][] = 'VideoHooks::onCanonicalNamespaces';
 
 // Set up logging
-$wgLogTypes[] = 'video';
-$wgLogNames['video'] = 'video-log-page';
-$wgLogHeaders['video'] = 'video-log-page-text';
-$wgLogActions['video/video'] = 'video-log-entry';
+$wgLogActionsHandlers['video/*'] = 'LogFormatter';

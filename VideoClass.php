@@ -159,10 +159,8 @@ class Video {
 
 		$now = $dbw->timestamp();
 
-		$desc = wfMessage(
-			'video-log-added-entry',
-			Title::makeTitle( NS_VIDEO, $this->getName() )->getPrefixedText()
-		)->inContentLanguage()->text();
+		$logAction = 'add';
+
 		// Test to see if the row exists using INSERT IGNORE
 		// This avoids race conditions by locking the row until the commit, and also
 		// doesn't deadlock. SELECT FOR UPDATE causes a deadlock for every race condition.
@@ -183,10 +181,7 @@ class Video {
 		$categoryWikiText = '';
 
 		if ( $dbw->affectedRows() == 0 ) {
-			$desc = wfMessage(
-				'video-log-updated-entry',
-				Title::makeTitle( NS_VIDEO, $this->getName() )->getPrefixedText()
-			)->inContentLanguage()->text();
+			$logAction = 'update';
 
 			// Clear cache
 			global $wgMemc;
@@ -214,7 +209,7 @@ class Video {
 			$dbw->update(
 				'video',
 				array( /* SET */
-					'video_url'=> $url,
+					'video_url' => $url,
 					'video_type' => $type,
 					'video_user_id' => $user->getID(),
 					'video_user_name' => $user->getName(),
@@ -240,7 +235,7 @@ class Video {
 			$categories = $videoCategoryName;
 		}
 
-		// Loop through category variable and individually build Category Tab for Wiki text
+		// Loop through category variable and individually build category tag for wiki text
 		if ( $categories ) {
 			$categories_array = explode( '|', $categories );
 			foreach ( $categories_array as $ctg ) {
@@ -262,7 +257,7 @@ class Video {
 		} else {
 			// New video; create the description page.
 			// Supress the recent changes bc it will appear in the log/video
-			$article->doEdit( $categoryWikiText, $desc, EDIT_SUPPRESS_RC );
+			$article->doEdit( $categoryWikiText, '', EDIT_SUPPRESS_RC );
 		}
 
 		if ( $watch ) {
@@ -270,8 +265,11 @@ class Video {
 		}
 
 		// Add the log entry
-		$log = new LogPage( 'video' );
-		$log->addEntry( 'video', $descTitle, $desc );
+		$logEntry = new ManualLogEntry( 'video', $logAction );
+		$logEntry->setPerformer( $user );
+		$logEntry->setTarget( $descTitle );
+		$logId = $logEntry->insert();
+		$logEntry->publish( $logId );
 
 		// Commit the transaction now, in case something goes wrong later
 		// The most important thing is that videos don't get lost, especially archives

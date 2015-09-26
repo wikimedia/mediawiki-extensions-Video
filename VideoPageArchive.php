@@ -26,8 +26,7 @@ class VideoPageArchive extends PageArchive {
 			__METHOD__,
 			array( 'ORDER BY' => 'ov_timestamp DESC' )
 		);
-		$ret = $dbr->resultObject( $res );
-		return $ret;
+		return $res;
 	}
 
 	/**

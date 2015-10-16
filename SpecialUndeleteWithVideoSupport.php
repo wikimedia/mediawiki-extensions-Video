@@ -97,7 +97,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 	 * @param User $user
 	 * @return bool
 	 */
-	private function isAllowed( $permission, User $user = null ) {
+	function isAllowed( $permission, User $user = null ) {
 		$user = $user ? : $this->getUser();
 		if ( $this->mTargetObj !== null ) {
 			return $this->mTargetObj->userCan( $permission, $user );

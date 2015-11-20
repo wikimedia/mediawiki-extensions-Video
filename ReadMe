@@ -24,9 +24,8 @@ The '''Video Namespace''' extension requires MediaWiki 1.24.1 or greater.
 Installing the Video extension is very easy if you have shell (SSH) access to
 your server.
 
-You should add the require_once() line below into the wiki's
-LocalSettings.php and then re-run maintenance/update.php to create the two
-necessary database tables.
+You should add the line below into the wiki's LocalSettings.php and then re-run
+maintenance/update.php to create the two necessary database tables.
 
 If you don't have shell access, you should copy the contents of video.sql and
 paste them into phpMyAdmin's SQL prompt to create the tables.
@@ -34,6 +33,10 @@ paste them into phpMyAdmin's SQL prompt to create the tables.
 Then add the following into your wiki's LocalSettings.php:
 
 require_once "$IP/extensions/Video/Video.php";
+
+Or if you're using MediaWiki 1.25 or newer and Video version 1.5.3 or newer:
+
+wfLoadExtension( 'Video' );
 
 ==4. New Special Pages==
 Video extension introduces two new special pages, Special:AddVideo and Special:NewVideos.

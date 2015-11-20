@@ -15,7 +15,7 @@
 // Extension credits that show up on Special:Version
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Video',
-	'version' => '1.5.2',
+	'version' => '1.5.3',
 	'author' => array( 'David Pean', 'Jack Phoenix', 'John Du Hart' ),
 	'description' => 'Allows new Video namespace for embeddable media on supported sites',
 	'url' => 'https://www.mediawiki.org/wiki/Extension:Video',

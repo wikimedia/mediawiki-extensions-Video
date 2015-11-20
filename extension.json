@@ -1,0 +1,118 @@
+{
+	"name": "Video",
+	"version": "1.5.3",
+	"author": [
+		"David Pean",
+		"Jack Phoenix",
+		"John Du Hart"
+	],
+	"license-name": "GPL-2.0+",
+	"url": "https://www.mediawiki.org/wiki/Extension:Video",
+	"description": "Allows new Video namespace for embeddable media on supported sites",
+	"type": "other",
+	"SpecialPages": {
+		"AddVideo": "AddVideo",
+		"NewVideos": "NewVideos",
+		"Undelete": "SpecialUndeleteWithVideoSupport"
+	},
+	"MessagesDirs": {
+		"Video": [
+			"i18n"
+		]
+	},
+	"ExtensionMessagesFiles": {
+		"VideoAlias": "Video.alias.php",
+		"VideoNamespaces": "Video.namespaces.php"
+	},
+	"AutoloadClasses": {
+		"Video": "VideoClass.php",
+		"BlipTVVideoProvider": "providers/BlipTVVideo.php",
+		"DailyMotionVideoProvider": "providers/DailyMotionVideo.php",
+		"BaseVideoProvider": "providers/BaseVideoProvider.php",
+		"GametrailersVideoProvider": "providers/GametrailersVideo.php",
+		"GoogleVideoProvider": "providers/GoogleVideo.php",
+		"HuluVideoProvider": "providers/HuluVideo.php",
+		"MetaCafeVideoProvider": "providers/MetaCafeVideo.php",
+		"MovieClipsVideoProvider": "providers/MovieClipsVideo.php",
+		"MTVNetworksVideoProvider": "providers/MTVNetworksVideo.php",
+		"MyVideoVideoProvider": "providers/MyVideoVideo.php",
+		"SevenloadVideoProvider": "providers/SevenloadVideo.php",
+		"SouthParkStudiosVideoProvider": "providers/SouthParkStudiosVideo.php",
+		"ViddlerVideoProvider": "providers/ViddlerVideo.php",
+		"VimeoVideoProvider": "providers/VimeoVideo.php",
+		"WeGameVideoProvider": "providers/WeGameVideo.php",
+		"YouTubeVideoProvider": "providers/YouTubeVideo.php",
+		"VideoPage": "VideoPage.php",
+		"WikiVideoPage": "WikiVideoPage.php",
+		"RevertVideoAction": "RevertVideoAction.php",
+		"VideoHistoryList": "VideoPage.php",
+		"CategoryWithVideoViewer": "VideoPage.php",
+		"VideoGallery": "VideoGallery.php",
+		"VideoPageArchive": "VideoPageArchive.php",
+		"ArchivedVideo": "ArchivedVideo.php",
+		"AddVideo": "SpecialAddVideo.php",
+		"NewVideos": "SpecialNewVideos.php",
+		"SpecialUndeleteWithVideoSupport": "SpecialUndeleteWithVideoSupport.php",
+		"VideoHooks": "VideoHooks.php"
+	},
+	"Hooks": {
+		"ArticleFromTitle": [
+			"VideoHooks::videoFromTitle"
+		],
+		"CategoryPageView": [
+			"VideoHooks::categoryPageWithVideo"
+		],
+		"ParserBeforeStrip": [
+			"VideoHooks::videoTag"
+		],
+		"ParserFirstCallInit": [
+			"VideoHooks::registerVideoHook"
+		],
+		"ArticleDelete": [
+			"VideoHooks::onVideoDelete"
+		],
+		"UndeleteForm::showRevision": [
+			"VideoHooks::specialUndeleteSwitchArchive"
+		],
+		"UndeleteForm::showHistory": [
+			"VideoHooks::specialUndeleteSwitchArchive"
+		],
+		"UndeleteForm::undelete": [
+			"VideoHooks::specialUndeleteSwitchArchive"
+		],
+		"LoadExtensionSchemaUpdates": [
+			"VideoHooks::addTables"
+		],
+		"RenameUserSQL": [
+			"VideoHooks::onUserRename"
+		],
+		"CanonicalNamespaces": [
+			"VideoHooks::onCanonicalNamespaces"
+		]
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "",
+		"remoteExtPath": "Video"
+	},
+	"ResourceModules": {
+		"ext.video": {
+			"styles": "Video.css",
+			"position": "top"
+		}
+	},
+	"LogActionsHandlers": {
+		"video/*": "LogFormatter"
+	},
+	"AvailableRights": [
+		"addvideo"
+	],
+	"GroupPermissions": {
+		"*": {
+			"addvideo": false
+		},
+		"user": {
+			"addvideo": true
+		}
+	},
+	"manifest_version": 1
+}

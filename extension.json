@@ -20,6 +20,19 @@
 			"i18n"
 		]
 	},
+	"namespaces": [
+		{
+			"id": 400,
+			"constant": "NS_VIDEO",
+			"name": "Video",
+			"protection": "addvideo"
+		},
+		{
+			"id": 401,
+			"constant": "NS_VIDEO_TALK",
+			"name": "Video_talk"
+		}
+	],
 	"ExtensionMessagesFiles": {
 		"VideoAlias": "Video.alias.php",
 		"VideoNamespaces": "Video.namespaces.php"

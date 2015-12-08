@@ -222,7 +222,7 @@ class VideoHooks {
 			// with some modifications
 			$archiveName = gmdate( 'YmdHis' ) . "!{$videoName}";
 			if ( !empty( $videoName ) ) {
-				$dbw->begin();
+				$dbw->startAtomic( __METHOD__ );
 				$dbw->insertSelect(
 					'oldvideo',
 					'video',
@@ -246,7 +246,7 @@ class VideoHooks {
 					__METHOD__
 				);
 
-				$dbw->commit();
+				$dbw->endAtomic( __METHOD__ );
 			}
 
 			// Purge caches

@@ -38,7 +38,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 		$this->mTargetObj = null;
 
 		if ( $this->mTarget !== null && $this->mTarget !== '' ) {
-			$this->mTargetObj = Title::newFromURL( urldecode( $this->mTarget ) ); // CORE HACK: added urldecode() here
+			$this->mTargetObj = Title::newFromText( urldecode( $this->mTarget ) ); // CORE HACK: added urldecode() here
 		}
 
 		$this->mSearchPrefix = $request->getText( 'prefix' );

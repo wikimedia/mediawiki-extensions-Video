@@ -104,7 +104,7 @@ class NewVideos extends IncludableSpecialPage {
 		$where = array();
 		$searchpar = array();
 		if ( $wpIlMatch != '' ) {
-			$nt = Title::newFromUrl( $wpIlMatch );
+			$nt = Title::newFromText( $wpIlMatch );
 			if ( $nt ) {
 				$where[] = 'LCASE(video_name)' . $dbr->buildLike(
 					$dbr->anyString(), strtolower( $nt->getDBkey() ), $dbr->anyString() );

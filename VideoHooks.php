@@ -146,6 +146,10 @@ class VideoHooks {
 		$output = '';
 		$video = Video::newFromName( $video_name, RequestContext::getMain() );
 		if ( $video->exists() ) {
+			// If there's such a video, register an internal link
+			// so that Special:WhatLinksHere works as intended.
+			$parser->getOutput()->addLink( $video->getTitle() );
+
 			$video->setWidth( $width );
 			$video->setHeight( $height );
 
@@ -321,3 +325,4 @@ class VideoHooks {
 		return true;
 	}
 }
+

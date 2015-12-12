@@ -49,6 +49,9 @@ class VideoPage extends Article {
 			$out->addHTML( $this->getEmbedThisTag() );
 
 			$this->videoHistory();
+
+			$out->addWikiText( '== ' . $ctx->msg( 'video-links' )->escaped() . " ==\n" );
+			$this->videoLinks();
 		} else {
 			// Video doesn't exist, so give a link allowing user to add one with this name
 			$title = SpecialPage::getTitleFor( 'AddVideo' );
@@ -60,20 +63,14 @@ class VideoPage extends Article {
 			);
 			$out->addHTML( $ctx->msg( 'video-novideo', $link )->text() );
 
-			//$wgOut->addHTML( $videoLinksHTML );
-			//$this->videoLinks();
+			$out->addWikiText( '== ' . $ctx->msg( 'video-links' )->escaped() . " ==\n" );
+			$this->videoLinks();
 			$this->mPage->doViewUpdates( $ctx->getUser() );
 		}
 	}
 
 	/**
 	 * Display pages linking to that video on the video page.
-	 *
-	 * @todo FIXME: this does not work at the moment; there are no NS_VIDEO
-	 *              entries in the pagelinks table. I think it is because the
-	 *              [[Video:Foo]] links are not links per se, but they just
-	 *              look like links to the end-user; to MediaWiki, they are
-	 *              parser hooks, like <video name="Foo" />...how to fix this?
 	 */
 	function videoLinks() {
 		$out = $this->getContext()->getOutput();

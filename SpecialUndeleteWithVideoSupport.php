@@ -185,7 +185,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 		}
 	}
 
-	private function showHistory() {
+	function showHistory() {
 		$out = $this->getOutput();
 		if ( $this->mAllowed ) {
 			$out->addModules( 'mediawiki.special.undelete' );
@@ -468,7 +468,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 		return $link;
 	}
 
-	private function formatRevisionRow( $row, $earliestLiveTime, $remaining ) {
+	function formatRevisionRow( $row, $earliestLiveTime, $remaining ) {
 		$rev = Revision::newFromArchiveRow( $row,
 			array(
 				'title' => $this->mTargetObj

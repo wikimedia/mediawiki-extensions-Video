@@ -273,7 +273,7 @@ class Video {
 
 		// Commit the transaction now, in case something goes wrong later
 		// The most important thing is that videos don't get lost, especially archives
-		$dbw->commit();
+		$dbw->commit( __METHOD__ );
 	}
 
 	/**

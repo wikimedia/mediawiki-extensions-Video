@@ -24,6 +24,10 @@ class RevertVideoAction extends FormAction {
 		return 'revert';
 	}
 
+	public function doesWrites() {
+		return true;
+	}
+
 	/**
 	 * Get the permission required to perform this action.  Often, but not always,
 	 * the same as the action name

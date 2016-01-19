@@ -22,6 +22,10 @@ class AddVideo extends SpecialPage {
 		parent::__construct( 'AddVideo' /*class*/, 'addvideo' /*restriction*/);
 	}
 
+	public function doesWrites() {
+		return true;
+	}
+
 	/**
 	 * Group this special page under the correct header in Special:SpecialPages.
 	 *

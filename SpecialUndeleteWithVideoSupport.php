@@ -537,7 +537,11 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 
 		// Tags
 		$attribs = array();
-		list( $tagSummary, $classes ) = ChangeTags::formatSummaryRow( $row->ts_tags, 'deletedhistory' );
+		list( $tagSummary, $classes ) = ChangeTags::formatSummaryRow(
+			$row->ts_tags,
+			'deletedhistory',
+			$this->getContext()
+		);
 		if ( $classes ) {
 			$attribs['class'] = implode( ' ', $classes );
 		}

@@ -284,7 +284,6 @@ class Video {
 	private function loadFromCache() {
 		global $wgMemc;
 
-		wfProfileIn( __METHOD__ );
 		$this->dataLoaded = false;
 
 		$key = $this->getCacheKey();
@@ -307,7 +306,6 @@ class Video {
 			wfIncrStats( 'video_cache_miss' );
 		}
 
-		wfProfileOut( __METHOD__ );
 		return $this->dataLoaded;
 	}
 
@@ -348,8 +346,6 @@ class Video {
 	 * Load video from the database
 	 */
 	function loadFromDB() {
-		wfProfileIn( __METHOD__ );
-
 		$dbr = wfGetDB( DB_MASTER );
 
 		$row = $dbr->selectRow(
@@ -373,7 +369,6 @@ class Video {
 
 		# Unconditionally set loaded=true, we don't want the accessors constantly rechecking
 		$this->dataLoaded = true;
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**

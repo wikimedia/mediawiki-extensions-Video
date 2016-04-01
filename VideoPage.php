@@ -309,7 +309,6 @@ class CategoryWithVideoViewer extends CategoryViewer {
 	 */
 	function getHTML() {
 		global $wgOut, $wgCategoryMagicGallery;
-		wfProfileIn( __METHOD__ );
 
 		$this->showGallery = $wgCategoryMagicGallery && !$wgOut->mNoGallery;
 
@@ -324,7 +323,6 @@ class CategoryWithVideoViewer extends CategoryViewer {
 			$this->getVideoSection() .
 			$this->getCategoryBottom();
 
-		wfProfileOut( __METHOD__ );
 		return $r;
 	}
 

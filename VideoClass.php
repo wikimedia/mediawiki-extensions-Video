@@ -69,6 +69,11 @@ class Video {
 	public $dataLoaded;
 
 	/**
+	 * @var Integer: history pointer, see nextHistoryLine() for details
+	 */
+	public $historyLine;
+
+	/**
 	 * @var IContextSource
 	 */
 	protected $context;

@@ -546,13 +546,9 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 			$attribs['class'] = implode( ' ', $classes );
 		}
 
-		// Revision delete links
-		$revdlink = Linker::getRevDeleteLink( $user, $rev, $this->mTargetObj );
-
-		$revisionRow = $this->msg( 'undelete-revision-row' )
+		$revisionRow = $this->msg( 'undelete-revision-row2' )
 			->rawParams(
 				$checkBox,
-				$revdlink,
 				$last,
 				$pageLink,
 				$userLink,

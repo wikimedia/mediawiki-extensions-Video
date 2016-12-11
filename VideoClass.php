@@ -228,7 +228,7 @@ class Video {
 		}
 
 		$descTitle = $this->getTitle();
-		$article = new Article( $descTitle );
+		$page = WikiPage::factory( $descTitle );
 		$watch = $watch || $user->isWatched( $descTitle );
 
 		// Get the localized category name
@@ -262,7 +262,11 @@ class Video {
 		} else {
 			// New video; create the description page.
 			// Supress the recent changes bc it will appear in the log/video
-			$article->doEdit( $categoryWikiText, '', EDIT_SUPPRESS_RC );
+			$page->doEditContent(
+				ContentHandler::makeContent( $categoryWikiText, $page->getTitle() ),
+				'',
+				EDIT_SUPPRESS_RC
+			);
 		}
 
 		if ( $watch ) {

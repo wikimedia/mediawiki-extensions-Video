@@ -465,20 +465,32 @@ class Video {
 	 */
 	public static function getURLfromEmbedCode( $code ) {
 		preg_match(
-			"/embed .*src=(\"([^<\"].*?)\"|\'([^<\"].*?)\'|[^<\"].*?)(.*flashvars=(\"([^<\"].*?)\"|\'([^<\"].*?)\'|[^<\"].*?\s))?/i",
+			// iframe for YouTube support. Who uses <embed> these days anyway?
+			// It's 2016, get on with the times!
+			"/(embed .*src=(\"([^<\"].*?)\"|\'([^<\"].*?)\'|[^<\"].*?)(.*flashvars=(\"([^<\"].*?)\"|\'([^<\"].*?)\'|[^<\"].*?\s))?|iframe .*src=(\"([^<\"].*?)\"|\'([^<\"].*?)\'|[^<\"].*?))/i",
 			$code,
 			$matches
 		);
 
 		$embedCode = '';
-		if ( isset( $matches[2] ) ) {
+		if ( isset( $matches[2] ) && !empty( $matches[2] ) ) {
 			$embedCode = $matches[2];
+		} elseif ( isset( $matches[10] ) && !empty( $matches[10] ) ) {
+			// New (as of 2016) YouTube <iframe>-based embed code
+			// The string YT offers to the user is like this:
+			// <iframe width="560" height="315" src="https://www.youtube.com/embed/cBOE1aUNZVo" frameborder="0" allowfullscreen></iframe>
+			// $matches[0] and $matches[1] contain a meaningless HTML fragment
+			// (iframe and the width, height and src attributes and their values),
+			// array indexes from 2 to 8 are empty, 9 contains the URL with
+			// "double quotes" and 10 finally contains what we want, i.e. just
+			// the plain video URL and nothing else
+			$embedCode = $matches[10];
 		}
 
 		// Some providers (such as MySpace) have flashvars='' in the embed
 		// code, and the base URL in the src='' so we need to grab the
 		// flashvars and append it to get the real URL
-		if ( isset( $matches[6] ) ) {
+		if ( isset( $matches[6] ) && !empty( $matches[6] ) ) {
 			$flash_vars = $matches[6];
 			if ( strpos( '?', $flash_vars ) !== false ) {
 				$embedCode .= '&';

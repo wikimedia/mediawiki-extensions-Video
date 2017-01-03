@@ -130,11 +130,6 @@ class VideoPage extends Article {
 		}
 	}
 
-	/** @todo FIXME: is this needed? If not, remove! */
-	function getContent() {
-		return Article::getContent();
-	}
-
 	/**
 	 * Get the HTML table that contains the code for embedding the current
 	 * video on a wiki page.

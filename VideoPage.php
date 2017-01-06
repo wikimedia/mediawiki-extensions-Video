@@ -265,9 +265,9 @@ class VideoHistoryList {
 		$userlink = Linker::userLink( $user_id, $user_name ) .
 			Linker::userToolLinks( $user_id, $user_name );
 
-		$style = Linker::getInternalLinkAttributes( $url, $datetime );
+		$style = htmlspecialchars( strtr( urldecode( $url ), '_', ' ') );
 
-		$s = "<li>({$rlink}) <a href=\"{$url}\"{$style}>{$datetime}</a> . . ({$type}) . . {$userlink}";
+		$s = "<li>({$rlink}) <a href=\"{$url}\" title=\"{$style}\">{$datetime}</a> . . ({$type}) . . {$userlink}";
 
 		$s .= Linker::commentBlock( /*$description*/'', $title );
 		$s .= "</li>\n";

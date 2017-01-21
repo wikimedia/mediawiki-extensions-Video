@@ -6,28 +6,28 @@
  * @ingroup Extensions
  */
 
-$aliases = array();
+$specialPageAliases = array();
 
 /** English */
-$aliases['en'] = array(
+$specialPageAliases['en'] = array(
 	'AddVideo' => array( 'AddVideo' ),
 	'NewVideos' => array( 'NewVideos' ),
 );
 
 /** Finnish (Suomi) */
-$aliases['fi'] = array(
+$specialPageAliases['fi'] = array(
 	'AddVideo' => array( 'Lisää video' ),
 	'NewVideos' => array( 'Uudet videot' ),
 );
 
 /** French (Français) */
-$aliases['fr'] = array(
+$specialPageAliases['fr'] = array(
 	'AddVideo' => array( 'Ajouter vidéo', 'Ajouter video', 'AjouterVidéo', 'AjouterVideo' ),
 	'NewVideos' => array( 'Nouvelles vidéos', 'Nouvelles videos', 'NouvellesVidéos', 'NouvellesVideos' ),
 );
 
 /** Dutch (Nederlands) */
-$aliases['nl'] = array(
+$specialPageAliases['nl'] = array(
 	'AddVideo' => array( 'VideoToevoegen', 'Video toevoegen' ),
 	'NewVideos' => array( "NieuweVideos", "NieuweVideo's", 'NieuweVideo’s', "Nieuwe video's", 'Nieuwe video’s' ),
 );

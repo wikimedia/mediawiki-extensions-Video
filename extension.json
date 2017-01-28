@@ -8,7 +8,7 @@
 	],
 	"license-name": "GPL-2.0+",
 	"url": "https://www.mediawiki.org/wiki/Extension:Video",
-	"description": "Allows new Video namespace for embeddable media on supported sites",
+	"descriptionmsg": "video-desc",
 	"type": "other",
 	"SpecialPages": {
 		"AddVideo": "AddVideo",

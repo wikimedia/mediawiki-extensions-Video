@@ -4,6 +4,7 @@
             "John Du Hart <john@compwhizii.net>"
         ]
     },
+    "video-desc": "{{desc|name=Video|url=https://www.mediawiki.org/wiki/Extension:Video}}",
 	"video-upload-new-version": "Like [[MediaWiki:Uploadnewversion-linktext]], but \"file\" changed to \"video\".",
 	"video-newvideos-showfrom": "Like [[MediaWiki:Sp-newimages-showfrom]], but \"file\" changed to \"video\".",
 	"video-newvideos-list-text": "Like [[MediaWiki:Imagelisttext]], but \"file\" changed to \"video\".",

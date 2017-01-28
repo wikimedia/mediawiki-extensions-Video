@@ -4,6 +4,7 @@
 			"David Pean <david.pean@gmail.com>"
 		]
 	},
+	"video-desc": "Allows new Video namespace for embeddable media on supported sites",
 	"addvideo": "Add video",
 	"newvideos": "New videos",
 	"video-upload-new-version": "Upload a new version of this video",

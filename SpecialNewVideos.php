@@ -106,7 +106,9 @@ class NewVideos extends IncludableSpecialPage {
 		if ( $wpIlMatch != '' ) {
 			$nt = Title::newFromText( $wpIlMatch );
 			if ( $nt ) {
-				$where[] = 'LCASE(video_name)' . $dbr->buildLike(
+				// LOWER() & friends don't work as-is on varbinary fields
+				// @see https://phabricator.wikimedia.org/T157197
+				$where[] = 'LOWER(CONVERT(video_name USING utf8))' . $dbr->buildLike(
 					$dbr->anyString(), strtolower( $nt->getDBkey() ), $dbr->anyString() );
 				$searchpar['wpIlMatch'] = $wpIlMatch;
 			}

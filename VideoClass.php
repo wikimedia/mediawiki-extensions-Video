@@ -84,22 +84,14 @@ class Video {
 	 * @var array
 	 */
 	static $providers = array(
-		//'archiveorg' => 'ArchiveOrgVideoProvider', // broken/dont know how this works
 		'bliptv' => 'BlipTVVideoProvider',
 		'dailymotion' => 'DailyMotionVideoProvider',
 		'gametrailers' => 'GametrailersVideoProvider',
-		//'gamevideos' => 'GamevideosVideoProvider', // broken
-		//'gogreentube' => 'GoGreenTubeVideoProvider', // Down
 		'google' => 'GoogleVideoProvider',
 		'hulu' => 'HuluVideoProvider',
 		'metacafe' => 'MetaCafeVideoProvider',
 		'movieclips' => 'MovieClipsVideoProvider',
-		// I'd rather not wade through the shit that is MySpace to figure out
-		// how videos work, someone else can do that..
-		//'myspace' => 'MySpaceVideoProvider',
 		'myvideo' => 'MyVideoVideoProvider',
-		//'thenewsroom' => 'NewsRoomVideoProvider', // Website sucks too much
-		'sevenload' => 'SevenloadVideoProvider',
 		'southparkstudios' => 'SouthParkStudiosVideoProvider',
 		'youtube' => 'YouTubeVideoProvider',
 		'viddler' => 'ViddlerVideoProvider',

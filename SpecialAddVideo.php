@@ -44,15 +44,10 @@ class AddVideo extends SpecialPage {
 		$out = $this->getOutput();
 
 		// If the user doesn't have the required 'addvideo' permission, display an error
-		if ( !$this->userCanExecute( $this->getUser() ) ) {
-			$this->displayRestrictionError();
-			return;
-		}
+		$this->checkPermissions();
 
 		// Show a message if the database is in read-only mode
-		if ( wfReadOnly() ) {
-			throw new ReadOnlyError;
-		}
+		$this->checkReadOnly();
 
 		// If user is blocked, s/he doesn't need to access this page
 		if ( $this->getUser()->isBlocked() ) {

@@ -1,6 +1,6 @@
 {
 	"name": "Video",
-	"version": "1.5.7",
+	"version": "1.6.0",
 	"author": [
 		"David Pean",
 		"Jack Phoenix",
@@ -34,38 +34,40 @@
 		}
 	],
 	"ExtensionMessagesFiles": {
-		"VideoAlias": "Video.alias.php",
-		"VideoNamespaces": "Video.namespaces.php"
+		"VideoAlias": "includes/Video.alias.php",
+		"VideoNamespaces": "includes/Video.namespaces.php"
 	},
 	"AutoloadClasses": {
-		"Video": "VideoClass.php",
-		"BlipTVVideoProvider": "providers/BlipTVVideo.php",
-		"DailyMotionVideoProvider": "providers/DailyMotionVideo.php",
-		"BaseVideoProvider": "providers/BaseVideoProvider.php",
-		"GametrailersVideoProvider": "providers/GametrailersVideo.php",
-		"GoogleVideoProvider": "providers/GoogleVideo.php",
-		"HuluVideoProvider": "providers/HuluVideo.php",
-		"MetaCafeVideoProvider": "providers/MetaCafeVideo.php",
-		"MovieClipsVideoProvider": "providers/MovieClipsVideo.php",
-		"MTVNetworksVideoProvider": "providers/MTVNetworksVideo.php",
-		"MyVideoVideoProvider": "providers/MyVideoVideo.php",
-		"SouthParkStudiosVideoProvider": "providers/SouthParkStudiosVideo.php",
-		"ViddlerVideoProvider": "providers/ViddlerVideo.php",
-		"VimeoVideoProvider": "providers/VimeoVideo.php",
-		"WeGameVideoProvider": "providers/WeGameVideo.php",
-		"YouTubeVideoProvider": "providers/YouTubeVideo.php",
-		"VideoPage": "VideoPage.php",
-		"WikiVideoPage": "WikiVideoPage.php",
-		"RevertVideoAction": "RevertVideoAction.php",
-		"VideoHistoryList": "VideoPage.php",
-		"CategoryWithVideoViewer": "VideoPage.php",
-		"VideoGallery": "VideoGallery.php",
-		"VideoPageArchive": "VideoPageArchive.php",
-		"ArchivedVideo": "ArchivedVideo.php",
-		"AddVideo": "SpecialAddVideo.php",
-		"NewVideos": "SpecialNewVideos.php",
-		"SpecialUndeleteWithVideoSupport": "SpecialUndeleteWithVideoSupport.php",
-		"VideoHooks": "VideoHooks.php"
+		"Video": "includes/Video.php",
+		"BlipTVVideoProvider": "includes/providers/BlipTVVideo.php",
+		"DailyMotionVideoProvider": "includes/providers/DailyMotionVideo.php",
+		"BaseVideoProvider": "includes/providers/BaseVideoProvider.php",
+		"GametrailersVideoProvider": "includes/providers/GametrailersVideo.php",
+		"GoogleVideoProvider": "includes/providers/GoogleVideo.php",
+		"HuluVideoProvider": "includes/providers/HuluVideo.php",
+		"MetaCafeVideoProvider": "includes/providers/MetaCafeVideo.php",
+		"MovieClipsVideoProvider": "includes/providers/MovieClipsVideo.php",
+		"MTVNetworksVideoProvider": "includes/providers/MTVNetworksVideo.php",
+		"MyVideoVideoProvider": "includes/providers/MyVideoVideo.php",
+		"SouthParkStudiosVideoProvider": "includes/providers/SouthParkStudiosVideo.php",
+		"ViddlerVideoProvider": "includes/providers/ViddlerVideo.php",
+		"VimeoVideoProvider": "includes/providers/VimeoVideo.php",
+		"WeGameVideoProvider": "includes/providers/WeGameVideo.php",
+		"YouTubeVideoProvider": "includes/providers/YouTubeVideo.php",
+		"VideoPage": "includes/VideoPage.php",
+		"WikiVideoPage": "includes/WikiVideoPage.php",
+		"RevertVideoAction": "includes/RevertVideoAction.php",
+		"VideoHistoryList": "includes/VideoHistoryList.php",
+		"CategoryWithVideoViewer": "includes/CategoryWithVideoViewer.php",
+		"VideoGallery": "includes/VideoGallery.php",
+		"VideoGalleryHooks": "includes/parser/VideoGallery.hooks.php",
+		"VideoGalleryPopulateHooks": "includes/parser/VideoGalleryPopulate.hooks.php",
+		"VideoPageArchive": "includes/VideoPageArchive.php",
+		"ArchivedVideo": "includes/ArchivedVideo.php",
+		"AddVideo": "includes/specials/SpecialAddVideo.php",
+		"NewVideos": "includes/specials/SpecialNewVideos.php",
+		"SpecialUndeleteWithVideoSupport": "includes/specials/SpecialUndeleteWithVideoSupport.php",
+		"VideoHooks": "includes/Video.hooks.php"
 	},
 	"Hooks": {
 		"ArticleFromTitle": [
@@ -78,7 +80,9 @@
 			"VideoHooks::videoTag"
 		],
 		"ParserFirstCallInit": [
-			"VideoHooks::registerVideoHook"
+			"VideoHooks::onParserFirstCallInit",
+			"VideoGalleryHooks::onParserFirstCallInit",
+			"VideoGalleryPopulateHooks::onParserFirstCallInit"
 		],
 		"ArticleDelete": [
 			"VideoHooks::onVideoDelete"
@@ -108,7 +112,7 @@
 	},
 	"ResourceModules": {
 		"ext.video": {
-			"styles": "Video.css",
+			"styles": "resources/css/Video.css",
 			"position": "top"
 		}
 	},

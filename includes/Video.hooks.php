@@ -104,7 +104,7 @@ class VideoHooks {
 	 * @param Parser $parser
 	 * @return bool
 	 */
-	public static function registerVideoHook( &$parser ) {
+	public static function onParserFirstCallInit( &$parser ) {
 		$parser->setHook( 'video', 'VideoHooks::videoEmbed' );
 		return true;
 	}
@@ -294,7 +294,7 @@ class VideoHooks {
 	 */
 	public static function addTables( $updater ) {
 		$dir = __DIR__;
-		$file = "$dir/video.sql";
+		$file = "$dir/../sql/video.sql";
 		$updater->addExtensionUpdate( array( 'addTable', 'video', $file, true ) );
 		$updater->addExtensionUpdate( array( 'addTable', 'oldvideo', $file, true ) );
 		return true;
@@ -325,4 +325,3 @@ class VideoHooks {
 		return true;
 	}
 }
-

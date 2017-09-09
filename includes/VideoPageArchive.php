@@ -15,7 +15,7 @@ class VideoPageArchive extends PageArchive {
 	 * @return ResultWrapper
 	 */
 	function listFiles() {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$res = $dbr->select(
 			'oldvideo',
 			array(

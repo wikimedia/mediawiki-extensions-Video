@@ -40,7 +40,7 @@ class NewVideos extends IncludableSpecialPage {
 		$out->setPageTitle( $this->msg( 'newvideos' ) );
 
 		$wpIlMatch = $request->getText( 'wpIlMatch' );
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$shownav = !$this->including();
 		$hidebots = $request->getBool( 'hidebots', 1 );
 

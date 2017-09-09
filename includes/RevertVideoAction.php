@@ -44,7 +44,7 @@ class RevertVideoAction extends FormAction {
 			throw new ErrorPageError( 'internalerror', 'unexpected', array( 'oldvideo', $oldvideo ) );
 		}
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 		$row = $dbr->selectRow(
 			'oldvideo',
 			array( 'ov_url', 'ov_type', 'ov_timestamp', 'ov_url', 'ov_name' ),

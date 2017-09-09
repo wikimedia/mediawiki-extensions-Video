@@ -77,7 +77,7 @@ class VideoPage extends Article {
 
 		$limit = 100;
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		// WikiaVideo used the imagelinks table here because that extension
 		// adds everything into core (archive, filearchive, imagelinks, etc.)

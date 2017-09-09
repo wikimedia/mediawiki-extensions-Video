@@ -79,7 +79,7 @@ class CategoryWithVideoViewer extends CategoryViewer {
 	}
 
 	function doCategoryQuery() {
-		$dbr = wfGetDB( DB_SLAVE, 'category' );
+		$dbr = wfGetDB( DB_REPLICA, 'category' );
 
 		$this->nextPage = array(
 			'page' => null,

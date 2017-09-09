@@ -184,7 +184,7 @@ class ArchivedVideo extends ArchivedFile {
 
 		if ( !$this->title || $this->title->getNamespace() == NS_VIDEO ) {
 			$this->dataLoaded = true; // set it here, to have also true on miss
-			$dbr = wfGetDB( DB_SLAVE );
+			$dbr = wfGetDB( DB_REPLICA );
 			$row = $dbr->selectRow(
 				'oldvideo',
 				self::selectFields(),

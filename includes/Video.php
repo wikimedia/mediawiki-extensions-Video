@@ -587,7 +587,7 @@ class Video {
 	 *  2, ... return next old version from above query
 	 */
 	public function nextHistoryLine() {
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_REPLICA );
 
 		if ( empty( $this->historyLine ) ) { // called for the first time, return line from cur
 			$this->historyRes = $dbr->select(

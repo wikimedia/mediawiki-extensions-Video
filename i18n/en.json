@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"David Pean <david.pean@gmail.com>"
+			"David Pean <david.pean@gmail.com>",
+			"Mainframe98"
 		]
 	},
 	"video-desc": "Allows new Video namespace for embeddable media on supported sites",
@@ -9,7 +10,7 @@
 	"newvideos": "New videos",
 	"video-upload-new-version": "Upload a new version of this video",
 	"video-newvideos-showfrom": "Show new videos starting from $2, $1",
-	"video-newvideos-list-text": "Below is a list of <strong>$1</strong> {{PLURAL:$1|video|videos}} sorted $2.",
+	"video-newvideos-list-text": "Below is a list of <strong>$1</strong> {{PLURAL:$1|video|videos}}.",
 	"video-addvideo-watchlist": "Add this video to my watchlist",
 	"video-addvideo-title": "Add video",
 	"video-addvideo-dest": "Add video for $1",
@@ -43,5 +44,6 @@
 	"video-more-links-to-video": "View [[Special:WhatLinksHere/$1|more links]] to this video.",
 	"video-showhidebots": "($1 bots)",
 	"action-addvideo": "add videos from external services into the site",
-	"right-addvideo": "Add videos from external services into the site"
+	"right-addvideo": "Add videos from external services into the site",
+	"video-hidebots": "Hide uploads by bots"
 }

@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"John Du Hart <john@compwhizii.net>"
+			"John Du Hart <john@compwhizii.net>",
+			"Mainframe98"
 		]
 	},
 	"video-desc": "{{desc|name=Video|url=https://www.mediawiki.org/wiki/Extension:Video}}",
@@ -43,5 +44,6 @@
 	"video-more-links-to-video": "Used as label to show more results",
 	"video-showhidebots": "This is shown on the special page [[Special:NewVideos]]. The format is \"{{int:video-showhidebots|[[MediaWiki:Hide/{{SUBPAGENAME}}|{{int:hide}}]]}}\" or \"{{int:showhidebots|[[MediaWiki:Show/{{SUBPAGENAME}}|{{int:show}}]]}}\"\n\n{{Identical|$1 bots}}",
 	"action-addvideo": "{{doc-action|addvideo}}",
-	"right-addvideo": "{{doc-right|addvideo}}"
+	"right-addvideo": "{{doc-right|addvideo}}",
+	"video-hidebots": "Used as label for a checkbox. When unchecked, [[Special:NewVideos]] will also display uploads by users in the bots group."
 }

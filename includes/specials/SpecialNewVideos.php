@@ -8,6 +8,8 @@
  */
 
 class NewVideos extends IncludableSpecialPage {
+	/** @var FormOptions */
+	protected $opts;
 
 	/**
 	 * Constructor
@@ -21,7 +23,7 @@ class NewVideos extends IncludableSpecialPage {
 	 *
 	 * @return string
 	 */
-	function getGroupName() {
+	public function getGroupName() {
 		return 'changes';
 	}
 
@@ -31,256 +33,169 @@ class NewVideos extends IncludableSpecialPage {
 	 * @param mixed|null $par Parameter passed to the page or null
 	 */
 	public function execute( $par ) {
-		global $wgGroupPermissions;
+		$context = new DerivativeContext( $this->getContext() );
 
 		$out = $this->getOutput();
-		$request = $this->getRequest();
 		$lang = $this->getLanguage();
 
 		$out->setPageTitle( $this->msg( 'newvideos' ) );
 
-		$wpIlMatch = $request->getText( 'wpIlMatch' );
-		$dbr = wfGetDB( DB_REPLICA );
-		$shownav = !$this->including();
-		$hidebots = $request->getBool( 'hidebots', 1 );
+		$opts = new FormOptions();
 
-		$hidebotsql = '';
-		if ( $hidebots ) {
-			/*
-			 * Make a list of group names which have the 'bot' flag
-			 * set.
-			 */
-			$botconds = array();
-			foreach ( $wgGroupPermissions as $groupname => $perms ) {
-				if ( array_key_exists( 'bot', $perms ) && $perms['bot'] ) {
-					$botconds[] = "ug_group='$groupname'";
-				}
-			}
+		$opts->add( 'wpIlMatch', '' ); // Known as 'like', but uses old name for back-compat
+		$opts->add( 'user', '' );
+		$opts->add( 'hidebots', true );
+		$opts->add( 'newbies', false );
+		$opts->add( 'hidepatrolled', false );
+		$opts->add( 'limit', 48 ); // Back-compat, old value has always been 48
+		$opts->add( 'offset', '' );
+		$opts->add( 'start', '' );
+		$opts->add( 'end', '' );
 
-			/* If not bot groups, do not set $hidebotsql */
-			if ( $botconds ) {
-				$isbotmember = $dbr->makeList( $botconds, LIST_OR );
+		$opts->fetchValuesFromRequest( $this->getRequest() );
 
-				/*
-				 * This join, in conjunction with WHERE ug_group
-				 * IS NULL, returns only those rows from IMAGE
-				 * where the uploading user is not a member of
-				 * a group which has the 'bot' permission set.
-				 */
-				$ug = $dbr->tableName( 'user_groups' );
-				$hidebotsql = " LEFT OUTER JOIN $ug ON video_user_name=ug_user AND ($isbotmember)";
-			}
+		if ( $par !== null ) {
+			$opts->setValue( is_numeric( $par ) ? 'limit' : 'wpIlMatch', $par );
 		}
 
-		$video = $dbr->tableName( 'video' );
+		$data = [ 'hidebots' => 1 ];
 
-		$sql = "SELECT video_timestamp FROM $video";
-		if ( $hidebotsql ) {
-			$sql .= "$hidebotsql WHERE ug_group IS NULL";
-		}
-		$sql .= ' ORDER BY video_timestamp DESC LIMIT 1';
-		$res = $dbr->query( $sql, __METHOD__ );
-		$row = $dbr->fetchRow( $res );
-		if ( $row !== false ) {
-			$ts = $row[0];
-		} else {
-			$ts = false;
-		}
-		$sql = '';
+		// If start date comes after end date chronologically, swap them.
+		// They are swapped in the interface by JS.
+		$start = $opts->getValue( 'start' );
+		$end = $opts->getValue( 'end' );
+		if ( $start !== '' && $end !== '' && $start > $end ) {
+			$temp = $end;
+			$end = $start;
+			$start = $temp;
 
-		/** If we were clever, we'd use this to cache. */
-		$latestTimestamp = wfTimestamp( TS_MW, $ts );
+			$opts->setValue( 'start', $start, true );
+			$opts->setValue( 'end', $end, true );
 
-		/** Hardcode this for now. */
-		$limit = 48;
-
-		$parval = intval( $par );
-		if ( $parval ) {
-			if ( $parval <= $limit && $parval > 0 ) {
-				$limit = $parval;
-			}
+			// Since the request values must always be adjusted for backwards compatibility with the
+			// previous parameter mix, parameter values are added to $data here and the request
+			// re-creation is moved outside this block
+			$data['start'] = $start;
+			$data['end'] = $end;
 		}
 
-		$where = array();
-		$searchpar = array();
-		if ( $wpIlMatch != '' ) {
-			$nt = Title::newFromText( $wpIlMatch );
-			if ( $nt ) {
-				// LOWER() & friends don't work as-is on varbinary fields
-				// @see https://phabricator.wikimedia.org/T157197
-				$where[] = 'LOWER(CONVERT(video_name USING utf8))' . $dbr->buildLike(
-					$dbr->anyString(), strtolower( $nt->getDBkey() ), $dbr->anyString() );
-				$searchpar['wpIlMatch'] = $wpIlMatch;
-			}
+		// Swap values in request object, which is used by HTMLForm to pre-populate the fields with
+		// the previous input. Done every request to maintain backwards parameter compatibility
+		$request = $context->getRequest();
+		$context->setRequest( new DerivativeRequest(
+			$request,
+			$data + $request->getValues(),
+			$request->wasPosted()
+		) );
+
+		$opts->validateIntBounds( 'limit', 0, 500 );
+
+		$this->opts = $opts;
+
+		$pager = new NewVideosPager( $context, $opts );
+		// Store html output for a moment so the toptext can be shown first.
+		// A workaround, as the number of videos isn't available before calling getBody(),
+		// but the toptext must be shown before the gallery
+		$pagerBody = $pager->getBody();
+
+		if ( !$this->including() ) {
+			$lt = $lang->formatNum( min( $pager->getShownVideosCount(), $opts->getValue( 'limit' ) ) );
+			$this->setTopText( $lt );
+			$this->buildForm( $context );
 		}
 
-		$invertSort = false;
-		if( $until = $request->getVal( 'until' ) ) {
-			$where[] = 'video_timestamp < ' . $dbr->timestamp( $until );
+		$out->addHTML( $pagerBody );
+		if ( !$this->including() ) {
+			$out->addHTML( $pager->getNavigationBar() );
 		}
-		if( $from = $request->getVal( 'from' ) ) {
-			$where[] = 'video_timestamp >= ' . $dbr->timestamp( $from );
-			$invertSort = true;
+	}
+
+	protected function buildForm( IContextSource $context ) {
+		$formDescriptor = [
+			'wpIlMatch' => [
+				'type' => 'text',
+				'label-message' => 'newimages-label',
+				'name' => 'wpIlMatch',
+			],
+			'user' => [
+				'type' => 'text',
+				'label-message' => 'newimages-user',
+				'name' => 'user',
+			],
+			'newbies' => [
+				'type' => 'check',
+				'label-message' => 'newimages-newbies',
+				'name' => 'newbies',
+			],
+			'hidebots' => [
+				'type' => 'check',
+				'label-message' => 'video-hidebots',
+				'default' => $this->opts->getValue( 'hidebots' ),
+				'name' => 'hidebots',
+			],
+			'hidepatrolled' => [
+				'type' => 'check',
+				'label-message' => 'newimages-hidepatrolled',
+				'name' => 'hidepatrolled',
+			],
+			'limit' => [
+				'type' => 'hidden',
+				'default' => $this->opts->getValue( 'limit' ),
+				'name' => 'limit',
+			],
+			'offset' => [
+				'type' => 'hidden',
+				'default' => $this->opts->getValue( 'offset' ),
+				'name' => 'offset',
+			],
+			'start' => [
+				'type' => 'date',
+				'label-message' => 'date-range-from',
+				'name' => 'start',
+			],
+			'end' => [
+				'type' => 'date',
+				'label-message' => 'date-range-to',
+				'name' => 'end',
+			],
+		];
+
+		if ( $this->getConfig()->get( 'MiserMode' ) ) {
+			unset( $formDescriptor['wpIlMatch'] );
 		}
-		$sql = 'SELECT video_name, video_url, video_user_name, video_user_id, '.
-				" video_timestamp FROM $video";
 
-		if ( $hidebotsql ) {
-			$sql .= $hidebotsql;
-			$where[] = 'ug_group IS NULL';
-		}
-		if ( count( $where ) ) {
-			$sql.= ' WHERE ' . $dbr->makeList( $where, LIST_AND );
-		}
-		$sql.= ' ORDER BY video_timestamp '. ( $invertSort ? '' : ' DESC' );
-		$sql.= ' LIMIT ' . ( $limit + 1 );
-		$res = $dbr->query( $sql, __METHOD__ );
-
-		// We have to flip things around to get the last N after a certain date
-		$videos = array();
-		foreach ( $res as $s ) {
-			if ( $invertSort ) {
-				array_unshift( $videos, $s );
-			} else {
-				array_push( $videos, $s );
-			}
+		if ( !$this->getUser()->useFilePatrol() ) {
+			unset( $formDescriptor['hidepatrolled'] );
 		}
 
-		$gallery = new VideoGallery();
-		$firstTimestamp = null;
-		$lastTimestamp = null;
-		$shownVideos = 0;
-		foreach ( $videos as $s ) {
-			if ( ++$shownVideos > $limit ) {
-				// One extra just to test for whether to show a page link;
-				// don't actually show it.
-				break;
-			}
+		HTMLForm::factory( 'ooui', $formDescriptor, $context )
+			// For the 'multiselect' field values to be preserved on submit
+			->setFormIdentifier( 'specialnewvideos' )
+			->setWrapperLegendMsg( 'newimages-legend' )
+			->setSubmitTextMsg( 'ilsubmit' )
+			->setMethod( 'get' )
+			->prepareForm()
+			->displayForm( false );
+	}
 
-			$name = $s->video_name;
-			$ut = $s->video_user_name;
+	/**
+	 * Send the text to be displayed above the options
+	 *
+	 * @param string $lt number of videos displayed
+	 */
+	public function setTopText( $lt ) {
+		global $wgContLang;
 
-			$nt = Title::newFromText( $name, NS_VIDEO );
-			$vid = new Video( $nt, $this->getContext() );
-			$ul = Linker::linkKnown( Title::makeTitle( NS_USER, $ut ), $ut );
-
-			$gallery->add(
-				$vid,
-				"$ul<br />\n<i>" .
-					$lang->timeanddate( $s->video_timestamp, true ) .
-					"</i><br />\n"
+		$message = $this->msg( 'video-newvideos-list-text', $lt )->inContentLanguage();
+		if ( !$message->isDisabled() ) {
+			$this->getOutput()->addWikiText(
+				Html::rawElement( 'p',
+					[ 'lang' => $wgContLang->getHtmlCode(), 'dir' => $wgContLang->getDir() ],
+					"\n" . $message->parse() . "\n"
+				),
+				/* $lineStart */ false,
+				/* $interface */ false
 			);
-
-			$timestamp = wfTimestamp( TS_MW, $s->video_timestamp );
-			if ( empty( $firstTimestamp ) ) {
-				$firstTimestamp = $timestamp;
-			}
-			$lastTimestamp = $timestamp;
-		}
-
-		$bydate = $this->msg( 'bydate' )->escaped();
-		$lt = $lang->formatNum( min( $shownVideos, $limit ) );
-		if ( $shownav ) {
-			$text = $this->msg( 'video-newvideos-list-text', $lt, $bydate )->parse();
-			$out->addHTML( $text . "\n" );
-		}
-
-		$sub = $this->msg( 'ilsubmit' )->escaped();
-		$titleObj = SpecialPage::getTitleFor( 'NewVideos' );
-		$action = htmlspecialchars( $titleObj->getLocalURL( $hidebots ? '' : 'hidebots=0' ) );
-		if( $shownav ) {
-			$out->addHTML(
-				"<form id=\"imagesearch\" method=\"post\" action=\"{$action}\">" .
-				Xml::input( 'wpIlMatch', 20, $wpIlMatch ) . ' ' .
-				Xml::submitButton( $sub, array( 'name' => 'wpIlSubmit' ) ) .
-				'</form>'
-			);
-		}
-
-		// Paging controls...
-
-		# If we change bot visibility, this needs to be carried along.
-		if ( !$hidebots ) {
-			$botpar = array( 'hidebots' => 0 );
-		} else {
-			$botpar = array();
-		}
-		$now = wfTimestampNow();
-		$date = $lang->date( $now, true );
-		$time = $lang->time( $now, true );
-		$query = array_merge(
-			array( 'from' => $now ),
-			$botpar,
-			$searchpar
-		);
-
-		$dateLink = Linker::linkKnown(
-			$titleObj,
-			htmlspecialchars( $this->msg( 'video-newvideos-showfrom', $date, $time )->escaped() ),
-			array(),
-			$query
-		);
-
-		$query = array_merge(
-			array( 'hidebots' => ( $hidebots ? 0 : 1 ) ),
-			$searchpar
-		);
-
-		$showhide = $hidebots ? $this->msg( 'show' )->escaped() : $this->msg( 'hide' )->escaped();
-
-		$botLink = Linker::linkKnown(
-			$titleObj,
-			htmlspecialchars( $this->msg( 'video-showhidebots', $showhide )->escaped() ),
-			array(),
-			$query
-		);
-
-		$prevLink = $this->msg( 'pager-newer-n', $lang->formatNum( $limit ) )->parse();
-		if ( $firstTimestamp && $firstTimestamp != $latestTimestamp ) {
-			$query = array_merge(
-				array( 'from' => $firstTimestamp ),
-				$botpar,
-				$searchpar
-			);
-			$prevLink = Linker::linkKnown(
-				$titleObj,
-				$prevLink,
-				array(),
-				$query
-			);
-		}
-
-		$nextLink = $this->msg( 'pager-older-n', $lang->formatNum( $limit ) )->parse();
-		if ( $shownVideos > $limit && $lastTimestamp ) {
-			$query = array_merge(
-				array( 'until' => $lastTimestamp ),
-				$botpar,
-				$searchpar
-			);
-
-			$nextLink = Linker::linkKnown(
-				$titleObj,
-				$nextLink,
-				array(),
-				$query
-			);
-		}
-
-		$prevnext = '<p>' . $botLink . ' ' .
-			$this->msg( 'viewprevnext', $prevLink, $nextLink, $dateLink )->text() .
-			'</p>';
-
-		if ( $shownav ) {
-			$out->addHTML( $prevnext );
-		}
-
-		if ( count( $videos ) ) {
-			$out->addHTML( $gallery->toHTML() );
-			if ( $shownav ) {
-				$out->addHTML( $prevnext );
-			}
-		} else {
-			$out->addWikiMsg( 'video-no-videos' );
 		}
 	}
 }

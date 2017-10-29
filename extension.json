@@ -1,6 +1,6 @@
 {
 	"name": "Video",
-	"version": "1.6.1",
+	"version": "1.7.1",
 	"author": [
 		"David Pean",
 		"Jack Phoenix",
@@ -67,7 +67,8 @@
 		"AddVideo": "includes/specials/SpecialAddVideo.php",
 		"NewVideos": "includes/specials/SpecialNewVideos.php",
 		"SpecialUndeleteWithVideoSupport": "includes/specials/SpecialUndeleteWithVideoSupport.php",
-		"VideoHooks": "includes/Video.hooks.php"
+		"VideoHooks": "includes/Video.hooks.php",
+		"NewVideosPager": "includes/specials/pagers/NewVideosPager.php"
 	},
 	"Hooks": {
 		"ArticleFromTitle": [

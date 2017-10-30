@@ -79,11 +79,16 @@ class Video {
 	protected $context;
 
 	/**
+	 * @var \Wikimedia\Rdbms\IResultWrapper
+	 */
+	private $historyRes;
+
+	/**
 	 * Array of providers codes to classes
 	 *
 	 * @var array
 	 */
-	static $providers = array(
+	static $providers = [
 		'bliptv' => 'BlipTVVideoProvider',
 		'dailymotion' => 'DailyMotionVideoProvider',
 		'gametrailers' => 'GametrailersVideoProvider',
@@ -97,7 +102,7 @@ class Video {
 		'viddler' => 'ViddlerVideoProvider',
 		'vimeo' => 'VimeoVideoProvider',
 		'wegame' => 'WeGameVideoProvider',
-	);
+	];
 
 	/**
 	 * Array of domain name to provider codes
@@ -163,21 +168,21 @@ class Video {
 		// doesn't deadlock. SELECT FOR UPDATE causes a deadlock for every race condition.
 		$dbw->insert(
 			'video',
-			array(
+			[
 				'video_name' => $this->getName(),
 				'video_url' => $url,
 				'video_type' => $type,
-				'video_user_id' => $user->getID(),
+				'video_user_id' => $user->getId(),
 				'video_user_name' => $user->getName(),
 				'video_timestamp' => $now
-			),
+			],
 			__METHOD__,
 			'IGNORE'
 		);
 
 		$categoryWikiText = '';
 
-		if ( $dbw->affectedRows() == 0 ) {
+		if ( $dbw->affectedRows() === 0 ) {
 			$logAction = 'update';
 
 			// Clear cache
@@ -189,7 +194,7 @@ class Video {
 			// Insert previous contents into oldvideo
 			$dbw->insertSelect(
 				'oldvideo', 'video',
-				array(
+				[
 					'ov_name' => 'video_name',
 					'ov_archive_name' => $dbw->addQuotes( gmdate( 'YmdHis' ) . "!{$this->getName()}" ),
 					'ov_url' => 'video_url',
@@ -197,24 +202,26 @@ class Video {
 					'ov_user_id' => 'video_user_id',
 					'ov_user_name' => 'video_user_name',
 					'ov_timestamp' => 'video_timestamp'
-				),
-				array( 'video_name' => $this->getName() ),
+				],
+				[ 'video_name' => $this->getName() ],
 				__METHOD__
 			);
 
 			// Update the current video row
 			$dbw->update(
 				'video',
-				array( /* SET */
+				[
+					/* SET */
 					'video_url' => $url,
 					'video_type' => $type,
-					'video_user_id' => $user->getID(),
+					'video_user_id' => $user->getId(),
 					'video_user_name' => $user->getName(),
 					'video_timestamp' => $now
-				),
-				array( /* WHERE */
+				],
+				[
+					/* WHERE */
 					'video_name' => $this->getName()
-				),
+				],
 				__METHOD__
 			);
 		}
@@ -238,7 +245,7 @@ class Video {
 			foreach ( $categories_array as $ctg ) {
 				$ctg = trim( $ctg );
 				if ( $ctg ) {
-					$catName = $this->context->getLanguage()->getNsText( NS_CATEGORY );
+					$catName = $this->context->getConfig()->get( 'ContLang' )->getNsText( NS_CATEGORY );
 					$tag = "[[{$catName}:{$ctg}]]";
 					if ( strpos( $categoryWikiText, $tag ) === false ) {
 						$categoryWikiText .= "\n{$tag}";
@@ -317,13 +324,13 @@ class Video {
 		global $wgMemc;
 		$key = $this->getCacheKey();
 		if ( $this->exists() ) {
-			$cachedValues = array(
+			$cachedValues = [
 				'url' => $this->url,
 				'type' => $this->type,
 				'user_id' => $this->submitter_user_id,
 				'user_name' => $this->submitter_user_name,
 				'create_date' => $this->create_date
-			);
+			];
 			$wgMemc->set( $key, $cachedValues, 60 * 60 * 24 * 7 ); // A week
 		} else {
 			// However we should clear them, so they aren't leftover
@@ -339,8 +346,7 @@ class Video {
 		global $wgMemc;
 		// memcached does not like spaces, so replace 'em with an underscore
 		$safeVideoName = str_replace( ' ', '_', $this->getName() );
-		$key = wfMemcKey( 'video', 'page', $safeVideoName );
-		return $key;
+		return $wgMemc->makeKey( 'video', 'page', $safeVideoName );
 	}
 
 	/**
@@ -351,11 +357,11 @@ class Video {
 
 		$row = $dbr->selectRow(
 			'video',
-			array(
+			[
 				'video_url', 'video_type', 'video_user_name', 'video_user_id',
 				'video_timestamp'
-			),
-			array( 'video_name' => $this->name ),
+			],
+			[ 'video_name' => $this->name ],
 			__METHOD__
 		);
 
@@ -505,7 +511,7 @@ class Video {
 			return;
 		}
 
-		self::$providerDomains = array();
+		self::$providerDomains = [];
 		foreach ( self::$providers as $name => $class ) {
 			$domains = $class::getDomains();
 			foreach ( $domains as $domain ) {
@@ -592,34 +598,34 @@ class Video {
 		if ( empty( $this->historyLine ) ) { // called for the first time, return line from cur
 			$this->historyRes = $dbr->select(
 				'video',
-				array(
+				[
 					'video_url',
 					'video_type',
 					'video_user_id',
 					'video_user_name',
 					'video_timestamp',
 					"'' AS ov_archive_name"
-				),
-				array( 'video_name' => $this->title->getDBkey() ),
+				],
+				[ 'video_name' => $this->title->getDBkey() ],
 				__METHOD__
 			);
-			if ( $dbr->numRows( $this->historyRes ) == 0 ) {
+			if ( $dbr->numRows( $this->historyRes ) === 0 ) {
 				return false;
 			}
-		} elseif ( $this->historyLine == 1 ) {
+		} elseif ( $this->historyLine === 1 ) {
 			$this->historyRes = $dbr->select(
 				'oldvideo',
-				array(
+				[
 					'ov_url AS video_url',
 					'ov_type AS video_type',
 					'ov_user_id AS video_user_id',
 					'ov_user_name AS video_user_name',
 					'ov_timestamp AS video_timestamp',
 					'ov_archive_name'
-				),
-				array( 'ov_name' => $this->title->getDBkey() ),
+				],
+				[ 'ov_name' => $this->title->getDBkey() ],
 				__METHOD__,
-				array( 'ORDER BY' => 'ov_timestamp DESC' )
+				[ 'ORDER BY' => 'ov_timestamp DESC' ]
 			);
 		}
 		$this->historyLine++;

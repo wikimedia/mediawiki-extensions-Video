@@ -6,8 +6,7 @@
  * @file
  */
 
-class AddVideo extends SpecialPage {
-
+class AddVideo extends FormSpecialPage {
 	/**
 	 * New video object created when the title field is validated
 	 *
@@ -31,45 +30,39 @@ class AddVideo extends SpecialPage {
 	 *
 	 * @return string
 	 */
-	function getGroupName() {
+	public function getGroupName() {
 		return 'media';
 	}
 
 	/**
-	 * Show the special page
-	 *
-	 * @param mixed|null $par Parameter passed to the page or null
+	 * Add pre-text to the form
+	 * @return string HTML which will be sent to $form->addPreText()
 	 */
-	public function execute( $par ) {
-		$out = $this->getOutput();
+	protected function preText() {
+		$this->getOutput()->addModuleStyles( 'ext.video' );
 
-		// If the user doesn't have the required 'addvideo' permission, display an error
-		$this->checkPermissions();
+		return '';
+	}
 
-		// Show a message if the database is in read-only mode
-		$this->checkReadOnly();
-
-		// If user is blocked, s/he doesn't need to access this page
-		if ( $this->getUser()->isBlocked() ) {
-			throw new UserBlockedError( $this->getUser()->mBlock );
-		}
-
-		// Add CSS
-		$out->addModuleStyles( 'ext.video' );
-
-		$this->setHeaders();
-
-		$form = new HTMLForm( $this->getFormFields(), $this->getContext() );
+	/**
+	 * Play with the HTMLForm if you need to more substantially
+	 * @param HTMLForm $form
+	 */
+	protected function alterForm( HTMLForm $form ) {
 		$form->setIntro( $this->msg( 'video-addvideo-instructions' )->parse() );
 		$form->setWrapperLegend( $this->msg( 'video-addvideo-title' )->plain() );
 		$form->setSubmitText( $this->msg( 'video-addvideo-button' )->plain() );
-		$form->setSubmitCallback( array( $this, 'submit' ) );
 
 		if ( $this->getRequest()->getCheck( 'forReUpload' ) ) {
 			$form->addHiddenField( 'forReUpload', true );
 		}
+	}
 
-		$form->show();
+	/**
+	 * Get display format for the form.
+	 */
+	protected function getDisplayFormat() {
+		return 'ooui';
 	}
 
 	/**
@@ -84,7 +77,7 @@ class AddVideo extends SpecialPage {
 			$url = Video::getURLfromEmbedCode( $value );
 		}
 
-		return array( $url, Video::getProviderByURL( $url ) );
+		return [ $url, Video::getProviderByURL( $url ) ];
 	}
 
 	/**
@@ -93,14 +86,14 @@ class AddVideo extends SpecialPage {
 	 * Checks to see if the string given is a valid URL and corresponds
 	 * to a supported provider.
 	 *
-	 * @param array $value
+	 * @param string $value
 	 * @param array $allData
 	 * @return bool|string
 	 */
 	public function validateVideoField( $value, $allData ) {
 		list( , $provider ) = $this->getUrlAndProvider( $value );
 
-		if ( $provider == 'unknown' ) {
+		if ( $provider === 'unknown' ) {
 			return $this->msg( 'video-addvideo-invalidcode' )->plain();
 		}
 
@@ -140,7 +133,7 @@ class AddVideo extends SpecialPage {
 	 * @param array $data
 	 * @return bool
 	 */
-	public function submit( array $data ) {
+	public function onSubmit( array $data ) {
 		list( $url, $provider ) = $this->getUrlAndProvider( $data['Video'] );
 
 		$this->video->addVideo( $url, $provider, false, $data['Watch'] );
@@ -156,29 +149,26 @@ class AddVideo extends SpecialPage {
 	 * @return array
 	 */
 	protected function getFormFields() {
-		$fields = array(
-			'Title' => array(
+		return [
+			'Title' => [
 				'type' => 'text',
 				'label-message' => 'video-addvideo-title-label',
 				'size' => '30',
 				'required' => true,
-				'validation-callback' => array( $this, 'validateTitleField' ),
-			),
-			'Video' => array(
+				'validation-callback' => [ $this, 'validateTitleField' ],
+			],
+			'Video' => [
 				'type' => 'textarea',
 				'label-message' => 'video-addvideo-embed-label',
 				'rows' => '5',
-				'cols' => '65',
 				'required' => true,
-				'validation-callback' => array( $this, 'validateVideoField' ),
-			),
-			'Watch' => array(
+				'validation-callback' => [ $this, 'validateVideoField' ],
+			],
+			'Watch' => [
 				'type' => 'check',
 				'label-message' => 'video-addvideo-watchlist',
 				'default' => $this->getUser()->getOption( 'watchdefault' ),
-			),
-		);
-
-		return $fields;
+			],
+		];
 	}
 }

@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bjankuloski06"
+		]
+	},
+	"video-desc": "Овозможува нов именски простор „Видео“ за вметнување на снимки на поддржани мрежни места",
+	"addvideo": "Додај видео",
+	"newvideos": "Нови видеа",
+	"video-upload-new-version": "Подигни нова верзија на видеово",
+	"video-newvideos-showfrom": "Прикажи нови видеа почнувајќи од $2, $1",
+	"video-newvideos-list-text": "Следи список на <strong>$1</strong> {{PLURAL:$1|видео|видеа}}.",
+	"video-showhidebots": "($1 ботови)"
+}

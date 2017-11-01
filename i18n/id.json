@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kenrick95"
+		]
+	},
+	"addvideo": "Tambah video",
+	"category-video-header": "Video dalam kategori \"$1\"",
+	"video-showhidebots": "($1 bot)"
+}

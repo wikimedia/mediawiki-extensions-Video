@@ -1,0 +1,20 @@
+{
+	"@metadata": {
+		"authors": [
+			"Beta16"
+		]
+	},
+	"addvideo": "Aggiungi video",
+	"newvideos": "Nuovi video",
+	"video-upload-new-version": "Carica una nuova versione di questo video",
+	"video-addvideo-watchlist": "Aggiungi questo video alla tua lista degli osservati speciali",
+	"video-addvideo-title": "Aggiungi video",
+	"video-addvideo-dest": "Aggiungi video per $1",
+	"video-no-videos": "Nessun nuovo video.",
+	"category-video-header": "Video nella categoria \"$1\"",
+	"video-revert-legend": "Ripristina video",
+	"video-category-name": "Video",
+	"video-links-to-video": "{{PLURAL:$1|La seguente pagina contiene|Le seguenti $1 pagine contengono}} collegamenti a questo video:",
+	"video-showhidebots": "($1 i bot)",
+	"video-hidebots": "Nascondi caricamenti di bot"
+}

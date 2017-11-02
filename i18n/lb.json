@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Robby"
+		]
+	},
+	"addvideo": "Video dobäisetzen",
+	"newvideos": "Nei Videoen",
+	"video-addvideo-watchlist": "Dëse Video op meng Iwwerwaachungslëscht bäisetzen",
+	"video-addvideo-title-label": "Titel vum Video:",
+	"video-no-videos": "Keng nei Videoen.",
+	"logentry-video-update": "$1 huet de Video $3 aktualiséiert",
+	"category-video-header": "Videoen an der Kategorie \"$1\"",
+	"video-novideo-linktext": "dobäisetzen",
+	"video-novideo": "Et gëtt kee Video mat deem Numm, Dir kënnt en $1.",
+	"video-embed": "Abannen",
+	"video-revert-success": "Zréckgesat op eng vireg Versioun.",
+	"video-category-name": "Videoen",
+	"video-no-links-to-video": "Et gëtt Keng Säiten déi op dëse Video linken.",
+	"video-showhidebots": "($1 Botten)"
+}

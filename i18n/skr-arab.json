@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"Saraiki"
+		]
+	},
+	"addvideo": "ویڈیو شامل کرو",
+	"newvideos": "نویاں ویڈیو",
+	"video-addvideo-title": "ویڈیو شامل کرو",
+	"video-addvideo-button": "ویڈیو شامل کرو",
+	"video-addvideo-title-label": "ویڈیو دا عنوان:",
+	"log-name-video": "ویڈیو لاڳ",
+	"video-category-name": "ویڈیو",
+	"video-showhidebots": "($1 بوٹ)"
+}

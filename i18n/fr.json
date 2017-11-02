@@ -1,9 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Jack Phoenix <jack@countervandalism.net>"
+			"Jack Phoenix <jack@countervandalism.net>",
+			"Gomoko"
 		]
 	},
+	"video-desc": "Permet un nouvel espace de noms Video pour les média inclus dans les sites supportés",
 	"addvideo": "Ajouter un vidéo",
 	"newvideos": "Nouvelles vidéos",
 	"video-upload-new-version": "Importer une nouvelle version de cette vidéo",
@@ -41,5 +43,6 @@
 	"video-more-links-to-video": "Voir [[Special:WhatLinksHere/$1|plus de liens]] vers cette vidéo.",
 	"video-showhidebots": "($1 robots)",
 	"action-addvideo": "ajouter des vidéos à partir des services externes dans le site",
-	"right-addvideo": "Ajouter des vidéos à partir des services externes dans le site"
+	"right-addvideo": "Ajouter des vidéos à partir des services externes dans le site",
+	"video-hidebots": "Masquer les téléchargements par robots"
 }

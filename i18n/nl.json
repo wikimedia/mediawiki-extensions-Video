@@ -21,6 +21,7 @@
 	"video-addvideo-embed-label": "Insluitcode of URL:",
 	"video-no-videos": "Geen nieuwe video's.",
 	"log-name-video": "Video logboek",
+	"log-description-video": "Dit is een logboek van alle toegevoegde videos en wijzigingen aan bestaande videos.",
 	"logentry-video-add": "$1 voegde video $3 toe",
 	"logentry-video-update": "$1 werkte video $3 bij",
 	"category-video-header": "Video's in de categorie \"$1\"",

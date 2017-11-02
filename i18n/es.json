@@ -1,7 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Macofe"
+			"Macofe",
+			"Fitoschido",
+			"Ohlila"
 		]
 	},
 	"video-desc": "Permite un espacio de nombres nuevo llamado \"Video\" para contenido multimedia incrustable en sitios que lo admitan",
@@ -14,6 +16,7 @@
 	"video-addvideo-title": "Añadir video",
 	"video-addvideo-dest": "Añadir video para $1",
 	"video-addvideo-button": "Añadir video",
+	"video-addvideo-instructions": "Añadir un video en {{SITENAME}} es fácil.\nSólo pega el código embed del video ''o'' el URL del video de la forma siguiente, añadir un nombre para el vídeo, y pulsar el botón \"{{int:vídeo-addvideo-botón}}\".\nSi  quieres incluir el video en una página utiliza el formato siguiente:  '''<nowiki>[[</nowiki>{{ns:video}}:Título de Vídeo<nowiki>]]</nowiki>'''.\nPuedes añadir un video de los siguientes proveedores:\n{{int:video-provider-list}}\n===Ejemplo de código embed de un vídeo===\nEste es un ejemplo de código embed de un video YouTube/Youtube:\n\n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">\n<nowiki><object width=\"425\" height=\"355\">\n<param name=\"movie\" value=\"http://www.youtube.com/v/hUcFWPgB8oY\"></param>\n<param name=\"wmode\" value=\"transparent\"></param>\n<embed src=\"http://www.youtube.com/v/hUcFWPgB8oY\" type=\"application/x-shockwave-flash\"\nwmode=\"transparent\" width=\"425\" height=\"355\"></embed>\n</object></nowiki>\n</pre>\n\n\n\n===Ejemplo de URL de un video===\nAbajo tienes un ejemplo de URL de un video de YouTube:\n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">http://www.youtube.com/watch?v=hUcFWPgB8oY</pre>",
 	"video-addvideo-invalidcode": "El código o el URL que ingresaste no es válido. Inténtalo de nuevo.",
 	"video-addvideo-exists": "El título para tu video ya existe. Elige otro.",
 	"video-addvideo-title-label": "Título del video:",
@@ -36,6 +39,7 @@
 	"video-revert-intro": "Estas por revertir el video '''[[:{{ns:video}}:$1|$1]]''' a la [$4 versión del $3, $2].",
 	"video-category-name": "Videos",
 	"video-links": "Enlaces del video",
+	"video-links-to-video": "{{PLURAL:$1|La página siguiente enlaza|Las $1 páginas siguientes enlazan}} a este vídeo:",
 	"video-no-links-to-video": "No hay páginas que enlacen a este video.",
 	"video-more-links-to-video": "Ver[[Special:WhatLinksHere/$1|más enlaces]] a este video.",
 	"video-showhidebots": "($1 bots)",

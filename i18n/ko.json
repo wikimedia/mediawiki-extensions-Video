@@ -37,6 +37,7 @@
 	"video-links": "동영상 링크",
 	"video-links-to-video": "다음 {{PLURAL:$1|문서 $1개}}가 이 동영상을 가리키고 있습니다:",
 	"video-no-links-to-video": "이 동영상을 사용하는 문서가 없습니다.",
+	"video-more-links-to-video": "이 동영상이 쓰이고 있는 문서 목록 [[Special:WhatLinksHere/$1|더 보기]].",
 	"video-showhidebots": "(봇을 $1)",
 	"action-addvideo": "외부 서비스의 동영상을 사이트에 추가",
 	"right-addvideo": "외부 서비스의 동영상을 사이트로 추가합니다",

@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Emem.calist"
+		]
+	},
+	"addvideo": "Karagdagang Video",
+	"video-newvideos-list-text": "Ang mga sumusunod na lathalang <strong>$1</strong>{{PLURAL:$1|video|videos}}.",
+	"video-showhidebots": "($1 mga ''bot'')"
+}

@@ -26,7 +26,7 @@
 	"log-description-video": "Este es un registro de videos añadidos y actualizaciones a videos existentes.",
 	"logentry-video-add": "$1 añadió el video $3",
 	"logentry-video-update": "$1 actualizó el video $3",
-	"category-video-header": "Videos en la categoría \"$1\"",
+	"category-video-header": "Vídeos en la categoría «$1»",
 	"category-video-count": "Hay {{PLURAL:$1|un video|$1 videos}} en esta categoría.",
 	"video-novideo-linktext": "añadirlo",
 	"video-novideo": "No existe video con este nombre. Puedes $1.",

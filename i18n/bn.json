@@ -1,0 +1,17 @@
+{
+	"@metadata": {
+		"authors": [
+			"Aftabuzzaman"
+		]
+	},
+	"addvideo": "ভিডিও যোগ করুন",
+	"newvideos": "নতুন ভিডিও",
+	"video-addvideo-title": "ভিডিও যোগ করুন",
+	"video-addvideo-title-label": "ভিডিওর শিরোনাম:",
+	"log-name-video": "ভিডিও লগ",
+	"logentry-video-add": "$1 ভিডিও $3 যোগ করেছেন",
+	"category-video-header": "\"$1\" বিষয়শ্রেণীতে অন্তর্ভুক্ত ভিডিও",
+	"video-category-name": "ভিডিও",
+	"video-showhidebots": "($1 বট)",
+	"video-hidebots": "বটের দ্বারা আপলোড লুকান"
+}

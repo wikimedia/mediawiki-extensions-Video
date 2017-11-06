@@ -1,0 +1,20 @@
+{
+	"@metadata": {
+		"authors": [
+			"Elisardojm"
+		]
+	},
+	"addvideo": "Engadir vídeo",
+	"newvideos": "Novos vídeos",
+	"video-addvideo-title": "Engadir vídeo",
+	"video-addvideo-dest": "Engadir vídeo para $1",
+	"video-addvideo-button": "Engadir vídeo",
+	"video-addvideo-title-label": "Título do vídeo:",
+	"video-no-videos": "No hai vídeos novos.",
+	"log-name-video": "Rexistro dos vídeos",
+	"video-novideo-linktext": "engadilo",
+	"video-revert": "rev",
+	"video-category-name": "Vídeos",
+	"video-links": "Ligazóns do vídeo",
+	"video-showhidebots": "($1 os bots)"
+}

@@ -20,7 +20,7 @@
 	"video-addvideo-invalidcode": "El código o el URL que ingresaste no es válido. Inténtalo de nuevo.",
 	"video-addvideo-exists": "El título para tu video ya existe. Elige otro.",
 	"video-addvideo-title-label": "Título del video:",
-	"video-addvideo-embed-label": "Código incrustado o URL:",
+	"video-addvideo-embed-label": "Código de incrustación o URL:",
 	"video-no-videos": "No hay video nuevos.",
 	"log-name-video": "Registro de video",
 	"log-description-video": "Este es un registro de videos añadidos y actualizaciones a videos existentes.",

@@ -1,6 +1,6 @@
 {
 	"name": "Video",
-	"version": "1.7.1",
+	"version": "1.7.2",
 	"author": [
 		"David Pean",
 		"Jack Phoenix",
@@ -117,6 +117,9 @@
 			"position": "top"
 		}
 	},
+	"LogTypes": [
+		"video"
+	],
 	"LogActionsHandlers": {
 		"video/*": "LogFormatter"
 	},

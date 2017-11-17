@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"Wirbel78"
+		]
+	},
+	"addvideo": "Добавить видео",
+	"newvideos": "Новые видео",
+	"video-addvideo-title": "Добавить видео",
+	"video-addvideo-button": "Добавить видео",
+	"video-category-name": "Видео",
+	"video-showhidebots": "($1 ботов)"
+}

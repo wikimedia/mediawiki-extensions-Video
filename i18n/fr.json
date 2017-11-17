@@ -2,10 +2,11 @@
 	"@metadata": {
 		"authors": [
 			"Jack Phoenix",
-			"Gomoko"
+			"Gomoko",
+			"Urhixidur"
 		]
 	},
-	"video-desc": "Permet un nouvel espace de noms Video pour les média inclus dans les sites supportés",
+	"video-desc": "Permet un nouvel espace de noms Video pour les médias inclus dans les sites supportés",
 	"addvideo": "Ajouter un vidéo",
 	"newvideos": "Nouvelles vidéos",
 	"video-upload-new-version": "Importer une nouvelle version de cette vidéo",
@@ -44,5 +45,5 @@
 	"video-showhidebots": "($1 robots)",
 	"action-addvideo": "ajouter des vidéos à partir des services externes dans le site",
 	"right-addvideo": "Ajouter des vidéos à partir des services externes dans le site",
-	"video-hidebots": "Masquer les téléchargements par robots"
+	"video-hidebots": "Masquer les téléversements par robots"
 }

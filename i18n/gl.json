@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Elisardojm"
+			"Elisardojm",
+			"Athena in Wonderland"
 		]
 	},
 	"addvideo": "Engadir vídeo",
@@ -13,7 +14,9 @@
 	"video-no-videos": "No hai vídeos novos.",
 	"log-name-video": "Rexistro dos vídeos",
 	"video-novideo-linktext": "engadilo",
+	"video-history": "Historial do vídeo",
 	"video-revert": "rev",
+	"video-revert-legend": "Reverter o vídeo",
 	"video-category-name": "Vídeos",
 	"video-links": "Ligazóns do vídeo",
 	"video-showhidebots": "($1 os bots)"

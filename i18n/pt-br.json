@@ -1,4 +1,12 @@
 {
-	"@metadata": [],
+	"@metadata": {
+		"authors": [
+			"Eduardo Addad de Oliveira"
+		]
+	},
+	"video-desc": "Permite novo espaço de nomes de vídeo para mídia incorporável no site suportado",
+	"addvideo": "Adicionar vídeo",
+	"newvideos": "Vídeos novos",
+	"video-upload-new-version": "Carregar uma nova versão deste vídeo",
 	"video-showhidebots": "($1 robôs)"
 }

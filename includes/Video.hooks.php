@@ -295,8 +295,8 @@ class VideoHooks {
 	public static function addTables( $updater ) {
 		$dir = __DIR__;
 		$file = "$dir/../sql/video.sql";
-		$updater->addExtensionUpdate( array( 'addTable', 'video', $file, true ) );
-		$updater->addExtensionUpdate( array( 'addTable', 'oldvideo', $file, true ) );
+		$updater->addExtensionTable( 'video', $file );
+		$updater->addExtensionTable( 'oldvideo', $file );
 		return true;
 	}
 

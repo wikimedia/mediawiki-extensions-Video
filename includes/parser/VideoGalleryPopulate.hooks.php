@@ -15,7 +15,7 @@ class VideoGalleryPopulateHooks {
 	}
 
 	public static function renderVideoGalleryPopulate( $input, $args, $parser ) {
-		$parser->disableCache();
+		$parser->getOutput()->updateCacheExpiry( 0 );
 
 		$category = ( isset( $args['category'] ) ) ? $args['category'] : '';
 		$limit = ( isset( $args['limit'] ) ) ? intval( $args['limit'] ) : 10;

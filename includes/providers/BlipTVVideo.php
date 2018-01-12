@@ -23,7 +23,7 @@ class BlipTVVideoProvider extends BaseVideoProvider {
 
 		$videoId = $matches[1];
 
-		$cacheKey = wfMemcKey( 'video', 'bliptv', $videoId );
+		$cacheKey = $wgMemc->makeKey( 'video', 'bliptv', $videoId );
 		$cachedEmbedId = $wgMemc->get( $cacheKey );
 
 		if ( $cachedEmbedId !== false ) {

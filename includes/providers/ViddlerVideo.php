@@ -12,11 +12,10 @@ class ViddlerVideoProvider extends BaseVideoProvider {
 		return 437 / 288;
 	}
 
-
 	protected function extractVideoId( $url ) {
 		global $wgMemc;
 
-		$cacheKey = wfMemcKey( 'video', 'viddler', sha1( $url ) );
+		$cacheKey = $wgMemc->makeKey( 'video', 'viddler', sha1( $url ) );
 		$cachedEmbedId = $wgMemc->get( $cacheKey );
 
 		if ( $cachedEmbedId !== false ) {

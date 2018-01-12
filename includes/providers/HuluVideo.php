@@ -24,7 +24,7 @@ class HuluVideoProvider extends BaseVideoProvider {
 
 		$videoId = $matches['id'];
 
-		$cacheKey = wfMemcKey( 'video', 'hulu', $videoId );
+		$cacheKey = $wgMemc->makeKey( 'video', 'hulu', $videoId );
 		$cachedEmbedId = $wgMemc->get( $cacheKey );
 
 		if ( $cachedEmbedId !== false ) {

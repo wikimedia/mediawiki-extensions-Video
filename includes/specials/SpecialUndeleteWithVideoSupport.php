@@ -3,7 +3,7 @@
  * A hacked version of MediaWiki's standard Special:Undelete for supporting the
  * undeletion of videos without changing core MediaWiki code.
  *
- * Based on MediaWiki 1.24.1's /includes/specials/SpecialUndelete.php.
+ * Based on MediaWiki 1.30.0's /includes/specials/SpecialUndelete.php.
  *
  * Check the code comments to see what's changed.
  * The four major chunks of code which have been added are marked with "CORE HACK",
@@ -13,8 +13,11 @@
  *
  * @file
  * @ingroup SpecialPage
- * @date 4 May 2015
+ * @date 15 January 2017
  */
+
+// Not sure if we even need this, but better safe than sorry...
+use Wikimedia\Rdbms\ResultWrapper;
 
 class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 	/** @var Title */
@@ -49,6 +52,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 		$posted = $request->wasPosted() &&
 			$user->matchEditToken( $request->getVal( 'wpEditToken' ) );
 		$this->mRestore = $request->getCheck( 'restore' ) && $posted;
+		$this->mRevdel = $request->getCheck( 'revdel' ) && $posted;
 		$this->mInvert = $request->getCheck( 'invert' ) && $posted;
 		$this->mPreview = $request->getCheck( 'preview' ) && $posted;
 		$this->mDiff = $request->getCheck( 'diff' );
@@ -72,10 +76,10 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 		}
 
 		if ( $this->mRestore || $this->mInvert ) {
-			$timestamps = array();
-			$this->mFileVersions = array();
+			$timestamps = [];
+			$this->mFileVersions = [];
 			foreach ( $request->getValues() as $key => $val ) {
-				$matches = array();
+				$matches = [];
 				if ( preg_match( '/^ts(\d{14})$/', $key, $matches ) ) {
 					array_push( $timestamps, $matches[1] );
 				}
@@ -107,6 +111,8 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 	}
 
 	function execute( $par ) {
+		$this->useTransactionalTimeLimit();
+
 		$user = $this->getUser();
 
 		$this->setHeaders();
@@ -128,9 +134,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 			return;
 		}
 
-		if ( method_exists( $out, 'addHelpLink' ) ) { // MW 1.25 or 1.26+ thing
-			$out->addHelpLink( 'Help:Undelete' );
-		}
+		$this->addHelpLink( 'Help:Undelete' );
 		if ( $this->mAllowed ) {
 			$out->setPageTitle( $this->msg( 'undeletepage' ) );
 		} else {
@@ -178,32 +182,62 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 			}
 		}
 		// END CORE HACK
-		elseif ( $this->mRestore && $this->mAction == 'submit' ) {
-			$this->undelete();
+		elseif ( $this->mAction == 'submit' ) {
+			if ( $this->mRestore ) {
+				$this->undelete();
+			} elseif ( $this->mRevdel ) {
+				$this->redirectToRevDel();
+			}
 		} else {
 			$this->showHistory();
 		}
 	}
 
+	/**
+	 * Convert submitted form data to format expected by RevisionDelete and
+	 * redirect the request
+	 */
+	private function redirectToRevDel() {
+		// CORE HACK
+		if ( $this->mTargetObj->inNamespace( NS_VIDEO ) ) {
+			$archive = new VideoPageArchive( $this->mTargetObj );
+		} else {
+			$archive = new PageArchive( $this->mTargetObj );
+		}
+		// CORE HACK END
+
+		$revisions = [];
+
+		foreach ( $this->getRequest()->getValues() as $key => $val ) {
+			$matches = [];
+			if ( preg_match( "/^ts(\d{14})$/", $key, $matches ) ) {
+				$revisions[$archive->getRevision( $matches[1] )->getId()] = 1;
+			}
+		}
+		$query = [
+			'type' => 'revision',
+			'ids' => $revisions,
+			'target' => $this->mTargetObj->getPrefixedText()
+		];
+		$url = SpecialPage::getTitleFor( 'Revisiondelete' )->getFullURL( $query );
+		$this->getOutput()->redirect( $url );
+	}
+
 	function showHistory() {
+		$this->checkReadOnly();
+
 		$out = $this->getOutput();
 		if ( $this->mAllowed ) {
 			$out->addModules( 'mediawiki.special.undelete' );
 		}
 		$out->wrapWikiMsg(
 			"<div class='mw-undelete-pagetitle'>\n$1\n</div>\n",
-			array( 'undeletepagetitle', wfEscapeWikiText( $this->mTargetObj->getPrefixedText() ) )
+			[ 'undeletepagetitle', wfEscapeWikiText( $this->mTargetObj->getPrefixedText() ) ]
 		);
 
 		$archive = new PageArchive( $this->mTargetObj, $this->getConfig() );
-		Hooks::run( 'UndeleteForm::showHistory', array( &$archive, $this->mTargetObj ) );
-		/*
-		$text = $archive->getLastRevisionText();
-		if( is_null( $text ) ) {
-			$out->addWikiMsg( 'nohistory' );
-			return;
-		}
-		*/
+		Hooks::run( 'UndeleteForm::showHistory', [ &$archive, $this->mTargetObj ] );
+
 		$out->addHTML( '<div class="mw-undelete-history">' );
 		if ( $this->mAllowed ) {
 			$out->addWikiMsg( 'undeletehistory' );
@@ -248,13 +282,15 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 		}
 
 		if ( $this->mAllowed ) {
-			$action = $this->getPageTitle()->getLocalURL( array( 'action' => 'submit' ) );
+			$out->enableOOUI();
+
+			$action = $this->getPageTitle()->getLocalURL( [ 'action' => 'submit' ] );
 			# Start the form here
-			$top = Xml::openElement(
-				'form',
-				array( 'method' => 'post', 'action' => $action, 'id' => 'undelete' )
-			);
-			$out->addHTML( $top );
+			$form = new OOUI\FormLayout( [
+				'method' => 'post',
+				'action' => $action,
+				'id' => 'undelete',
+			] );
 		}
 
 		# Show relevant lines from the deletion log:
@@ -269,95 +305,133 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 		}
 
 		if ( $this->mAllowed && ( $haveRevisions || $haveFiles ) ) {
-			# Format the user-visible controls (comment field, submission button)
-			# in a nice little table
+			$fields[] = new OOUI\Layout( [
+				'content' => new OOUI\HtmlSnippet( $this->msg( 'undeleteextrahelp' )->parseAsBlock() )
+			] );
+
+			$fields[] = new OOUI\FieldLayout(
+				new OOUI\TextInputWidget( [
+					'name' => 'wpComment',
+					'inputId' => 'wpComment',
+					'infusable' => true,
+					'value' => $this->mComment,
+					'autofocus' => true,
+				] ),
+				[
+					'label' => $this->msg( 'undeletecomment' )->text(),
+					'align' => 'top',
+				]
+			);
+
+			$fields[] = new OOUI\FieldLayout(
+				new OOUI\Widget( [
+					'content' => new OOUI\HorizontalLayout( [
+						'items' => [
+							new OOUI\ButtonInputWidget( [
+								'name' => 'restore',
+								'inputId' => 'mw-undelete-submit',
+								'value' => '1',
+								'label' => $this->msg( 'undeletebtn' )->text(),
+								'flags' => [ 'primary', 'progressive' ],
+								'type' => 'submit',
+							] ),
+							new OOUI\ButtonInputWidget( [
+								'name' => 'invert',
+								'inputId' => 'mw-undelete-invert',
+								'value' => '1',
+								'label' => $this->msg( 'undeleteinvert' )->text()
+							] ),
+						]
+					] )
+				] )
+			);
+
 			if ( $this->getUser()->isAllowed( 'suppressrevision' ) ) {
-				$unsuppressBox =
-					"<tr>
-						<td>&#160;</td>
-						<td class='mw-input'>" .
-						Xml::checkLabel( $this->msg( 'revdelete-unsuppress' )->text(),
-							'wpUnsuppress', 'mw-undelete-unsuppress', $this->mUnsuppress ) .
-						"</td>
-					</tr>";
-			} else {
-				$unsuppressBox = '';
+				$fields[] = new OOUI\FieldLayout(
+					new OOUI\CheckboxInputWidget( [
+						'name' => 'wpUnsuppress',
+						'inputId' => 'mw-undelete-unsuppress',
+						'value' => '1',
+					] ),
+					[
+						'label' => $this->msg( 'revdelete-unsuppress' )->text(),
+						'align' => 'inline',
+					]
+				);
 			}
 
-			$table = Xml::fieldset( $this->msg( 'undelete-fieldset-title' )->text() ) .
-				Xml::openElement( 'table', array( 'id' => 'mw-undelete-table' ) ) .
-				"<tr>
-					<td colspan='2' class='mw-undelete-extrahelp'>" .
-				$this->msg( 'undeleteextrahelp' )->parseAsBlock() .
-				"</td>
-			</tr>
-			<tr>
-				<td class='mw-label'>" .
-				Xml::label( $this->msg( 'undeletecomment' )->text(), 'wpComment' ) .
-				"</td>
-				<td class='mw-input'>" .
-				Xml::input(
-					'wpComment',
-					50,
-					$this->mComment,
-					array( 'id' => 'wpComment', 'autofocus' => '' )
-				) .
-				"</td>
-			</tr>
-			<tr>
-				<td>&#160;</td>
-				<td class='mw-submit'>" .
-				Xml::submitButton(
-					$this->msg( 'undeletebtn' )->text(),
-					array( 'name' => 'restore', 'id' => 'mw-undelete-submit' )
-				) . ' ' .
-				Xml::submitButton(
-					$this->msg( 'undeleteinvert' )->text(),
-					array( 'name' => 'invert', 'id' => 'mw-undelete-invert' )
-				) .
-				"</td>
-			</tr>" .
-				$unsuppressBox .
-				Xml::closeElement( 'table' ) .
-				Xml::closeElement( 'fieldset' );
+			$fieldset = new OOUI\FieldsetLayout( [
+				'label' => $this->msg( 'undelete-fieldset-title' )->text(),
+				'id' => 'mw-undelete-table',
+				'items' => $fields,
+			] );
 
-			$out->addHTML( $table );
+			$form->appendContent(
+				new OOUI\PanelLayout( [
+					'expanded' => false,
+					'padded' => true,
+					'framed' => true,
+					'content' => $fieldset,
+				] ),
+				new OOUI\HtmlSnippet(
+					Html::hidden( 'target', $this->mTarget ) .
+					Html::hidden( 'wpEditToken', $this->getUser()->getEditToken() )
+				)
+			);
 		}
 
-		$out->addHTML( Xml::element( 'h2', null, $this->msg( 'history' )->text() ) . "\n" );
+		$history = '';
+		$history .= Xml::element( 'h2', null, $this->msg( 'history' )->text() ) . "\n";
 
 		if ( $haveRevisions ) {
-			# The page's stored (deleted) history:
-			$out->addHTML( '<ul>' );
+			# Show the page's stored (deleted) history
+
+			if ( $this->getUser()->isAllowed( 'deleterevision' ) ) {
+				$history .= Html::element(
+					'button',
+					[
+						'name' => 'revdel',
+						'type' => 'submit',
+						'class' => 'deleterevision-log-submit mw-log-deleterevision-button'
+					],
+					$this->msg( 'showhideselectedversions' )->text()
+				) . "\n";
+			}
+
+			$history .= '<ul class="mw-undelete-revlist">';
 			$remaining = $revisions->numRows();
 			$earliestLiveTime = $this->mTargetObj->getEarliestRevTime();
 
 			foreach ( $revisions as $row ) {
 				$remaining--;
-				$out->addHTML( $this->formatRevisionRow( $row, $earliestLiveTime, $remaining ) );
+				$history .= $this->formatRevisionRow( $row, $earliestLiveTime, $remaining );
 			}
 			$revisions->free();
-			$out->addHTML( '</ul>' );
+			$history .= '</ul>';
 		} else {
 			$out->addWikiMsg( 'nohistory' );
 		}
 
 		if ( $haveFiles ) {
-			$out->addHTML( Xml::element( 'h2', null, $this->msg( 'filehist' )->text() ) . "\n" );
-			$out->addHTML( '<ul>' );
+			$history .= Xml::element( 'h2', null, $this->msg( 'filehist' )->text() ) . "\n";
+			$history .= '<ul class="mw-undelete-revlist">';
 			foreach ( $files as $row ) {
-				$out->addHTML( $this->formatFileRow( $row ) );
+				$history .= $this->formatFileRow( $row );
 			}
 			$files->free();
-			$out->addHTML( '</ul>' );
+			$history .= '</ul>';
 		}
 
 		if ( $this->mAllowed ) {
 			# Slip in the hidden controls here
 			$misc = Html::hidden( 'target', $this->mTarget );
 			$misc .= Html::hidden( 'wpEditToken', $this->getUser()->getEditToken() );
-			$misc .= Xml::closeElement( 'form' );
-			$out->addHTML( $misc );
+			$history .= $misc;
+
+			$form->appendContent( new OOUI\HtmlSnippet( $history ) );
+			$out->addHTML( $form );
+		} else {
+			$out->addHTML( $history );
 		}
 
 		return true;
@@ -406,14 +480,14 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 			return '<span class="history-deleted">' . $time . '</span>';
 		}
 
-		$link = Linker::linkKnown(
+		$link = $this->getLinkRenderer()->makeKnownLink(
 			$titleObj,
-			htmlspecialchars( $time ),
-			array(),
-			array(
+			$time,
+			[],
+			[
 				'target' => $this->mTargetObj->getPrefixedText(),
 				'timestamp' => $ts
-			)
+			]
 		);
 
 		if ( $rev->isDeleted( Revision::DELETED_TEXT ) ) {
@@ -445,18 +519,18 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 		if ( $file instanceof ArchivedVideo ) {
 			$link = Linker::makeExternalLink(
 				$file->getURL(), $time, /* $escape */ true, /* $linktype */ '',
-				/* $attribs */ array(), $titleObj
+				/* $attribs */ [], $titleObj
 			);
 		} else {
-			$link = Linker::linkKnown(
+			$link = $this->getLinkRenderer()->makeKnownLink(
 				$titleObj,
-				htmlspecialchars( $time ),
-				array(),
-				array(
+				$time,
+				[],
+				[
 					'target' => $this->mTargetObj->getPrefixedText(),
 					'file' => $key,
 					'token' => $user->getEditToken( $key )
-				)
+				]
 			);
 		}
 		// END CORE HACK
@@ -470,9 +544,9 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 
 	function formatRevisionRow( $row, $earliestLiveTime, $remaining ) {
 		$rev = Revision::newFromArchiveRow( $row,
-			array(
+			[
 				'title' => $this->mTargetObj
-			) );
+			] );
 
 		$revTextSize = '';
 		$ts = wfTimestamp( TS_MW, $row->ar_timestamp );
@@ -501,15 +575,15 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 				$last = $this->msg( 'diff' )->escaped();
 			} elseif ( $remaining > 0 || ( $earliestLiveTime && $ts > $earliestLiveTime ) ) {
 				$pageLink = $this->getPageLink( $rev, $titleObj, $ts );
-				$last = Linker::linkKnown(
+				$last = $this->getLinkRenderer()->makeKnownLink(
 					$titleObj,
-					$this->msg( 'diff' )->escaped(),
-					array(),
-					array(
+					$this->msg( 'diff' )->text(),
+					[],
+					[
 						'target' => $this->mTargetObj->getPrefixedText(),
 						'timestamp' => $ts,
 						'diff' => 'prev'
-					)
+					]
 				);
 			} else {
 				$pageLink = $this->getPageLink( $rev, $titleObj, $ts );
@@ -536,7 +610,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 		$comment = Linker::revComment( $rev );
 
 		// Tags
-		$attribs = array();
+		$attribs = [];
 		list( $tagSummary, $classes ) = ChangeTags::formatSummaryRow(
 			$row->ts_tags,
 			'deletedhistory',
@@ -566,17 +640,17 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 	// undeletion will be impossible because PageArchive (sic) is passed a null
 	// Title when trying to undelete a Video. Fuck this is so fucking awesome...not.
 	function undelete() {
-		if ( $this->getConfig()->get( 'UploadMaintenance' ) && $this->mTargetObj->getNamespace() == NS_FILE ) {
+		if ( $this->getConfig()->get( 'UploadMaintenance' )
+			&& $this->mTargetObj->getNamespace() == NS_FILE
+		) {
 			throw new ErrorPageError( 'undelete-error', 'filedelete-maintenance' );
 		}
 
-		if ( wfReadOnly() ) {
-			throw new ReadOnlyError;
-		}
+		$this->checkReadOnly();
 
 		$out = $this->getOutput();
 		$archive = new PageArchive( $this->mTargetObj, $this->getConfig() );
-		Hooks::run( 'UndeleteForm::undelete', array( &$archive, $this->mTargetObj ) );
+		Hooks::run( 'UndeleteForm::undelete', [ &$archive, $this->mTargetObj ] );
 		$ok = $archive->undelete(
 			$this->mTargetTimestamp,
 			$this->mComment,
@@ -587,12 +661,12 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 
 		if ( is_array( $ok ) ) {
 			if ( $ok[1] ) { // Undeleted file count
-				Hooks::run( 'FileUndeleteComplete', array(
+				Hooks::run( 'FileUndeleteComplete', [
 					$this->mTargetObj, $this->mFileVersions,
-					$this->getUser(), $this->mComment ) );
+					$this->getUser(), $this->mComment ] );
 			}
 
-			$link = Linker::linkKnown( $this->mTargetObj );
+			$link = $this->getLinkRenderer()->makeKnownLink( $this->mTargetObj );
 			$out->addHTML( $this->msg( 'undeletedpage' )->rawParams( $link )->parse() );
 		} else {
 			$out->setPageTitle( $this->msg( 'undelete-error' ) );
@@ -601,7 +675,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 		// Show revision undeletion warnings and errors
 		$status = $archive->getRevisionStatus();
 		if ( $status && !$status->isGood() ) {
-			$out->addWikiText( '<div class="error">' .
+			$out->addWikiText( '<div class="error" id="mw-error-cannotundelete">' .
 				$status->getWikiText(
 					'cannotundelete',
 					'cannotundelete'

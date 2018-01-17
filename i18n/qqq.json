@@ -3,7 +3,8 @@
 		"authors": [
 			"John Du Hart <john@compwhizii.net>",
 			"Mainframe98",
-			"Robby"
+			"Robby",
+			"Liuxinyu970226"
 		]
 	},
 	"video-desc": "{{desc|name=Video|url=https://www.mediawiki.org/wiki/Extension:Video}}",
@@ -31,7 +32,7 @@
 	"category-video-count": "Used on category pages",
 	"video-novideo-linktext": "Linktext used in error message {{msg-mw|video-novideo}}",
 	"video-novideo": "Error message when no video was found\n*$1 - {{msg-mw|video-novideo-linktext}}",
-	"video-embed": "A label",
+	"video-embed": "A label\n{{Identical|Embed}}",
 	"video-history": "A header",
 	"video-revert": "Used as link text",
 	"video-histlegend": "A legend",

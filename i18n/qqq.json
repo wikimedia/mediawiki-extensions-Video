@@ -10,6 +10,7 @@
 	"video-desc": "{{desc|name=Video|url=https://www.mediawiki.org/wiki/Extension:Video}}",
 	"addvideo": "{{doc-special}}",
 	"newvideos": "{{doc-special}}",
+	"unusedvideos": "{{doc-special}}",
 	"video-upload-new-version": "Like [[MediaWiki:Uploadnewversion-linktext]], but \"file\" changed to \"video\".",
 	"video-newvideos-showfrom": "Like [[MediaWiki:Sp-newimages-showfrom]], but \"file\" changed to \"video\".",
 	"video-newvideos-list-text": "Like [[MediaWiki:Imagelisttext]], but \"file\" changed to \"video\".",
@@ -47,5 +48,6 @@
 	"video-showhidebots": "This is shown on the special page [[Special:NewVideos]]. The format is \"{{int:video-showhidebots|[[MediaWiki:Hide/{{SUBPAGENAME}}|{{int:hide}}]]}}\" or \"{{int:showhidebots|[[MediaWiki:Show/{{SUBPAGENAME}}|{{int:show}}]]}}\"\n\n{{Identical|$1 bots}}",
 	"action-addvideo": "{{doc-action|addvideo}}",
 	"right-addvideo": "{{doc-right|addvideo}}",
-	"video-hidebots": "Used as label for a checkbox. When unchecked, [[Special:NewVideos]] will also display uploads by users in the bots group."
+	"video-hidebots": "Used as label for a checkbox. When unchecked, [[Special:NewVideos]] will also display uploads by users in the bots group.",
+	"unusedvideos-summary": "Header message of [[Special:UnusedVideos]]"
 }

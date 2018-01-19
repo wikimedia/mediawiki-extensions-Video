@@ -33,6 +33,8 @@ class VideoHooks {
 	 * Callback function for the preg_replace_callback call in
 	 * VideoHooks::videoTag.
 	 * Converts [[Video:]] links to <video> parser hooks.
+	 * @param $matches
+	 * @return string
 	 */
 	public static function renderVideo( $matches ) {
 		$name = $matches[2];
@@ -63,8 +65,7 @@ class VideoHooks {
 				if ( !empty( $align ) ) {
 					$alignTag = " align=\"{$align}\"";
 				}
-				$output = "<video name=\"{$video->getName()}\"{$widthTag}{$alignTag} />";
-				return $output;
+				return "<video name=\"{$video->getName()}\"{$widthTag}{$alignTag} />";
 			}
 			return $matches[0];
 		}
@@ -76,13 +77,13 @@ class VideoHooks {
 	 *
 	 * @param Title $title Title object for the current page
 	 * @param Article $article Article object for the current page
-	 * @return bool
+	 * @return void
 	 */
 	public static function videoFromTitle( &$title, &$article ) {
 		global $wgRequest;
 
-		if ( $title->getNamespace() == NS_VIDEO ) {
-			if ( $wgRequest->getVal( 'action' ) == 'edit' ) {
+		if ( $title->getNamespace() === NS_VIDEO ) {
+			if ( $wgRequest->getVal( 'action' ) === 'edit' ) {
 				$addTitle = SpecialPage::getTitleFor( 'AddVideo' );
 				$video = Video::newFromName( $title->getText(), RequestContext::getMain() );
 				if ( !$video->exists() ) {
@@ -94,19 +95,16 @@ class VideoHooks {
 			}
 			$article = new VideoPage( $title );
 		}
-
-		return true;
 	}
 
 	/**
 	 * Register the new <video> hook with MediaWiki's parser.
 	 *
 	 * @param Parser $parser
-	 * @return bool
+	 * @return void
 	 */
 	public static function onParserFirstCallInit( &$parser ) {
 		$parser->setHook( 'video', 'VideoHooks::videoEmbed' );
-		return true;
 	}
 
 	/**
@@ -126,7 +124,7 @@ class VideoHooks {
 
 		$width = $width_max = 425;
 		$height = $height_max = 350;
-		$validAlign = array( 'LEFT', 'CENTER', 'RIGHT' );
+		$validAlign = [ 'LEFT', 'CENTER', 'RIGHT' ];
 
 		if ( !empty( $argv['width'] ) && ( $width_max >= $argv['width'] ) ) {
 			$width = $argv['width'];
@@ -165,13 +163,13 @@ class VideoHooks {
 	 * Injects Video Gallery into Category pages
 	 *
 	 * @param CategoryPage $cat
-	 * @return bool
+	 * @return void
 	 */
 	public static function categoryPageWithVideo( &$cat ) {
 		$article = new Article( $cat->mTitle );
 		$article->view();
 
-		if ( $cat->mTitle->getNamespace() == NS_CATEGORY ) {
+		if ( $cat->mTitle->getNamespace() === NS_CATEGORY ) {
 			global $wgOut, $wgRequest;
 			$from = $wgRequest->getVal( 'from' );
 			// @todo CHECKME/FIXME: is this correct? I just added something
@@ -181,8 +179,6 @@ class VideoHooks {
 			$viewer = new CategoryWithVideoViewer( $cat->mTitle, $cat->getContext(), $from, $until );
 			$wgOut->addHTML( $viewer->getHTML() );
 		}
-
-		return false;
 	}
 
 	/**
@@ -193,19 +189,19 @@ class VideoHooks {
 	 * @param User $user Current User object ($wgUser)
 	 * @param string $reason Reason for the deletion [unused]
 	 * @param string $error Error message, if any [unused]
-	 * @return bool
+	 * @return void
 	 */
 	public static function onVideoDelete( &$articleObj, &$user, &$reason, &$error ) {
-		if ( $articleObj->getTitle()->getNamespace() == NS_VIDEO ) {
+		if ( $articleObj->getTitle()->getNamespace() === NS_VIDEO ) {
 			global $wgRequest;
 
 			$context = ( is_callable( $articleObj, 'getContext' ) ? $articleObj->getContext() : RequestContext::getMain() );
 			$videoObj = new Video( $articleObj->getTitle(), $context );
 			$videoName = $videoObj->getName();
 			$oldVideo = $wgRequest->getVal( 'wpOldVideo', false );
-			$where = array(
+			$where = [
 				'video_name' => $videoName
-			);
+			];
 			/*
 			BEWARE! THIS DOES NOT WORK HOW YOU WOULD THINK IT DOES...
 			IT GENERATES INVALID SQL LIKE video_name = \'(Ayumi_Hamasaki_-_Ladies_Night) OR (Video:Ayumi Hamasaki - Ladies Night)\'
@@ -230,7 +226,7 @@ class VideoHooks {
 				$dbw->insertSelect(
 					'oldvideo',
 					'video',
-					array(
+					[
 						'ov_name' => 'video_name',
 						'ov_archive_name' => $dbw->addQuotes( $archiveName ),
 						'ov_url' => 'video_url',
@@ -238,7 +234,7 @@ class VideoHooks {
 						'ov_user_id' => 'video_user_id',
 						'ov_user_name' => 'video_user_name',
 						'ov_timestamp' => 'video_timestamp'
-					),
+					],
 					$where,
 					__METHOD__
 				);
@@ -264,9 +260,6 @@ class VideoHooks {
 			$wgMemc->delete( $videoObj->getCacheKey() );
 			*/
 		}
-
-		// Continue deleting stuff
-		return true;
 	}
 
 	/**
@@ -277,39 +270,34 @@ class VideoHooks {
 	 * @param PageArchive|VideoPageArchive $archive PageArchive object or a child class
 	 * @param Title $title Title for the current page that we're about to
 	 *                     undelete or view
-	 * @return bool
 	 */
 	public static function specialUndeleteSwitchArchive( $archive, $title ) {
-		if ( $title->getNamespace() == NS_VIDEO ) {
+		if ( $title->getNamespace() === NS_VIDEO ) {
 			$archive = new VideoPageArchive( $title );
 		}
-		return true;
 	}
 
 	/**
 	 * Applies the schema changes when the user runs maintenance/update.php.
 	 *
 	 * @param DatabaseUpdater $updater
-	 * @return bool
+	 * @return void
 	 */
 	public static function addTables( $updater ) {
 		$dir = __DIR__;
 		$file = "$dir/../sql/video.sql";
 		$updater->addExtensionTable( 'video', $file );
 		$updater->addExtensionTable( 'oldvideo', $file );
-		return true;
 	}
 
 	/**
 	 * For the Renameuser extension.
 	 *
 	 * @param RenameuserSQL $renameUserSQL
-	 * @return bool
 	 */
 	public static function onUserRename( $renameUserSQL ) {
-		$renameUserSQL->tables['oldvideo'] = array( 'ov_user_name', 'ov_user_id' );
-		$renameUserSQL->tables['video'] = array( 'video_user_name', 'video_user_id' );
-		return true;
+		$renameUserSQL->tables['oldvideo'] = [ 'ov_user_name', 'ov_user_id' ];
+		$renameUserSQL->tables['video'] = [ 'video_user_name', 'video_user_id' ];
 	}
 
 	/**
@@ -317,11 +305,19 @@ class VideoHooks {
 	 *
 	 * @param array $list Array of namespace numbers with corresponding
 	 *                     canonical names
-	 * @return bool
 	 */
 	public static function onCanonicalNamespaces( &$list ) {
 		$list[NS_VIDEO] = 'Video';
 		$list[NS_VIDEO_TALK] = 'Video_talk';
-		return true;
+	}
+
+	/**
+	 * Hook to add Special:UnusedVideos to the list generated by QueryPage::getPages.
+	 * Used by the maintenance script updateSpecialPages.
+	 *
+	 * @param array $wgQueryPages
+	 */
+	public static function onwgQueryPages( &$wgQueryPages ) {
+		$wgQueryPages[] = [ 'SpecialUnusedVideos', 'UnusedVideos' ];
 	}
 }

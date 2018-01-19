@@ -1,10 +1,11 @@
 {
 	"name": "Video",
-	"version": "1.7.2",
+	"version": "1.8.0",
 	"author": [
 		"David Pean",
 		"Jack Phoenix",
-		"John Du Hart"
+		"John Du Hart",
+		"Mainframe98"
 	],
 	"license-name": "GPL-2.0+",
 	"url": "https://www.mediawiki.org/wiki/Extension:Video",
@@ -13,7 +14,8 @@
 	"SpecialPages": {
 		"AddVideo": "AddVideo",
 		"NewVideos": "NewVideos",
-		"Undelete": "SpecialUndeleteWithVideoSupport"
+		"Undelete": "SpecialUndeleteWithVideoSupport",
+		"UnusedVideos": "SpecialUnusedVideos"
 	},
 	"MessagesDirs": {
 		"Video": [
@@ -68,7 +70,8 @@
 		"NewVideos": "includes/specials/SpecialNewVideos.php",
 		"SpecialUndeleteWithVideoSupport": "includes/specials/SpecialUndeleteWithVideoSupport.php",
 		"VideoHooks": "includes/Video.hooks.php",
-		"NewVideosPager": "includes/specials/pagers/NewVideosPager.php"
+		"NewVideosPager": "includes/specials/pagers/NewVideosPager.php",
+		"SpecialUnusedVideos": "includes/specials/SpecialUnusedVideos.php"
 	},
 	"Hooks": {
 		"ArticleFromTitle": [
@@ -105,6 +108,9 @@
 		],
 		"CanonicalNamespaces": [
 			"VideoHooks::onCanonicalNamespaces"
+		],
+		"wgQueryPages": [
+			"VideoHooks::onwgQueryPages"
 		]
 	},
 	"ResourceFileModulePaths": {

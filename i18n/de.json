@@ -7,6 +7,7 @@
 	"video-desc": "Ermöglicht den neuen Video-Namensraum für einbettbare Medien von unterstützten Websites",
 	"addvideo": "Video hinzufügen",
 	"newvideos": "Neue Videos",
+	"unusedvideos": "Nicht verwendete Videos",
 	"video-upload-new-version": "Eine neue Version dieses Videos hochladen",
 	"video-newvideos-showfrom": "Zeige neue Videos ab $1, $2 Uhr",
 	"video-newvideos-list-text": "Unten ist eine Liste mit {{PLURAL:$1|einem Video|<strong>$1</strong> Videos}}.",
@@ -43,5 +44,6 @@
 	"video-showhidebots": "(Bots $1)",
 	"action-addvideo": "Videos von externen Diensten in die Website hinzuzufügen",
 	"right-addvideo": "Videos von externen Diensten in die Website hinzufügen",
-	"video-hidebots": "Hochgeladene Dateien von Bots ausblenden"
+	"video-hidebots": "Hochgeladene Dateien von Bots ausblenden",
+	"unusedvideos-summary": "Die folgenden Videos wurden im Wiki hinzugefügt, werden jedoch auf keiner Seite verwendet."
 }

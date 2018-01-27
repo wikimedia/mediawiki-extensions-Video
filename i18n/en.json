@@ -8,6 +8,7 @@
 	"video-desc": "Allows new Video namespace for embeddable media on supported sites",
 	"addvideo": "Add video",
 	"newvideos": "New videos",
+	"unusedvideos": "Unused videos",
 	"video-upload-new-version": "Upload a new version of this video",
 	"video-newvideos-showfrom": "Show new videos starting from $2, $1",
 	"video-newvideos-list-text": "Below is a list of <strong>$1</strong> {{PLURAL:$1|video|videos}}.",
@@ -45,5 +46,6 @@
 	"video-showhidebots": "($1 bots)",
 	"action-addvideo": "add videos from external services into the site",
 	"right-addvideo": "Add videos from external services into the site",
-	"video-hidebots": "Hide uploads by bots"
+	"video-hidebots": "Hide uploads by bots",
+	"unusedvideos-summary": "The following videos have been added to the wiki but are not used on any pages."
 }

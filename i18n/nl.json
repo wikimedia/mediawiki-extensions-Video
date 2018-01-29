@@ -7,6 +7,7 @@
 	"video-desc": "Voegt een nieuwe Video naamruimte toe voor het invoegen van media van ondersteunde sites",
 	"addvideo": "Video toevoegen",
 	"newvideos": "Nieuwe video's",
+	"unusedvideos": "Ongebruikte video's",
 	"video-upload-new-version": "Een nieuwe versie van deze video uploaden",
 	"video-newvideos-showfrom": "Nieuwe video's bekijken vanaf $2, $1",
 	"video-newvideos-list-text": "Hier volgt een lijst met <strong>$1</strong> {{PLURAL:$1|video|video's}}.",
@@ -43,5 +44,6 @@
 	"video-showhidebots": "(Bots $1)",
 	"action-addvideo": "video's van externe diensten aan deze site toe te voegen",
 	"right-addvideo": "Video's van externe diensten aan deze site toe te voegen",
-	"video-hidebots": "Uploads door bots verbergen"
+	"video-hidebots": "Uploads door bots verbergen",
+	"unusedvideos-summary": "De volgende video's zijn aanwezig op de wiki maar worden nergens gebruikt."
 }

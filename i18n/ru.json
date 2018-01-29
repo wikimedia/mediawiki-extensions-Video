@@ -1,11 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
-			"Wirbel78"
+			"Wirbel78",
+			"Redredsonia"
 		]
 	},
 	"addvideo": "Добавить видео",
 	"newvideos": "Новые видео",
+	"unusedvideos": "Неиспользуемые видео",
 	"video-addvideo-title": "Добавить видео",
 	"video-addvideo-button": "Добавить видео",
 	"video-category-name": "Видео",

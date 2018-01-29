@@ -9,6 +9,7 @@
 	"video-desc": "Permite un espacio de nombres nuevo llamado \"Video\" para contenido multimedia incrustable en sitios que lo admitan",
 	"addvideo": "Añadir video",
 	"newvideos": "Videos nuevos",
+	"unusedvideos": "Vídeos no utilizados",
 	"video-upload-new-version": "Subir una versión nueva de este video",
 	"video-newvideos-showfrom": "Mostrar videos nuevos empezando desde $2, $1",
 	"video-newvideos-list-text": "Debajo hay una lista de <strong>$1</strong> {{PLURAL:$1|video|videos}}.",
@@ -45,5 +46,6 @@
 	"video-showhidebots": "($1 bots)",
 	"action-addvideo": "añadir videos de servicios externos en este sitio",
 	"right-addvideo": "Añadir videos de servicios externos en este sitio",
-	"video-hidebots": "Ocultar subidas de bots"
+	"video-hidebots": "Ocultar subidas de bots",
+	"unusedvideos-summary": "Los vídeos siguientes se han añadido al wiki pero no se utilizan en ninguna página."
 }

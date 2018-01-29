@@ -3,12 +3,14 @@
 		"authors": [
 			"Jack Phoenix",
 			"Gomoko",
-			"Urhixidur"
+			"Urhixidur",
+			"Wladek92"
 		]
 	},
 	"video-desc": "Permet un nouvel espace de noms Video pour les médias inclus dans les sites supportés",
 	"addvideo": "Ajouter une vidéo",
 	"newvideos": "Nouvelles vidéos",
+	"unusedvideos": "Vidéos non utilisées",
 	"video-upload-new-version": "Importer une nouvelle version de cette vidéo",
 	"video-newvideos-showfrom": "Afficher les nouvelles vidéos à partir du $1 à $2",
 	"video-newvideos-list-text": "Voici une liste de <strong>$1</strong> vidéo{{PLURAL:$1||s}}.",
@@ -45,5 +47,6 @@
 	"video-showhidebots": "($1 robots)",
 	"action-addvideo": "ajouter des vidéos au site à partir de services externes",
 	"right-addvideo": "Ajouter des vidéos au site à partir de services externes",
-	"video-hidebots": "Masquer les téléversements par robots"
+	"video-hidebots": "Masquer les téléversements par robots",
+	"unusedvideos-summary": "Les vidéos suivantes ont été ajoutées au wiki mais ne sont utilisées dans aucune page."
 }

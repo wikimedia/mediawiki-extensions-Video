@@ -7,6 +7,7 @@
 	"video-desc": "允许新视频名字空间用于在受支持网站上的可嵌入媒体",
 	"addvideo": "添加视频",
 	"newvideos": "新视频",
+	"unusedvideos": "未使用视频",
 	"video-upload-new-version": "上传此视频的新版本",
 	"video-newvideos-showfrom": "显示从$1 $2开始的新视频",
 	"video-newvideos-list-text": "以下是<strong>$1</strong>个{{PLURAL:$1|视频}}列表。",
@@ -43,5 +44,6 @@
 	"video-showhidebots": "（$1机器人）",
 	"action-addvideo": "从外部服务条件视频至网站",
 	"right-addvideo": "从外部服务条件视频至网站",
-	"video-hidebots": "隐藏机器人上传"
+	"video-hidebots": "隐藏机器人上传",
+	"unusedvideos-summary": "以下视频已添加至wiki，但未用于任何页面上。"
 }

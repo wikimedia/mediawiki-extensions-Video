@@ -1,4 +1,10 @@
 {
-	"@metadata": [],
-	"video-showhidebots": "($1 bots)"
+	"@metadata": {
+		"authors": [
+			"Fitoschido"
+		]
+	},
+	"unusedvideos": "Vídeos no utilitzats",
+	"video-showhidebots": "($1 bots)",
+	"unusedvideos-summary": "Els vídeos següents s’han afegit al wiki però no es fan servir en cap pàgina."
 }

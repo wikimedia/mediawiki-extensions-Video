@@ -6,6 +6,7 @@
 	},
 	"addvideo": "Aggiungi video",
 	"newvideos": "Nuovi video",
+	"unusedvideos": "Video non utilizzati",
 	"video-upload-new-version": "Carica una nuova versione di questo video",
 	"video-newvideos-list-text": "Di seguito è riportato un elenco di <strong>$1</strong> {{PLURAL:$1|video}}.",
 	"video-addvideo-watchlist": "Aggiungi questo video alla tua lista degli osservati speciali",

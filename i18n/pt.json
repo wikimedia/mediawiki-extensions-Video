@@ -5,7 +5,7 @@
 			"Athena in Wonderland"
 		]
 	},
-	"video-desc": "Permite um espaço nominal novo chamado Vídeo, para ficheiros multimédia incorporáveis existentes em sites suportados",
+	"video-desc": "Permite um espaço nominal novo chamado Vídeo, para ficheiros multimédia incorporáveis existentes em sítios suportados",
 	"addvideo": "Adicionar vídeo",
 	"newvideos": "Vídeos novos",
 	"unusedvideos": "Vídeos não utilizados",
@@ -43,8 +43,8 @@
 	"video-no-links-to-video": "Não existem páginas com hiperligações para este vídeo.",
 	"video-more-links-to-video": "Ver [[Special:WhatLinksHere/$1|mais hiperligações]] para este vídeo.",
 	"video-showhidebots": "($1 robôs)",
-	"action-addvideo": "adicionar vídeos de serviços externos ao site",
-	"right-addvideo": "Adicionar vídeos de serviços externos ao site",
+	"action-addvideo": "adicionar vídeos de serviços externos ao sítio",
+	"right-addvideo": "Adicionar vídeos de serviços externos ao sítio",
 	"video-hidebots": "Ocultar carregamentos de robôs",
 	"unusedvideos-summary": "Os seguintes vídeos foram adicionados à wiki mas não são usados em nenhuma página."
 }

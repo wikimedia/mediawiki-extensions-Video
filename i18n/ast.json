@@ -7,6 +7,7 @@
 	"video-desc": "Permite'l nuevu espaciu de nomes Videu pa conteníu multimedia incrustable nos sitios con encontu",
 	"addvideo": "Añadir videu",
 	"newvideos": "Videos nuevos",
+	"unusedvideos": "Videos ensin utilizar",
 	"video-upload-new-version": "Xubir una versión nueva d'esti videu",
 	"video-newvideos-showfrom": "Amosar videos nuevos empezando dende $2, $1",
 	"video-newvideos-list-text": "Debaxo hai una llista de <strong>$1</strong> {{PLURAL:$1|videu|videos}}.",
@@ -43,5 +44,6 @@
 	"video-showhidebots": "($1 bots)",
 	"action-addvideo": "añadir videos de servicios esternos a esti sitiu",
 	"right-addvideo": "Añadir videos de servicios esternos a esti sitiu",
-	"video-hidebots": "Despintar les xubíes de bots"
+	"video-hidebots": "Despintar les xubíes de bots",
+	"unusedvideos-summary": "Los videos siguientes añadiéronse a la wiki pero nun s'utilicen en nenguna páxina."
 }

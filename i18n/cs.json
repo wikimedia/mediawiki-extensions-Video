@@ -1,4 +1,10 @@
 {
-	"@metadata": [],
-	"video-showhidebots": "($1 roboty)"
+	"@metadata": {
+		"authors": [
+			"Ilimanaq29"
+		]
+	},
+	"unusedvideos": "Nepoužívaná videa",
+	"video-showhidebots": "($1 roboty)",
+	"unusedvideos-summary": "Následující videa byla vložena na wiki, ale nejsou použita na žádné stránce."
 }

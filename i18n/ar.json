@@ -1,4 +1,9 @@
 {
-	"@metadata": [],
+	"@metadata": {
+		"authors": [
+			"محمد أحمد عبد الفتاح"
+		]
+	},
+	"unusedvideos": "فيدوهات غير مستخدمة",
 	"video-showhidebots": "($1 بوتات)"
 }

@@ -1,4 +1,9 @@
 {
-	"@metadata": [],
+	"@metadata": {
+		"authors": [
+			"Otokoume"
+		]
+	},
+	"unusedvideos": "使われていない動画",
 	"video-showhidebots": "(ボットを$1)"
 }

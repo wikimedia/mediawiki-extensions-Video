@@ -1,4 +1,9 @@
 {
-	"@metadata": [],
+	"@metadata": {
+		"authors": [
+			"Chrumps"
+		]
+	},
+	"unusedvideos": "Nieużywane pliki wideo",
 	"video-showhidebots": "($1 boty)"
 }

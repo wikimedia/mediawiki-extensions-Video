@@ -7,6 +7,7 @@
 	"video-desc": "지원되는 사이트에서 포함 가능한 미디어에 대해 동영상 이름공간을 허용합니다",
 	"addvideo": "동영상 추가",
 	"newvideos": "새로운 동영상",
+	"unusedvideos": "사용하지 않는 동영상",
 	"video-upload-new-version": "이 동영상의 새로운 버전을 올리기",
 	"video-newvideos-showfrom": "$1 $2부터 시작하는 새 동영상 보기",
 	"video-newvideos-list-text": "{{PLURAL:$1|동영상}} <strong>$1</strong>개의 목록입니다.",

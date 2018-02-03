@@ -1,4 +1,9 @@
 {
-	"@metadata": [],
+	"@metadata": {
+		"authors": [
+			"چۈشكۈن"
+		]
+	},
+	"unusedvideos": "ئىشلىتىلمىگەن سىنلار",
 	"video-showhidebots": "($1 ماشىنا ئادەم)"
 }

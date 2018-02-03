@@ -119,8 +119,7 @@
 	},
 	"ResourceModules": {
 		"ext.video": {
-			"styles": "resources/css/Video.css",
-			"position": "top"
+			"styles": "resources/css/Video.css"
 		}
 	},
 	"LogTypes": [

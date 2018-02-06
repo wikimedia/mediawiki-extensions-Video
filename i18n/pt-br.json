@@ -44,5 +44,6 @@
 	"video-showhidebots": "($1 robôs)",
 	"action-addvideo": "adicionar vídeos de serviços externos ao site",
 	"right-addvideo": "Adicionar vídeos de serviços externos ao site",
-	"video-hidebots": "Ocultar carregamentos de robôs"
+	"video-hidebots": "Ocultar carregamentos de robôs",
+	"unusedvideos-summary": "Os seguintes vídeos foram adicionados ao wiki, mas não são usados em nenhuma página."
 }

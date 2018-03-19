@@ -1,9 +1,36 @@
 {
 	"@metadata": {
 		"authors": [
-			"Chrumps"
+			"Chrumps",
+			"Railfail536"
 		]
 	},
+	"addvideo": "Dodaj film",
+	"newvideos": "Nowe filmy",
 	"unusedvideos": "Nieużywane pliki wideo",
-	"video-showhidebots": "($1 boty)"
+	"video-upload-new-version": "Załaduj nowszą wersję tego filmu",
+	"video-newvideos-showfrom": "Pokaż nowe filmy począwszy od $2, $1",
+	"video-newvideos-list-text": "Poniżej na liście {{PLURAL:$1|znajduje|znajdują|znajduje}} się $1 {{PLURAL:$1|film|filmy|filmów}}.",
+	"video-addvideo-watchlist": "Dodaj ten film do obserwowanych",
+	"video-addvideo-title": "Dodaj film",
+	"video-addvideo-dest": "Dodaj film do $1",
+	"video-addvideo-button": "Dodaj film",
+	"video-addvideo-exists": "Nazwa dla twojego filmu już istnieje. Proszę wybierz inną nazwę dla filmu.",
+	"video-addvideo-title-label": "Nazwa filmu:",
+	"video-addvideo-embed-label": "Osadź kod lub adres URL:",
+	"video-no-videos": "Nie znaleziono nowych filmów.",
+	"log-name-video": "Rejestr filmów",
+	"logentry-video-add": "$1 dodał film $3",
+	"logentry-video-update": "$1 przesłał film $3",
+	"category-video-header": "Filmy w kategorii „$1”",
+	"video-embed": "Osadź",
+	"video-history": "Historia filmu",
+	"video-revert-success": "Przywrócono poprzednią wersję.",
+	"video-category-name": "Filmy",
+	"video-no-links-to-video": "Żadna strona nie odwołuje się do tego filmu.",
+	"video-more-links-to-video": "Pokaż [[Special:WhatLinksHere/$1|więcej odnośników]] do tego filmu.",
+	"video-showhidebots": "($1 boty)",
+	"action-addvideo": "dodaj filmy z zewnętrznych serwisów",
+	"right-addvideo": "Dodaj filmy z zewnętrznych serwisów",
+	"video-hidebots": "Ukryj pliki przesłane przez boty"
 }

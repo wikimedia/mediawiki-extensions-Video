@@ -16,9 +16,6 @@
  * @date 15 January 2017
  */
 
-// Not sure if we even need this, but better safe than sorry...
-use Wikimedia\Rdbms\ResultWrapper;
-
 class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 	/** @var Title */
 	private $mTargetObj;

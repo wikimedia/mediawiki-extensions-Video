@@ -12,7 +12,7 @@ class VideoPageArchive extends PageArchive {
 	 * List the deleted file revisions for this video page.
 	 * Returns a result wrapper with various oldvideo fields.
 	 *
-	 * @return ResultWrapper
+	 * @return \Wikimedia\Rdbms\IResultWrapper
 	 */
 	function listFiles() {
 		$dbr = wfGetDB( DB_REPLICA );

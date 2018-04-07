@@ -1,6 +1,6 @@
 <?php
 
-use Wikimedia\Rdbms\ResultWrapper;
+use Wikimedia\Rdbms\IResultWrapper;
 use Wikimedia\Rdbms\IDatabase;
 
 /**
@@ -25,7 +25,7 @@ class SpecialUnusedVideos extends QueryPage {
 	 * @param OutputPage $out OutputPage to print to
 	 * @param Skin $skin User skin to use [unused]
 	 * @param IDatabase $dbr (read) connection to use
-	 * @param ResultWrapper $res Result pointer
+	 * @param IResultWrapper $res Result pointer
 	 * @param int $num Number of available result rows
 	 * @param int $offset Paging offset
 	 */

@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"KATRINE1992"
+			"KATRINE1992",
+			"Nikosgranturismogt"
 		]
 	},
 	"video-desc": "Επιτρέπει το διάστημα για εγγραφή ονόματος νέου Βίντεο για τα μέσα που εισάγονται σε υπάρχοντες φακέλλους",
@@ -30,15 +31,15 @@
 	"video-embed": "Εισάγετε",
 	"video-history": "Ιστορικό βίντεο",
 	"video-revert": "rev",
-	"video-histlegend": "Λεζάντα : ({{int:cur}}}=αυτό είναι το παρόν βίντεο, ({{int:video-revert}})=επαναφορά στην πρώην εκδοχή\n<br/><i>Κάνετε κλικ για να δείτε το βίντεο URL αυτήν την ημερομηνία </i>",
+	"video-histlegend": "Λεζάντα: ({{int:cur}}} = αυτό είναι το παρόν βίντεο, ({{int:video-revert}}) = επαναφορά στην πρώην εκδοχή.\n<br/><i>Κάνετε κλικ για να δείτε το βίντεο URL αυτήν την ημερομηνία </i>",
 	"video-revert-success": "Επαναφορά στην προηγούμενη μορφή",
 	"video-revert-legend": "Επαναφέρετε το βίντεο",
-	"video-revert-intro": "Είστε έτοιμοι να επαναφέρετε το βίντεο '''{{: {{ns: video}}: $1|$1|}}'''στην {εκδοχή ως $3,$2}.",
+	"video-revert-intro": "Είστε έτοιμοι να επαναφέρετε το βίντεο '''[[:{{ns:video}}:$1|$1]]''' στην [έκδοση $4 ως $3, $2].",
 	"video-category-name": "Βίντεο",
 	"video-links": "Σύνδεσμοι βίντεο",
 	"video-links-to-video": "Η ακόλουθη σελίδα {{PLURAL:$1|page links|$1 page link}} σε αυτό το βίντεο:",
 	"video-no-links-to-video": "Δεν υπάρχουν σελίδες στο σύνδεσμο αυτού του βίντεο",
-	"video-more-links-to-video": "Δέστε το {{Special: WhatLinksHere/$1|περισσότεροι σύνδεσμοι}} σε αυτό το βίντεο.",
+	"video-more-links-to-video": "Δείτε το [[Special:WhatLinksHere/$1|περισσότεροι σύνδεσμοι]] σε αυτό το βίντεο.",
 	"video-showhidebots": "($1 bots)",
 	"action-addvideo": "προσθέσετε βίντεο από τις εξωτερικές υπηρεσίες στην ιστοσελίδα",
 	"right-addvideo": "Προσθέσετε βίντεο από εξωτερικές υπηρεσίες στην ιστοσελίδα",

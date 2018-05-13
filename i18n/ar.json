@@ -1,9 +1,50 @@
 {
 	"@metadata": {
 		"authors": [
-			"محمد أحمد عبد الفتاح"
+			"محمد أحمد عبد الفتاح",
+			"ديفيد"
 		]
 	},
+	"video-desc": "يتيح نطاق فيديو جديد للوسائط القابلة للتضمين في المواقع المدعومة",
+	"addvideo": "إضافة فيديو",
+	"newvideos": "مقاطع فيديو جديدة",
 	"unusedvideos": "فيدوهات غير مستخدمة",
-	"video-showhidebots": "($1 بوتات)"
+	"video-upload-new-version": "رفع نسخة جديدة من هذا الفيديو",
+	"video-newvideos-showfrom": "عرض مقاطع فيديو جديدة تبدأ من $2، $1",
+	"video-newvideos-list-text": "في ما يلي قائمة <strong>$1</strong> {{PLURAL:$1|الفيديو|مقاطع الفيديو}}.",
+	"video-addvideo-watchlist": "أضف هذا الفيديو إلى قائمة مراقبتي",
+	"video-addvideo-title": "أضف فيديو",
+	"video-addvideo-dest": "أضف فيديو لـ$1",
+	"video-addvideo-button": "أضف فيديو",
+	"video-addvideo-instructions": "من السهل إضافة فيديو إلى {{SITENAME}}. \nما عليك سوى لصق رمز تضمين ''أو'' مسار الفيديو في النموذج التالي، وإضافة اسم للفيديو، والضغط على الزر \"{{int:video-addvideo-button}}\" button.\nإذا كنت تريد تضمين الفيديو على صفحة، استخدم الصيغة التالية: '''<nowiki>[[</nowiki>{{ns:video}}:عنوان الفيديو<nowiki>]]</nowiki>'''.\nيمكنك إضافة فيديو من مقدمي الخدمة التالين: \n{{int:video-provider-list}}\n===مثال على رمز تضمين فيديو===\nهذا مثال على رمز تضمين فيديو من يوتيوب:\n\n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">\n<nowiki><object width=\"425\" height=\"355\">\n<param name=\"movie\" value=\"http://www.youtube.com/v/hUcFWPgB8oY\"></param>\n<param name=\"wmode\" value=\"transparent\"></param>\n<embed src=\"http://www.youtube.com/v/hUcFWPgB8oY\" type=\"application/x-shockwave-flash\"\nwmode=\"transparent\" width=\"425\" height=\"355\"></embed>\n</object></nowiki>\n</pre>\n\n===مثال على مسار فيديو===\nأدناه مثال لمسار فيديو من يوتيوب: \n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">http://www.youtube.com/watch?v=hUcFWPgB8oY</pre>",
+	"video-addvideo-invalidcode": "الرمز أو المسار الذي لصقته غير صالح; الرجاء المحاولة مرة أخرى.",
+	"video-addvideo-exists": "عنوان الفيديو الخاص بك موجود بالفعل; يرجى اختيار عنوان آخر للفيديو.",
+	"video-addvideo-title-label": "عنوان الفيديو:",
+	"video-addvideo-embed-label": "رمز أو مسار التضمين:",
+	"video-no-videos": "لا توجد مقاطع فيديو جديدة.",
+	"log-name-video": "سجل الفيديو",
+	"log-description-video": "هذا سجل مقاطع الفيديو المضافة والتحديثات لمقاطع الفيديو الموجودة.",
+	"logentry-video-add": "أضاف $1 الفيديو $3",
+	"logentry-video-update": "حدث $1 الفيديو $3",
+	"category-video-header": "مقاطع الفيديو في التصنيف \"$1\"",
+	"category-video-count": "هناك {{PLURAL:$1|فيديو واحد|$1 مقاطع فيديو}} في هذا التصنيف.",
+	"video-novideo-linktext": "أضفه",
+	"video-novideo": "لا يوجد فيديو بهذا الاسم، يمكنك $1.",
+	"video-embed": "تضمين",
+	"video-history": "تاريخ الفيديو",
+	"video-revert": "سا",
+	"video-histlegend": "العنوان التفسيري: ({{int:cur}}) = هذا هو الفيديو الحالي، ({{int:video-revert}}) = العودة إلى هذا الإصدار القديم،\n<br /><i>انقر على التاريخ لمشاهدة مسار للفيديو في ذلك التاريخ</i>.",
+	"video-revert-success": "تم الاسترجاع لنسخة أقدم",
+	"video-revert-legend": "استرجع الملف",
+	"video-revert-intro": "أنت على وشك إرجاع الفيديو '''[[:{{ns:video}}:$1|$1]]''' إلى [$4 الإصدار اعتبارا من $3، $2].",
+	"video-category-name": "مقاطع فيديو",
+	"video-links": "روابط الفيديو",
+	"video-links-to-video": "{{PLURAL:$1|الصفحة|الصفحات الـ$1}} التالية تصل لهذا الفيديو:",
+	"video-no-links-to-video": "لا توجد صفحات تصل إلى هذا الفيديو.",
+	"video-more-links-to-video": "عرض [[Special:WhatLinksHere/$1|المزيد من الوصلات]] إلى هذا الفيديو.",
+	"video-showhidebots": "($1 بوتات)",
+	"action-addvideo": "إضافة مقاطع فيديو من خدمات خارجية إلى الموقع",
+	"right-addvideo": "إضافة مقاطع فيديو من خدمات خارجية إلى الموقع",
+	"video-hidebots": "إخفاء المرفوعات بواسطة البوتات",
+	"unusedvideos-summary": "تمت إضافة مقاطع الفيديو التالية إلى الويكي ولكن لم يتم استخدامها في أية صفحات."
 }

@@ -168,7 +168,7 @@ class VideoGallery {
 			$nb = '';
 
 			$textlink = $this->mShowFilename ?
-				Linker::linkKnown( $nt, htmlspecialchars( $wgLang->truncate( $nt->getText(), 30, '...' ) ) ) . "<br />\n" :
+				Linker::linkKnown( $nt, htmlspecialchars( $wgLang->truncateForVisual( $nt->getText(), 30, '...' ) ) ) . "<br />\n" :
 				'';
 
 			# ATTENTION: The newline after <div class="gallerytext"> is needed to accommodate htmltidy which

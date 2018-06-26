@@ -34,17 +34,19 @@ class VideoPageArchive extends PageArchive {
 	 * Once restored, the items will be removed from the archive tables.
 	 * The deletion log will be updated with an undeletion notice.
 	 *
-	 * @param $timestamps Array: pass an empty array to restore all revisions,
-	 *                           otherwise list the ones to undelete.
-	 * @param $comment String: reason for undeleting
-	 * @param $fileVersions Array
-	 * @param $unsuppress Boolean: false by default
-	 *
-	 * @return array(number of file revisions restored, number of video revisions restored, log message)
-	 *         on success, false on failure
+	 * @param array $timestamps Pass an empty array to restore all revisions,
+	 *   otherwise list the ones to undelete.
+	 * @param string $comment
+	 * @param array $fileVersions
+	 * @param bool $unsuppress
+	 * @param User $user User performing the action, or null to use $wgUser
+	 * @param string|string[] $tags Change tags to add to log entry
+	 *   ($user should be able to add the specified tags before this is called)
+	 * @return array|bool array(number of file revisions restored, number of image revisions
+	 *   restored, log message) on success, false on failure.
 	 */
 	function undelete( $timestamps, $comment = '', $fileVersions = [],
-		$unsuppress = false, User $user = null
+		$unsuppress = false, User $user = null, $tags = null
 	) {
 		// We currently restore only whole deleted videos, a restore link from
 		// log could take us here...

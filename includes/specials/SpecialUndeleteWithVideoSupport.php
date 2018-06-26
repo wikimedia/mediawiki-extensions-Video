@@ -232,7 +232,13 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 			[ 'undeletepagetitle', wfEscapeWikiText( $this->mTargetObj->getPrefixedText() ) ]
 		);
 
-		$archive = new PageArchive( $this->mTargetObj, $this->getConfig() );
+		// CORE HACK
+		if ( $this->mTargetObj->inNamespace( NS_VIDEO ) ) {
+			$archive = new VideoPageArchive( $this->mTargetObj, $this->getConfig() );
+		} else {
+			$archive = new PageArchive( $this->mTargetObj, $this->getConfig() );
+		}
+		// CORE HACK END
 		Hooks::run( 'UndeleteForm::showHistory', [ &$archive, $this->mTargetObj ] );
 
 		$out->addHTML( '<div class="mw-undelete-history">' );
@@ -646,7 +652,13 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 		$this->checkReadOnly();
 
 		$out = $this->getOutput();
-		$archive = new PageArchive( $this->mTargetObj, $this->getConfig() );
+		// CORE HACK
+		if ( $this->mTargetObj->inNamespace( NS_VIDEO ) ) {
+			$archive = new VideoPageArchive( $this->mTargetObj, $this->getConfig() );
+		} else {
+			$archive = new PageArchive( $this->mTargetObj, $this->getConfig() );
+		}
+		// CORE HACK END
 		Hooks::run( 'UndeleteForm::undelete', [ &$archive, $this->mTargetObj ] );
 		$ok = $archive->undelete(
 			$this->mTargetTimestamp,
@@ -691,4 +703,177 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 			);
 		}
 	}
+
+	// This one's from MW 1.31.0. It's a private function in the parent class so
+	// this class cannot call it, not to mention we still need to use our own
+	// archive class here anyway.
+	private function showRevision( $timestamp ) {
+		if ( !preg_match( '/[0-9]{14}/', $timestamp ) ) {
+			return;
+		}
+
+		// CORE HACK
+		if ( $this->mTargetObj->inNamespace( NS_VIDEO ) ) {
+			$archive = new VideoPageArchive( $this->mTargetObj, $this->getConfig() );
+		} else {
+			$archive = new PageArchive( $this->mTargetObj, $this->getConfig() );
+		}
+		// END CORE HACK
+		if ( !Hooks::run( 'UndeleteForm::showRevision', [ &$archive, $this->mTargetObj ] ) ) {
+			return;
+		}
+		$rev = $archive->getRevision( $timestamp );
+
+		$out = $this->getOutput();
+		$user = $this->getUser();
+
+		if ( !$rev ) {
+			$out->addWikiMsg( 'undeleterevision-missing' );
+
+			return;
+		}
+
+		if ( $rev->isDeleted( Revision::DELETED_TEXT ) ) {
+			if ( !$rev->userCan( Revision::DELETED_TEXT, $user ) ) {
+				$out->wrapWikiMsg(
+					"<div class='mw-warning plainlinks'>\n$1\n</div>\n",
+				$rev->isDeleted( Revision::DELETED_RESTRICTED ) ?
+					'rev-suppressed-text-permission' : 'rev-deleted-text-permission'
+				);
+
+				return;
+			}
+
+			$out->wrapWikiMsg(
+				"<div class='mw-warning plainlinks'>\n$1\n</div>\n",
+				$rev->isDeleted( Revision::DELETED_RESTRICTED ) ?
+					'rev-suppressed-text-view' : 'rev-deleted-text-view'
+			);
+			$out->addHTML( '<br />' );
+			// and we are allowed to see...
+		}
+
+		if ( $this->mDiff ) {
+			$previousRev = $archive->getPreviousRevision( $timestamp );
+			if ( $previousRev ) {
+				$this->showDiff( $previousRev, $rev );
+				if ( $this->mDiffOnly ) {
+					return;
+				}
+
+				$out->addHTML( '<hr />' );
+			} else {
+				$out->addWikiMsg( 'undelete-nodiff' );
+			}
+		}
+
+		$link = $this->getLinkRenderer()->makeKnownLink(
+			$this->getPageTitle( $this->mTargetObj->getPrefixedDBkey() ),
+			$this->mTargetObj->getPrefixedText()
+		);
+
+		$lang = $this->getLanguage();
+
+		// date and time are separate parameters to facilitate localisation.
+		// $time is kept for backward compat reasons.
+		$time = $lang->userTimeAndDate( $timestamp, $user );
+		$d = $lang->userDate( $timestamp, $user );
+		$t = $lang->userTime( $timestamp, $user );
+		$userLink = Linker::revUserTools( $rev );
+
+		$content = $rev->getContent( Revision::FOR_THIS_USER, $user );
+
+		$isText = ( $content instanceof TextContent );
+
+		if ( $this->mPreview || $isText ) {
+			$openDiv = '<div id="mw-undelete-revision" class="mw-warning">';
+		} else {
+			$openDiv = '<div id="mw-undelete-revision">';
+		}
+		$out->addHTML( $openDiv );
+
+		// Revision delete links
+		if ( !$this->mDiff ) {
+			$revdel = Linker::getRevDeleteLink( $user, $rev, $this->mTargetObj );
+			if ( $revdel ) {
+				$out->addHTML( "$revdel " );
+			}
+		}
+
+		$out->addHTML( $this->msg( 'undelete-revision' )->rawParams( $link )->params(
+			$time )->rawParams( $userLink )->params( $d, $t )->parse() . '</div>' );
+
+		if ( !Hooks::run( 'UndeleteShowRevision', [ $this->mTargetObj, $rev ] ) ) {
+			return;
+		}
+
+		if ( ( $this->mPreview || !$isText ) && $content ) {
+			// NOTE: non-text content has no source view, so always use rendered preview
+
+			$popts = $out->parserOptions();
+
+			$pout = $content->getParserOutput( $this->mTargetObj, $rev->getId(), $popts, true );
+			$out->addParserOutput( $pout, [
+				'enableSectionEditLinks' => false,
+			] );
+		}
+
+		$out->enableOOUI();
+		$buttonFields = [];
+
+		if ( $isText ) {
+			// source view for textual content
+			$sourceView = Xml::element( 'textarea', [
+				'readonly' => 'readonly',
+				'cols' => 80,
+				'rows' => 25
+			], $content->getNativeData() . "\n" );
+
+			$buttonFields[] = new OOUI\ButtonInputWidget( [
+				'type' => 'submit',
+				'name' => 'preview',
+				'label' => $this->msg( 'showpreview' )->text()
+			] );
+		} else {
+			$sourceView = '';
+			$previewButton = '';
+		}
+
+		$buttonFields[] = new OOUI\ButtonInputWidget( [
+			'name' => 'diff',
+			'type' => 'submit',
+			'label' => $this->msg( 'showdiff' )->text()
+		] );
+
+		$out->addHTML(
+			$sourceView .
+				Xml::openElement( 'div', [
+					'style' => 'clear: both' ] ) .
+				Xml::openElement( 'form', [
+					'method' => 'post',
+					'action' => $this->getPageTitle()->getLocalURL( [ 'action' => 'submit' ] ) ] ) .
+				Xml::element( 'input', [
+					'type' => 'hidden',
+					'name' => 'target',
+					'value' => $this->mTargetObj->getPrefixedDBkey() ] ) .
+				Xml::element( 'input', [
+					'type' => 'hidden',
+					'name' => 'timestamp',
+					'value' => $timestamp ] ) .
+				Xml::element( 'input', [
+					'type' => 'hidden',
+					'name' => 'wpEditToken',
+					'value' => $user->getEditToken() ] ) .
+				new OOUI\FieldLayout(
+					new OOUI\Widget( [
+						'content' => new OOUI\HorizontalLayout( [
+							'items' => $buttonFields
+						] )
+					] )
+				) .
+				Xml::closeElement( 'form' ) .
+				Xml::closeElement( 'div' )
+		);
+	}
+
 }

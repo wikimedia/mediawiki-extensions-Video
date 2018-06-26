@@ -7,10 +7,10 @@
 class CategoryWithVideoViewer extends CategoryViewer {
 
 	function clearCategoryState() {
-		$this->articles = array();
-		$this->articles_start_char = array();
-		$this->children = array();
-		$this->children_start_char = array();
+		$this->articles = [];
+		$this->articles_start_char = [];
+		$this->children = [];
+		$this->children_start_char = [];
 		if ( $this->showGallery ) {
 			$this->gallery = ImageGalleryBase::factory();
 		}
@@ -81,18 +81,22 @@ class CategoryWithVideoViewer extends CategoryViewer {
 	function doCategoryQuery() {
 		$dbr = wfGetDB( DB_REPLICA, 'category' );
 
-		$this->nextPage = array(
+		$this->nextPage = [
 			'page' => null,
 			'subcat' => null,
 			'file' => null,
-		);
-		$this->flip = array( 'page' => false, 'subcat' => false, 'file' => false );
+		];
+		$this->flip = [
+			'page' => false,
+			'subcat' => false,
+			'file' => false
+		];
 
-		foreach ( array( 'page', 'subcat', 'file' ) as $type ) {
+		foreach ( [ 'page', 'subcat', 'file' ] as $type ) {
 			# Get the sortkeys for start/end, if applicable.  Note that if
 			# the collation in the database differs from the one
 			# set in $wgCategoryCollation, pagination might go totally haywire.
-			$extraConds = array( 'cl_type' => $type );
+			$extraConds = [ 'cl_type' => $type ];
 			if ( isset( $this->from[$type] ) && $this->from[$type] !== null ) {
 				$extraConds[] = 'cl_sortkey >= '
 					. $dbr->addQuotes( $this->collation->getSortKey( $this->from[$type] ) );
@@ -103,25 +107,25 @@ class CategoryWithVideoViewer extends CategoryViewer {
 			}
 
 			$res = $dbr->select(
-				array( 'page', 'categorylinks', 'category' ),
-				array( 'page_id', 'page_title', 'page_namespace', 'page_len',
+				[ 'page', 'categorylinks', 'category' ],
+				[ 'page_id', 'page_title', 'page_namespace', 'page_len',
 					'page_is_redirect', 'cl_sortkey', 'cat_id', 'cat_title',
 					'cat_subcats', 'cat_pages', 'cat_files',
-					'cl_sortkey_prefix', 'cl_collation' ),
-				array_merge( array( 'cl_to' => $this->title->getDBkey() ), $extraConds ),
+					'cl_sortkey_prefix', 'cl_collation' ],
+				array_merge( [ 'cl_to' => $this->title->getDBkey() ], $extraConds ),
 				__METHOD__,
-				array(
-					'USE INDEX' => array( 'categorylinks' => 'cl_sortkey' ),
+				[
+					'USE INDEX' => [ 'categorylinks' => 'cl_sortkey' ],
 					'LIMIT' => $this->limit + 1,
 					'ORDER BY' => $this->flip[$type] ? 'cl_sortkey DESC' : 'cl_sortkey',
-				),
-				array(
-					'categorylinks' => array( 'INNER JOIN', 'cl_from = page_id' ),
-					'category' => array( 'LEFT JOIN', array(
+				],
+				[
+					'categorylinks' => [ 'INNER JOIN', 'cl_from = page_id' ],
+					'category' => [ 'LEFT JOIN', [
 						'cat_title = page_title',
 						'page_namespace' => NS_CATEGORY
-					) )
-				)
+					] ]
+				]
 			);
 
 			$count = 0;

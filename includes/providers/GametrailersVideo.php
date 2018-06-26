@@ -2,7 +2,7 @@
 
 class GametrailersVideoProvider extends MTVNetworksVideoProvider {
 	public static function getDomains() {
-		return array( 'gametrailers.com' );
+		return [ 'gametrailers.com' ];
 	}
 
 	protected function extractVideoId( $url ) {

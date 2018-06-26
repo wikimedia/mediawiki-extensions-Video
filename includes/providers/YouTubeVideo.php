@@ -18,7 +18,7 @@ class YouTubeVideoProvider extends BaseVideoProvider {
 	 * @return string Video ID
 	 */
 	protected function extractVideoId( $url ) {
-		$matches = array();
+		$matches = [];
 
 		if ( preg_match( $this->videoIdRegex, $url, $matches ) ) {
 			$this->videoId = $matches[1];
@@ -38,7 +38,7 @@ class YouTubeVideoProvider extends BaseVideoProvider {
 	}
 
 	public static function getDomains() {
-		return array(
+		return [
 			'youtu.be',
 			'youtube.com',
 			// YouTube's "enhanced privacy mode", in which "YouTube won’t
@@ -46,6 +46,6 @@ class YouTubeVideoProvider extends BaseVideoProvider {
 			// play the video"
 			// @see https://support.google.com/youtube/answer/171780?expand=PrivacyEnhancedMode#privacy
 			'youtube-nocookie.com'
-		);
+		];
 	}
 }

@@ -5,7 +5,7 @@
  * @file
  */
 
-$namespaceNames = array();
+$namespaceNames = [];
 
 // For wikis where the Video extension is not installed.
 if ( !defined( 'NS_VIDEO' ) ) {
@@ -17,79 +17,79 @@ if ( !defined( 'NS_VIDEO_TALK' ) ) {
 }
 
 /** English */
-$namespaceNames['en'] = array(
+$namespaceNames['en'] = [
 	NS_VIDEO => 'Video',
 	NS_VIDEO_TALK => 'Video_talk',
-);
+];
 
 /** German (Deutsch) */
-$namespaceNames['de'] = array(
+$namespaceNames['de'] = [
 	NS_VIDEO => 'Video',
 	NS_VIDEO_TALK => 'Video_Diskussion',
-);
+];
 
 /** Spanish (Español) */
-$namespaceNames['es'] = array(
+$namespaceNames['es'] = [
 	NS_VIDEO => 'Video',
 	NS_VIDEO_TALK => 'Video_Discusión',
-);
+];
 
 /** Estonian (Eesti) */
-$namespaceNames['et'] = array(
+$namespaceNames['et'] = [
 	NS_VIDEO => 'Video',
 	NS_VIDEO_TALK => 'Video_arutelu',
-);
+];
 
 /** Finnish (Suomi) */
-$namespaceNames['fi'] = array(
+$namespaceNames['fi'] = [
 	NS_VIDEO => 'Video',
 	NS_VIDEO_TALK => 'Keskustelu_videosta',
-);
+];
 
 /** French (Français) */
-$namespaceNames['fr'] = array(
+$namespaceNames['fr'] = [
 	NS_VIDEO => 'Vidéo',
 	NS_VIDEO_TALK => 'Discussion_vidéo',
-);
+];
 
 /** Italian (Italiano) */
-$namespaceNames['it'] = array(
+$namespaceNames['it'] = [
 	NS_VIDEO => 'Video',
 	NS_VIDEO_TALK => 'Discussioni_video',
-);
+];
 
 /** Korean (한국어) */
-$namespaceNames['ko'] = array(
+$namespaceNames['ko'] = [
 	NS_VIDEO => '동영상',
 	NS_VIDEO_TALK => '동영상토론',
-);
+];
 
 /** Dutch (Nederlands) */
-$namespaceNames['nl'] = array(
+$namespaceNames['nl'] = [
 	NS_VIDEO => 'Video',
 	NS_VIDEO_TALK => 'Overleg_video',
-);
+];
 
 /** Polish (Polski) */
-$namespaceNames['pl'] = array(
+$namespaceNames['pl'] = [
 	NS_VIDEO => 'Video',
 	NS_VIDEO_TALK => 'Dyskusja_Video',
-);
+];
 
 /** Portuguese (Português) */
-$namespaceNames['pt'] = array(
+$namespaceNames['pt'] = [
 	NS_VIDEO => 'Vídeo',
 	NS_VIDEO_TALK => 'Vídeo_Discussão',
-);
+];
 
 /** Russian (Русский) */
-$namespaceNames['ru'] = array(
+$namespaceNames['ru'] = [
 	NS_VIDEO => 'Видео',
 	NS_VIDEO_TALK => 'Обсуждение_видео'
-);
+];
 
 /** Swedish (Svenska) */
-$namespaceNames['sv'] = array(
+$namespaceNames['sv'] = [
 	NS_VIDEO => 'Video',
 	NS_VIDEO_TALK => 'Videodiskussion',
-);
+];

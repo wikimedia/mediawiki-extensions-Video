@@ -41,14 +41,14 @@ class RevertVideoAction extends FormAction {
 
 		$oldvideo = $this->getRequest()->getText( 'oldvideo' );
 		if ( strlen( $oldvideo ) < 16 ) {
-			throw new ErrorPageError( 'internalerror', 'unexpected', array( 'oldvideo', $oldvideo ) );
+			throw new ErrorPageError( 'internalerror', 'unexpected', [ 'oldvideo', $oldvideo ] );
 		}
 
 		$dbr = wfGetDB( DB_REPLICA );
 		$row = $dbr->selectRow(
 			'oldvideo',
-			array( 'ov_url', 'ov_type', 'ov_timestamp', 'ov_url', 'ov_name' ),
-			array( 'ov_archive_name' => urldecode( $oldvideo ) ),
+			[ 'ov_url', 'ov_type', 'ov_timestamp', 'ov_url', 'ov_name' ],
+			[ 'ov_archive_name' => urldecode( $oldvideo ) ],
 			__METHOD__
 		);
 		if ( $row === false ) {
@@ -70,16 +70,16 @@ class RevertVideoAction extends FormAction {
 	protected function getFormFields() {
 		$timestamp = $this->oldvideo->ov_timestamp;
 
-		return array(
-			'intro' => array(
+		return [
+			'intro' => [
 				'type' => 'info',
 				'vertical-label' => true,
 				'raw' => true,
 				'default' => wfMessage( 'video-revert-intro', $this->getTitle()->getText(),
 					$this->getLanguage()->date( $timestamp, true ), $this->getLanguage()->time( $timestamp, true ),
 					$this->oldvideo->ov_url )->parse()
-			),
-		);
+			],
+		];
 	}
 
 	/**

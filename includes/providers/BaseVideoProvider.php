@@ -39,7 +39,7 @@ abstract class BaseVideoProvider {
 		// TODO: This sucks fix it
 		$this->video->ratio = $this->getRatio();
 
-		$matches = array();
+		$matches = [];
 		if ( $this->videoIdRegex !== null && preg_match( $this->videoIdRegex, $this->video->getURL(), $matches ) ) {
 			$this->videoId = $matches[1];
 		} else {
@@ -73,15 +73,15 @@ abstract class BaseVideoProvider {
 			return '';
 		}
 
-		return str_replace( array(
+		return str_replace( [
 				'$video_id',
 				'$height',
 				'$width',
-			), array(
+			], [
 				$this->videoId,
 				$this->video->getHeight(),
 				$this->video->getWidth(),
-			), $this->embedTemplate );
+			], $this->embedTemplate );
 	}
 
 	/**
@@ -99,7 +99,7 @@ abstract class BaseVideoProvider {
 	 * @return array
 	 */
 	public static function getDomains() {
-		return array();
+		return [];
 	}
 
 }

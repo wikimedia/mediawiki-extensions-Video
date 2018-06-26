@@ -10,6 +10,6 @@ class DailyMotionVideoProvider extends BaseVideoProvider {
 	}
 
 	public static function getDomains() {
-		return array( 'dailymotion.com' );
+		return [ 'dailymotion.com' ];
 	}
 }

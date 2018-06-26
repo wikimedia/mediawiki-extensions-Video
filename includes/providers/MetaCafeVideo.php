@@ -10,6 +10,6 @@ class MetaCafeVideoProvider extends BaseVideoProvider {
 	}
 
 	public static function getDomains() {
-		return array( 'metacafe.com' );
+		return [ 'metacafe.com' ];
 	}
 }

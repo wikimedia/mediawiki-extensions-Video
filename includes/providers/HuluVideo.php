@@ -8,7 +8,7 @@ class HuluVideoProvider extends BaseVideoProvider {
 	protected $embedTemplate = '<object width="$width" height="$height"><param name="movie" value="$video_id"></param><param name="allowFullScreen" value="true"></param><embed src="$video_id" type="application/x-shockwave-flash"  width="$width" height="$height" allowFullScreen="true"></embed></object>';
 
 	public static function getDomains() {
-		return array( 'hulu.com' );
+		return [ 'hulu.com' ];
 	}
 
 	protected function getRatio() {

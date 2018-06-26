@@ -10,7 +10,7 @@
 class VideoGalleryPopulateHooks {
 
 	public static function onParserFirstCallInit( $parser ) {
-		$parser->setHook( 'videogallerypopulate', array( __CLASS__, 'renderVideoGalleryPopulate' ) );
+		$parser->setHook( 'videogallerypopulate', [ __CLASS__, 'renderVideoGalleryPopulate' ] );
 		return true;
 	}
 
@@ -25,7 +25,7 @@ class VideoGalleryPopulateHooks {
 		}
 
 		// Use Parser::recursivePreprocess() if available instead of creating another Parser instance
-		if ( is_callable( array( $parser, 'recursivePreprocess' ) ) ) {
+		if ( is_callable( [ $parser, 'recursivePreprocess' ] ) ) {
 			$category = $parser->recursivePreprocess( $category );
 		} else {
 			$newParser = new Parser();
@@ -49,18 +49,18 @@ class VideoGalleryPopulateHooks {
 
 		$dbr = wfGetDB( DB_REPLICA );
 		$res = $dbr->select(
-			array( 'page', 'categorylinks' ),
+			[ 'page', 'categorylinks' ],
 			'page_title',
-			array(
-				'cl_to' => array(
+			[
+				'cl_to' => [
 					$category_title->getDBkey(),
 					$category_title_secondary->getDBkey()
-				),
+				],
 				'page_namespace' => NS_VIDEO
-			),
+			],
 			__METHOD__,
 			$params,
-			array( 'categorylinks' => array( 'INNER JOIN', 'cl_from = page_id' ) )
+			[ 'categorylinks' => [ 'INNER JOIN', 'cl_from = page_id' ] ]
 		);
 
 		$gallery = new VideoGallery();

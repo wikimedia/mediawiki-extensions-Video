@@ -4,7 +4,7 @@ class SouthParkStudiosVideoProvider extends MTVNetworksVideoProvider {
 	protected $videoRegexId = '#/clips/(\d+)/#';
 
 	public static function getDomains() {
-		return array( 'southparkstudios.com' );
+		return [ 'southparkstudios.com' ];
 	}
 
 	protected function extractVideoId( $url ) {

@@ -9,7 +9,7 @@
 class VideoGalleryHooks {
 
 	public static function onParserFirstCallInit( &$parser ) {
-		$parser->setHook( 'videogallery', array( __CLASS__, 'renderVideoGallery' ) );
+		$parser->setHook( 'videogallery', [ __CLASS__, 'renderVideoGallery' ] );
 		return true;
 	}
 
@@ -34,7 +34,7 @@ class VideoGalleryHooks {
 		foreach ( $lines as $line ) {
 			// match lines like these:
 			// Video:Some video name|This is some video
-			$matches = array();
+			$matches = [];
 			preg_match( "/^([^|]+)(\\|(.*))?$/", $line, $matches );
 
 			// Skip empty lines

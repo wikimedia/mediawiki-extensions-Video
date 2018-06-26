@@ -163,7 +163,7 @@ class ArchivedVideo extends ArchivedFile {
 		if ( $this->dataLoaded ) {
 			return true;
 		}
-		$conds = array();
+		$conds = [];
 
 		/**
 		if ( $this->id > 0 ) {
@@ -190,7 +190,7 @@ class ArchivedVideo extends ArchivedFile {
 				self::selectFields(),
 				$conds,
 				__METHOD__,
-				array( 'ORDER BY' => 'ov_timestamp DESC' )
+				[ 'ORDER BY' => 'ov_timestamp DESC' ]
 			);
 			if ( !$row ) {
 				// this revision does not exist?
@@ -225,7 +225,7 @@ class ArchivedVideo extends ArchivedFile {
 	 * @return array
 	 */
 	static function selectFields() {
-		return array(
+		return [
 			'ov_name',
 			'ov_archive_name',
 			'ov_url',
@@ -233,7 +233,7 @@ class ArchivedVideo extends ArchivedFile {
 			'ov_user_id',
 			'ov_user_name',
 			'ov_timestamp'
-		);
+		];
 	}
 
 	/**

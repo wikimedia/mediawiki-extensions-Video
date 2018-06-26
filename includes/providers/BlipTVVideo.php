@@ -6,7 +6,7 @@ class BlipTVVideoProvider extends BaseVideoProvider {
 	protected $embedTemplate = '<iframe src="http://blip.tv/play/$video_id.html" width="$width" height="$height" frameborder="0" allowfullscreen></iframe>';
 
 	public static function getDomains() {
-		return array( 'blip.tv' );
+		return [ 'blip.tv' ];
 	}
 
 	protected function getRatio() {

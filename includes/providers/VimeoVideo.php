@@ -10,7 +10,7 @@ class VimeoVideoProvider extends BaseVideoProvider {
 	}
 
 	public static function getDomains() {
-		return array( 'vimeo.com' );
+		return [ 'vimeo.com' ];
 	}
 
 }

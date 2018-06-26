@@ -20,7 +20,7 @@ class VideoGallery {
 	 * Create a new video gallery object.
 	 */
 	function __construct() {
-		$this->mVideos = array();
+		$this->mVideos = [];
 		$this->mShowFilename = true;
 		$this->mParsing = false;
 	}
@@ -97,7 +97,7 @@ class VideoGallery {
 	 * @param $html String: additional HTML text to be shown. The name and size of the video are always shown.
 	 */
 	function add( $video, $html = '' ) {
-		$this->mVideos[] = array( &$video, $html );
+		$this->mVideos[] = [ &$video, $html ];
 		wfDebug( __METHOD__ . ':' . $video->getName() . "\n" );
 	}
 
@@ -108,7 +108,7 @@ class VideoGallery {
  	 * @param $html String: Additional HTML text to be shown. The name and size of the video are always shown.
  	 */
 	function insert( $video, $html = '' ) {
-		array_unshift( $this->mVideos, array( &$video, $html ) );
+		array_unshift( $this->mVideos, [ &$video, $html ] );
 	}
 
 	/**

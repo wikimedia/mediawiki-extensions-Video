@@ -5,7 +5,7 @@
 class VideoHistoryList {
 	function beginVideoHistoryList() {
 		$s = "\n" .
-			Xml::element( 'h2', array( 'id' => 'filehistory' ), wfMessage( 'video-history' )->plain() ) .
+			Xml::element( 'h2', [ 'id' => 'filehistory' ], wfMessage( 'video-history' )->plain() ) .
 			"\n<p>" . wfMessage( 'video-histlegend' )->parse() . "</p>\n" . '<ul class="special">';
 		return $s;
 	}
@@ -28,8 +28,8 @@ class VideoHistoryList {
 				$rlink = Linker::linkKnown(
 					$title,
 					wfMessage( 'video-revert' )->plain(),
-					array(),
-					array( 'action' => 'revert', 'oldvideo' => $video )
+					[],
+					[ 'action' => 'revert', 'oldvideo' => $video ]
 				);
 			} else {
 				# Having live active links for non-logged in users

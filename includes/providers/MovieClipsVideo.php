@@ -20,6 +20,6 @@ class MovieClipsVideoProvider extends BaseVideoProvider {
 	}
 
 	public static function getDomains() {
-		return array( 'movieclips.com' );
+		return [ 'movieclips.com' ];
 	}
 }

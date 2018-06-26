@@ -58,8 +58,8 @@ class VideoPage extends Article {
 			$link = Linker::linkKnown(
 				$title,
 				$ctx->msg( 'video-novideo-linktext' )->plain(),
-				array(),
-				array( 'wpTitle' => $this->video->getName() )
+				[],
+				[ 'wpTitle' => $this->video->getName() ]
 			);
 			$out->addHTML( $ctx->msg( 'video-novideo', $link )->text() );
 
@@ -83,15 +83,15 @@ class VideoPage extends Article {
 		// adds everything into core (archive, filearchive, imagelinks, etc.)
 		// tables instead of using its own tables
 		$res = $dbr->select(
-			array( 'pagelinks', 'page' ),
-			array( 'page_namespace', 'page_title' ),
-			array(
+			[ 'pagelinks', 'page' ],
+			[ 'page_namespace', 'page_title' ],
+			[
 				'pl_namespace' => NS_VIDEO,
 				'pl_title' => $this->getTitle()->getDBkey(),
 				'pl_from = page_id',
-			),
+			],
 			__METHOD__,
-			array( 'LIMIT' => $limit + 1 )
+			[ 'LIMIT' => $limit + 1 ]
 		);
 
 		$count = $dbr->numRows( $res );
@@ -209,11 +209,11 @@ class VideoPage extends Article {
 			$ulink = Linker::link(
 				SpecialPage::getTitleFor( 'AddVideo' ),
 				$this->getContext()->msg( 'video-upload-new-version' )->plain(),
-				array(),
-				array(
+				[],
+				[
 					'wpTitle' => $this->video->getName(),
 					'forReUpload' => 1,
-				)
+				]
 			);
 			$out->addHTML( "<li>{$ulink}</li>" );
 		}

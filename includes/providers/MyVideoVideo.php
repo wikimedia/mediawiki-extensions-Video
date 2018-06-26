@@ -9,6 +9,6 @@ class MyVideoVideoProvider extends BaseVideoProvider {
 	}
 
 	public static function getDomains() {
-		return array( 'myvideo.de' );
+		return [ 'myvideo.de' ];
 	}
 }

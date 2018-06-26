@@ -18,13 +18,13 @@ class VideoPageArchive extends PageArchive {
 		$dbr = wfGetDB( DB_REPLICA );
 		$res = $dbr->select(
 			'oldvideo',
-			array(
+			[
 				'ov_name', 'ov_archive_name', 'ov_url', 'ov_type',
 				'ov_user_id', 'ov_user_name', 'ov_timestamp'
-			),
-			array( 'ov_name' => $this->title->getDBkey() ),
+			],
+			[ 'ov_name' => $this->title->getDBkey() ],
 			__METHOD__,
-			array( 'ORDER BY' => 'ov_timestamp DESC' )
+			[ 'ORDER BY' => 'ov_timestamp DESC' ]
 		);
 		return $res;
 	}
@@ -43,7 +43,7 @@ class VideoPageArchive extends PageArchive {
 	 * @return array(number of file revisions restored, number of video revisions restored, log message)
 	 *         on success, false on failure
 	 */
-	function undelete( $timestamps, $comment = '', $fileVersions = array(),
+	function undelete( $timestamps, $comment = '', $fileVersions = [],
 		$unsuppress = false, User $user = null
 	) {
 		// We currently restore only whole deleted videos, a restore link from
@@ -57,28 +57,28 @@ class VideoPageArchive extends PageArchive {
 		$result = $dbw->select(
 			'oldvideo',
 			'*',
-			array( 'ov_name' => $this->title->getDBkey() ),
+			[ 'ov_name' => $this->title->getDBkey() ],
 			__METHOD__,
-			array( 'ORDER BY' => 'ov_timestamp DESC' )
+			[ 'ORDER BY' => 'ov_timestamp DESC' ]
 		);
 
-		$insertBatch = array();
+		$insertBatch = [];
 		$insertCurrent = false;
 		$archiveName = '';
 		$first = true;
 
 		foreach ( $result as $row ) {
 			if ( $first ) { // this is our new current revision
-				$insertCurrent = array(
+				$insertCurrent = [
 					'video_name' => $row->ov_name,
 					'video_url' => $row->ov_url,
 					'video_type' => $row->ov_type,
 					'video_user_id' => $row->ov_user_id,
 					'video_user_name' => $row->ov_user_name,
 					'video_timestamp' => $row->ov_timestamp
-				);
+				];
 			} else { // older revisions, they could be even elder current ones from ancient deletions
-				$insertBatch = array(
+				$insertBatch = [
 					'ov_name' => $row->ov_name,
 					'ov_archive_name' => $archiveName,
 					'ov_url' => $row->ov_url,
@@ -86,7 +86,7 @@ class VideoPageArchive extends PageArchive {
 					'ov_user_id' => $row->ov_user_id,
 					'ov_user_name' => $row->ov_user_name,
 					'ov_timestamp' => $row->ov_timestamp
-				);
+				];
 			}
 			$first = false;
 		}
@@ -100,7 +100,7 @@ class VideoPageArchive extends PageArchive {
 			// We need to delete the oldvideo entry here so that "duplicate"
 			// entries won't show up under "Video History" on the appropriate Video:
 			// page.
-			$dbw->delete( 'oldvideo', array( 'ov_name' => $this->title->getDBkey() ), __METHOD__ );
+			$dbw->delete( 'oldvideo', [ 'ov_name' => $this->title->getDBkey() ], __METHOD__ );
 		}
 		if ( $insertBatch ) {
 			$dbw->insert( 'oldvideo', $insertBatch, __METHOD__ );
@@ -110,6 +110,6 @@ class VideoPageArchive extends PageArchive {
 		// files will not be touched anyway here, because it's not NS_FILE
 		parent::undelete( $timestamps, $comment, $fileVersions, $unsuppress );
 
-		return array( '', '', '' );
+		return [ '', '', '' ];
 	}
 }

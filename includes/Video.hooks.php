@@ -206,12 +206,12 @@ class VideoHooks {
 			BEWARE! THIS DOES NOT WORK HOW YOU WOULD THINK IT DOES...
 			IT GENERATES INVALID SQL LIKE video_name = \'(Ayumi_Hamasaki_-_Ladies_Night) OR (Video:Ayumi Hamasaki - Ladies Night)\'
 			AND GENERALLY CAUSES THINGS TO EXPLODE!
-			$where = array(
-				'video_name' => $dbw->makeList( array(
+			$where = [
+				'video_name' => $dbw->makeList( [
 					$articleObj->getTitle()->getDBkey(),
 					$articleObj->getTitle()->getPrefixedText()
-				), LIST_OR )
-			);
+				], LIST_OR )
+			];
 			*/
 			if ( !empty( $oldVideo ) ) {
 				$where['video_timestamp'] = $oldVideo;

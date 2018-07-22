@@ -1,4 +1,9 @@
 {
-	"@metadata": [],
-	"video-showhidebots": "(botları $1)"
+	"@metadata": {
+		"authors": [
+			"Hedda"
+		]
+	},
+	"video-showhidebots": "(botları $1)",
+	"video-hidebots": "Bot yüklemelerini gizle"
 }

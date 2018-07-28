@@ -2,11 +2,18 @@
 	"@metadata": {
 		"authors": [
 			"Elisardojm",
-			"Athena in Wonderland"
+			"Athena in Wonderland",
+			"Banjo"
 		]
 	},
+	"video-desc": "Permite un novo espazo de nomes chamado Video para ficheiros multimedia incorporables nos sitios soportados",
 	"addvideo": "Engadir vídeo",
 	"newvideos": "Novos vídeos",
+	"unusedvideos": "Vídeos sen uso",
+	"video-upload-new-version": "Cargar unha nova versión deste vídeo",
+	"video-newvideos-showfrom": "Mostrar os novos ficheiros comezando polo $1 ás $2",
+	"video-newvideos-list-text": "A continuación móstrase unha lista de <strong>$1</strong> {{PLURAL:$1|vídeo|vídeos}}.",
+	"video-addvideo-watchlist": "Engadir este vídeo á miña lista de vixilancia",
 	"video-addvideo-title": "Engadir vídeo",
 	"video-addvideo-dest": "Engadir vídeo para $1",
 	"video-addvideo-button": "Engadir vídeo",

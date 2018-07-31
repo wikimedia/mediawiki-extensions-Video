@@ -92,7 +92,6 @@ class Video {
 		'bliptv' => 'BlipTVVideoProvider',
 		'dailymotion' => 'DailyMotionVideoProvider',
 		'gametrailers' => 'GametrailersVideoProvider',
-		'google' => 'GoogleVideoProvider',
 		'hulu' => 'HuluVideoProvider',
 		'metacafe' => 'MetaCafeVideoProvider',
 		'movieclips' => 'MovieClipsVideoProvider',

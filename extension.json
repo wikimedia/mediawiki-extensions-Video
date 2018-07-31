@@ -1,6 +1,6 @@
 {
 	"name": "Video",
-	"version": "1.8.0",
+	"version": "1.8.1",
 	"author": [
 		"David Pean",
 		"Jack Phoenix",
@@ -48,7 +48,6 @@
 		"DailyMotionVideoProvider": "includes/providers/DailyMotionVideo.php",
 		"BaseVideoProvider": "includes/providers/BaseVideoProvider.php",
 		"GametrailersVideoProvider": "includes/providers/GametrailersVideo.php",
-		"GoogleVideoProvider": "includes/providers/GoogleVideo.php",
 		"HuluVideoProvider": "includes/providers/HuluVideo.php",
 		"MetaCafeVideoProvider": "includes/providers/MetaCafeVideo.php",
 		"MovieClipsVideoProvider": "includes/providers/MovieClipsVideo.php",

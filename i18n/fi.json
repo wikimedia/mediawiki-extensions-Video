@@ -1,11 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
-			"Jack Phoenix"
+			"Jack Phoenix",
+			"01miki10"
 		]
 	},
 	"addvideo": "Lisää video",
 	"newvideos": "Uudet videot",
+	"unusedvideos": "Käyttämättömät videot",
 	"video-upload-new-version": "Tallenna uusi versio tästä videosta",
 	"video-newvideos-showfrom": "Näytä uudet videot alkaen $1 kello $2",
 	"video-newvideos-list-text": "Alla on {{PLURAL:$1|1 video|$1 videoa}} lajiteltuna <strong>$2</strong>.",
@@ -41,5 +43,7 @@
 	"video-more-links-to-video": "Katso [[Special:WhatLinksHere/$1|lisää linkkejä]] tähän videoon.",
 	"video-showhidebots": "($1 botit)",
 	"action-addvideo": "lisätä videoita ulkoisista palveluista sivustolle",
-	"right-addvideo": "Lisätä videoita ulkoisista palveluista sivustolle"
+	"right-addvideo": "Lisätä videoita ulkoisista palveluista sivustolle",
+	"video-hidebots": "Piilota bottien tekemät tallennukset",
+	"unusedvideos-summary": "Seuraavat videot on lisätty wikiin, mutta niitä ei käytetä millään sivulla."
 }

@@ -259,7 +259,7 @@ class Video {
 			$descTitle->purgeSquid();
 		} else {
 			// New video; create the description page.
-			// Supress the recent changes bc it will appear in the log/video
+			// Suppress the recent changes bc it will appear in the log/video
 			$page->doEditContent(
 				ContentHandler::makeContent( $categoryWikiText, $page->getTitle() ),
 				'',

@@ -188,13 +188,12 @@ class NewVideos extends IncludableSpecialPage {
 
 		$message = $this->msg( 'video-newvideos-list-text', $lt )->inContentLanguage();
 		if ( !$message->isDisabled() ) {
-			$this->getOutput()->addWikiText(
-				Html::rawElement( 'p',
+			$this->getOutput()->addWikiTextAsContent(
+				Html::rawElement( 'div',
 					[ 'lang' => $wgContLang->getHtmlCode(), 'dir' => $wgContLang->getDir() ],
-					"\n" . $message->parse() . "\n"
+					"\n" . $message->plain() . "\n"
 				),
-				/* $lineStart */ false,
-				/* $interface */ false
+				/* $lineStart */ false
 			);
 		}
 	}

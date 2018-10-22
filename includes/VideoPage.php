@@ -50,7 +50,7 @@ class VideoPage extends Article {
 
 			$this->videoHistory();
 
-			$out->addWikiText( '== ' . $ctx->msg( 'video-links' )->escaped() . " ==\n" );
+			$out->addWikiTextAsInterface( '== ' . $ctx->msg( 'video-links' )->escaped() . " ==\n" );
 			$this->videoLinks();
 		} else {
 			// Video doesn't exist, so give a link allowing user to add one with this name
@@ -63,7 +63,7 @@ class VideoPage extends Article {
 			);
 			$out->addHTML( $ctx->msg( 'video-novideo', $link )->text() );
 
-			$out->addWikiText( '== ' . $ctx->msg( 'video-links' )->escaped() . " ==\n" );
+			$out->addWikiTextAsInterface( '== ' . $ctx->msg( 'video-links' )->escaped() . " ==\n" );
 			$this->videoLinks();
 			$this->mPage->doViewUpdates( $ctx->getUser() );
 		}

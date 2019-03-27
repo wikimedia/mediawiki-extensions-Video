@@ -830,7 +830,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialUndelete {
 				'readonly' => 'readonly',
 				'cols' => 80,
 				'rows' => 25
-			], $content->getNativeData() . "\n" );
+			], $content->getText() . "\n" );
 
 			$buttonFields[] = new OOUI\ButtonInputWidget( [
 				'type' => 'submit',

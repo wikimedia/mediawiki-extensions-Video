@@ -1,9 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"Otokoume"
+			"Otokoume",
+			"Shirayuki"
 		]
 	},
 	"unusedvideos": "使われていない動画",
-	"video-showhidebots": "(ボットを$1)"
+	"video-showhidebots": "(ボットを$1)",
+	"action-addvideo": "外部サービスからサイトへの動画の追加",
+	"right-addvideo": "外部サービスからサイトに動画を追加"
 }

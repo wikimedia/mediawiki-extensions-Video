@@ -1,11 +1,13 @@
 <?php
 
+use Wikimedia\Rdbms\IResultWrapper;
+
 class RevertVideoAction extends FormAction {
 
 	/**
 	 * Row from the oldvideo table for the revision to revert to
 	 *
-	 * @var ResultWrapper
+	 * @var IResultWrapper
 	 */
 	protected $oldvideo;
 

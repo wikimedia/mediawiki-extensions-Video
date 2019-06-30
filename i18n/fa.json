@@ -1,4 +1,39 @@
 {
-	"@metadata": [],
-	"video-showhidebots": "($1 ربات‌ها)"
+	"@metadata": {
+		"authors": [
+			"FarsiNevis"
+		]
+	},
+	"addvideo": "افزودن ویدئو",
+	"newvideos": "ویدئوهای جدید",
+	"unusedvideos": "ویدئوهای استفاده‌نشده",
+	"video-upload-new-version": "نسخهٔ جدیدی از این ویدئو را بارگذاری کنید",
+	"video-newvideos-showfrom": "نمایش ویدئوهای جدید با شروع از $2، $1",
+	"video-newvideos-list-text": "در زیر، فهرستی از <strong>$1</strong> ویدئو آمده است.",
+	"video-addvideo-watchlist": "افزودن این ویدئو به فهرست پی‌گیری‌هایم",
+	"video-addvideo-title": "افزودن ویدئو",
+	"video-addvideo-dest": "افزودن ویدئو برای $1",
+	"video-addvideo-button": "افزودن ویدئو",
+	"video-addvideo-exists": "عنوان انتخابی برای ویدئوتان از قبل وجود دارد. لطفاً عنوان دیگری برای این ویدئو انتخاب کنید.",
+	"video-addvideo-title-label": "عنوان ویدئو:",
+	"video-no-videos": "هیچ ویدئو جدیدی وجود ندارد.",
+	"log-name-video": "سیاههٔ ویدئو",
+	"logentry-video-add": "$1 ویدئو $3 را افزود",
+	"logentry-video-update": "$1 ویدئو $3 را روزآمد کرد",
+	"category-video-header": "ویدئوهای موجود در ردهٔ «$1»",
+	"category-video-count": "$1 ویدئو در این رده وجود دارد.",
+	"video-novideo-linktext": "بیفزاییدش",
+	"video-novideo": "هیچ ویدئویی با این نام وجود ندارد. شما می‌توانید $1.",
+	"video-history": "تاریخچهٔ ویدئو",
+	"video-revert": "وگ",
+	"video-revert-success": "به نسخهٔ پیشین واگردانده شد.",
+	"video-revert-legend": "واگردانی ویدئو",
+	"video-category-name": "ویدئوها",
+	"video-links": "پیوندهای ویدئو",
+	"video-links-to-video": "{{PLURAL:$1|صفحهٔ زیر، پیوند دارد|$1 صفحه‌های زیر، پیوند دارند}} به این ویدئو:",
+	"video-no-links-to-video": "هیچ صفحه‌ای وجود ندارد که پیوندی به این ویدئو داشته باشد.",
+	"video-more-links-to-video": "مشاهدهٔ [[Special:WhatLinksHere/$1|پیوندهای بیشتر]] به این ویدئو",
+	"video-showhidebots": "($1 ربات‌ها)",
+	"video-hidebots": "پنهان‌سازی بارگذاری‌های رباتی",
+	"unusedvideos-summary": "ویدئوهای زیر به این ویکی افزوده شده‌اند، ولی در هیچ صفحه‌ای به کار نرفته‌اند."
 }

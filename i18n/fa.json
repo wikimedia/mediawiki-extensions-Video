@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"FarsiNevis"
+			"FarsiNevis",
+			"Barsavosh"
 		]
 	},
 	"addvideo": "افزودن ویدئو",
@@ -16,7 +17,7 @@
 	"video-addvideo-button": "افزودن ویدئو",
 	"video-addvideo-exists": "عنوان انتخابی برای ویدئوتان از قبل وجود دارد. لطفاً عنوان دیگری برای این ویدئو انتخاب کنید.",
 	"video-addvideo-title-label": "عنوان ویدئو:",
-	"video-no-videos": "هیچ ویدئو جدیدی وجود ندارد.",
+	"video-no-videos": "هیچ ویدئوی جدیدی وجود ندارد.",
 	"log-name-video": "سیاههٔ ویدئو",
 	"logentry-video-add": "$1 ویدئو $3 را افزود",
 	"logentry-video-update": "$1 ویدئو $3 را روزآمد کرد",

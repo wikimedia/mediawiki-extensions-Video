@@ -18,8 +18,8 @@ class VideoHooks {
 	 * @return Boolean: true
 	 */
 	public static function videoTag( &$parser, &$text, &$strip_state ) {
-		global $wgContLang;
-		$localizedVideoName = $wgContLang->getNsText( NS_VIDEO );
+		$contLang = MediaWiki\MediaWikiServices::getInstance()->getContentLanguage();
+		$localizedVideoName = $contLang->getNsText( NS_VIDEO );
 		// Fallback code...is this needed?
 		if ( $localizedVideoName === false ) {
 			$localizedVideoName = 'Video';

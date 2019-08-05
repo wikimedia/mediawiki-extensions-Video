@@ -184,13 +184,12 @@ class NewVideos extends IncludableSpecialPage {
 	 * @param string $lt number of videos displayed
 	 */
 	public function setTopText( $lt ) {
-		global $wgContLang;
-
 		$message = $this->msg( 'video-newvideos-list-text', $lt )->inContentLanguage();
 		if ( !$message->isDisabled() ) {
+			$contLang = MediaWiki\MediaWikiServices::getInstance()->getContentLanguage();
 			$this->getOutput()->addWikiTextAsContent(
 				Html::rawElement( 'div',
-					[ 'lang' => $wgContLang->getHtmlCode(), 'dir' => $wgContLang->getDir() ],
+					[ 'lang' => $contLang->getHtmlCode(), 'dir' => $contLang->getDir() ],
 					"\n" . $message->plain() . "\n"
 				),
 				/* $lineStart */ false

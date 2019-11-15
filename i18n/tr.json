@@ -1,9 +1,24 @@
 {
 	"@metadata": {
 		"authors": [
-			"Hedda"
+			"Hedda",
+			"Sayginer"
 		]
 	},
+	"newvideos": "Yeni videolar",
+	"video-upload-new-version": "Bu videonun yeni bir sürümünü yükle",
+	"video-addvideo-title": "Video ekle",
+	"video-addvideo-button": "Video ekle",
+	"video-addvideo-exists": "Videonuzun başlığı hâlihazırda kullanımdadır. Lütfen video için başka bir başlık seçin.",
+	"video-no-videos": "Yeni video yok.",
+	"logentry-video-update": "$1, $3 adlı videoyu yükledi",
+	"category-video-count": "Bu kategoride {{PLURAL:$1|bir video|$1 video}} bulunmaktadır.",
+	"video-history": "Video geçmişi",
+	"video-links": "Video bağlantıları",
+	"video-links-to-video": "Aşağıdaki {{PLURAL:$1|sayfa|$1 sayfa}} bu videoyu kullanmaktadır:",
+	"video-more-links-to-video": "Bu videoya [[Special:WhatLinksHere/$1|daha fazla bağlantı]] gör.",
 	"video-showhidebots": "(botları $1)",
-	"video-hidebots": "Bot yüklemelerini gizle"
+	"right-addvideo": "Dış servislerden videoları siteye ekle",
+	"video-hidebots": "Bot yüklemelerini gizle",
+	"unusedvideos-summary": "Aşağıdaki videolar vikiye eklenmiştir ancak hiçbir sayfada kullanılmamaktadır."
 }

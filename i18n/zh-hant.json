@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Kly"
+			"Kly",
+			"Xiplus"
 		]
 	},
 	"video-desc": "允許新影片名稱空間用於支援可嵌入多媒體的站台上",
@@ -15,7 +16,7 @@
 	"video-addvideo-title": "添加影片",
 	"video-addvideo-dest": "添加用於 $1 的影片",
 	"video-addvideo-button": "添加影片",
-	"video-addvideo-instructions": "添加影片至 {{SITENAME}} 很簡單。\n只需要貼上影片的嵌入代碼，''或是''該影片的 URL 到以下表單裡。為影片添加名稱，然後按下\"{{int:video-addvideo-button}}\"按鍵。\n若您想要內嵌影片在頁面裡請使用以下格式：'''<nowiki>[[</nowiki>{{ns:video}}:Video Title<nowiki>]]</nowiki>'''。\n您也可以從下列提供方來添加影片：\n{{int:video-provider-list}}\n===影片嵌入代碼範例===\n此為嵌入來自 YouTube 影片的代碼範例:\n\n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">\n<nowiki><object width=\"425\" height=\"355\">\n<param name=\"movie\" value=\"http://www.youtube.com/v/hUcFWPgB8oY\"></param>\n<param name=\"wmode\" value=\"transparent\"></param>\n<embed src=\"http://www.youtube.com/v/hUcFWPgB8oY\" type=\"application/x-shockwave-flash\"\nwmode=\"transparent\" width=\"425\" height=\"355\"></embed>\n</object></nowiki>\n</pre>\n\n===影片 URL 範例===\n下列為來自 YouTube 影片的 URL 範例：\n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">http://www.youtube.com/watch?v=hUcFWPgB8oY</pre>",
+	"video-addvideo-instructions": "添加影片至{{SITENAME}}很簡單。\n只需要貼上影片的嵌入代碼，''或是''該影片的 URL 到以下表單裡。為影片添加名稱，然後按下\"{{int:video-addvideo-button}}\"按鍵。\n若您想要內嵌影片在頁面裡請使用以下格式：'''<nowiki>[[</nowiki>{{ns:video}}:Video Title<nowiki>]]</nowiki>'''。\n您也可以從下列提供方來添加影片：\n{{int:video-provider-list}}\n===影片嵌入代碼範例===\n此為嵌入來自 YouTube 影片的代碼範例:\n\n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">\n<nowiki><object width=\"425\" height=\"355\">\n<param name=\"movie\" value=\"http://www.youtube.com/v/hUcFWPgB8oY\"></param>\n<param name=\"wmode\" value=\"transparent\"></param>\n<embed src=\"http://www.youtube.com/v/hUcFWPgB8oY\" type=\"application/x-shockwave-flash\"\nwmode=\"transparent\" width=\"425\" height=\"355\"></embed>\n</object></nowiki>\n</pre>\n\n===影片 URL 範例===\n下列為來自 YouTube 影片的 URL 範例：\n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">http://www.youtube.com/watch?v=hUcFWPgB8oY</pre>",
 	"video-addvideo-invalidcode": "您所貼上的代碼或 URL 無效。請重試。",
 	"video-addvideo-exists": "用於您影片的標題已存在。請選擇其它影片標題。",
 	"video-addvideo-title-label": "影片標題：",

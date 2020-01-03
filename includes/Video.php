@@ -41,16 +41,10 @@ class Video {
 	public $url;
 
 	/**
-	 * @var String: username of the person who added the current video to the
-	 *              wiki
-	 */
-	public $submitter_user_name;
-
-	/**
-	 * @var Integer: user ID number of the person who added the current video
+	 * @var Integer: actor ID number of the person who added the current video
 	 *               to the wiki
 	 */
-	public $submitter_user_id;
+	public $submitter_actor;
 
 	/**
 	 * @var Integer: timestamp when this video was added to the wiki
@@ -171,8 +165,7 @@ class Video {
 				'video_name' => $this->getName(),
 				'video_url' => $url,
 				'video_type' => $type,
-				'video_user_id' => $user->getId(),
-				'video_user_name' => $user->getName(),
+				'video_actor' => $user->getActorId(),
 				'video_timestamp' => $now
 			],
 			__METHOD__,
@@ -198,8 +191,7 @@ class Video {
 					'ov_archive_name' => $dbw->addQuotes( gmdate( 'YmdHis' ) . "!{$this->getName()}" ),
 					'ov_url' => 'video_url',
 					'ov_type' => 'video_type',
-					'ov_user_id' => 'video_user_id',
-					'ov_user_name' => 'video_user_name',
+					'ov_actor' => 'video_actor',
 					'ov_timestamp' => 'video_timestamp'
 				],
 				[ 'video_name' => $this->getName() ],
@@ -213,8 +205,7 @@ class Video {
 					/* SET */
 					'video_url' => $url,
 					'video_type' => $type,
-					'video_user_id' => $user->getId(),
-					'video_user_name' => $user->getName(),
+					'video_actor' => $user->getActorId(),
 					'video_timestamp' => $now
 				],
 				[
@@ -295,8 +286,7 @@ class Video {
 		if ( !empty( $data ) && is_array( $data ) ) {
 			$this->url = $data['url'];
 			$this->type = $data['type'];
-			$this->submitter_user_id = $data['user_id'];
-			$this->submitter_user_name = $data['user_name'];
+			$this->submitter_actor = $data['actor'];
 			$this->create_date = $data['create_date'];
 			$this->dataLoaded = true;
 			$this->exists = true;
@@ -322,8 +312,7 @@ class Video {
 			$cachedValues = [
 				'url' => $this->url,
 				'type' => $this->type,
-				'user_id' => $this->submitter_user_id,
-				'user_name' => $this->submitter_user_name,
+				'actor' => $this->submitter_actor,
 				'create_date' => $this->create_date
 			];
 			$wgMemc->set( $key, $cachedValues, 60 * 60 * 24 * 7 ); // A week
@@ -353,7 +342,7 @@ class Video {
 		$row = $dbr->selectRow(
 			'video',
 			[
-				'video_url', 'video_type', 'video_user_name', 'video_user_id',
+				'video_url', 'video_type', 'video_actor',
 				'video_timestamp'
 			],
 			[ 'video_name' => $this->name ],
@@ -364,8 +353,7 @@ class Video {
 			$this->url = $row->video_url;
 			$this->exists = true;
 			$this->type = $row->video_type;
-			$this->submitter_user_name = $row->video_user_name;
-			$this->submitter_user_id = $row->video_user_id;
+			$this->submitter_actor = $row->video_actor;
 			$this->create_date = $row->video_timestamp;
 		}
 
@@ -596,8 +584,7 @@ class Video {
 				[
 					'video_url',
 					'video_type',
-					'video_user_id',
-					'video_user_name',
+					'video_actor',
 					'video_timestamp',
 					"'' AS ov_archive_name"
 				],
@@ -613,8 +600,7 @@ class Video {
 				[
 					'ov_url AS video_url',
 					'ov_type AS video_type',
-					'ov_user_id AS video_user_id',
-					'ov_user_name AS video_user_name',
+					'ov_actor AS video_actor',
 					'ov_timestamp AS video_timestamp',
 					'ov_archive_name'
 				],

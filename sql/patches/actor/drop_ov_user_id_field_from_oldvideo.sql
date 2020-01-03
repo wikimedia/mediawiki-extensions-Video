@@ -1,0 +1,1 @@
+ALTER TABLE /*_*/oldvideo DROP COLUMN ov_user_id;

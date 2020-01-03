@@ -2,6 +2,8 @@
 /**
  * @todo document
  */
+use MediaWiki\MediaWikiServices;
+
 class VideoHistoryList {
 	function beginVideoHistoryList() {
 		$s = "\n" .
@@ -15,17 +17,21 @@ class VideoHistoryList {
 		return $s;
 	}
 
-	function videoHistoryLine( $isCur, $timestamp, $video, $user_id, $user_name, $url, $type, $title ) {
+	function videoHistoryLine( $isCur, $timestamp, $video, $actor_id, $url, $type, $title ) {
 		global $wgUser, $wgLang;
 
+		$services = MediaWikiServices::getInstance();
 		$datetime = $wgLang->timeanddate( $timestamp, true );
 		$cur = wfMessage( 'cur' )->plain();
 
 		if ( $isCur ) {
 			$rlink = $cur;
 		} else {
-			if ( $wgUser->getId() != 0 && $title->userCan( 'edit' ) ) {
-				$rlink = Linker::linkKnown(
+			if (
+				!$wgUser->isAnon() &&
+				$services->getPermissionManager()->userCan( 'edit', $wgUser )
+			) {
+				$rlink = $services->getLinkRenderer()->makeKnownLink(
 					$title,
 					wfMessage( 'video-revert' )->plain(),
 					[],
@@ -39,6 +45,9 @@ class VideoHistoryList {
 			}
 		}
 
+		$actor = User::newFromActorId( $actor_id );
+		$user_id = $actor->getId();
+		$user_name = $actor->getName();
 		$userlink = Linker::userLink( $user_id, $user_name ) .
 			Linker::userToolLinks( $user_id, $user_name );
 

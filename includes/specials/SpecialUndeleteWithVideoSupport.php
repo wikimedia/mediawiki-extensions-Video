@@ -213,7 +213,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			$file = new ArchivedVideo( $this->mTargetObj, '', $this->mFilename );
 			// Check if user is allowed to see this file
 			if ( !$file->exists() ) {
-				$out->addWikiMsg( 'filedelete-nofile', $this->mFilename );
+				$out->addWikiMsg( 'filedelete-nofile', $this->mTargetObj->getPrefixedText() );
 			} elseif ( !$file->userCan( File::DELETED_FILE, $user ) ) {
 				if ( $file->isDeleted( File::DELETED_RESTRICTED ) ) {
 					throw new PermissionsError( 'suppressrevision' );
@@ -768,9 +768,10 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			$batch = new LinkBatch();
 			foreach ( $files as $row ) {
 				// CORE HACK for [[mw:Extension:Video]]
-				if ( isset( $row->ov_user_name ) && $row->ov_user_name ) {
-					$batch->addObj( Title::makeTitleSafe( NS_USER, $row->ov_user_name ) );
-					$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $row->ov_user_name ) );
+				if ( isset( $row->ov_actor ) && $row->ov_actor ) {
+					$actor = User::newFromActorId( $row->ov_actor );
+					$batch->addObj( Title::makeTitleSafe( NS_USER, $actor->getName() ) );
+					$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $actor->getName() ) );
 				} else {
 					$batch->addObj( Title::makeTitleSafe( NS_USER, $row->fa_user_text ) );
 					$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $row->fa_user_text ) );
@@ -1200,8 +1201,18 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 				'</span>';
 		}
 
-		$link = Linker::userLink( $file->getRawUser(), $file->getRawUserText() ) .
-			Linker::userToolLinks( $file->getRawUser(), $file->getRawUserText() );
+		// CORE HACK
+		// Actor support using the new ArchivedVideo class method
+		if ( method_exists( $file, 'getRawActor' ) ) {
+			$actorId = $file->getRawActor();
+			$user = User::newFromActorId( $actorId );
+			$link = Linker::userLink( $user->getId(), $user->getName() ) .
+				Linker::userToolLinks( $user->getId(), $user->getName() );
+		} else {
+			$link = Linker::userLink( $file->getRawUser(), $file->getRawUserText() ) .
+				Linker::userToolLinks( $file->getRawUser(), $file->getRawUserText() );
+		}
+		// CORE HACK END
 
 		if ( $file->isDeleted( File::DELETED_USER ) ) {
 			$link = '<span class="history-deleted">' . $link . '</span>';

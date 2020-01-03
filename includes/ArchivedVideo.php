@@ -66,11 +66,8 @@ class ArchivedVideo extends ArchivedFile {
 	/** @var string Upload description */
 	private $description;
 
-	/** @var int User ID of uploader */
-	private $user;
-
-	/** @var string User name of uploader */
-	private $user_text;
+	/** @var int Actor ID of uploader */
+	private $actor;
 
 	/** @var string Time of upload */
 	private $timestamp;
@@ -121,8 +118,7 @@ class ArchivedVideo extends ArchivedFile {
 		$this->mime = 'unknown/unknown';
 		$this->media_type = '';
 		$this->description = '';
-		$this->user = 0;
-		$this->user_text = '';
+		$this->actor = 0;
 		$this->timestamp = null;
 		$this->deleted = 0;
 		$this->dataLoaded = false;
@@ -230,8 +226,7 @@ class ArchivedVideo extends ArchivedFile {
 			'ov_archive_name',
 			'ov_url',
 			'ov_type',
-			'ov_user_id',
-			'ov_user_name',
+			'ov_actor',
 			'ov_timestamp'
 		];
 	}
@@ -257,8 +252,7 @@ class ArchivedVideo extends ArchivedFile {
 		$this->mime = 'video/x-flv'; // @todo FIXME/CHECKME: is hard-coding the minor MIME type like this OK?
 		$this->media_type = 'VIDEO';
 		//$this->description = $row->fa_description;
-		$this->user = $row->ov_user_id;
-		$this->user_text = $row->ov_user_name;
+		$this->actor = $row->ov_actor;
 		$this->timestamp = $row->ov_timestamp;
 		$this->url = $row->ov_url;
 		/**
@@ -283,27 +277,16 @@ class ArchivedVideo extends ArchivedFile {
 		return $this->url;
 	}
 
-	// WHY ARE THESE TWO NOT PROPERLY INHERITED AND HAVE TO BE DUPLICATED HERE?
 	/**
-	 * Return the user ID of the uploader.
+	 * Return the actor ID of the uploader.
+	 * This is a custom method
 	 *
 	 * @return int
 	 */
-	public function getRawUser() {
+	public function getRawActor() {
 		$this->load();
 
-		return $this->user;
-	}
-
-	/**
-	 * Return the user name of the uploader.
-	 *
-	 * @return string
-	 */
-	public function getRawUserText() {
-		$this->load();
-
-		return $this->user_text;
+		return $this->actor;
 	}
 
 	/** Getters mostly inherited from the parent class **/

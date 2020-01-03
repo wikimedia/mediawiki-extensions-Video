@@ -169,17 +169,20 @@ class VideoPage extends Article {
 					true,
 					wfTimestamp( TS_MW, $line->video_timestamp ),
 					$this->mTitle->getDBkey(),
-					$line->video_user_id,
-					$line->video_user_name,
+					$line->video_actor,
 					strip_tags( $line->video_url ),
 					$line->video_type,
 					$this->getTitle()
 				);
 
 			while ( $line = $this->video->nextHistoryLine() ) {
-				$s .= $list->videoHistoryLine( false, $line->video_timestamp,
-			  		$line->ov_archive_name, $line->video_user_id,
-					$line->video_user_name, strip_tags( $line->video_url ), $line->video_type,
+				$s .= $list->videoHistoryLine(
+					false,
+					$line->video_timestamp,
+					$line->ov_archive_name,
+					$line->video_actor,
+					strip_tags( $line->video_url ),
+					$line->video_type,
 					$this->getTitle()
 				);
 			}

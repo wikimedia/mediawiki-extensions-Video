@@ -39,7 +39,7 @@ class NewVideosPager extends RangeChronologicalPager {
 
 	function formatRow( $row ) {
 		$name = $row->video_name;
-		$user = User::newFromId( $row->video_user_id );
+		$user = User::newFromActorId( $row->video_actor );
 
 		$title = Title::makeTitle( NS_VIDEO, $name );
 		$video = new Video( $title, $this->getContext() );
@@ -61,31 +61,15 @@ class NewVideosPager extends RangeChronologicalPager {
 		$opts = $this->opts;
 		$conds = $jconds = [];
 		$tables = [ 'video' ];
-		$fields = [ 'video_name', 'video_url', 'video_user_name', 'video_user_id', 'video_timestamp' ];
+		$fields = [ 'video_name', 'video_url', 'video_actor', 'video_timestamp' ];
 		$options = [];
 
 		$user = $opts->getValue( 'user' );
 		if ( $user !== '' ) {
-			$userId = User::idFromName( $user );
-			if ( $userId ) {
-				$conds['video_user_id'] = $userId;
-			} else {
-				$conds['video_user_name'] = $user;
+			$userObj = User::newFromName( $user );
+			if ( $userObj ) {
+				$conds['video_actor'] = $userObj->getActorId();
 			}
-		}
-
-		if ( $opts->getValue( 'newbies' ) ) {
-			// newbie = most recent 1% of users
-			$dbr = wfGetDB( DB_REPLICA );
-			$max = $dbr->selectField( 'user', 'max(user_id)', false, __METHOD__ );
-			$conds[] = 'video_user_id >' . (int)( $max - $max / 100 );
-
-			// there's no point in looking for new user activity in a far past;
-			// beyond a certain point, we'd just end up scanning the rest of the
-			// table even though the users we're looking for didn't yet exist...
-			// see T140537, (for ContribsPages, but similar to this)
-			$conds[] = 'video_timestamp > ' .
-			           $dbr->addQuotes( $dbr->timestamp( wfTimestamp() - 30 * 24 * 60 * 60 ) );
 		}
 
 		if ( $opts->getValue( 'hidebots' ) ) {
@@ -94,13 +78,22 @@ class NewVideosPager extends RangeChronologicalPager {
 			if ( count( $groupsWithBotPermission ) ) {
 				$dbr = wfGetDB( DB_REPLICA );
 				$tables[] = 'user_groups';
+				$tables[] = 'actor';
+				$fields[] = 'actor_id';
+				$fields[] = 'actor_user';
 				$conds[] = 'ug_group IS NULL';
 				$jconds['user_groups'] = [
 					'LEFT JOIN',
 					[
 						'ug_group' => $groupsWithBotPermission,
-						'ug_user = video_user_id',
+						'ug_user = actor_user',
 						'ug_expiry IS NULL OR ug_expiry >= ' . $dbr->addQuotes( $dbr->timestamp() )
+					]
+				];
+				$jconds['actor'] = [
+					'JOIN',
+					[
+						'actor_id = video_actor'
 					]
 				];
 			}
@@ -116,7 +109,7 @@ class NewVideosPager extends RangeChronologicalPager {
 				'INNER JOIN',
 				[
 					'rc_title = video_name',
-					'rc_user = video_user_id',
+					'rc_actor = video_actor',
 					'rc_timestamp = video_timestamp'
 				]
 			];

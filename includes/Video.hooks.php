@@ -231,8 +231,7 @@ class VideoHooks {
 						'ov_archive_name' => $dbw->addQuotes( $archiveName ),
 						'ov_url' => 'video_url',
 						'ov_type' => 'video_type',
-						'ov_user_id' => 'video_user_id',
-						'ov_user_name' => 'video_user_name',
+						'ov_actor' => 'video_actor',
 						'ov_timestamp' => 'video_timestamp'
 					],
 					$where,
@@ -281,23 +280,62 @@ class VideoHooks {
 	 * Applies the schema changes when the user runs maintenance/update.php.
 	 *
 	 * @param DatabaseUpdater $updater
-	 * @return void
 	 */
-	public static function addTables( $updater ) {
-		$dir = __DIR__;
-		$file = "$dir/../sql/video.sql";
+	public static function onLoadExtensionSchemaUpdates( $updater ) {
+		$dir = __DIR__ . '/../sql';
+
+		$file = "$dir/video.sql";
 		$updater->addExtensionTable( 'video', $file );
 		$updater->addExtensionTable( 'oldvideo', $file );
-	}
 
-	/**
-	 * For the Renameuser extension.
-	 *
-	 * @param RenameuserSQL $renameUserSQL
-	 */
-	public static function onUserRename( $renameUserSQL ) {
-		$renameUserSQL->tables['oldvideo'] = [ 'ov_user_name', 'ov_user_id' ];
-		$renameUserSQL->tables['video'] = [ 'video_user_name', 'video_user_id' ];
+		$db = $updater->getDB();
+
+		$videoTableHasActorField = $db->fieldExists( 'video', 'video_actor', __METHOD__ );
+		$oldvideoTableHasActorField = $db->fieldExists( 'oldvideo', 'ov_actor', __METHOD__ );
+
+		// Actor support
+		if ( !$videoTableHasActorField ) {
+			// 1) add new actor column
+			$updater->addExtensionField( 'video', 'video_actor', $dir . '/patches/actor/add_video_actor_field_to_video.sql' );
+		}
+
+		if ( !$oldvideoTableHasActorField ) {
+			// 1) add new actor column
+			$updater->addExtensionField( 'oldvideo', 'ov_actor', $dir . '/patches/actor/add_ov_actor_field_to_oldvideo.sql' );
+		}
+
+		// The only time both tables have both an _actor and a _user_name column at
+		// the same time is when upgrading from an older version to v. 1.9.0;
+		// all versions prior to that will have only the _user_name columns (and the
+		// corresponding _user_id columns, but we assume here that if the _user_name
+		// columns are present, the _user_id ones must also be) and v. 1.9.0 and newer
+		// will only have the _actor columns.
+		// If both are present, then we know that we're in the middle of migration and
+		// we should complete the migration ASAP.
+		if (
+			$db->fieldExists( 'video', 'video_actor', __METHOD__ ) &&
+			$db->fieldExists( 'video', 'video_user_name', __METHOD__ ) &&
+			$db->fieldExists( 'oldvideo', 'ov_actor', __METHOD__ ) &&
+			$db->fieldExists( 'oldvideo', 'ov_user_name', __METHOD__ )
+		) {
+			// 2) populate the columns with correct values
+			// PITFALL WARNING! Do NOT change this to $updater->runMaintenance,
+			// THEY ARE NOT THE SAME THING and this MUST be using addExtensionUpdate
+			// instead for the code to work as desired!
+			// HT Skizzerz
+			$updater->addExtensionUpdate( [
+				'runMaintenance',
+				'MigrateOldVideoUserColumnsToActor',
+				'../maintenance/migrateOldVideoUserColumnsToActor.php'
+			] );
+
+			// 3) drop old columns
+			$updater->dropExtensionField( 'video', 'video_user_name', $dir . '/patches/actor/drop_video_user_name_field_from_video.sql' );
+			$updater->dropExtensionField( 'video', 'video_user_id', $dir . '/patches/actor/drop_video_user_id_field_from_video.sql' );
+
+			$updater->dropExtensionField( 'oldvideo', 'ov_user_name', $dir . '/patches/actor/drop_ov_user_name_field_from_oldvideo.sql' );
+			$updater->dropExtensionField( 'oldvideo', 'ov_user_id', $dir . '/patches/actor/drop_ov_user_id_field_from_oldvideo.sql' );
+		}
 	}
 
 	/**

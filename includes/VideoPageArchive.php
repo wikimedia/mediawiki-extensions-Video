@@ -20,7 +20,7 @@ class VideoPageArchive extends PageArchive {
 			'oldvideo',
 			[
 				'ov_name', 'ov_archive_name', 'ov_url', 'ov_type',
-				'ov_user_id', 'ov_user_name', 'ov_timestamp'
+				'ov_actor', 'ov_timestamp'
 			],
 			[ 'ov_name' => $this->title->getDBkey() ],
 			__METHOD__,
@@ -75,8 +75,7 @@ class VideoPageArchive extends PageArchive {
 					'video_name' => $row->ov_name,
 					'video_url' => $row->ov_url,
 					'video_type' => $row->ov_type,
-					'video_user_id' => $row->ov_user_id,
-					'video_user_name' => $row->ov_user_name,
+					'video_actor' => $row->ov_actor,
 					'video_timestamp' => $row->ov_timestamp
 				];
 			} else { // older revisions, they could be even elder current ones from ancient deletions
@@ -85,8 +84,7 @@ class VideoPageArchive extends PageArchive {
 					'ov_archive_name' => $archiveName,
 					'ov_url' => $row->ov_url,
 					'ov_type' => $row->ov_type,
-					'ov_user_id' => $row->ov_user_id,
-					'ov_user_name' => $row->ov_user_name,
+					'ov_actor' => $row->ov_actor,
 					'ov_timestamp' => $row->ov_timestamp
 				];
 			}

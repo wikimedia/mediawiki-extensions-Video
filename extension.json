@@ -1,6 +1,6 @@
 {
 	"name": "Video",
-	"version": "1.8.2",
+	"version": "1.9.0",
 	"author": [
 		"David Pean",
 		"Jack Phoenix",
@@ -9,7 +9,7 @@
 	],
 	"license-name": "GPL-2.0-or-later",
 	"requires": {
-		"MediaWiki": ">= 1.32.0"
+		"MediaWiki": ">= 1.34.0"
 	},
 	"url": "https://www.mediawiki.org/wiki/Extension:Video",
 	"descriptionmsg": "video-desc",
@@ -43,6 +43,7 @@
 		"VideoNamespaces": "includes/Video.namespaces.php"
 	},
 	"AutoloadClasses": {
+		"MigrateOldVideoUserColumnsToActor": "maintenance/migrateOldVideoUserColumnsToActor.php",
 		"Video": "includes/Video.php",
 		"BlipTVVideoProvider": "includes/providers/BlipTVVideo.php",
 		"DailyMotionVideoProvider": "includes/providers/DailyMotionVideo.php",
@@ -103,10 +104,7 @@
 			"VideoHooks::specialUndeleteSwitchArchive"
 		],
 		"LoadExtensionSchemaUpdates": [
-			"VideoHooks::addTables"
-		],
-		"RenameUserSQL": [
-			"VideoHooks::onUserRename"
+			"VideoHooks::onLoadExtensionSchemaUpdates"
 		],
 		"CanonicalNamespaces": [
 			"VideoHooks::onCanonicalNamespaces"

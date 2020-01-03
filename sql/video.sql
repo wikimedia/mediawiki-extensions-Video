@@ -4,8 +4,7 @@ CREATE TABLE /*_*/oldvideo (
   `ov_archive_name` varchar(255) NOT NULL default '',
   `ov_url` varchar(255) NOT NULL default '',
   `ov_type` varchar(255) default 'unknown',
-  `ov_user_id` int(11) NOT NULL default '0',
-  `ov_user_name` varchar(255) NOT NULL default '',
+  `ov_actor` bigint unsigned NOT NULL,
   `ov_timestamp` varchar(14) NOT NULL default ''
 )/*$wgDBTableOptions*/;
 
@@ -17,8 +16,7 @@ CREATE TABLE /*_*/video (
   `video_name` varchar(255) NOT NULL PRIMARY KEY default '',
   `video_url` varchar(255) NOT NULL default '',
   `video_type` varchar(255) default 'unknown',
-  `video_user_id` int(11) NOT NULL default '0',
-  `video_user_name` varchar(255) NOT NULL default '',
+  `video_actor` bigint unsigned NOT NULL,
   `video_timestamp` varchar(14) NOT NULL default ''
 )/*$wgDBTableOptions*/;
 

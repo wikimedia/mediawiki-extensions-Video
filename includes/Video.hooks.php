@@ -285,10 +285,11 @@ class VideoHooks {
 		$dir = __DIR__ . '/../sql';
 
 		$db = $updater->getDB();
+		$dbType = $db->getType();
 
 		$oldvideo = 'oldvideo.sql';
 		$video = 'video.sql';
-		if ( !in_array( $db->getType(), [ 'mysql', 'sqlite' ] ) ) {
+		if ( !in_array( $dbType, [ 'mysql', 'sqlite' ] ) ) {
 			$oldvideo = "oldvideo.{$dbType}.sql";
 			$video = "video.{$dbType}.sql";
 		}

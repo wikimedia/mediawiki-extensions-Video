@@ -285,10 +285,15 @@ class VideoHooks {
 		$dir = __DIR__ . '/../sql';
 
 		$file = "$dir/video.sql";
-		$updater->addExtensionTable( 'video', $file );
-		$updater->addExtensionTable( 'oldvideo', $file );
 
 		$db = $updater->getDB();
+		// @todo Split both schemas into one table per file
+		if ( $db->getType() === 'postgres' ) {
+			$file = "$dir/video.postgres.sql";
+		}
+
+		$updater->addExtensionTable( 'video', $file );
+		$updater->addExtensionTable( 'oldvideo', $file );
 
 		$videoTableHasActorField = $db->fieldExists( 'video', 'video_actor', __METHOD__ );
 		$oldvideoTableHasActorField = $db->fieldExists( 'oldvideo', 'ov_actor', __METHOD__ );

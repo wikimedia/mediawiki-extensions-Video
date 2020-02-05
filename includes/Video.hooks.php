@@ -284,16 +284,17 @@ class VideoHooks {
 	public static function onLoadExtensionSchemaUpdates( $updater ) {
 		$dir = __DIR__ . '/../sql';
 
-		$file = "$dir/video.sql";
-
 		$db = $updater->getDB();
-		// @todo Split both schemas into one table per file
-		if ( $db->getType() === 'postgres' ) {
-			$file = "$dir/video.postgres.sql";
+
+		$oldvideo = 'oldvideo.sql';
+		$video = 'video.sql';
+		if ( !in_array( $db->getType(), [ 'mysql', 'sqlite' ] ) ) {
+			$oldvideo = "oldvideo.{$dbType}.sql";
+			$video = "video.{$dbType}.sql";
 		}
 
-		$updater->addExtensionTable( 'video', $file );
-		$updater->addExtensionTable( 'oldvideo', $file );
+		$updater->addExtensionTable( 'video', "$dir/$video" );
+		$updater->addExtensionTable( 'oldvideo', "$dir/$oldvideo" );
 
 		$videoTableHasActorField = $db->fieldExists( 'video', 'video_actor', __METHOD__ );
 		$oldvideoTableHasActorField = $db->fieldExists( 'oldvideo', 'ov_actor', __METHOD__ );

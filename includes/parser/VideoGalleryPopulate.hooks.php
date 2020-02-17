@@ -32,13 +32,7 @@ class VideoGalleryPopulateHooks {
 			return '';
 		}
 
-		// Use Parser::recursivePreprocess() if available instead of creating another Parser instance
-		if ( is_callable( [ $parser, 'recursivePreprocess' ] ) ) {
-			$category = $parser->recursivePreprocess( $category );
-		} else {
-			$newParser = new Parser();
-			$category = $newParser->preprocess( $category, $parser->getTitle(), $parser->getOptions() );
-		}
+		$category = $parser->recursivePreprocess( $category );
 		$category_title = Title::newFromText( $category );
 		if ( !( $category_title instanceof Title ) ) {
 			return '';

@@ -44,7 +44,7 @@ class VideoGalleryHooks {
 
 			$tp = Title::newFromText( $matches[1] );
 			$nt =& $tp;
-			if ( is_null( $nt ) ) {
+			if ( !$nt ) {
 				// Bogus title. Ignore these so we don't bomb out later.
 				continue;
 			}

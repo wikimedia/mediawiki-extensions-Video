@@ -54,7 +54,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 	private	$mComment;
 	private	$mToken;
 
-	/** @var Title */
+	/** @var Title|null */
 	private $mTargetObj;
 	/**
 	 * @var string Search prefix
@@ -169,7 +169,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 
 		$out = $this->getOutput();
 
-		if ( is_null( $this->mTargetObj ) ) {
+		if ( !$this->mTargetObj ) {
 			$out->addWikiMsg( 'undelete-header' );
 
 			# Not all users can just browse every deleted page from the list
@@ -207,9 +207,8 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			} else {
 				$this->showFile( $this->mFilename );
 			}
-		}
 		// CORE HACK for [[mw:Extension:Video]]
-		elseif ( $this->mTargetObj->inNamespace( NS_VIDEO ) ) {
+		} elseif ( $this->mTargetObj->inNamespace( NS_VIDEO ) ) {
 			$file = new ArchivedVideo( $this->mTargetObj, '', $this->mFilename );
 			// Check if user is allowed to see this file
 			if ( !$file->exists() ) {
@@ -226,9 +225,8 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			} else {
 				$this->showHistory();
 			}
-		}
 		// END CORE HACK
-		elseif ( $this->mAction === "submit" ) {
+		} elseif ( $this->mAction === "submit" ) {
 			if ( $this->mRestore ) {
 				$this->undelete();
 			} elseif ( $this->mRevdel ) {
@@ -1011,7 +1009,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 
 		// Revision text size
 		$size = $row->ar_len;
-		if ( !is_null( $size ) ) {
+		if ( $size !== null ) {
 			$revTextSize = Linker::formatRevisionSize( $size );
 		}
 

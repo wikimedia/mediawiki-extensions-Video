@@ -93,8 +93,8 @@ class VideoGallery {
 	/**
 	 * Add a video to the gallery.
 	 *
-	 * @param $video Video object that is added to the gallery
-	 * @param $html String: additional HTML text to be shown. The name and size of the video are always shown.
+	 * @param Video $video object that is added to the gallery
+	 * @param string $html additional HTML text to be shown. The name and size of the video are always shown.
 	 */
 	function add( $video, $html = '' ) {
 		$this->mVideos[] = [ &$video, $html ];
@@ -102,11 +102,11 @@ class VideoGallery {
 	}
 
 	/**
- 	 * Add a video at the beginning of the gallery.
- 	 *
- 	 * @param $video Video object that is added to the gallery
- 	 * @param $html String: Additional HTML text to be shown. The name and size of the video are always shown.
- 	 */
+	 * Add a video at the beginning of the gallery.
+	 *
+	 * @param Video $video object that is added to the gallery
+	 * @param string $html Additional HTML text to be shown. The name and size of the video are always shown.
+	 */
 	function insert( $video, $html = '' ) {
 		array_unshift( $this->mVideos, [ &$video, $html ] );
 	}
@@ -156,7 +156,7 @@ class VideoGallery {
 				# We're dealing with a non-video, spit out the name and be done with it.
 				$thumbhtml = "\n\t\t\t" . '<div style="height: ' . ( $this->mHeights * 1.25 + 2 ) . 'px;">'
 					. htmlspecialchars( $nt->getText() ) . '</div>';
- 			} else {
+			} else {
 				$video->load(); // Just in case to ensure that all the fields we need are populated, etc.
 				$video->setWidth( $this->mWidths );
 				$video->setHeight( $this->mHeights );

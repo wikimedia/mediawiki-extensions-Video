@@ -30,13 +30,13 @@ class BlipTVVideoProvider extends BaseVideoProvider {
 			return $cachedEmbedId;
 		}
 
-		list( $apiUrl ) = explode( '?', $url);
+		list( $apiUrl ) = explode( '?', $url );
 		$apiUrl .= '?skin=api';
 
 		$apiContents = Http::get( $apiUrl );
 		if ( empty( $apiContents ) ) {
-	 		return null;
-	 	}
+			return null;
+		}
 
 		$dom = new DOMDocument( '1.0', 'UTF-8' );
 		$dom->loadXML( $apiContents );

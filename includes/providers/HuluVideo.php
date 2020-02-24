@@ -18,7 +18,7 @@ class HuluVideoProvider extends BaseVideoProvider {
 	protected function extractVideoId( $url ) {
 		global $wgMemc;
 
-		if ( !preg_match( '#/watch/(?<id>\d+)/#', $url, $matches) ) {
+		if ( !preg_match( '#/watch/(?<id>\d+)/#', $url, $matches ) ) {
 			return null;
 		}
 

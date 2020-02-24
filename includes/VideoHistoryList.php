@@ -51,7 +51,7 @@ class VideoHistoryList {
 		$userlink = Linker::userLink( $user_id, $user_name ) .
 			Linker::userToolLinks( $user_id, $user_name );
 
-		$style = htmlspecialchars( strtr( urldecode( $url ), '_', ' ') );
+		$style = htmlspecialchars( strtr( urldecode( $url ), '_', ' ' ) );
 
 		$s = "<li>({$rlink}) <a href=\"{$url}\" title=\"{$style}\">{$datetime}</a> . . ({$type}) . . {$userlink}";
 

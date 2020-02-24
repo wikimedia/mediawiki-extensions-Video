@@ -56,8 +56,8 @@ abstract class BaseVideoProvider {
 	 *
 	 * Override to use instead of regular expression
 	 *
-	 * @param $url
-	 * @return null
+	 * @param string $url
+	 * @return string|null
 	 */
 	protected function extractVideoId( $url ) {
 		return null;

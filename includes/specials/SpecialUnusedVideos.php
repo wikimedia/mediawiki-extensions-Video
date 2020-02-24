@@ -1,7 +1,7 @@
 <?php
 
-use Wikimedia\Rdbms\IResultWrapper;
 use Wikimedia\Rdbms\IDatabase;
+use Wikimedia\Rdbms\IResultWrapper;
 
 /**
  * Special:UnusedVideos - a special page for unused videos
@@ -63,7 +63,13 @@ class SpecialUnusedVideos extends QueryPage {
 		];
 	}
 
-	// Gotta override this since it's abstract
+	/**
+	 * Gotta override this since it's abstract
+	 *
+	 * @param Skin $skin
+	 * @param object $result
+	 * @return void
+	 */
 	public function formatResult( $skin, $result ) {
 	}
 

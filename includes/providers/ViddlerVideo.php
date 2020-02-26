@@ -1,7 +1,8 @@
 <?php
 
 class ViddlerVideoProvider extends BaseVideoProvider {
-	const idRegex = '#src="http://www\.viddler\.com/player/(?<id>[a-zA-Z0-9]*?)/"#';
+	private const ID_REGEX = '#src="http://www\.viddler\.com/player/(?<id>[a-zA-Z0-9]*?)/"#';
+	// phpcs:disable Generic.Files.LineLength
 	protected $embedTemplate = '<object width="$width" height="$height" id="viddlerplayer-$video_id"><param name="movie" value="http://www.viddler.com/player/$video_id/" /><param name="allowScriptAccess" value="always" /><param name="wmode" value="transparent" /><param name="allowFullScreen" value="true" /><embed src="http://www.viddler.com/player/$video_id/" width="$width" height="$height" type="application/x-shockwave-flash" wmode="transparent" allowScriptAccess="always" allowFullScreen="true" name="viddlerplayer-$video_id" ></embed></object>';
 
 	public static function getDomains() {
@@ -23,7 +24,7 @@ class ViddlerVideoProvider extends BaseVideoProvider {
 		}
 
 		$apiUrl = 'http://lab.viddler.com/services/oembed/?format=json&url=' . urlencode( $url );
-		$apiResult = HTTP::get( $apiUrl );
+		$apiResult = Http::get( $apiUrl );
 
 		if ( $apiResult === false ) {
 			return null;
@@ -32,7 +33,7 @@ class ViddlerVideoProvider extends BaseVideoProvider {
 		$apiResult = FormatJson::decode( $apiResult, true );
 
 		// Extract the player source from the HTML
-		if ( !preg_match( self::idRegex, $apiResult['html'], $matches ) ) {
+		if ( !preg_match( self::ID_REGEX, $apiResult['html'], $matches ) ) {
 			return null;
 		}
 

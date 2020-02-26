@@ -33,6 +33,8 @@ class RevertVideoAction extends FormAction {
 	/**
 	 * Get the permission required to perform this action.  Often, but not always,
 	 * the same as the action name
+	 *
+	 * @return string
 	 */
 	public function getRestriction() {
 		return 'edit';

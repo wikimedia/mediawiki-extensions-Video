@@ -29,7 +29,7 @@ class VideoHistoryList {
 		} else {
 			if (
 				!$wgUser->isAnon() &&
-				$services->getPermissionManager()->userCan( 'edit', $wgUser )
+				$services->getPermissionManager()->userCan( 'edit', $wgUser, $title )
 			) {
 				$rlink = $services->getLinkRenderer()->makeKnownLink(
 					$title,

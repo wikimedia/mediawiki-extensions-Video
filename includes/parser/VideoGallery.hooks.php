@@ -8,14 +8,22 @@
 
 class VideoGalleryHooks {
 
-	public static function onParserFirstCallInit( &$parser ) {
+	/**
+	 * @param Parser $parser
+	 */
+	public static function onParserFirstCallInit( $parser ) {
 		$parser->setHook( 'videogallery', [ __CLASS__, 'renderVideoGallery' ] );
-		return true;
 	}
 
+	/**
+	 * @param string $input
+	 * @param string[] $argv
+	 * @param Parser $parser
+	 * @return string
+	 */
 	public static function renderVideoGallery( $input, $argv, $parser ) {
 		$vg = new VideoGallery();
-		$vg->setContextTitle( $parser->getTitle()->getText() );
+		$vg->setContextTitle( $parser->getTitle() );
 		$vg->setShowFilename( true );
 		$vg->setParsing();
 

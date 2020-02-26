@@ -10,7 +10,6 @@ class GametrailersVideoProvider extends MTVNetworksVideoProvider {
 			return null;
 		}
 
-		$vidType = '';
 		switch ( $matches['type'] ) {
 			case 'video':
 				$vidType = 'video';

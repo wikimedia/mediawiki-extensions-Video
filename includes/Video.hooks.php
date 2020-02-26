@@ -264,11 +264,11 @@ class VideoHooks {
 	 * Standard PageArchive allows only to restore the wiki page, not the
 	 * associated video.
 	 *
-	 * @param PageArchive|VideoPageArchive $archive PageArchive object or a child class
+	 * @param PageArchive|VideoPageArchive &$archive PageArchive object or a child class
 	 * @param Title $title Title for the current page that we're about to
 	 *                     undelete or view
 	 */
-	public static function specialUndeleteSwitchArchive( $archive, $title ) {
+	public static function specialUndeleteSwitchArchive( &$archive, $title ) {
 		if ( $title->getNamespace() === NS_VIDEO ) {
 			$archive = new VideoPageArchive( $title );
 		}

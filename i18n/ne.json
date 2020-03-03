@@ -1,4 +1,9 @@
 {
-	"@metadata": [],
+	"@metadata": {
+		"authors": [
+			"पर्वत सुबेदी"
+		]
+	},
+	"video-upload-new-version": "यो फाइलको नयाँ संस्करण उर्ध्वभरण गर्नुहोस् ।",
 	"video-showhidebots": "($1 बोटहरु)"
 }

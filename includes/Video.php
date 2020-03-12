@@ -80,29 +80,29 @@ class Video {
 	/**
 	 * Array of providers codes to classes
 	 *
-	 * @var array
+	 * @var string[]
 	 */
-	static $providers = [
-		'bliptv' => 'BlipTVVideoProvider',
-		'dailymotion' => 'DailyMotionVideoProvider',
-		'gametrailers' => 'GametrailersVideoProvider',
-		'hulu' => 'HuluVideoProvider',
-		'metacafe' => 'MetaCafeVideoProvider',
-		'movieclips' => 'MovieClipsVideoProvider',
-		'myvideo' => 'MyVideoVideoProvider',
-		'southparkstudios' => 'SouthParkStudiosVideoProvider',
-		'youtube' => 'YouTubeVideoProvider',
-		'viddler' => 'ViddlerVideoProvider',
-		'vimeo' => 'VimeoVideoProvider',
-		'wegame' => 'WeGameVideoProvider',
+	private static $providers = [
+		'bliptv' => BlipTVVideoProvider::class,
+		'dailymotion' => DailyMotionVideoProvider::class,
+		'gametrailers' => GametrailersVideoProvider::class,
+		'hulu' => HuluVideoProvider::class,
+		'metacafe' => MetaCafeVideoProvider::class,
+		'movieclips' => MovieClipsVideoProvider::class,
+		'myvideo' => MyVideoVideoProvider::class,
+		'southparkstudios' => SouthParkStudiosVideoProvider::class,
+		'youtube' => YouTubeVideoProvider::class,
+		'viddler' => ViddlerVideoProvider::class,
+		'vimeo' => VimeoVideoProvider::class,
+		'wegame' => WeGameVideoProvider::class,
 	];
 
 	/**
 	 * Array of domain name to provider codes
 	 *
-	 * @var null
+	 * @var string[]|null
 	 */
-	static protected $providerDomains = null;
+	protected static $providerDomains = null;
 
 	/**
 	 * Constructor -- create a new Video object from the given Title and set
@@ -325,6 +325,8 @@ class Video {
 
 	/**
 	 * Get the memcached key for the current video.
+	 *
+	 * @return string
 	 */
 	public function getCacheKey() {
 		global $wgMemc;
@@ -376,13 +378,15 @@ class Video {
 
 	/**
 	 * Return the name of this video
+	 *
+	 * @return string
 	 */
 	public function getName() {
 		return $this->name;
 	}
 
 	/**
-	 * Return the associated Title object
+	 * @return Title
 	 */
 	public function getTitle() {
 		return $this->title;
@@ -390,6 +394,8 @@ class Video {
 
 	/**
 	 * Return the URL of this video
+	 *
+	 * @return string
 	 */
 	public function getURL() {
 		$this->load();
@@ -398,6 +404,8 @@ class Video {
 
 	/**
 	 * Return the type of this video
+	 *
+	 * @return string
 	 */
 	public function getType() {
 		$this->load();
@@ -423,6 +431,7 @@ class Video {
 		}
 
 		$class = self::$providers[$this->type];
+		/** @var BaseVideoProvider $provider */
 		$provider = new $class( $this );
 
 		return $provider->getEmbedCode();
@@ -431,6 +440,7 @@ class Video {
 	/**
 	 * Is the supplied value a URL?
 	 *
+	 * @param string $code
 	 * @return bool True if it is, otherwise false
 	 */
 	public static function isURL( $code ) {
@@ -496,6 +506,7 @@ class Video {
 
 		self::$providerDomains = [];
 		foreach ( self::$providers as $name => $class ) {
+			/** @var BaseVideoProvider $class */
 			$domains = $class::getDomains();
 			foreach ( $domains as $domain ) {
 				self::$providerDomains[$domain] = $name;
@@ -574,6 +585,8 @@ class Video {
 	 *  0      return line for current version
 	 *  1      query for old versions, return first one
 	 *  2, ... return next old version from above query
+	 *
+	 * @return object|false
 	 */
 	public function nextHistoryLine() {
 		$dbr = wfGetDB( DB_REPLICA );

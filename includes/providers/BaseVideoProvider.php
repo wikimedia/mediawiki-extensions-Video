@@ -96,7 +96,7 @@ abstract class BaseVideoProvider {
 	/**
 	 * Returns all domains associated with the provider
 	 *
-	 * @return array
+	 * @return string[]
 	 */
 	public static function getDomains() {
 		return [];

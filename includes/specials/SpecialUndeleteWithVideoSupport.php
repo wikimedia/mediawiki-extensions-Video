@@ -389,6 +389,9 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		return true;
 	}
 
+	/**
+	 * @param string $timestamp
+	 */
 	private function showRevision( $timestamp ) {
 		if ( !preg_match( '/[0-9]{14}/', $timestamp ) ) {
 			return;
@@ -535,7 +538,6 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			] );
 		} else {
 			$sourceView = '';
-			$previewButton = '';
 		}
 
 		$buttonFields[] = new OOUI\ButtonInputWidget( [
@@ -581,7 +583,6 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 	 *
 	 * @param Revision $previousRev
 	 * @param Revision $currentRev
-	 * @return string HTML
 	 */
 	function showDiff( $previousRev, $currentRev ) {
 		$diffContext = clone $this->getContext();
@@ -1026,7 +1027,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 
 		// Tags
 		$attribs = [];
-		list( $tagSummary, $classes ) = ChangeTags::formatSummaryRow(
+		[ $tagSummary, $classes ] = ChangeTags::formatSummaryRow(
 			$row->ts_tags,
 			'deletedhistory',
 			$this->getContext()

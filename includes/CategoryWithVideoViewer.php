@@ -68,8 +68,10 @@ class CategoryWithVideoViewer extends CategoryViewer {
 
 	/**
 	 * Add a page in the video namespace
+	 *
+	 * @param Title $title
 	 */
-	function addVideo( $title, $sortkey, $pageLength ) {
+	private function addVideo( Title $title ) {
 		$video = new Video( $title, $this->getContext() );
 		if ( $this->flip ) {
 			$this->videogallery->insert( $video );
@@ -153,7 +155,7 @@ class CategoryWithVideoViewer extends CategoryViewer {
 				} elseif ( $title->getNamespace() == NS_FILE ) {
 					$this->addImage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
 				} elseif ( $title->getNamespace() == NS_VIDEO ) {
-					$this->addVideo( $title, $row->cl_sortkey, $row->page_len, $row->page_is_redirect );
+					$this->addVideo( $title );
 				} else {
 					$this->addPage( $title, $humanSortkey, $row->page_len, $row->page_is_redirect );
 				}

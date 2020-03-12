@@ -9,11 +9,19 @@
 
 class VideoGalleryPopulateHooks {
 
+	/**
+	 * @param Parser $parser
+	 */
 	public static function onParserFirstCallInit( $parser ) {
 		$parser->setHook( 'videogallerypopulate', [ __CLASS__, 'renderVideoGalleryPopulate' ] );
-		return true;
 	}
 
+	/**
+	 * @param string $input
+	 * @param string[] $args
+	 * @param Parser $parser
+	 * @return string
+	 */
 	public static function renderVideoGalleryPopulate( $input, $args, $parser ) {
 		$parser->getOutput()->updateCacheExpiry( 0 );
 
@@ -72,6 +80,6 @@ class VideoGalleryPopulateHooks {
 			$gallery->add( $video );
 		}
 
-		return $gallery->toHtml();
+		return $gallery->toHTML();
 	}
 }

@@ -2,7 +2,10 @@
 
 class VideoPage extends Article {
 
-	public $title = null;
+	/**
+	 * @var Video
+	 */
+	private $video;
 
 	/**
 	 * Constructor and clear the article
@@ -31,7 +34,7 @@ class VideoPage extends Article {
 		$out = $ctx->getOutput();
 
 		// No need to display noarticletext, we use our own message
-		if ( $this->getID() ) {
+		if ( $this->getId() ) {
 			parent::view();
 		} else {
 			// Just need to set the right headers

@@ -27,6 +27,8 @@ class VideoGallery {
 
 	/**
 	 * Set the "parse" bit so we know to hide "bad" videos
+	 *
+	 * @param bool $val
 	 */
 	function setParsing( $val = true ) {
 		$this->mParsing = $val;
@@ -34,6 +36,8 @@ class VideoGallery {
 
 	/**
 	 * Get the caption (as plain text)
+	 *
+	 * @return string
 	 */
 	function getCaption() {
 		return ( isset( $this->mCaption ) ) ? $this->mCaption : '';
@@ -136,6 +140,8 @@ class VideoGallery {
 	 * - the video name
 	 * - the additional text provided when adding the video
 	 * - the size of the video
+	 *
+	 * @return string
 	 */
 	function toHTML() {
 		global $wgLang;

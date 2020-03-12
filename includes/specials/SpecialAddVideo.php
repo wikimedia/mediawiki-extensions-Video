@@ -60,6 +60,8 @@ class AddVideo extends FormSpecialPage {
 
 	/**
 	 * Get display format for the form.
+	 *
+	 * @return string
 	 */
 	protected function getDisplayFormat() {
 		return 'ooui';
@@ -91,7 +93,7 @@ class AddVideo extends FormSpecialPage {
 	 * @return bool|string
 	 */
 	public function validateVideoField( $value, $allData ) {
-		list( , $provider ) = $this->getUrlAndProvider( $value );
+		[ , $provider ] = $this->getUrlAndProvider( $value );
 
 		if ( $provider === 'unknown' ) {
 			return $this->msg( 'video-addvideo-invalidcode' )->plain();
@@ -134,7 +136,7 @@ class AddVideo extends FormSpecialPage {
 	 * @return bool
 	 */
 	public function onSubmit( array $data ) {
-		list( $url, $provider ) = $this->getUrlAndProvider( $data['Video'] );
+		[ $url, $provider ] = $this->getUrlAndProvider( $data['Video'] );
 
 		$this->video->addVideo( $url, $provider, false, $data['Watch'] );
 

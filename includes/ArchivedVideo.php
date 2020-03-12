@@ -81,11 +81,6 @@ class ArchivedVideo extends ArchivedFile {
 	/** @var string SHA-1 hash of file content */
 	private $sha1;
 
-	/** @var string Number of pages of a multipage document, or false for
-	 * documents which aren't multipage documents
-	 */
-	private $pageCount;
-
 	/** @var string Original base filename */
 	private $archive_name;
 
@@ -104,7 +99,7 @@ class ArchivedVideo extends ArchivedFile {
 	 * @param int $id
 	 * @param string $key
 	 */
-	function __construct( $title, $id = 0, $key = '' ) {
+	public function __construct( $title, $id = 0, $key = '' ) {
 		$this->id = -1;
 		$this->title = false;
 		$this->name = false;
@@ -161,15 +156,6 @@ class ArchivedVideo extends ArchivedFile {
 		}
 		$conds = [];
 
-		/**
-		if ( $this->id > 0 ) {
-			$conds['fa_id'] = $this->id;
-		}
-		if ( $this->key ) {
-			$conds['fa_storage_group'] = $this->group;
-			$conds['fa_storage_key'] = $this->key;
-		}
-		**/
 		if ( $this->title ) {
 			$conds['ov_name'] = $this->title->getDBkey();
 		}
@@ -237,33 +223,13 @@ class ArchivedVideo extends ArchivedFile {
 	 * @param stdClass $row Object database row
 	 */
 	public function loadFromRow( $row ) {
-		//$this->id = intval( $row->fa_id );
 		$this->name = $row->ov_name;
 		$this->archive_name = $row->ov_archive_name;
-		/**
-		$this->group = $row->fa_storage_group;
-		$this->key = $row->fa_storage_key;
-		$this->size = $row->fa_size;
-		$this->bits = $row->fa_bits;
-		$this->width = $row->fa_width;
-		$this->height = $row->fa_height;
-		$this->metadata = $row->fa_metadata;
-		**/
 		$this->mime = 'video/x-flv'; // @todo FIXME/CHECKME: is hard-coding the minor MIME type like this OK?
 		$this->media_type = 'VIDEO';
-		//$this->description = $row->fa_description;
 		$this->actor = $row->ov_actor;
 		$this->timestamp = $row->ov_timestamp;
 		$this->url = $row->ov_url;
-		/**
-		$this->deleted = $row->fa_deleted;
-		if ( isset( $row->fa_sha1 ) ) {
-			$this->sha1 = $row->fa_sha1;
-		} else {
-			// old row, populate from key
-			$this->sha1 = LocalRepo::getHashFromKey( $this->key );
-		}
-		**/
 	}
 
 	/**
@@ -288,8 +254,6 @@ class ArchivedVideo extends ArchivedFile {
 
 		return $this->actor;
 	}
-
-	/** Getters mostly inherited from the parent class **/
 
 	/**
 	 * Return the FileStore key

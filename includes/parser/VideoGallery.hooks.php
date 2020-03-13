@@ -52,9 +52,17 @@ class VideoGalleryHooks {
 
 			$tp = Title::newFromText( $matches[1] );
 			$nt =& $tp;
-			if ( !$nt ) {
-				// Bogus title. Ignore these so we don't bomb out later.
-				continue;
+			// exists() checks to see if there is such a page
+			// i.e. "Sara Bareilles - Brave" _is_ a valid page title for both NS_MAIN and NS_VIDEO,
+			// but if no NS was specified, we should assume the NS is NS_VIDEO and not NS_MAIN
+			if ( !$nt || !$nt->exists() ) {
+				// Maybe the user supplied a NS_VIDEO page name *without* the namespace?
+				// Try that first before bailing out.
+				$nt = Title::makeTitleSafe( NS_VIDEO, $matches[1] );
+				if ( !$nt ) {
+					// Bogus title. Ignore these so we don't bomb out later.
+					continue;
+				}
 			}
 
 			if ( isset( $matches[3] ) ) {

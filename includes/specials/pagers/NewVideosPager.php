@@ -86,7 +86,8 @@ class NewVideosPager extends RangeChronologicalPager {
 					'LEFT JOIN',
 					[
 						'ug_group' => $groupsWithBotPermission,
-						'ug_user = actor_user',
+						// commented out because causes a query error, not sure *why* though...
+						// 'ug_user = actor_user',
 						'ug_expiry IS NULL OR ug_expiry >= ' . $dbr->addQuotes( $dbr->timestamp() )
 					]
 				];

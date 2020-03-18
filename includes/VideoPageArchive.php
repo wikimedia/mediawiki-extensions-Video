@@ -34,6 +34,8 @@ class VideoPageArchive extends PageArchive {
 	 * Once restored, the items will be removed from the archive tables.
 	 * The deletion log will be updated with an undeletion notice.
 	 *
+	 * @note undeleteAsUser should be used instead
+	 *
 	 * @param array $timestamps Pass an empty array to restore all revisions,
 	 *   otherwise list the ones to undelete.
 	 * @param string $comment
@@ -47,6 +49,38 @@ class VideoPageArchive extends PageArchive {
 	 */
 	function undelete( $timestamps, $comment = '', $fileVersions = [],
 		$unsuppress = false, User $user = null, $tags = null
+	) {
+		if ( $user === null ) {
+			$user = RequestContext::getMain()->getUser();
+		}
+		$this->undeleteAsUser(
+			$timestamps,
+			$user,
+			$comment,
+			$fileVersions,
+			$unsuppress,
+			$tags
+		);
+	}
+
+	/**
+	 * Restore the given (or all) text and video revisions for the page.
+	 * Once restored, the items will be removed from the archive tables.
+	 * The deletion log will be updated with an undeletion notice.
+	 *
+	 * @param array $timestamps Pass an empty array to restore all revisions,
+	 *   otherwise list the ones to undelete.
+	 * @param User $user User performing the action
+	 * @param string $comment
+	 * @param array $fileVersions
+	 * @param bool $unsuppress
+	 * @param string|string[]|null $tags Change tags to add to log entry
+	 *   ($user should be able to add the specified tags before this is called)
+	 * @return array|bool array(number of file revisions restored, number of image revisions
+	 *   restored, log message) on success, false on failure.
+	 */
+	function undeleteAsUser( $timestamps, User $user, $comment = '',
+		$fileVersions = [], $unsuppress = false, $tags = null
 	) {
 		// We currently restore only whole deleted videos, a restore link from
 		// log could take us here...
@@ -108,7 +142,17 @@ class VideoPageArchive extends PageArchive {
 
 		// run parent version, because it uses a private function inside
 		// files will not be touched anyway here, because it's not NS_FILE
-		parent::undelete( $timestamps, $comment, $fileVersions, $unsuppress );
+		if ( method_exists( get_parent_class( $this ), 'undeleteAsUser' ) ) {
+			parent::undeleteAsUser(
+				$timestamps,
+				$user,
+				$comment,
+				$fileVersions,
+				$unsuppress
+			);
+		} else {
+			parent::undelete( $timestamps, $comment, $fileVersions, $unsuppress );
+		}
 
 		return [ '', '', '' ];
 	}

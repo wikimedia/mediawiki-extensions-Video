@@ -146,7 +146,8 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 	protected function isAllowed( $permission, User $user = null ) {
 		$user = $user ?: $this->getUser();
 		if ( $this->mTargetObj !== null ) {
-			return $this->mTargetObj->userCan( $permission, $user );
+			return MediaWikiServices::getInstance()->getPermissionManager()
+				->userCan( $permission, $user, $this->mTargetObj );
 		} else {
 			return $user->isAllowed( $permission );
 		}

@@ -534,6 +534,9 @@ class Video {
 	 */
 	public static function getProviderByURL( $url ) {
 		$host = wfParseUrl( $url );
+		if ( !$host ) {
+			return 'unknown';
+		}
 		$host = $host['host'];
 
 		self::getDomainsForProviders();

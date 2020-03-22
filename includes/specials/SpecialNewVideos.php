@@ -45,7 +45,6 @@ class NewVideos extends IncludableSpecialPage {
 		$opts->add( 'wpIlMatch', '' ); // Known as 'like', but uses old name for back-compat
 		$opts->add( 'user', '' );
 		$opts->add( 'hidebots', true );
-		$opts->add( 'newbies', false );
 		$opts->add( 'hidepatrolled', false );
 		$opts->add( 'limit', 48 ); // Back-compat, old value has always been 48
 		$opts->add( 'offset', '' );
@@ -121,11 +120,6 @@ class NewVideos extends IncludableSpecialPage {
 				'type' => 'text',
 				'label-message' => 'newimages-user',
 				'name' => 'user',
-			],
-			'newbies' => [
-				'type' => 'check',
-				'label-message' => 'newimages-newbies',
-				'name' => 'newbies',
 			],
 			'hidebots' => [
 				'type' => 'check',

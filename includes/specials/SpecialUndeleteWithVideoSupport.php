@@ -31,6 +31,7 @@
  */
 
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Revision\RevisionFactory;
 use MediaWiki\Revision\RevisionRecord;
 use Wikimedia\Rdbms\IResultWrapper;
 
@@ -956,10 +957,13 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 	}
 
 	protected function formatRevisionRow( $row, $earliestLiveTime, $remaining ) {
-		$rev = Revision::newFromArchiveRow( $row,
-			[
-				'title' => $this->mTargetObj
-			] );
+		$revRecord = MediaWikiServices::getInstance()
+			->getRevisionFactory()
+			->newRevisionFromArchiveRow(
+				$row,
+				RevisionFactory::READ_NORMAL,
+				$this->mTargetObj
+			);
 
 		$revTextSize = '';
 		$ts = wfTimestamp( TS_MW, $row->ar_timestamp );
@@ -984,14 +988,14 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			$titleObj = $this->getPageTitle();
 			# Last link
 			if ( !RevisionRecord::userCanBitfield(
-				$rev->getVisibility(),
+				$revRecord->getVisibility(),
 				RevisionRecord::DELETED_TEXT,
 				$this->getUser()
 			) ) {
 				$pageLink = htmlspecialchars( $this->getLanguage()->userTimeAndDate( $ts, $user ) );
 				$last = $this->msg( 'diff' )->escaped();
 			} elseif ( $remaining > 0 || ( $earliestLiveTime && $ts > $earliestLiveTime ) ) {
-				$pageLink = $this->getPageLink( $rev, $titleObj, $ts );
+				$pageLink = $this->getPageLink( $revRecord, $titleObj, $ts );
 				$last = $this->getLinkRenderer()->makeKnownLink(
 					$titleObj,
 					$this->msg( 'diff' )->text(),
@@ -1003,7 +1007,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 					]
 				);
 			} else {
-				$pageLink = $this->getPageLink( $rev, $titleObj, $ts );
+				$pageLink = $this->getPageLink( $revRecord, $titleObj, $ts );
 				$last = $this->msg( 'diff' )->escaped();
 			}
 		} else {
@@ -1012,10 +1016,11 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		}
 
 		// User links
-		$userLink = Linker::revUserTools( $rev );
+		$revision = new Revision( $revRecord );
+		$userLink = Linker::revUserTools( $revision );
 
 		// Minor edit
-		$minor = $rev->isMinor() ? ChangesList::flag( 'minor' ) : '';
+		$minor = $revRecord->isMinor() ? ChangesList::flag( 'minor' ) : '';
 
 		// Revision text size
 		$size = $row->ar_len;
@@ -1024,7 +1029,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		}
 
 		// Edit summary
-		$comment = Linker::revComment( $rev );
+		$comment = Linker::revComment( $revision );
 
 		// Tags
 		$attribs = [];
@@ -1121,17 +1126,17 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 	/**
 	 * Fetch revision text link if it's available to all users
 	 *
-	 * @param Revision $rev
+	 * @param RevisionRecord $revRecord
 	 * @param Title $titleObj
 	 * @param string $ts Timestamp
 	 * @return string
 	 */
-	function getPageLink( $rev, $titleObj, $ts ) {
+	private function getPageLink( $revRecord, $titleObj, $ts ) {
 		$user = $this->getUser();
 		$time = $this->getLanguage()->userTimeAndDate( $ts, $user );
 
 		if ( !RevisionRecord::userCanBitfield(
-			$rev->getVisibility(),
+			$revRecord->getVisibility(),
 			RevisionRecord::DELETED_TEXT,
 			$user
 		) ) {
@@ -1148,7 +1153,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			]
 		);
 
-		if ( $rev->isDeleted( Revision::DELETED_TEXT ) ) {
+		if ( $revRecord->isDeleted( RevisionRecord::DELETED_TEXT ) ) {
 			$link = '<span class="history-deleted">' . $link . '</span>';
 		}
 

@@ -1,4 +1,6 @@
 {
-	"@metadata": [],
+	"@metadata": {
+		"authors": []
+	},
 	"video-showhidebots": "(सांगकामे $1)"
 }

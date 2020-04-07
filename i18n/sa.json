@@ -1,4 +1,6 @@
 {
-	"@metadata": [],
+	"@metadata": {
+		"authors": []
+	},
 	"video-showhidebots": "(स्वयं चालकः $1)"
 }

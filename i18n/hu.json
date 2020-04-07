@@ -1,4 +1,6 @@
 {
-	"@metadata": [],
+	"@metadata": {
+		"authors": []
+	},
 	"video-showhidebots": "(botok szerkesztéseinek $1)"
 }

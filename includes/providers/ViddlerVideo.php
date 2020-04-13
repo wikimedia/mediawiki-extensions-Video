@@ -1,5 +1,7 @@
 <?php
 
+use MediaWiki\MediaWikiServices;
+
 class ViddlerVideoProvider extends BaseVideoProvider {
 	private const ID_REGEX = '#src="http://www\.viddler\.com/player/(?<id>[a-zA-Z0-9]*?)/"#';
 	// phpcs:disable Generic.Files.LineLength
@@ -14,10 +16,9 @@ class ViddlerVideoProvider extends BaseVideoProvider {
 	}
 
 	protected function extractVideoId( $url ) {
-		global $wgMemc;
-
-		$cacheKey = $wgMemc->makeKey( 'video', 'viddler', sha1( $url ) );
-		$cachedEmbedId = $wgMemc->get( $cacheKey );
+		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
+		$cacheKey = $cache->makeKey( 'video', 'viddler', sha1( $url ) );
+		$cachedEmbedId = $cache->get( $cacheKey );
 
 		if ( $cachedEmbedId !== false ) {
 			return $cachedEmbedId;
@@ -39,7 +40,7 @@ class ViddlerVideoProvider extends BaseVideoProvider {
 
 		$embedId = $matches['id'];
 
-		$wgMemc->set( $cacheKey, $embedId, 60 * 60 * 24 );
+		$cache->set( $cacheKey, $embedId, 60 * 60 * 24 );
 
 		return $embedId;
 	}

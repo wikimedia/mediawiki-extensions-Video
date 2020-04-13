@@ -1,5 +1,7 @@
 <?php
 
+use MediaWiki\MediaWikiServices;
+
 class Video {
 
 	/**
@@ -178,9 +180,8 @@ class Video {
 			$logAction = 'update';
 
 			// Clear cache
-			global $wgMemc;
 			$key = $this->getCacheKey();
-			$wgMemc->delete( $key );
+			MediaWikiServices::getInstance()->getMainWANObjectCache()->delete( $key );
 
 			// Collision, this is an update of a video
 			// Insert previous contents into oldvideo
@@ -276,12 +277,10 @@ class Video {
 	 * @return bool True on success.
 	 */
 	private function loadFromCache() {
-		global $wgMemc;
-
 		$this->dataLoaded = false;
 
 		$key = $this->getCacheKey();
-		$data = $wgMemc->get( $key );
+		$data = MediaWikiServices::getInstance()->getMainWANObjectCache()->get( $key );
 
 		if ( !empty( $data ) && is_array( $data ) ) {
 			$this->url = $data['url'];
@@ -303,10 +302,10 @@ class Video {
 	}
 
 	/**
-	 * Save the video data to memcached
+	 * Save the video data to cache
 	 */
 	private function saveToCache() {
-		global $wgMemc;
+		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
 		$key = $this->getCacheKey();
 		if ( $this->exists() ) {
 			$cachedValues = [
@@ -315,24 +314,24 @@ class Video {
 				'actor' => $this->submitter_actor,
 				'create_date' => $this->create_date
 			];
-			$wgMemc->set( $key, $cachedValues, 60 * 60 * 24 * 7 ); // A week
+			$cache->set( $key, $cachedValues, 60 * 60 * 24 * 7 ); // A week
 		} else {
 			// However we should clear them, so they aren't leftover
 			// if we've deleted the file.
-			$wgMemc->delete( $key );
+			$cache->delete( $key );
 		}
 	}
 
 	/**
-	 * Get the memcached key for the current video.
+	 * Get the cache key for the current video.
 	 *
 	 * @return string
 	 */
 	public function getCacheKey() {
-		global $wgMemc;
 		// memcached does not like spaces, so replace 'em with an underscore
 		$safeVideoName = str_replace( ' ', '_', $this->getName() );
-		return $wgMemc->makeKey( 'video', 'page', $safeVideoName );
+		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
+		return $cache->makeKey( 'video', 'page', $safeVideoName );
 	}
 
 	/**

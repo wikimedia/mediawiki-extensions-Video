@@ -2,6 +2,9 @@
 /**
  * @file
  */
+
+use MediaWiki\MediaWikiServices;
+
 class BlipTVVideoProvider extends BaseVideoProvider {
 	protected $embedTemplate = '<iframe src="http://blip.tv/play/$video_id.html" width="$width" height="$height" frameborder="0" allowfullscreen></iframe>';
 
@@ -14,8 +17,6 @@ class BlipTVVideoProvider extends BaseVideoProvider {
 	}
 
 	protected function extractVideoId( $url ) {
-		global $wgMemc;
-
 		// See if this is a valid url
 		if ( !preg_match( '#/[a-zA-Z0-9\-]+/[a-zA-Z0-9\-]*-(\d+)#', $url, $matches ) ) {
 			return null;
@@ -23,8 +24,9 @@ class BlipTVVideoProvider extends BaseVideoProvider {
 
 		$videoId = $matches[1];
 
-		$cacheKey = $wgMemc->makeKey( 'video', 'bliptv', $videoId );
-		$cachedEmbedId = $wgMemc->get( $cacheKey );
+		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
+		$cacheKey = $cache->makeKey( 'video', 'bliptv', $videoId );
+		$cachedEmbedId = $cache->get( $cacheKey );
 
 		if ( $cachedEmbedId !== false ) {
 			return $cachedEmbedId;
@@ -43,7 +45,7 @@ class BlipTVVideoProvider extends BaseVideoProvider {
 
 		$embedId = $dom->getElementsByTagName( 'embedLookup' )->item( 0 )->textContent;
 
-		$wgMemc->set( $cacheKey, $embedId, 60 * 60 * 24 );
+		$cache->set( $cacheKey, $embedId, 60 * 60 * 24 );
 
 		return $embedId;
 	}

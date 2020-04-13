@@ -495,7 +495,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		$out->addHTML( $this->msg( 'undelete-revision' )->rawParams( $link )->params(
 			$time )->rawParams( $userLink )->params( $d, $t )->parse() . '</div>' );
 
-		if ( !Hooks::run( 'UndeleteShowRevision', [ $this->mTargetObj, $rev ] ) ) {
+		if ( !Hooks::run( 'UndeleteShowRevision', [ $this->mTargetObj, $rev ], '1.35' ) ) {
 			return;
 		}
 

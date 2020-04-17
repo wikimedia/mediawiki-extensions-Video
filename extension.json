@@ -83,7 +83,10 @@
 		"CategoryPageView": [
 			"VideoHooks::categoryPageWithVideo"
 		],
-		"ParserBeforeStrip": [
+		"ParserBeforeInternalParse": [
+			"VideoHooks::videoTag"
+		],
+		"ParserBeforePreprocessor": [
 			"VideoHooks::videoTag"
 		],
 		"ParserFirstCallInit": [

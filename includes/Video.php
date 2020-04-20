@@ -1,5 +1,7 @@
 <?php
 
+use MediaWiki\MediaWikiServices;
+
 class Video {
 
 	/**
@@ -292,11 +294,12 @@ class Video {
 			$this->exists = true;
 		}
 
+		$stats = MediaWikiServices::getInstance()->getStatsdDataFactory();
 		if ( $this->dataLoaded ) {
 			wfDebug( "Loaded Video:{$this->name} from cache\n" );
-			wfIncrStats( 'video_cache_hit' );
+			$stats->increment( 'video_cache_hit' );
 		} else {
-			wfIncrStats( 'video_cache_miss' );
+			$stats->increment( 'video_cache_miss' );
 		}
 
 		return $this->dataLoaded;

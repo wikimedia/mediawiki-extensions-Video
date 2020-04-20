@@ -1016,8 +1016,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		}
 
 		// User links
-		$revision = new Revision( $revRecord );
-		$userLink = Linker::revUserTools( $revision );
+		$userLink = Linker::revUserTools( $revRecord );
 
 		// Minor edit
 		$minor = $revRecord->isMinor() ? ChangesList::flag( 'minor' ) : '';
@@ -1029,7 +1028,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		}
 
 		// Edit summary
-		$comment = Linker::revComment( $revision );
+		$comment = Linker::revComment( $revRecord );
 
 		// Tags
 		$attribs = [];

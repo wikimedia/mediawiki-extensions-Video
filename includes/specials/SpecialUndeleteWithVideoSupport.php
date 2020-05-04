@@ -445,9 +445,10 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		}
 
 		if ( $this->mDiff ) {
-			$previousRev = $archive->getPreviousRevision( $timestamp );
+			$previousRev = $archive->getPreviousRevisionRecord( $timestamp );
 			if ( $previousRev ) {
-				$this->showDiff( $previousRev, $rev );
+				// TODO remove use of Revision objects entirely (T246284)
+				$this->showDiff( new Revision( $previousRev ), $rev );
 				if ( $this->mDiffOnly ) {
 					return;
 				}

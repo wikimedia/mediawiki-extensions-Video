@@ -253,8 +253,7 @@ class VideoHooks {
 			$articleObj->getTitle()->invalidateCache();
 			$articleObj->getTitle()->purgeSquid();
 			$articleObj->doPurge();
-			global $wgMemc;
-			$wgMemc->delete( $videoObj->getCacheKey() );
+			MediaWiki\MediaWikiServices::getInstance()->getMainWANObjectCache()->delete( $videoObj->getCacheKey() );
 			*/
 		}
 	}

@@ -86,7 +86,7 @@
 		"ParserBeforeInternalParse": [
 			"VideoHooks::videoTag"
 		],
-		"ParserBeforePreprocessor": [
+		"ParserBeforePreprocess": [
 			"VideoHooks::videoTag"
 		],
 		"ParserFirstCallInit": [

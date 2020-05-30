@@ -14,10 +14,10 @@ class CategoryWithVideoViewer extends CategoryViewer {
 		if ( $this->showGallery ) {
 			$this->gallery = ImageGalleryBase::factory();
 		}
-		#if ( $this->showVideoGallery ) {
+		# if ( $this->showVideoGallery ) {
 			$this->videogallery = new VideoGallery();
 			$this->videogallery->setParsing();
-		#}
+		# }
 	}
 
 	/**

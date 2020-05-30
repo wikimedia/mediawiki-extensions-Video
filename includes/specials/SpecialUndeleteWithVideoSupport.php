@@ -1065,9 +1065,9 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			$ts = wfTimestamp( TS_MW, $row->ov_timestamp );
 			$user = $this->getUser();
 
-			if ( $this->mAllowed ) { //&& $row->fa_storage_key ) {
-				$checkBox = Xml::check( 'fileid' ); //. $row->fa_id );
-				$key = rand();//urlencode( $row->fa_storage_key );
+			if ( $this->mAllowed ) { // && $row->fa_storage_key ) {
+				$checkBox = Xml::check( 'fileid' ); // . $row->fa_id );
+				$key = rand();// urlencode( $row->fa_storage_key );
 				$pageLink = $this->getFileLink( $file, $this->getPageTitle(), $ts, $key );
 			} else {
 				$checkBox = '';

@@ -567,7 +567,7 @@ class Video {
 
 	public function getHeight() {
 		return floor( $this->getWidth() / $this->ratio );
-		//return $this->height;
+		// return $this->height;
 	}
 
 	/**
@@ -578,7 +578,7 @@ class Video {
 	public function getEmbedThisCode() {
 		$videoName = htmlspecialchars( $this->getName(), ENT_QUOTES );
 		return "[[Video:{$videoName}|{$this->getWidth()}px]]";
-		//return "<video name=\"{$this->getName()}\" width=\"{$this->getWidth()}\" height=\"{$this->getHeight()}\"></video>";
+		// return "<video name=\"{$this->getName()}\" width=\"{$this->getWidth()}\" height=\"{$this->getHeight()}\"></video>";
 	}
 
 	/**

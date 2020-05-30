@@ -231,4 +231,4 @@ class VideoGallery {
 				: false;
 	}
 
-} //class
+} // class

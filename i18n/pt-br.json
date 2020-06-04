@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Eduardo Addad de Oliveira"
+			"Eduardo Addad de Oliveira",
+			"TheEduGobi"
 		]
 	},
 	"video-desc": "Permite novo espaço de nomes de vídeo para mídia incorporável no site suportado",
@@ -25,7 +26,7 @@
 	"log-description-video": "Este é um registo dos vídeos adicionados e das atualizações de vídeos existentes.",
 	"logentry-video-add": "$1 adicionou o vídeo $3",
 	"logentry-video-update": "$1 atualizou o vídeo $3",
-	"category-video-header": "Vídeos na categoria \"$1\"",
+	"category-video-header": "Vídeos na categoria “$1”",
 	"category-video-count": "Há {{PLURAL:$1|um vídeo|$1 vídeos}} nesta categoria.",
 	"video-novideo-linktext": "adicioná-lo",
 	"video-novideo": "Não existe nenhum vídeo com este nome, pode $1.",

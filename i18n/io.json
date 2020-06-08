@@ -1,6 +1,9 @@
 {
 	"@metadata": {
-		"authors": []
+		"authors": [
+			"Joao Xavier"
+		]
 	},
+	"video-category-name": "Videi",
 	"video-showhidebots": "($1 roboti)"
 }

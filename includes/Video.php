@@ -5,67 +5,67 @@ use MediaWiki\MediaWikiServices;
 class Video {
 
 	/**
-	 * @var String: database key of the video
+	 * @var string database key of the video
 	 */
 	public $name;
 
 	/**
-	 * @var Title: Title object associated with the current Video
+	 * @var Title Title object associated with the current Video
 	 */
 	public $title;
 
 	/**
-	 * @var Boolean: does this video exist? True = exists, false = doesn't.
+	 * @var bool does this video exist? True = exists, false = doesn't.
 	 */
 	public $exists;
 
 	/**
-	 * @var Integer: height of the video, is set to 400 in this class'
+	 * @var int height of the video, is set to 400 in this class'
 	 *               constructor
 	 */
 	public $height;
 
 	/**
-	 * @var Integer: width of the video, is set to 400 in this class'
+	 * @var int width of the video, is set to 400 in this class'
 	 *               constructor
 	 */
 	public $width;
 
 	/**
-	 * @var Integer: is set to 1 in this class' constructor. Provider classes
+	 * @var int is set to 1 in this class' constructor. Provider classes
 	 *               should calculate this by diving width by height.
 	 */
 	public $ratio;
 
 	/**
-	 * @var String: URL to the video on the provider service
+	 * @var string URL to the video on the provider service
 	 */
 	public $url;
 
 	/**
-	 * @var Integer: actor ID number of the person who added the current video
+	 * @var int actor ID number of the person who added the current video
 	 *               to the wiki
 	 */
 	public $submitter_actor;
 
 	/**
-	 * @var Integer: timestamp when this video was added to the wiki
+	 * @var int timestamp when this video was added to the wiki
 	 */
 	public $create_date;
 
 	/**
-	 * @var String: lowercase/internal name of the video provider service, such
+	 * @var string lowercase/internal name of the video provider service, such
 	 *              as 'youtube' or 'archiveorg'
 	 */
 	public $type;
 
 	/**
-	 * @var Boolean: has all the metadata been loaded into the cache?
+	 * @var bool has all the metadata been loaded into the cache?
 	 */
 	public $dataLoaded;
 
 	/**
-	 * @var Integer: history pointer, see nextHistoryLine() for details
+	 * @var int history pointer, see nextHistoryLine() for details
 	 */
 	public $historyLine;
 

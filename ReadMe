@@ -18,7 +18,7 @@ Also allows functionality for Video Galleries (similar to <gallery>) and
 showing Videos in category pages.
 
 ==2. Requirements==
-The '''Video Namespace''' extension requires MediaWiki 1.29.0 or greater.
+The '''Video Namespace''' extension requires MediaWiki 1.35.0 or greater.
 
 ==3. Installing Video Extension==
 Installing the Video extension is very easy if you have shell (SSH) access to
@@ -51,9 +51,9 @@ videos.
 In addition, everyone is able to view Special:NewVideos special page.
 
 ==6. Bug Reports and More==
-You can report software bugs on this extension's talk page at MediaWiki.org:
+Bugs, issues and feature requests should be reported on the MediaWiki Phabricator:
 
-https://www.mediawiki.org/w/index.php?title=Extension_talk:Video&action=edit&section=new
+https://phabricator.wikimedia.org/maniphest/task/create/?projects=MediaWiki-extensions-Video
 
 The most up-to-date Video extension documentation can always be found at MediaWiki.org:
 

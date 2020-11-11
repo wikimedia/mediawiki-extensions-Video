@@ -161,21 +161,25 @@ class VideoHooks {
 	 * Injects Video Gallery into Category pages
 	 *
 	 * @param CategoryPage $cat
-	 * @return void
+	 * @return bool|void Void by default, bool false when in NS_CATEGORY and thus
+	 *   CategoryWithVideoViewer is invoked
 	 */
 	public static function categoryPageWithVideo( $cat ) {
-		$article = new Article( $cat->mTitle );
+		$title = $cat->getTitle();
+		$article = new Article( $title );
 		$article->view();
 
-		if ( $cat->mTitle->getNamespace() === NS_CATEGORY ) {
-			global $wgOut, $wgRequest;
-			$from = $wgRequest->getVal( 'from' );
+		if ( $title->getNamespace() === NS_CATEGORY ) {
+			$context = $cat->getContext();
+			$request = $context->getRequest();
+			$from = $request->getVal( 'from' );
 			// @todo CHECKME/FIXME: is this correct? I just added something
 			// here to prevent an E_NOTICE about an undefined variable...
-			$until = $wgRequest->getVal( 'until' );
+			$until = $request->getVal( 'until' );
 
-			$viewer = new CategoryWithVideoViewer( $cat->mTitle, $cat->getContext(), $from, $until );
-			$wgOut->addHTML( $viewer->getHTML() );
+			$viewer = new CategoryWithVideoViewer( $title, $context, $from, $until );
+			$context->getOutput()->addHTML( $viewer->getHTML() );
+			return false;
 		}
 	}
 

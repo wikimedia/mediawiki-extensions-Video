@@ -17,7 +17,8 @@ require_once "$IP/maintenance/Maintenance.php";
 class MigrateOldVideoUserColumnsToActor extends LoggedUpdateMaintenance {
 	public function __construct() {
 		parent::__construct();
-		$this->addDescription( 'Migrates data from old _user_name/_user_id columns in video and oldvideo tables to the new actor columns.' );
+		$this->addDescription( 'Migrates data from old _user_name/_user_id columns in video and '
+			. 'oldvideo tables to the new actor columns.' );
 	}
 
 	/**
@@ -46,11 +47,19 @@ class MigrateOldVideoUserColumnsToActor extends LoggedUpdateMaintenance {
 	protected function doDBUpdates() {
 		$dbw = $this->getDB( DB_MASTER );
 		$dbw->query(
-			"UPDATE {$dbw->tableName( 'video' )} SET video_actor=(SELECT actor_id FROM {$dbw->tableName( 'actor' )} WHERE actor_user=video_user_id AND actor_name=video_user_name)",
+			"UPDATE {$dbw->tableName( 'video' )}
+			SET video_actor=(SELECT actor_id
+				FROM {$dbw->tableName( 'actor' )}
+				WHERE actor_user=video_user_id
+				AND actor_name=video_user_name)",
 			__METHOD__
 		);
 		$dbw->query(
-			"UPDATE {$dbw->tableName( 'oldvideo' )} SET ov_actor=(SELECT actor_id FROM {$dbw->tableName( 'actor' )} WHERE actor_user=ov_user_id AND actor_name=ov_user_name)",
+			"UPDATE {$dbw->tableName( 'oldvideo' )}
+			SET ov_actor=(SELECT actor_id
+				FROM {$dbw->tableName( 'actor' )}
+				WHERE actor_user=ov_user_id
+				AND actor_name=ov_user_name)",
 			__METHOD__
 		);
 		return true;

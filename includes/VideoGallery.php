@@ -6,12 +6,10 @@
  */
 
 class VideoGallery {
-	public $mVideos, $mShowFilename;
-
-	/**
-	 * Is the gallery on a wiki page (i.e. not a special page)
-	 */
-	public $mParsing;
+	/** @var array[] Pairs of Video objects and a HTML string */
+	private $mVideos;
+	/** @var bool */
+	private $mShowFilename;
 
 	private $mPerRow = 3; // How many videos wide should the gallery be?
 	private $mWidths = 200, $mHeights = 200; // How wide/tall each thumbnail should be
@@ -22,16 +20,6 @@ class VideoGallery {
 	function __construct() {
 		$this->mVideos = [];
 		$this->mShowFilename = true;
-		$this->mParsing = false;
-	}
-
-	/**
-	 * Set the "parse" bit so we know to hide "bad" videos
-	 *
-	 * @param bool $val
-	 */
-	function setParsing( $val = true ) {
-		$this->mParsing = $val;
 	}
 
 	/**
@@ -153,6 +141,7 @@ class VideoGallery {
 
 		$i = 0;
 		foreach ( $this->mVideos as $pair ) {
+			/** @var Video $video */
 			$video =& $pair[0];
 			$text = $pair[1];
 
@@ -167,7 +156,8 @@ class VideoGallery {
 				$video->setWidth( $this->mWidths );
 				$video->setHeight( $this->mHeights );
 				$vpad = floor( ( 1.25 * $this->mHeights - $this->mWidths ) / 2 ) - 2;
-				$thumbhtml = "\n\t\t\t" . '<div class="thumb" style="padding: ' . $vpad . 'px 0; width: ' . ( $this->mWidths + 30 ) . 'px;">'
+				$thumbhtml = "\n\t\t\t" . '<div class="thumb" style="padding: ' . $vpad
+					. 'px 0; width: ' . ( $this->mWidths + 30 ) . 'px;">'
 					. $video->getEmbedCode() . '</div>';
 			}
 
@@ -231,4 +221,4 @@ class VideoGallery {
 				: false;
 	}
 
-} // class
+}

@@ -66,7 +66,6 @@ class VideoGalleryPopulateHooks {
 		);
 
 		$gallery = new VideoGallery();
-		$gallery->setParsing( true );
 		$gallery->setShowFilename( true );
 
 		foreach ( $res as $row ) {

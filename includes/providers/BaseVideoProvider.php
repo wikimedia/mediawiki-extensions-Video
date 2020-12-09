@@ -19,14 +19,14 @@ abstract class BaseVideoProvider {
 	/**
 	 * Regular expression used to extract the video ID
 	 *
-	 * @var null
+	 * @var string|null
 	 */
 	protected $videoIdRegex = null;
 
 	/**
 	 * Template for embedding
 	 *
-	 * @var null
+	 * @var string|null
 	 */
 	protected $embedTemplate = null;
 

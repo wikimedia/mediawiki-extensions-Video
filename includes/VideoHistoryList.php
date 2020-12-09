@@ -18,6 +18,7 @@ class VideoHistoryList {
 	}
 
 	function videoHistoryLine( $isCur, $timestamp, $video, $actor_id, $url, $type, $title ) {
+		// phpcs:ignore MediaWiki.Usage.DeprecatedGlobalVariables.Deprecated$wgUser
 		global $wgUser, $wgLang;
 
 		$services = MediaWikiServices::getInstance();

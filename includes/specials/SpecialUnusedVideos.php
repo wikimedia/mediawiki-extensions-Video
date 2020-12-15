@@ -67,7 +67,7 @@ class SpecialUnusedVideos extends QueryPage {
 	 * Gotta override this since it's abstract
 	 *
 	 * @param Skin $skin
-	 * @param object $result
+	 * @param stdClass $result
 	 * @return void
 	 */
 	public function formatResult( $skin, $result ) {

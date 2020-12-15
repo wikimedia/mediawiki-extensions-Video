@@ -25,7 +25,6 @@ class VideoGalleryHooks {
 		$vg = new VideoGallery();
 		$vg->setContextTitle( $parser->getTitle() );
 		$vg->setShowFilename( true );
-		$vg->setParsing();
 
 		if ( isset( $argv['perrow'] ) ) {
 			$vg->setPerRow( $argv['perrow'] );

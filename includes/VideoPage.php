@@ -151,7 +151,10 @@ class VideoPage extends Article {
 				</td>
 				<td>
 				<form name="embed_video" action="">
-					<input name="embed_code" style="width: 300px; font-size: 10px;" type="text" value="' . $code . '" onclick="javascript:document.embed_video.embed_code.focus();document.embed_video.embed_code.select();" readonly="readonly" />
+					<input name="embed_code" style="width: 300px; font-size: 10px;" type="text" value="'
+			. $code
+			. '" onclick="document.embed_video.embed_code.focus();'
+			. 'document.embed_video.embed_code.select();" readonly="readonly" />
 				</form>
 				</td>
 			</tr>

@@ -2,7 +2,10 @@
 
 class YouTubeVideoProvider extends BaseVideoProvider {
 
-	// @see http://linuxpanda.wordpress.com/2013/07/24/ultimate-best-regex-pattern-to-get-grab-parse-youtube-video-id-from-any-youtube-link-url/
+	/**
+	 * @var string
+	 * @see http://linuxpanda.wordpress.com/2013/07/24/ultimate-best-regex-pattern-to-get-grab-parse-youtube-video-id-from-any-youtube-link-url/
+	 */
 	protected $videoIdRegex = '~(?:http|https|)(?::\/\/|)(?:www.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})[a-z0-9;:@?&%=+\/\$_.-]*~i';
 
 	protected $embedTemplate = '<iframe width="$width" height="$height" src="https://www.youtube.com/embed/$video_id" frameborder="0" allowfullscreen></iframe>';

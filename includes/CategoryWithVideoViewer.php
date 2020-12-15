@@ -6,6 +6,9 @@
  */
 class CategoryWithVideoViewer extends CategoryViewer {
 
+	/** @var VideoGallery */
+	private $videogallery;
+
 	function clearCategoryState() {
 		$this->articles = [];
 		$this->articles_start_char = [];
@@ -14,10 +17,7 @@ class CategoryWithVideoViewer extends CategoryViewer {
 		if ( $this->showGallery ) {
 			$this->gallery = ImageGalleryBase::factory();
 		}
-		# if ( $this->showVideoGallery ) {
-			$this->videogallery = new VideoGallery();
-			$this->videogallery->setParsing();
-		# }
+		$this->videogallery = new VideoGallery();
 	}
 
 	/**

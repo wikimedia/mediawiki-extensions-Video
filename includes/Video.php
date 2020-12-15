@@ -458,6 +458,7 @@ class Video {
 		preg_match(
 			// iframe for YouTube support. Who uses <embed> these days anyway?
 			// It's 2016, get on with the times!
+			// phpcs:ignore Generic.Files.LineLength
 			"/(embed .*src=(\"([^<\"].*?)\"|\'([^<\"].*?)\'|[^<\"].*?)(.*flashvars=(\"([^<\"].*?)\"|\'([^<\"].*?)\'|[^<\"].*?\s))?|iframe .*src=(\"([^<\"].*?)\"|\'([^<\"].*?)\'|[^<\"].*?))/i",
 			$code,
 			$matches
@@ -589,7 +590,7 @@ class Video {
 	 *  1      query for old versions, return first one
 	 *  2, ... return next old version from above query
 	 *
-	 * @return object|false
+	 * @return stdClass|false
 	 */
 	public function nextHistoryLine() {
 		$dbr = wfGetDB( DB_REPLICA );

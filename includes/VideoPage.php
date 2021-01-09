@@ -111,7 +111,7 @@ class VideoPage extends Article {
 		$out->addHTML( '<ul class="mw-imagepage-linktoimage">' . "\n" );
 
 		$count = 0;
-		while ( $s = $res->fetchObject() ) {
+		foreach ( $res as $s ) {
 			$count++;
 			if ( $count <= $limit ) {
 				// We have not yet reached the extra one that tells us there is
@@ -122,7 +122,6 @@ class VideoPage extends Article {
 			}
 		}
 		$out->addHTML( "</ul></div>\n" );
-		$res->free();
 
 		// Add a link to [[Special:WhatLinksHere]]
 		if ( $count > $limit ) {
@@ -181,6 +180,7 @@ class VideoPage extends Article {
 					$this->getTitle()
 				);
 
+			// phpcs:ignore MediaWiki.ControlStructures.AssignmentInControlStructures.AssignmentInControlStructures
 			while ( $line = $this->video->nextHistoryLine() ) {
 				$s .= $list->videoHistoryLine(
 					false,

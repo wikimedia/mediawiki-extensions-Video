@@ -833,7 +833,12 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 
 		$out = $this->getOutput();
 		if ( $this->mAllowed ) {
-			$out->addModules( 'mediawiki.misc-authed-ooui' );
+			// mediawiki.special.undelete merged into mediawiki.misc-authed-ooui
+			// in 1.36
+			$moduleName = version_compare( MW_VERSION, '1.36', '>=' ) ?
+				'mediawiki.misc-authed-ooui' :
+				'mediawiki.special.undelete';
+			$out->addModules( $moduleName );
 		}
 		$out->wrapWikiMsg(
 			"<div class='mw-undelete-pagetitle'>\n$1\n</div>\n",

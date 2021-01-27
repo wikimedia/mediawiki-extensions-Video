@@ -1,6 +1,9 @@
 {
 	"@metadata": {
-		"authors": []
+		"authors": [
+			"Eleassar"
+		]
 	},
+	"video-revert-intro": "Videoposnetek '''[[:{{ns:video}}:$1|$1]]''' boste vrnili na [različico $4 s časom objave: $3, $2].",
 	"video-showhidebots": "($1 bote)"
 }

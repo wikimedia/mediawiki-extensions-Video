@@ -1023,7 +1023,9 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 
 			$history .= '<ul class="mw-undelete-revlist">';
 			$remaining = $revisions->numRows();
-			$earliestLiveTime = $this->mTargetObj->getEarliestRevTime();
+			$revisionLookup = MediaWikiServices::getInstance()->getRevisionLookup();
+			$revisionRecord = $revisionLookup->getFirstRevision( $this->mTargetObj );
+			$earliestLiveTime = $revisionRecord ? $revisionRecord->getTimestamp() : null;
 
 			foreach ( $revisions as $row ) {
 				$remaining--;

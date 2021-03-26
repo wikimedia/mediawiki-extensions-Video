@@ -1,8 +1,8 @@
 <?php
 /**
  * This is like a normal CategoryViewer, except that it supports videos.
- * This is initialized for every category page by
- * VideoHooks::categoryPageWithVideo function in Video.hooks.php.
+ * This is initialized for every category page by the VideoCategoryPage class,
+ * which in turn is fired up by VideoHooks::videoFromTitle function in Video.hooks.php.
  */
 class CategoryWithVideoViewer extends CategoryViewer {
 

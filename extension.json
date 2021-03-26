@@ -59,6 +59,7 @@
 		"VimeoVideoProvider": "includes/providers/VimeoVideo.php",
 		"WeGameVideoProvider": "includes/providers/WeGameVideo.php",
 		"YouTubeVideoProvider": "includes/providers/YouTubeVideo.php",
+		"VideoCategoryPage": "includes/VideoCategoryPage.php",
 		"VideoPage": "includes/VideoPage.php",
 		"WikiVideoPage": "includes/WikiVideoPage.php",
 		"RevertVideoAction": "includes/RevertVideoAction.php",
@@ -79,9 +80,6 @@
 	"Hooks": {
 		"ArticleFromTitle": [
 			"VideoHooks::videoFromTitle"
-		],
-		"CategoryPageView": [
-			"VideoHooks::categoryPageWithVideo"
 		],
 		"ParserBeforeInternalParse": [
 			"VideoHooks::videoTag"

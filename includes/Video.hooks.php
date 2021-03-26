@@ -71,7 +71,8 @@ class VideoHooks {
 
 	/**
 	 * Calls VideoPage instead of standard Article for pages in the NS_VIDEO
-	 * namespace.
+	 * namespace, and VideoCategoryPage instead of CategoryPage for NS_CATEGORY
+	 * pages.
 	 *
 	 * @param Title $title Title object for the current page
 	 * @param Article &$article Article object for the current page
@@ -92,6 +93,10 @@ class VideoHooks {
 				}
 			}
 			$article = new VideoPage( $title );
+		} elseif ( $title->inNamespace( NS_CATEGORY ) ) {
+			// For grep: this category is what initializes an instance of CategoryWithVideoViewer
+			// but the logic is prone to giving you a headache. Not my fault, though!
+			$article = new VideoCategoryPage( $title );
 		}
 	}
 
@@ -155,32 +160,6 @@ class VideoHooks {
 		}
 
 		return $output;
-	}
-
-	/**
-	 * Injects Video Gallery into Category pages
-	 *
-	 * @param CategoryPage $cat
-	 * @return bool|void Void by default, bool false when in NS_CATEGORY and thus
-	 *   CategoryWithVideoViewer is invoked
-	 */
-	public static function categoryPageWithVideo( $cat ) {
-		$title = $cat->getTitle();
-		$article = new Article( $title );
-		$article->view();
-
-		if ( $title->getNamespace() === NS_CATEGORY ) {
-			$context = $cat->getContext();
-			$request = $context->getRequest();
-			$from = $request->getVal( 'from' );
-			// @todo CHECKME/FIXME: is this correct? I just added something
-			// here to prevent an E_NOTICE about an undefined variable...
-			$until = $request->getVal( 'until' );
-
-			$viewer = new CategoryWithVideoViewer( $title, $context, $from, $until );
-			$context->getOutput()->addHTML( $viewer->getHTML() );
-			return false;
-		}
 	}
 
 	/**

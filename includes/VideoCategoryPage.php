@@ -11,5 +11,6 @@
  */
 class VideoCategoryPage extends CategoryPage {
 	/** @var CategoryWithVideoViewer Override the viewer class. */
+	// @phan-suppress-next-line PhanTypeMismatchPropertyDefault
 	protected $mCategoryViewerClass = CategoryWithVideoViewer::class;
 }

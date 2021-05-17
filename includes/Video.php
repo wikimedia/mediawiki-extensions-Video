@@ -32,7 +32,7 @@ class Video {
 	public $width;
 
 	/**
-	 * @var int is set to 1 in this class' constructor. Provider classes
+	 * @var float is set to 1 in this class' constructor. Provider classes
 	 *               should calculate this by diving width by height.
 	 */
 	public $ratio;
@@ -484,7 +484,7 @@ class Video {
 		// flashvars and append it to get the real URL
 		if ( isset( $matches[6] ) && !empty( $matches[6] ) ) {
 			$flash_vars = $matches[6];
-			if ( strpos( '?', $flash_vars ) !== false ) {
+			if ( strpos( $flash_vars, '?' ) !== false ) {
 				$embedCode .= '&';
 			} else {
 				$embedCode .= '?';

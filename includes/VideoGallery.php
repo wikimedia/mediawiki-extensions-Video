@@ -8,10 +8,19 @@
 class VideoGallery {
 	/** @var array[] Pairs of Video objects and a HTML string */
 	private $mVideos;
+
+	/** @var string */
+	private $mCaption;
+
+	/** @var Title */
+	private $contextTitle;
+
 	/** @var bool */
 	private $mShowFilename;
 
-	private $mPerRow = 3; // How many videos wide should the gallery be?
+	/** @var int How many videos wide should the gallery be? */
+	private $mPerRow = 3;
+
 	private $mWidths = 200, $mHeights = 200; // How wide/tall each thumbnail should be
 
 	/**
@@ -28,6 +37,7 @@ class VideoGallery {
 	 * @return string
 	 */
 	function getCaption() {
+		// @phan-suppress-next-line PhanPluginDuplicateConditionalNullCoalescing
 		return ( isset( $this->mCaption ) ) ? $this->mCaption : '';
 	}
 

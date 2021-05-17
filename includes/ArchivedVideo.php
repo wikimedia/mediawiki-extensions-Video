@@ -69,7 +69,7 @@ class ArchivedVideo extends ArchivedFile {
 	/** @var int Actor ID of uploader */
 	private $actor;
 
-	/** @var string Time of upload */
+	/** @var string|null Time of upload */
 	private $timestamp;
 
 	/** @var bool Whether or not all this has been loaded from the database (loadFromXxx) */
@@ -87,8 +87,8 @@ class ArchivedVideo extends ArchivedFile {
 	/** @var MediaHandler */
 	protected $handler;
 
-	/** @var Title */
-	protected $title; # video title
+	/** @var Title|bool Video title */
+	protected $title;
 
 	/** @var string Video URL */
 	protected $url;
@@ -102,7 +102,7 @@ class ArchivedVideo extends ArchivedFile {
 	public function __construct( $title, $id = 0, $key = '' ) {
 		$this->id = -1;
 		$this->title = false;
-		$this->name = false;
+		$this->name = '';
 		$this->group = 'deleted'; // needed for direct use of constructor
 		$this->key = '';
 		$this->size = 0;

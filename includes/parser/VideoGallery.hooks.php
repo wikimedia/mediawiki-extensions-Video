@@ -27,13 +27,14 @@ class VideoGalleryHooks {
 		$vg->setShowFilename( true );
 
 		if ( isset( $argv['perrow'] ) ) {
-			$vg->setPerRow( $argv['perrow'] );
+			$vg->setPerRow( (int)$argv['perrow'] );
 		}
+		// @phan-suppress-next-line PhanImpossibleCondition No idea why phan thinks (only) $params['widths'] is null
 		if ( isset( $params['widths'] ) ) {
-			$vg->setWidths( $argv['widths'] );
+			$vg->setWidths( (int)$argv['widths'] );
 		}
 		if ( isset( $params['heights'] ) ) {
-			$vg->setHeights( $argv['heights'] );
+			$vg->setHeights( (int)$argv['heights'] );
 		}
 
 		$lines = explode( "\n", $input );

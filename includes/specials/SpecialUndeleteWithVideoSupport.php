@@ -96,6 +96,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			$this->mTarget = $request->getVal( 'target' );
 		}
 
+		// @phan-suppress-next-line PhanTypeMismatchPropertyProbablyReal
 		$this->mTargetObj = null;
 
 		if ( $this->mTarget !== null && $this->mTarget !== '' ) {
@@ -264,7 +265,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			}
 		// CORE HACK for [[mw:Extension:Video]]
 		} elseif ( $this->mTargetObj->inNamespace( NS_VIDEO ) ) {
-			$file = new ArchivedVideo( $this->mTargetObj, '', $this->mFilename );
+			$file = new ArchivedVideo( $this->mTargetObj, 0, $this->mFilename );
 			// Check if user is allowed to see this file
 			if ( !$file->exists() ) {
 				$out->addWikiMsg( 'filedelete-nofile', $this->mTargetObj->getPrefixedText() );
@@ -331,6 +332,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 	private function showSearchForm() {
 		$out = $this->getOutput();
 		$out->setPageTitle( $this->msg( 'undelete-search-title' ) );
+		// @phan-suppress-next-line PhanTypeMismatchArgument
 		$fuzzySearch = $this->getRequest()->getVal( 'fuzzy', true );
 
 		$out->enableOOUI();
@@ -578,6 +580,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		if ( $this->getHookContainer()->isRegistered( 'UndeleteShowRevision' ) ) {
 			// Only create the Revision object if needed
 			$rev = new Revision( $revRecord );
+			// @phan-suppress-next-line PhanUndeclaredMethod
 			if ( !$this->getHookRunner()->onUndeleteShowRevision(
 				$this->mTargetObj,
 				$rev
@@ -828,6 +831,10 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		$repo->streamFileWithStatus( $path );
 	}
 
+	/**
+	 * @suppress PhanPossiblyUndeclaredVariable
+	 * @return bool
+	 */
 	protected function showHistory() {
 		$this->checkReadOnly();
 
@@ -1053,9 +1060,12 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			$misc .= Html::hidden( 'wpEditToken', $this->getUser()->getEditToken() );
 			$history .= $misc;
 
+			// @phan-suppress-next-line SecurityCheck-XSS
 			$form->appendContent( new OOUI\HtmlSnippet( $history ) );
+			// @phan-suppress-next-line PhanTypeMismatchArgumentNullable
 			$out->addHTML( $form );
 		} else {
+			// @phan-suppress-next-line SecurityCheck-XSS
 			$out->addHTML( $history );
 		}
 
@@ -1147,6 +1157,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			$attribs['class'] = implode( ' ', $classes );
 		}
 
+		// @phan-suppress-next-line SecurityCheck-XSS
 		$revisionRow = $this->msg( 'undelete-revision-row2' )
 			->rawParams(
 				$checkBox,
@@ -1176,6 +1187,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			if ( $this->mAllowed ) { // && $row->fa_storage_key ) {
 				$checkBox = Xml::check( 'fileid' ); // . $row->fa_id );
 				$key = rand();// urlencode( $row->fa_storage_key );
+				// @phan-suppress-next-line PhanTypeMismatchArgument
 				$pageLink = $this->getFileLink( $file, $this->getPageTitle(), $ts, $key );
 			} else {
 				$checkBox = '';
@@ -1329,6 +1341,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		// CORE HACK
 		// Actor support using the new ArchivedVideo class method
 		if ( method_exists( $file, 'getRawActor' ) ) {
+			// @phan-suppress-next-line PhanUndeclaredMethod
 			$actorId = $file->getRawActor();
 			$user = User::newFromActorId( $actorId );
 			$link = Linker::userLink( $user->getId(), $user->getName() ) .

@@ -1,13 +1,11 @@
 <?php
 
-use Wikimedia\Rdbms\IResultWrapper;
-
 class RevertVideoAction extends FormAction {
 
 	/**
 	 * Row from the oldvideo table for the revision to revert to
 	 *
-	 * @var IResultWrapper
+	 * @var Wikimedia\Rdbms\IResultWrapper
 	 */
 	protected $oldvideo;
 
@@ -58,6 +56,7 @@ class RevertVideoAction extends FormAction {
 		if ( $row === false ) {
 			throw new ErrorPageError( '', 'filerevert-badversion' );
 		}
+		// @phan-suppress-next-line PhanTypeMismatchProperty
 		$this->oldvideo = $row;
 	}
 
@@ -69,6 +68,8 @@ class RevertVideoAction extends FormAction {
 
 	/**
 	 * Get an HTMLForm descriptor array
+	 *
+	 * @suppress PhanUndeclaredProperty
 	 * @return array
 	 */
 	protected function getFormFields() {
@@ -90,6 +91,8 @@ class RevertVideoAction extends FormAction {
 	 * Process the form on POST submission. If you return false from getFormFields(),
 	 * this will obviously never be reached. If you don't want to do anything with the
 	 * form, just return false here
+	 *
+	 * @suppress PhanUndeclaredProperty
 	 * @param array $data
 	 * @return bool|array True for success, false for didn't-try, array of errors on failure
 	 */

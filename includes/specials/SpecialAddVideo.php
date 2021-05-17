@@ -138,7 +138,7 @@ class AddVideo extends FormSpecialPage {
 	public function onSubmit( array $data ) {
 		[ $url, $provider ] = $this->getUrlAndProvider( $data['Video'] );
 
-		$this->video->addVideo( $url, $provider, false, $data['Watch'] );
+		$this->video->addVideo( $url, $provider, '', $data['Watch'] );
 
 		$this->getOutput()->redirect( $this->video->getTitle()->getFullURL() );
 

@@ -22,8 +22,8 @@ class VideoHistoryList {
 		global $wgUser, $wgLang;
 
 		$services = MediaWikiServices::getInstance();
-		$datetime = $wgLang->timeanddate( $timestamp, true );
-		$cur = wfMessage( 'cur' )->plain();
+		$datetime = htmlspecialchars( $wgLang->timeanddate( $timestamp, true ), ENT_QUOTES );
+		$cur = wfMessage( 'cur' )->escaped();
 
 		if ( $isCur ) {
 			$rlink = $cur;
@@ -42,7 +42,7 @@ class VideoHistoryList {
 				# Having live active links for non-logged in users
 				# means that bots and spiders crawling our site can
 				# inadvertently change content. Baaaad idea.
-				$rlink = wfMessage( 'video-revert' )->plain();
+				$rlink = wfMessage( 'video-revert' )->escaped();
 			}
 		}
 

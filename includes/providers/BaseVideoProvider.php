@@ -36,7 +36,7 @@ abstract class BaseVideoProvider {
 		}
 
 		$this->video = $video;
-		// TODO: This sucks fix it
+		// TODO: This sucks; fix it
 		$this->video->ratio = $this->getRatio();
 
 		$matches = [];
@@ -47,7 +47,7 @@ abstract class BaseVideoProvider {
 		}
 
 		if ( $this->videoId === null ) {
-			return null;
+			throw new MWException( 'Could not determine video ID!' );
 		}
 	}
 
@@ -87,7 +87,7 @@ abstract class BaseVideoProvider {
 	/**
 	 * Returns the (aspect?) ratio for the video
 	 *
-	 * @return int
+	 * @return float
 	 */
 	protected function getRatio() {
 		return 1;

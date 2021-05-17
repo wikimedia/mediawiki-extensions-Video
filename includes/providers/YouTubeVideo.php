@@ -18,7 +18,7 @@ class YouTubeVideoProvider extends BaseVideoProvider {
 	 * Function to extract the video ID
 	 *
 	 * @param string $url Video URL
-	 * @return string Video ID
+	 * @return string|null Video ID on success, null on failure
 	 */
 	protected function extractVideoId( $url ) {
 		$matches = [];

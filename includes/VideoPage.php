@@ -1,5 +1,7 @@
 <?php
 
+use MediaWiki\MediaWikiServices;
+
 class VideoPage extends Article {
 
 	/**
@@ -34,7 +36,7 @@ class VideoPage extends Article {
 		$out = $ctx->getOutput();
 
 		// No need to display noarticletext, we use our own message
-		if ( $this->getId() ) {
+		if ( $this->getPage()->getId() ) {
 			parent::view();
 		} else {
 			// Just need to set the right headers
@@ -58,12 +60,13 @@ class VideoPage extends Article {
 		} else {
 			// Video doesn't exist, so give a link allowing user to add one with this name
 			$title = SpecialPage::getTitleFor( 'AddVideo' );
-			$link = Linker::linkKnown(
+			$link = MediaWikiServices::getInstance()->getLinkRenderer()->makeKnownLink(
 				$title,
 				$ctx->msg( 'video-novideo-linktext' )->plain(),
 				[],
 				[ 'wpTitle' => $this->video->getName() ]
 			);
+			// @phan-suppress-next-line SecurityCheck-XSS Yes, the message allows raw HTML and needs to be properly fixed one day
 			$out->addHTML( $ctx->msg( 'video-novideo', $link )->text() );
 
 			$out->addWikiTextAsInterface( '== ' . $ctx->msg( 'video-links' )->escaped() . " ==\n" );
@@ -136,6 +139,7 @@ class VideoPage extends Article {
 	 * Get the HTML table that contains the code for embedding the current
 	 * video on a wiki page.
 	 *
+	 * @return-taint none
 	 * @return string HTML
 	 */
 	public function getEmbedThisTag() {
@@ -146,14 +150,13 @@ class VideoPage extends Article {
 		<table cellpadding="0" cellspacing="2" border="0">
 			<tr>
 				<td>
-					<b>' . wfMessage( 'video-embed' )->plain() . '</b>
+					<b>' . wfMessage( 'video-embed' )->escaped() . '</b>
 				</td>
 				<td>
 				<form name="embed_video" action="">
-					<input name="embed_code" style="width: 300px; font-size: 10px;" type="text" value="'
-			. $code
-			. '" onclick="document.embed_video.embed_code.focus();'
-			. 'document.embed_video.embed_code.select();" readonly="readonly" />
+					<input name="embed_code" style="width: 300px; font-size: 10px;" type="text" value="' .
+						$code . '" onclick="document.embed_video.embed_code.focus();' .
+						'document.embed_video.embed_code.select();" readonly="readonly" />
 				</form>
 				</td>
 			</tr>

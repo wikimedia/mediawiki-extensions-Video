@@ -151,6 +151,7 @@ class VideoPageArchive extends PageArchive {
 				$unsuppress
 			);
 		} else {
+			// @phan-suppress-next-line PhanUndeclaredStaticMethod No idea what's going on here...
 			parent::undelete( $timestamps, $comment, $fileVersions, $unsuppress );
 		}
 

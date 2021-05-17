@@ -25,6 +25,7 @@ class VideoGalleryPopulateHooks {
 	public static function renderVideoGalleryPopulate( $input, $args, $parser ) {
 		$parser->getOutput()->updateCacheExpiry( 0 );
 
+		// @phan-suppress-next-line PhanPluginDuplicateConditionalNullCoalescing
 		$category = ( isset( $args['category'] ) ) ? $args['category'] : '';
 		$limit = ( isset( $args['limit'] ) ) ? intval( $args['limit'] ) : 10;
 
@@ -44,6 +45,7 @@ class VideoGalleryPopulateHooks {
 			return '';
 		}
 
+		$params = [];
 		$params['ORDER BY'] = 'page_id';
 		if ( $limit ) {
 			$params['LIMIT'] = $limit;

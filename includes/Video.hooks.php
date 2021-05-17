@@ -137,11 +137,17 @@ class VideoHooks {
 			$height = $argv['height'];
 		}
 
+		// @phan-suppress-next-line PhanPluginDuplicateConditionalNullCoalescing
 		$align = isset( $argv['align'] ) ? $argv['align'] : 'left';
 		$alignTag = '';
 
 		if ( in_array( strtoupper( $align ), $validAlign ) ) {
-			$alignTag = " class=\"float{$align}\" ";
+			// phan doesn't want to let me suppress the issue about alleged XSS since
+			// phan doesn't understand our custom validation logic here.
+			// Per discussion with Skizzerz, just make the issue go away with a
+			// simple htmlspecialchars() call, it'll have no adverse effects.
+			// @todo FIXME: but as per the discussion, this code needs some TLC.
+			$alignTag = htmlspecialchars( " class=\"float{$align}\" " );
 		}
 
 		$output = '';
@@ -176,10 +182,11 @@ class VideoHooks {
 		if ( $articleObj->getTitle()->getNamespace() === NS_VIDEO ) {
 			global $wgRequest;
 
+			// @phan-suppress-next-line PhanTypeMismatchArgumentInternal
 			$context = ( is_callable( $articleObj, 'getContext' ) ? $articleObj->getContext() : RequestContext::getMain() );
 			$videoObj = new Video( $articleObj->getTitle(), $context );
 			$videoName = $videoObj->getName();
-			$oldVideo = $wgRequest->getVal( 'wpOldVideo', false );
+			$oldVideo = $wgRequest->getVal( 'wpOldVideo', '' );
 			$where = [
 				'video_name' => $videoName
 			];

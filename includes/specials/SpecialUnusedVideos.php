@@ -68,9 +68,10 @@ class SpecialUnusedVideos extends QueryPage {
 	 *
 	 * @param Skin $skin
 	 * @param stdClass $result
-	 * @return void
+	 * @return string
 	 */
 	public function formatResult( $skin, $result ) {
+		return '';
 	}
 
 	public function isExpensive() {

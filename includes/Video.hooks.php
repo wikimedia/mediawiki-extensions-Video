@@ -173,7 +173,7 @@ class VideoHooks {
 	 * There is no logic related to video deletion on the VideoPage class.
 	 *
 	 * @param Article $articleObj Instance of Article or its subclass
-	 * @param User $user Current User object ($wgUser)
+	 * @param User $user Current User object
 	 * @param string $reason Reason for the deletion [unused]
 	 * @param string $error Error message, if any [unused]
 	 * @return void

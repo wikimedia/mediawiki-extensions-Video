@@ -18,19 +18,19 @@ class VideoHistoryList {
 	}
 
 	function videoHistoryLine( $isCur, $timestamp, $video, $actor_id, $url, $type, $title ) {
-		// phpcs:ignore MediaWiki.Usage.DeprecatedGlobalVariables.Deprecated$wgUser
-		global $wgUser, $wgLang;
-
 		$services = MediaWikiServices::getInstance();
-		$datetime = htmlspecialchars( $wgLang->timeanddate( $timestamp, true ), ENT_QUOTES );
+		$context = RequestContext::getMain();
+		$lang = $context->getLanguage();
+		$user = $context->getUser();
+		$datetime = htmlspecialchars( $lang->timeanddate( $timestamp, true ), ENT_QUOTES );
 		$cur = wfMessage( 'cur' )->escaped();
 
 		if ( $isCur ) {
 			$rlink = $cur;
 		} else {
 			if (
-				!$wgUser->isAnon() &&
-				$services->getPermissionManager()->userCan( 'edit', $wgUser, $title )
+				!$user->isAnon() &&
+				$services->getPermissionManager()->userCan( 'edit', $user, $title )
 			) {
 				$rlink = $services->getLinkRenderer()->makeKnownLink(
 					$title,

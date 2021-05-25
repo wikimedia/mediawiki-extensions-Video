@@ -41,7 +41,7 @@ class VideoPageArchive extends PageArchive {
 	 * @param string $comment
 	 * @param array $fileVersions
 	 * @param bool $unsuppress
-	 * @param User|null $user User performing the action, or null to use $wgUser
+	 * @param User|null $user User performing the action
 	 * @param string|string[]|null $tags Change tags to add to log entry
 	 *   ($user should be able to add the specified tags before this is called)
 	 * @return array|false array(number of file revisions restored, number of image revisions

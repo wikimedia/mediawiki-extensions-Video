@@ -142,7 +142,7 @@ class VideoGallery {
 	 * @return string
 	 */
 	function toHTML() {
-		global $wgLang;
+		$lang = RequestContext::getMain()->getLanguage();
 
 		$s = '<table class="gallery" cellspacing="0" cellpadding="0">';
 		if ( $this->getCaption() ) {
@@ -174,7 +174,8 @@ class VideoGallery {
 			$nb = '';
 
 			$textlink = $this->mShowFilename ?
-				Linker::linkKnown( $nt, htmlspecialchars( $wgLang->truncateForVisual( $nt->getText(), 30, '...' ) ) ) . "<br />\n" :
+				Linker::linkKnown( $nt, htmlspecialchars( $lang->truncateForVisual(
+					$nt->getText(), 30, '...' ) ) ) . "<br />\n" :
 				'';
 
 			# ATTENTION: The newline after <div class="gallerytext"> is needed to accommodate htmltidy which

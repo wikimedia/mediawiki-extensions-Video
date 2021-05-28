@@ -236,7 +236,7 @@ class Video {
 			foreach ( $categories_array as $ctg ) {
 				$ctg = trim( $ctg );
 				if ( $ctg ) {
-					$catName = $this->context->getConfig()->get( 'ContLang' )->getNsText( NS_CATEGORY );
+					$catName = MediaWikiServices::getInstance()->getContentLanguage()->getNsText( NS_CATEGORY );
 					$tag = "[[{$catName}:{$ctg}]]";
 					if ( strpos( $categoryWikiText, $tag ) === false ) {
 						$categoryWikiText .= "\n{$tag}";

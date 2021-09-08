@@ -199,6 +199,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 				->getPermissionManager()
 				->isBlockedFrom( $user, $this->mTargetObj )
 		) {
+			// @phan-suppress-next-line PhanTypeMismatchArgumentNullable
 			throw new UserBlockedError( $user->getBlock() );
 		}
 
@@ -579,6 +580,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		// Hook hard deprecated since 1.35
 		if ( $this->getHookContainer()->isRegistered( 'UndeleteShowRevision' ) ) {
 			// Only create the Revision object if needed
+			// @phan-suppress-next-line PhanUndeclaredClassMethod
 			$rev = new Revision( $revRecord );
 			// @phan-suppress-next-line PhanUndeclaredMethod
 			if ( !$this->getHookRunner()->onUndeleteShowRevision(

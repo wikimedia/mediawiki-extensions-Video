@@ -220,7 +220,7 @@ class VideoPage extends Article {
 		if ( $this->getContext()->getUser()->isAllowed( 'reupload' ) ) {
 			$ulink = Linker::link(
 				SpecialPage::getTitleFor( 'AddVideo' ),
-				$this->getContext()->msg( 'video-upload-new-version' )->plain(),
+				$this->getContext()->msg( 'video-upload-new-version' )->escaped(),
 				[],
 				[
 					'wpTitle' => $this->video->getName(),

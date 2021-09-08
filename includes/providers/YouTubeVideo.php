@@ -33,11 +33,7 @@ class YouTubeVideoProvider extends BaseVideoProvider {
 			$this->videoId = $matches[1];
 		}
 
-		if ( isset( $this->videoId ) && $this->videoId !== null ) {
-			return $this->videoId;
-		} else {
-			return null;
-		}
+		return $this->videoId;
 	}
 
 	public static function getDomains() {

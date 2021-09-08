@@ -1,4 +1,7 @@
 <?php
+
+use MediaWiki\User\UserIdentity;
+
 /**
  * A subclass of PageArchive for restoring deleted videos.
  * Based on Bartek Łapiński's code.
@@ -70,7 +73,7 @@ class VideoPageArchive extends PageArchive {
 	 *
 	 * @param array $timestamps Pass an empty array to restore all revisions,
 	 *   otherwise list the ones to undelete.
-	 * @param User $user User performing the action
+	 * @param UserIdentity $user User performing the action
 	 * @param string $comment
 	 * @param array $fileVersions
 	 * @param bool $unsuppress
@@ -79,7 +82,7 @@ class VideoPageArchive extends PageArchive {
 	 * @return array|false array(number of file revisions restored, number of image revisions
 	 *   restored, log message) on success, false on failure.
 	 */
-	function undeleteAsUser( $timestamps, User $user, $comment = '',
+	function undeleteAsUser( $timestamps, UserIdentity $user, $comment = '',
 		$fileVersions = [], $unsuppress = false, $tags = null
 	) {
 		// We currently restore only whole deleted videos, a restore link from

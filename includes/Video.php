@@ -152,7 +152,7 @@ class Video {
 	 */
 	public function addVideo( $url, $type, $categories, $watch = false ) {
 		$user = $this->context->getUser();
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_PRIMARY );
 
 		$now = $dbw->timestamp();
 
@@ -339,7 +339,7 @@ class Video {
 	 * Load video from the database
 	 */
 	function loadFromDB() {
-		$dbr = wfGetDB( DB_MASTER );
+		$dbr = wfGetDB( DB_PRIMARY );
 
 		$row = $dbr->selectRow(
 			'video',

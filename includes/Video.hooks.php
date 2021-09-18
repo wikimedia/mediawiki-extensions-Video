@@ -205,7 +205,7 @@ class VideoHooks {
 				$where['video_timestamp'] = $oldVideo;
 			}
 
-			$dbw = wfGetDB( DB_MASTER );
+			$dbw = wfGetDB( DB_PRIMARY );
 			// Delicious copypasta from Article.php, function doDeleteArticle()
 			// with some modifications
 			$archiveName = gmdate( 'YmdHis' ) . "!{$videoName}";

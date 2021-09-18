@@ -91,7 +91,7 @@ class VideoPageArchive extends PageArchive {
 			return false;
 		}
 
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_PRIMARY );
 
 		$result = $dbw->select(
 			'oldvideo',

@@ -13,11 +13,12 @@
 		],
 		"test": [
 			"parallel-lint . --exclude vendor --exclude node_modules",
-			"phpcs -ps",
+			"@phpcs",
 			"minus-x check ."
 		],
 		"phan": "phan -d . --long-progress-bar",
 		"seccheck": "seccheck-mwext",
-		"seccheck-fast": "seccheck-fast-mwext"
+		"seccheck-fast": "seccheck-fast-mwext",
+		"phpcs": "phpcs -sp --cache"
 	}
 }

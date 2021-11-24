@@ -1,10 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Liuxinyu970226"
+			"Liuxinyu970226",
+			"Xiplus"
 		]
 	},
-	"video-desc": "允许新视频名字空间用于在受支持网站上的可嵌入媒体",
+	"video-desc": "允许新视频命名空间用于在受支持网站上的可嵌入媒体",
 	"addvideo": "添加视频",
 	"newvideos": "新视频",
 	"unusedvideos": "未使用视频",

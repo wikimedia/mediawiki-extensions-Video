@@ -2,12 +2,13 @@
 	"@metadata": {
 		"authors": [
 			"Kly",
-			"Xiplus"
+			"Xiplus",
+			"Winston Sung"
 		]
 	},
 	"video-desc": "允許新影片名稱空間用於支援可嵌入多媒體的站台上",
 	"addvideo": "添加影片",
-	"newvideos": "新的影片",
+	"newvideos": "新影片庫",
 	"unusedvideos": "未使用的影片",
 	"video-upload-new-version": "上傳此影片的新版本",
 	"video-newvideos-showfrom": "顯示自 $1 $2 以來的新影片",

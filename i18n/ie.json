@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"Renan"
+		]
+	},
+	"video-revert-intro": "Vu es revocant li video '''[[:{{ns:video}}:$1|$1]]''' por li [$4 version de $3, $2]."
+}

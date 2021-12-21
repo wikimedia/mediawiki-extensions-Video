@@ -2,10 +2,22 @@
 	"@metadata": {
 		"authors": [
 			"Otokoume",
-			"Shirayuki"
+			"Shirayuki",
+			"ひまり"
 		]
 	},
+	"addvideo": "ビデオを追加",
+	"newvideos": "新しいビデオ",
 	"unusedvideos": "使われていない動画",
+	"video-addvideo-title": "ビデオを追加",
+	"video-addvideo-dest": "$1のビデオを追加",
+	"video-addvideo-button": "ビデオを追加",
+	"video-addvideo-title-label": "ビデオのタイトル:",
+	"video-no-videos": "新しいビデオはありません。",
+	"video-embed": "埋め込む",
+	"video-history": "ビデオの履歴",
+	"video-category-name": "ビデオ",
+	"video-links": "ビデオのリンク",
 	"video-showhidebots": "(ボットを$1)",
 	"action-addvideo": "外部サービスからサイトへの動画の追加",
 	"right-addvideo": "外部サービスからサイトに動画を追加"

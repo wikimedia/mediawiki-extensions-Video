@@ -608,7 +608,7 @@ class Video {
 				[ 'video_name' => $this->title->getDBkey() ],
 				__METHOD__
 			);
-			if ( $dbr->numRows( $this->historyRes ) === 0 ) {
+			if ( $this->historyRes->numRows() === 0 ) {
 				return false;
 			}
 		} elseif ( $this->historyLine === 1 ) {
@@ -628,7 +628,7 @@ class Video {
 		}
 		$this->historyLine++;
 
-		return $dbr->fetchObject( $this->historyRes );
+		return $this->historyRes->fetchObject();
 	}
 
 	/**

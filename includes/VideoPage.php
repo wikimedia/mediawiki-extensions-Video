@@ -100,7 +100,7 @@ class VideoPage extends Article {
 			[ 'LIMIT' => $limit + 1 ]
 		);
 
-		$count = $dbr->numRows( $res );
+		$count = $res->numRows();
 
 		if ( $count == 0 ) {
 			$out->addHTML( '<div id="mw-imagepage-nolinkstoimage">' . "\n" );

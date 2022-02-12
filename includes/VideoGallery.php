@@ -174,7 +174,6 @@ class VideoGallery {
 			$nb = '';
 
 			$textlink = $this->mShowFilename ?
-				// @phan-suppress-next-line SecurityCheck-DoubleEscaped T290624
 				Linker::linkKnown( $nt, htmlspecialchars( $lang->truncateForVisual(
 					$nt->getText(), 30, '...' ) ) ) . "<br />\n" :
 				'';

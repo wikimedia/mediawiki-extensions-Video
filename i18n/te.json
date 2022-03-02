@@ -1,6 +1,48 @@
 {
 	"@metadata": {
-		"authors": []
+		"authors": [
+			"Chaduvari"
+		]
 	},
-	"video-showhidebots": "($1 బాట్లు)"
+	"addvideo": "వీడియోను చేర్చండి",
+	"newvideos": "కొత్త వీడియోలు",
+	"unusedvideos": "ఉపయోగించని వీడియోలు",
+	"video-upload-new-version": "ఈ వీడియోకు కొత్త వెర్షన్ను ఎక్కించండి",
+	"video-newvideos-showfrom": "$2, $1 తో మొదలుపెట్టి కొత్త వీడియోలను చూపించు",
+	"video-newvideos-list-text": "కింద <strong>$1</strong> {{PLURAL:$1|వీడియో|వీడియోల}} జాబితా ఉంది.",
+	"video-addvideo-watchlist": "ఈ వీడియోను నా వీక్షణజాబితాకు చేర్చు",
+	"video-addvideo-title": "వీడియోను చేర్చండి",
+	"video-addvideo-dest": "$1 కోసం వీడియోను చేర్చండి",
+	"video-addvideo-button": "వీడియోను చేర్చు",
+	"video-addvideo-instructions": "{{SITENAME}} లో వీడియోను చేర్చడం తేలిక.\nకింది ఫారం లోకి వీడియోను ఇమిడ్చే కోడ్‌ను గాని ''లేదా'' వీడియో URL ను గానీ చేర్చి, వీడియోకు పేరు పెట్టి, \"{{int:video-addvideo-button}}\" బొత్తాన్ని నొక్కండి.\nకింది ఫార్మాటును వాడి పేజీలో వీడియోను చేర్చాలనుకుంటే: '''<nowiki>[[</nowiki>{{ns:video}}:వీడియో శీర్షిక<nowiki>]]</nowiki>'''.\nకింది ప్రొవైడర్ల నుండి వీడియోను చేర్చవచ్చు:\n{{int:video-provider-list}}\n===వీడియో ఇమిడ్చే కోడ్ ఉదాహరణలు===\nYouTube లోని వీడియోను ఇమిడ్చే కోడ్ ఉదాహరణ ఇది:\n\n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">\n<nowiki><object width=\"425\" height=\"355\">\n<param name=\"movie\" value=\"http://www.youtube.com/v/hUcFWPgB8oY\"></param>\n<param name=\"wmode\" value=\"transparent\"></param>\n<embed src=\"http://www.youtube.com/v/hUcFWPgB8oY\" type=\"application/x-shockwave-flash\"\nwmode=\"transparent\" width=\"425\" height=\"355\"></embed>\n</object></nowiki>\n</pre>\n\n===వీడియో URL ఉదాహరణ===\nYouTube లోని వీడియో URL కు ఉదాహరణ ఇది:\n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">http://www.youtube.com/watch?v=hUcFWPgB8oY</pre>",
+	"video-addvideo-invalidcode": "మీరిచ్చిన URL కోడ్ చెల్లనిది. మళ్ళీ ప్రయత్నించండి.",
+	"video-addvideo-exists": "మీ వీడియో శీర్షిక ఈసరికే ఉంది. మరేదైనా శీర్షికను ఎంచుకోండి.",
+	"video-addvideo-title-label": "వీడియో శీర్షిక:",
+	"video-addvideo-embed-label": "ఇమిడ్చే కోడ్ లేదా URL:",
+	"video-no-videos": "కొత్త వీడియోలేమీ లేవు.",
+	"log-name-video": "వీడియో చిట్టా",
+	"log-description-video": "చేర్చిన వీడియోలు, ఉన్న వీడియోల తాజాకరణల చిట్టా ఇది.",
+	"logentry-video-add": "$1, వీడియో $3 ను చేర్చారు",
+	"logentry-video-update": "$1, వీడియో $3 ను తాజాకరించారు",
+	"category-video-header": "\"$1\" వర్గంలోని వీడియోలు",
+	"category-video-count": "ఈ వర్గంలో {{PLURAL:$1|ఒక వీడియో ఉంది|$1 వీడియోలు ఉన్నాయి}}.",
+	"video-novideo-linktext": "దీన్ని చేర్చండి",
+	"video-novideo": "ఈ పేరుతో వీడియో ఏదీ లేదు, మీరు $1.",
+	"video-embed": "ఇముడ్చు",
+	"video-history": "వీడియో చరిత్ర",
+	"video-revert": "కూర్పు",
+	"video-histlegend": "సూచిక: ({{int:cur}}) = ఇది ప్రస్తుత వీడియో, ({{int:video-revert}}) = ఈ పాత కూర్పుకు తిరగ్గొట్టు.\n<br /><i>ఏదైనా తేదీ నాటి వీడియో URL ను చూడాలంటే ఆ తేదీపై నొక్కండి</i>.",
+	"video-revert-success": "పాత కూర్పుకు తీసుకు వెళ్ళాం.",
+	"video-revert-legend": "వీడియోను వెనక్కు తీసుకుపో",
+	"video-revert-intro": "మీరు '''[[:{{ns:video}}:$1|$1]]''' వీడియోను [$4 $3, $2 నాటి కూర్పుకు] తీసుకు పోబోతున్నారు.",
+	"video-category-name": "వీడియోలు",
+	"video-links": "వీడియో లింకులు",
+	"video-links-to-video": "కింది {{PLURAL:$1|పేజీ|$1 పేజీల}} నుండి ఈ వీడియోకు లింకులున్నాయి:",
+	"video-no-links-to-video": "ఈ వీడియోకు లింకున్న పేజీలేమీ లేవు.",
+	"video-more-links-to-video": "ఈ వీడియోకున్న [[Special:WhatLinksHere/$1|మరిన్ని లింకులను]] చూడండి.",
+	"video-showhidebots": "($1 బాట్లు)",
+	"action-addvideo": "బయటి సేవల లోని వీడియోలను సైటులోకి చేర్చే",
+	"right-addvideo": "బయటి సేవల లోని వీడియోలను సైటులోకి చేర్చడం",
+	"video-hidebots": "బాట్లు చేసిన అప్లోడ్లు దాచు",
+	"unusedvideos-summary": "కింది వీడియోలను వికీలోకి చేర్చారు గానీ, వీటిని ఎక్కడా వాడడం లేదు."
 }

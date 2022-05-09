@@ -4,6 +4,7 @@
 			"Joao Xavier"
 		]
 	},
+	"video-revert-intro": "Vu renversos la video '''[[:{{ns:video}}:$1|$1]]''' a [$4 version as of $3, $2].",
 	"video-category-name": "Videi",
 	"video-showhidebots": "($1 roboti)"
 }

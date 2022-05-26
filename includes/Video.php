@@ -252,11 +252,21 @@ class Video {
 		} else {
 			// New video; create the description page.
 			// Suppress the recent changes bc it will appear in the log/video
-			$page->doEditContent(
-				ContentHandler::makeContent( $categoryWikiText, $page->getTitle() ),
-				'',
-				EDIT_SUPPRESS_RC
-			);
+			if ( method_exists( $page, 'doUserEditContent' ) ) {
+				// MW 1.36+
+				$page->doUserEditContent(
+					ContentHandler::makeContent( $categoryWikiText, $page->getTitle() ),
+					$user,
+					'',
+					EDIT_SUPPRESS_RC
+				);
+			} else {
+				$page->doEditContent(
+					ContentHandler::makeContent( $categoryWikiText, $page->getTitle() ),
+					'',
+					EDIT_SUPPRESS_RC
+				);
+			}
 		}
 
 		if ( $watch ) {

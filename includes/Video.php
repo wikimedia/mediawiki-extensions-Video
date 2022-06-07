@@ -219,7 +219,14 @@ class Video {
 
 		$descTitle = $this->getTitle();
 		$page = WikiPage::factory( $descTitle );
-		$watch = $watch || $user->isWatched( $descTitle );
+		if ( method_exists( MediaWikiServices::class, 'getWatchlistManager' ) ) {
+			// MediaWiki 1.36+
+			$watchlistManager = MediaWikiServices::getInstance()->getWatchlistManager();
+			$watch = $watch || $watchlistManager->isWatched( $user, $descTitle );
+		} else {
+			// @phan-suppress-next-line PhanUndeclaredMethod
+			$watch = $watch || $user->isWatched( $descTitle );
+		}
 
 		// Get the localized category name
 		$videoCategoryName = wfMessage( 'video-category-name' )->inContentLanguage()->text();
@@ -261,6 +268,7 @@ class Video {
 					EDIT_SUPPRESS_RC
 				);
 			} else {
+				// @phan-suppress-next-line PhanUndeclaredMethod
 				$page->doEditContent(
 					ContentHandler::makeContent( $categoryWikiText, $page->getTitle() ),
 					'',
@@ -270,7 +278,14 @@ class Video {
 		}
 
 		if ( $watch ) {
-			$user->addWatch( $descTitle );
+			if ( method_exists( MediaWikiServices::class, 'getWatchlistManager' ) ) {
+				// MediaWiki 1.36+
+				$watchlistManager = MediaWikiServices::getInstance()->getWatchlistManager();
+				$watchlistManager->addWatch( $user, $descTitle );
+			} else {
+				// @phan-suppress-next-line PhanUndeclaredMethod
+				$user->addWatch( $descTitle );
+			}
 		}
 
 		// Add the log entry

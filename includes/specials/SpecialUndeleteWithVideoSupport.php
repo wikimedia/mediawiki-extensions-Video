@@ -469,8 +469,10 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 
 		// CORE HACK
 		if ( $this->mTargetObj->inNamespace( NS_VIDEO ) ) {
+			// @phan-suppress-next-line PhanParamTooMany
 			$archive = new VideoPageArchive( $this->mTargetObj, $this->getConfig() );
 		} else {
+			// @phan-suppress-next-line PhanParamTooMany
 			$archive = new PageArchive( $this->mTargetObj, $this->getConfig() );
 		}
 		// END CORE HACK
@@ -856,8 +858,10 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 
 		// CORE HACK
 		if ( $this->mTargetObj->inNamespace( NS_VIDEO ) ) {
+			// @phan-suppress-next-line PhanParamTooMany
 			$archive = new VideoPageArchive( $this->mTargetObj, $this->getConfig() );
 		} else {
+			// @phan-suppress-next-line PhanParamTooMany
 			$archive = new PageArchive( $this->mTargetObj, $this->getConfig() );
 		}
 		// CORE HACK END
@@ -1348,9 +1352,18 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			$user = User::newFromActorId( $actorId );
 			$link = Linker::userLink( $user->getId(), $user->getName() ) .
 				Linker::userToolLinks( $user->getId(), $user->getName() );
+		} elseif ( method_exists( $file, 'getUploader' ) ) {
+			// MediaWiki 1.37+
+			$uploader = $file->getUploader( File::FOR_THIS_USER, $this->getContext()->getAuthority() );
+
+			$link = Linker::userLink( $uploader->getId(), $uploader->getName() ) .
+				Linker::userToolLinks( $uploader->getId(), $uploader->getName() );
 		} else {
+			// @phan-suppress-next-line PhanUndeclaredMethod
 			$link = Linker::userLink( $file->getRawUser(), $file->getRawUserText() ) .
 				Linker::userToolLinks( $file->getRawUser(), $file->getRawUserText() );
+			// @phan-suppress-previous-line PhanUndeclaredMethod
+
 		}
 		// CORE HACK END
 
@@ -1373,7 +1386,15 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 				$this->msg( 'rev-deleted-comment' )->escaped() . '</span></span>';
 		}
 
-		$link = Linker::commentBlock( $file->getRawDescription() );
+		if ( method_exists( $file, 'getRawDescription' ) ) {
+			// @phan-suppress-next-line PhanUndeclaredMethod
+			$comment = $file->getRawDescription();
+		} else {
+			// MediaWiki 1.37+
+			$comment = $file->getDescription( File::FOR_THIS_USER, $this->getContext()->getAuthority() );
+		}
+
+		$link = Linker::commentBlock( $comment ?? '' );
 
 		if ( $file->isDeleted( File::DELETED_COMMENT ) ) {
 			$link = '<span class="history-deleted">' . $link . '</span>';
@@ -1394,12 +1415,18 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		$out = $this->getOutput();
 		// CORE HACK
 		if ( $this->mTargetObj->inNamespace( NS_VIDEO ) ) {
+			// @phan-suppress-next-line PhanParamTooMany
 			$archive = new VideoPageArchive( $this->mTargetObj, $this->getConfig() );
 		} else {
+			// @phan-suppress-next-line PhanParamTooMany
 			$archive = new PageArchive( $this->mTargetObj, $this->getConfig() );
 		}
+		if ( method_exists( $this->getHookRunner(), 'onUndeleteForm__undelete' ) ) {
+			// Removed on MediaWiki 1.38
+			// @phan-suppress-next-line PhanUndeclaredMethod
+			$this->getHookRunner()->onUndeleteForm__undelete( $archive, $this->mTargetObj );
+		}
 		// CORE HACK END
-		$this->getHookRunner()->onUndeleteForm__undelete( $archive, $this->mTargetObj );
 
 		// If VideoPageArchive, only calls undeleteAsUser
 		if ( method_exists( $archive, 'undeleteAsUser' ) ) {

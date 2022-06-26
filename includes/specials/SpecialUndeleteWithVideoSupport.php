@@ -689,7 +689,12 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 
 		$diffContext = clone $this->getContext();
 		$diffContext->setTitle( $currentTitle );
-		$diffContext->setWikiPage( WikiPage::factory( $currentTitle ) );
+		if ( method_exists( MediaWikiServices::class, 'getWikiPageFactory' ) ) {
+			// MW 1.36+
+			$diffContext->setWikiPage( MediaWikiServices::getInstance()->getWikiPageFactory()->newFromTitle( $currentTitle ) );
+		} else {
+			$diffContext->setWikiPage( WikiPage::factory( $currentTitle ) );
+		}
 
 		$contentModel = $currentRevRecord->getSlot(
 			SlotRecord::MAIN,

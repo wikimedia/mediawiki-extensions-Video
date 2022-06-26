@@ -218,7 +218,12 @@ class Video {
 		}
 
 		$descTitle = $this->getTitle();
-		$page = WikiPage::factory( $descTitle );
+		if ( method_exists( MediaWikiServices::class, 'getWikiPageFactory' ) ) {
+			// MW 1.36+
+			$page = MediaWikiServices::getInstance()->getWikiPageFactory()->newFromTitle( $descTitle );
+		} else {
+			$page = WikiPage::factory( $descTitle );
+		}
 		if ( method_exists( MediaWikiServices::class, 'getWatchlistManager' ) ) {
 			// MediaWiki 1.36+
 			$watchlistManager = MediaWikiServices::getInstance()->getWatchlistManager();

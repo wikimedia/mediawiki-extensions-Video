@@ -5,6 +5,8 @@
  * Add videos to the gallery using add(), then render that list to HTML using toHTML().
  */
 
+use MediaWiki\MediaWikiServices;
+
 class VideoGallery {
 	/** @var array[] Pairs of Video objects and a HTML string */
 	private $mVideos;
@@ -143,6 +145,7 @@ class VideoGallery {
 	 */
 	function toHTML() {
 		$lang = RequestContext::getMain()->getLanguage();
+		$linkRenderer = MediaWikiServices::getInstance()->getLinkRenderer();
 
 		$s = '<table class="gallery" cellspacing="0" cellpadding="0">';
 		if ( $this->getCaption() ) {
@@ -174,9 +177,12 @@ class VideoGallery {
 			$nb = '';
 
 			$textlink = $this->mShowFilename ?
-				Linker::linkKnown( $nt, htmlspecialchars( $lang->truncateForVisual(
-					$nt->getText(), 30, '...' ) ) ) . "<br />\n" :
-				'';
+					$linkRenderer->makeKnownLink( $nt,
+						$lang->truncateForVisual(
+							$nt->getText(), 30, '...'
+						)
+					) . "<br />\n"
+				: '';
 
 			# ATTENTION: The newline after <div class="gallerytext"> is needed to accommodate htmltidy which
 			# in version 4.8.6 generated crackpot html in its absence, see:

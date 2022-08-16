@@ -5,12 +5,22 @@
 		]
 	},
 	"addvideo": "Lââʹzzet video",
+	"newvideos": "Ođđ video",
+	"video-upload-new-version": "Ruõkk ođđ versio tän videost",
 	"video-addvideo-watchlist": "Lââʹzzet tän video muu valvvâmliʹstte",
 	"video-addvideo-title": "Lââʹzzet video",
+	"video-addvideo-dest": "Lââʹzzet ođđ versio videost $1",
 	"video-addvideo-button": "Lââʹzzet video",
+	"video-addvideo-title-label": "Video nõmm:",
+	"logentry-video-add": "$1 lââʹzzti video $3",
+	"logentry-video-update": "$1 peiʹvvii video $3",
+	"category-video-header": "Video, kook lie kategoriast \"$1\"",
+	"category-video-count": "Tän kategoeriast {{PLURAL:$1|lij õhtt video|lie $1 video|lie $1 videod}}.",
+	"video-novideo-linktext": "tõn lââʹzzted",
 	"video-history": "Video historia",
 	"video-revert-success": "Kååʹmtum ääiʹjab versiooʹje.",
 	"video-revert-legend": "Maaccât ääiʹjab versio videost",
+	"video-category-name": "Video",
 	"video-links": "Liiŋk videooʹje",
 	"video-more-links-to-video": "Čuäʹjet [[Special:WhatLinksHere/$1|lââʹzz liiŋkid]] tän videooʹje."
 }

@@ -88,6 +88,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 	private function loadRequest( $par ) {
 		$request = $this->getRequest();
 		$user = $this->getUser();
+		$userOptionsManager = MediaWikiServices::getInstance()->getUserOptionsManager();
 
 		$this->mAction = $request->getVal( 'action' );
 		if ( $par !== null && $par !== '' ) {
@@ -115,7 +116,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		$this->mInvert = $request->getCheck( 'invert' ) && $posted;
 		$this->mPreview = $request->getCheck( 'preview' ) && $posted;
 		$this->mDiff = $request->getCheck( 'diff' );
-		$this->mDiffOnly = $request->getBool( 'diffonly', $this->getUser()->getOption( 'diffonly' ) );
+		$this->mDiffOnly = $request->getBool( 'diffonly', $userOptionsManager->getOption( $user, 'diffonly' ) );
 		$this->mComment = $request->getText( 'wpComment' );
 		$this->mUnsuppress = $request->getVal( 'wpUnsuppress' ) && MediaWikiServices::getInstance()
 				->getPermissionManager()
@@ -1117,7 +1118,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			if ( !RevisionRecord::userCanBitfield(
 				$revRecord->getVisibility(),
 				RevisionRecord::DELETED_TEXT,
-				$this->getUser()
+				$user
 			) ) {
 				$pageLink = htmlspecialchars( $this->getLanguage()->userTimeAndDate( $ts, $user ) );
 				$last = $this->msg( 'diff' )->escaped();

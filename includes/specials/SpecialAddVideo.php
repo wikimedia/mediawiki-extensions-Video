@@ -6,6 +6,8 @@
  * @file
  */
 
+use MediaWiki\MediaWikiServices;
+
 class AddVideo extends FormSpecialPage {
 	/**
 	 * New video object created when the title field is validated
@@ -169,7 +171,8 @@ class AddVideo extends FormSpecialPage {
 			'Watch' => [
 				'type' => 'check',
 				'label-message' => 'video-addvideo-watchlist',
-				'default' => $this->getUser()->getOption( 'watchdefault' ),
+				'default' => MediaWikiServices::getInstance()->getUserOptionsManager()
+					->getOption( $this->getUser(), 'watchdefault' ),
 			],
 		];
 	}

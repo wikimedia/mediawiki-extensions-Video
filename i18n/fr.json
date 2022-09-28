@@ -4,6 +4,7 @@
 			"Gomoko",
 			"Jack Phoenix",
 			"Urhixidur",
+			"Verdy p",
 			"Wladek92"
 		]
 	},
@@ -36,7 +37,7 @@
 	"video-history": "Historique de la vidéo",
 	"video-revert": "rét",
 	"video-histlegend": "Légende : ({{int:cur}}) = la version actuelle de la vidéo, ({{int:video-revert}}) = rétablir cette ancienne version.\n<br /><i>Cliquez sur la date pour voir l’URL de la vidéo à cette date</i>.",
-	"video-revert-success": "Rétablissement de version antérieure réussi.",
+	"video-revert-success": "Rétablissement de la version antérieure réussi.",
 	"video-revert-legend": "Rétablir vidéo",
 	"video-revert-intro": "Vous êtes sur le point de rétablir la vidéo '''[[:{{ns:video}}:$1|$1]]''' à la [$4 version du $2 à $3].",
 	"video-category-name": "Vidéos",

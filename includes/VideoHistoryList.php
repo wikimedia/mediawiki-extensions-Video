@@ -28,8 +28,7 @@ class VideoHistoryList {
 		if ( $isCur ) {
 			$rlink = $cur;
 		} else {
-			if (
-				!$user->isAnon() &&
+			if ( $user->isRegistered() &&
 				$services->getPermissionManager()->userCan( 'edit', $user, $title )
 			) {
 				$rlink = $services->getLinkRenderer()->makeKnownLink(

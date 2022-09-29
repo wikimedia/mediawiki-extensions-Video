@@ -137,8 +137,7 @@ class VideoHooks {
 			$height = $argv['height'];
 		}
 
-		// @phan-suppress-next-line PhanPluginDuplicateConditionalNullCoalescing
-		$align = isset( $argv['align'] ) ? $argv['align'] : 'left';
+		$align = $argv['align'] ?? 'left';
 		$alignTag = '';
 
 		if ( in_array( strtoupper( $align ), $validAlign ) ) {

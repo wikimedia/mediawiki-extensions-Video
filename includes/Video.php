@@ -189,7 +189,7 @@ class Video {
 				'oldvideo', 'video',
 				[
 					'ov_name' => 'video_name',
-					'ov_archive_name' => $dbw->addQuotes( gmdate( 'YmdHis' ) . "!{$this->getName()}" ),
+					'ov_archive_name' => $dbw->addQuotes( gmdate( 'YmdHis' ) . '!' . $this->getName() ),
 					'ov_url' => 'video_url',
 					'ov_type' => 'video_type',
 					'ov_actor' => 'video_actor',

@@ -9,7 +9,7 @@ use MediaWiki\MediaWikiServices;
 
 class VideoGallery {
 	/** @var array[] Pairs of Video objects and a HTML string */
-	private $mVideos;
+	private $mVideos = [];
 
 	/** @var string */
 	private $mCaption;
@@ -18,20 +18,13 @@ class VideoGallery {
 	private $contextTitle;
 
 	/** @var bool */
-	private $mShowFilename;
+	private $mShowFilename = true;
 
 	/** @var int How many videos wide should the gallery be? */
 	private $mPerRow = 3;
 
-	private $mWidths = 200, $mHeights = 200; // How wide/tall each thumbnail should be
-
-	/**
-	 * Create a new video gallery object.
-	 */
-	function __construct() {
-		$this->mVideos = [];
-		$this->mShowFilename = true;
-	}
+	private $mWidths = 200;
+	private $mHeights = 200; // How wide/tall each thumbnail should be
 
 	/**
 	 * Get the caption (as plain text)

@@ -10,7 +10,6 @@ class VideoPage extends Article {
 	private $video;
 
 	/**
-	 * Constructor and clear the article
 	 * @param Title $title
 	 */
 	public function __construct( $title ) {

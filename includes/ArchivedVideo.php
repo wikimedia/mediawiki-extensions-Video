@@ -48,13 +48,13 @@ class ArchivedVideo extends ArchivedFile {
 	/** @var int size in bytes */
 	private $bits;
 
-	/** @var int Width */
+	/** @var int */
 	private $width;
 
-	/** @var int Height */
+	/** @var int */
 	private $height;
 
-	/** @var string Metadata string */
+	/** @var string */
 	private $metadata;
 
 	/** @var string MIME type */

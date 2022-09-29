@@ -11,9 +11,6 @@ class NewVideos extends IncludableSpecialPage {
 	/** @var FormOptions */
 	protected $opts;
 
-	/**
-	 * Constructor
-	 */
 	public function __construct() {
 		parent::__construct( 'NewVideos' );
 	}

@@ -16,9 +16,6 @@ class AddVideo extends FormSpecialPage {
 	 */
 	protected $video;
 
-	/**
-	 * Constructor -- set up the new special page
-	 */
 	public function __construct() {
 		parent::__construct( 'AddVideo' /*class*/, 'addvideo' /*restriction*/ );
 	}

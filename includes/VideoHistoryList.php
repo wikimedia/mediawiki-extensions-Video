@@ -1,7 +1,5 @@
 <?php
-/**
- * @todo document
- */
+
 use MediaWiki\MediaWikiServices;
 
 class VideoHistoryList {

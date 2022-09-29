@@ -11,9 +11,6 @@ use Wikimedia\Rdbms\IResultWrapper;
  * @ingroup Extensions
  */
 class SpecialUnusedVideos extends QueryPage {
-	/**
-	 * Constructor
-	 */
 	public function __construct() {
 		parent::__construct( 'UnusedVideos' );
 	}

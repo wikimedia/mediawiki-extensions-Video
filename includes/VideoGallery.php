@@ -39,7 +39,7 @@ class VideoGallery {
 	/**
 	 * Set the caption (as plain text)
 	 *
-	 * @param string $caption Caption
+	 * @param string $caption
 	 */
 	function setCaption( $caption ) {
 		$this->mCaption = htmlspecialchars( $caption );
@@ -48,7 +48,7 @@ class VideoGallery {
 	/**
 	 * Set the caption (as HTML)
 	 *
-	 * @param string $caption Caption
+	 * @param string $caption
 	 */
 	public function setCaptionHtml( $caption ) {
 		$this->mCaption = $caption;

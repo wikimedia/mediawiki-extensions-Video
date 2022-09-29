@@ -65,26 +65,8 @@ class VideoGalleryHooks {
 				}
 			}
 
-			if ( isset( $matches[3] ) ) {
-				$label = $matches[3];
-			} else {
-				$label = '';
-			}
-
-			$html = '';
-			/*
-			$pout = $this->parse( $label,
-				$this->mTitle,
-				$this->mOptions,
-				false, // Strip whitespace...?
-				false  // Don't clear state!
-			);
-			$html = $pout->getText();
-			*/
-
 			// Gah, there should be a better way to get context here
-			$vg->add( new Video( $nt, RequestContext::getMain() ), $html );
-
+			$vg->add( new Video( $nt, RequestContext::getMain() ) );
 		}
 		return $vg->toHTML();
 	}

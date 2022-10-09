@@ -182,8 +182,7 @@ class VideoHooks {
 		if ( $articleObj->getTitle()->getNamespace() === NS_VIDEO ) {
 			global $wgRequest;
 
-			// @phan-suppress-next-line PhanTypeMismatchArgumentInternal
-			$context = ( is_callable( $articleObj, 'getContext' ) ? $articleObj->getContext() : RequestContext::getMain() );
+			$context = ( method_exists( $articleObj, 'getContext' ) ? $articleObj->getContext() : RequestContext::getMain() );
 			$videoObj = new Video( $articleObj->getTitle(), $context );
 			$videoName = $videoObj->getName();
 			$oldVideo = $wgRequest->getVal( 'wpOldVideo', '' );

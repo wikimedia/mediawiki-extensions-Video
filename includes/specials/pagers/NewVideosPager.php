@@ -78,7 +78,14 @@ class NewVideosPager extends RangeChronologicalPager {
 		}
 
 		if ( $opts->getValue( 'hidebots' ) ) {
-			$groupsWithBotPermission = User::getGroupsWithPermission( 'bot' );
+			if ( method_exists( MediaWikiServices::class, 'getGroupPermissionsLookup' ) ) {
+				// MediaWiki 1.36+
+				$groupsWithBotPermission = MediaWikiServices::getInstance()->getGroupPermissionsLookup()
+					->getGroupsWithPermission( 'bot' );
+			} else {
+				$groupsWithBotPermission = MediaWikiServices::getInstance()->getPermissionManager()
+					->getGroupsWithPermission( 'bot' );
+			}
 
 			if ( count( $groupsWithBotPermission ) ) {
 				$dbr = wfGetDB( DB_REPLICA );

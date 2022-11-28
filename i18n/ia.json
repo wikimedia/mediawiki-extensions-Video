@@ -1,6 +1,49 @@
 {
 	"@metadata": {
-		"authors": []
+		"authors": [
+			"McDutchie"
+		]
 	},
-	"video-showhidebots": "($1 bots)"
+	"video-desc": "Permitte un nove spatio de nomines Video pro multimedia incastrabile sur sitos supportate",
+	"addvideo": "Adder video",
+	"newvideos": "Nove videos",
+	"unusedvideos": "Videos non usate",
+	"video-upload-new-version": "Incargar un nove version de iste video",
+	"video-newvideos-showfrom": "Monstrar nove videos a partir del $1 a $2",
+	"video-newvideos-list-text": "Infra es un lista de <strong>$1</strong> video{{PLURAL:$1||s}}.",
+	"video-addvideo-watchlist": "Adder iste video a mi observatorio",
+	"video-addvideo-title": "Adder video",
+	"video-addvideo-dest": "Adder video pro $1",
+	"video-addvideo-button": "Adder video",
+	"video-addvideo-instructions": "Es facile adder un video a {{SITENAME}}.\nSimplemente colla le codice pro incastrar le video ''o'' le URL del video in le formulario sequente, insere un nomine pro le video, e preme le button \"{{int:video-addvideo-button}}\".\nSi tu vole incastrar le video sur un pagina, usa le formato sequente: '''<nowiki>[[</nowiki>{{ns:video}}:Titulo del video<nowiki>]]</nowiki>'''.\nTu pote adder un video del fornitores sequente:\n{{int:video-provider-list}}\n===Exemplo de un codice de incastration de video===\nIsto es un exemplo de codice de incastration de video YouTube:\n\n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">\n<nowiki><object width=\"425\" height=\"355\">\n<param name=\"movie\" value=\"http://www.youtube.com/v/hUcFWPgB8oY\"></param>\n<param name=\"wmode\" value=\"transparent\"></param>\n<embed src=\"http://www.youtube.com/v/hUcFWPgB8oY\" type=\"application/x-shockwave-flash\"\nwmode=\"transparent\" width=\"425\" height=\"355\"></embed>\n</object></nowiki>\n</pre>\n\n===Exemplo de un URL de video===\nEcce un exemplo de URL de un video de YouTube:\n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">http://www.youtube.com/watch?v=hUcFWPgB8oY</pre>",
+	"video-addvideo-invalidcode": "Le codice o URL que tu ha collate non es valide. Per favor tenta lo de novo.",
+	"video-addvideo-exists": "Le titulo de tu video ja existe. Per favor elige un altere titulo pro le video.",
+	"video-addvideo-title-label": "Titulo del video:",
+	"video-addvideo-embed-label": "Codice de incastration o URL:",
+	"video-no-videos": "Il non ha nove videos.",
+	"log-name-video": "Registro de videos",
+	"log-description-video": "Isto es un log de videos addite e actualisationes de videos existente.",
+	"logentry-video-add": "$1 ha addite le video $3$3",
+	"logentry-video-update": "$1 ha actualisate le video $3",
+	"category-video-header": "Videos in le categoria \"$1\"",
+	"category-video-count": "Il ha $1 video{{PLURAL:$1||s}} in iste categoria.",
+	"video-novideo-linktext": "adder lo",
+	"video-novideo": "Non existe alcun video con iste nomine. Tu pote $1.",
+	"video-embed": "Incastrar",
+	"video-history": "Historia del video",
+	"video-revert": "rev",
+	"video-histlegend": "Legenda: ({{int:cur}}) = iste es le video actual, ({{int:video-revert}}) = reverter a iste version ancian.\n<br /><i>Clicca sur un data pro vider le URL del video de ille data</i>.",
+	"video-revert-success": "Revertite a un version anterior.",
+	"video-revert-legend": "Reverter video",
+	"video-revert-intro": "Tu es sur le puncto de reverter le video '''[[:{{ns:video}}:$1|$1]]''' al [$4 version del $2 a $3].",
+	"video-category-name": "Videos",
+	"video-links": "Ligamines video",
+	"video-links-to-video": "Le sequente pagina{{PLURAL:$1||s}} liga a iste video:",
+	"video-no-links-to-video": "Il non ha paginas que liga a iste video.",
+	"video-more-links-to-video": "Vider [[Special:WhatLinksHere/$1|plus ligamines]] a iste video.",
+	"video-showhidebots": "($1 bots)",
+	"action-addvideo": "adder videos de servicios externe a iste sito",
+	"right-addvideo": "Adder videos de servicios externe a iste sito",
+	"video-hidebots": "Celar files incargate per robots",
+	"unusedvideos-summary": "Le sequente videos ha essite addite al wiki ma non es usate sur alcun pagina."
 }

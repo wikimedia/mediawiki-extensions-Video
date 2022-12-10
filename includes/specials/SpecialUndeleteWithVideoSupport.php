@@ -766,6 +766,13 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		$tags = implode( ',', $tags );
 		$tagSummary = ChangeTags::formatSummaryRow( $tags, 'deleteddiff', $this->getContext() );
 
+		if ( method_exists( MediaWikiServices::class, 'getCommentFormatter' ) ) {
+			// MW 1.38+
+			$comment = MediaWikiServices::getInstance()->getCommentFormatter()
+				->formatRevision( $revRecord, $user );
+		} else {
+			$comment = Linker::revComment( $revRecord );
+		}
 		// FIXME This is reimplementing DifferenceEngine#getRevisionHeader
 		// and partially #showDiffPage, but worse
 		return '<div id="mw-diff-' . $prefix . 'title1"><strong>' .
@@ -785,7 +792,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			Linker::revUserTools( $revRecord ) . '<br />' .
 			'</div>' .
 			'<div id="mw-diff-' . $prefix . 'title3">' .
-			$minor . Linker::revComment( $revRecord ) . $rdel . '<br />' .
+			$minor . $comment . $rdel . '<br />' .
 			'</div>' .
 			'<div id="mw-diff-' . $prefix . 'title5">' .
 			$tagSummary[0] . '<br />' .
@@ -1156,7 +1163,12 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		}
 
 		// Edit summary
-		$comment = Linker::revComment( $revRecord );
+		if ( method_exists( MediaWikiServices::class, 'getCommentFormatter' ) ) {
+			// MW 1.38+
+			$comment = MediaWikiServices::getInstance()->getCommentFormatter()->formatRevision( $revRecord, $user );
+		} else {
+			$comment = Linker::revComment( $revRecord );
+		}
 
 		// Tags
 		$attribs = [];
@@ -1400,7 +1412,12 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			$comment = $file->getDescription( File::FOR_THIS_USER, $this->getContext()->getAuthority() );
 		}
 
-		$link = Linker::commentBlock( $comment ?? '' );
+		if ( method_exists( MediaWikiServices::class, 'getCommentFormatter' ) ) {
+			// MW 1.38+
+			$link = MediaWikiServices::getInstance()->getCommentFormatter()->formatBlock( $comment ?? '' );
+		} else {
+			$link = Linker::commentBlock( $comment ?? '' );
+		}
 
 		if ( $file->isDeleted( File::DELETED_COMMENT ) ) {
 			$link = '<span class="history-deleted">' . $link . '</span>';

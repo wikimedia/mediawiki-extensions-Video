@@ -55,7 +55,12 @@ class VideoHistoryList {
 
 		$s = "<li>({$rlink}) <a href=\"{$url}\" title=\"{$style}\">{$datetime}</a> . . ({$type}) . . {$userlink}";
 
-		$s .= Linker::commentBlock( /*$description*/'', $title );
+		if ( method_exists( $services, 'getCommentFormatter' ) ) {
+			// MW 1.38+
+			$s .= $services->getCommentFormatter()->formatBlock( /*$description*/'', $title );
+		} else {
+			$s .= Linker::commentBlock( /*$description*/'', $title );
+		}
 		$s .= "</li>\n";
 		return $s;
 	}

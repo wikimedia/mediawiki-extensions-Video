@@ -35,7 +35,7 @@ class BlipTVVideoProvider extends BaseVideoProvider {
 		list( $apiUrl ) = explode( '?', $url );
 		$apiUrl .= '?skin=api';
 
-		$apiContents = Http::get( $apiUrl );
+		$apiContents = MediaWikiServices::getInstance()->getHttpRequestFactory()->get( $apiUrl );
 		if ( empty( $apiContents ) ) {
 			return null;
 		}

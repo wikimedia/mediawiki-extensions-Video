@@ -24,9 +24,9 @@ class ViddlerVideoProvider extends BaseVideoProvider {
 		}
 
 		$apiUrl = 'http://lab.viddler.com/services/oembed/?format=json&url=' . urlencode( $url );
-		$apiResult = Http::get( $apiUrl );
+		$apiResult = MediaWikiServices::getInstance()->getHttpRequestFactory()->get( $apiUrl );
 
-		if ( $apiResult === false ) {
+		if ( $apiResult === null ) {
 			return null;
 		}
 

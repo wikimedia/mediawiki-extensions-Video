@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"McDutchie"
+			"McDutchie",
+			"Jack Phoenix"
 		]
 	},
 	"video-desc": "Permitte un nove spatio de nomines Video pro multimedia incastrabile sur sitos supportate",
@@ -23,7 +24,7 @@
 	"video-no-videos": "Il non ha nove videos.",
 	"log-name-video": "Registro de videos",
 	"log-description-video": "Isto es un log de videos addite e actualisationes de videos existente.",
-	"logentry-video-add": "$1 ha addite le video $3$3",
+	"logentry-video-add": "$1 ha addite le video $3",
 	"logentry-video-update": "$1 ha actualisate le video $3",
 	"category-video-header": "Videos in le categoria \"$1\"",
 	"category-video-count": "Il ha $1 video{{PLURAL:$1||s}} in iste categoria.",

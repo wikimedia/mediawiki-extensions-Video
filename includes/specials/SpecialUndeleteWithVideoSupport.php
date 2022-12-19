@@ -898,7 +898,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 
 		# Batch existence check on user and talk pages
 		if ( $haveRevisions ) {
-			$batch = new LinkBatch();
+			$batch = MediaWikiServices::getInstance()->getLinkBatchFactory()->newLinkBatch();
 			foreach ( $revisions as $row ) {
 				$batch->addObj( Title::makeTitleSafe( NS_USER, $row->ar_user_text ) );
 				$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $row->ar_user_text ) );
@@ -907,7 +907,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			$revisions->seek( 0 );
 		}
 		if ( $haveFiles ) {
-			$batch = new LinkBatch();
+			$batch = MediaWikiServices::getInstance()->getLinkBatchFactory()->newLinkBatch();
 			foreach ( $files as $row ) {
 				// CORE HACK for [[mw:Extension:Video]]
 				if ( isset( $row->ov_actor ) && $row->ov_actor ) {

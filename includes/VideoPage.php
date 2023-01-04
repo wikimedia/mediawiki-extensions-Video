@@ -177,7 +177,7 @@ class VideoPage extends Article {
 				$list->videoHistoryLine(
 					true,
 					wfTimestamp( TS_MW, $line->video_timestamp ),
-					$this->mTitle->getDBkey(),
+					$this->getTitle()->getDBkey(),
 					$line->video_actor,
 					strip_tags( $line->video_url ),
 					$line->video_type,

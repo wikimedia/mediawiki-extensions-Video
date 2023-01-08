@@ -1,15 +1,16 @@
 {
 	"name": "Video",
-	"version": "1.9.1",
+	"version": "1.9.2",
 	"author": [
 		"David Pean",
 		"Jack Phoenix",
 		"John Du Hart",
-		"Mainframe98"
+		"Mainframe98",
+		"Universal Omega"
 	],
 	"license-name": "GPL-2.0-or-later",
 	"requires": {
-		"MediaWiki": ">= 1.35.3"
+		"MediaWiki": ">= 1.39.0"
 	},
 	"url": "https://www.mediawiki.org/wiki/Extension:Video",
 	"descriptionmsg": "video-desc",
@@ -17,8 +18,26 @@
 	"SpecialPages": {
 		"AddVideo": "AddVideo",
 		"NewVideos": "NewVideos",
-		"Undelete": "SpecialUndeleteWithVideoSupport",
-		"UnusedVideos": "SpecialUnusedVideos"
+		"UnusedVideos": "SpecialUnusedVideos",
+		"Undelete": {
+			"class": "SpecialUndeleteWithVideoSupport",
+			"services": [
+				"PermissionManager",
+				"RevisionStore",
+				"RevisionRenderer",
+				"ContentHandlerFactory",
+				"ChangeTagDefStore",
+				"LinkBatchFactory",
+				"RepoGroup",
+				"DBLoadBalancer",
+				"UserOptionsLookup",
+				"WikiPageFactory",
+				"SearchEngineFactory",
+				"UndeletePageFactory",
+				"ArchivedRevisionLookup",
+				"CommentFormatter"
+			]
+		}
 	},
 	"MessagesDirs": {
 		"Video": [
@@ -79,7 +98,7 @@
 	},
 	"Hooks": {
 		"ArticleFromTitle": [
-			"VideoHooks::videoFromTitle"
+			"VideoHooks::onArticleFromTitle"
 		],
 		"ParserBeforeInternalParse": [
 			"VideoHooks::videoTag"
@@ -92,23 +111,20 @@
 			"VideoGalleryHooks::onParserFirstCallInit",
 			"VideoGalleryPopulateHooks::onParserFirstCallInit"
 		],
-		"ArticleDelete": [
-			"VideoHooks::onVideoDelete"
+		"PageDelete": [
+			"VideoHooks::onPageDelete"
 		],
-		"UndeleteForm::showRevision": [
-			"VideoHooks::specialUndeleteSwitchArchive"
+		"PageUndelete": [
+			"VideoHooks::onPageUndelete"
 		],
 		"UndeleteForm::showHistory": [
-			"VideoHooks::specialUndeleteSwitchArchive"
-		],
-		"UndeleteForm::undelete": [
-			"VideoHooks::specialUndeleteSwitchArchive"
+			"VideoHooks::onUndeleteForm__showHistory"
 		],
 		"LoadExtensionSchemaUpdates": [
 			"VideoHooks::onLoadExtensionSchemaUpdates"
 		],
 		"wgQueryPages": [
-			"VideoHooks::onwgQueryPages"
+			"VideoHooks::onWgQueryPages"
 		]
 	},
 	"ResourceFileModulePaths": {

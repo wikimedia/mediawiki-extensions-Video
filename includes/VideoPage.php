@@ -41,7 +41,7 @@ class VideoPage extends Article {
 			// Just need to set the right headers
 			$out->setArticleFlag( true );
 			$out->setRobotPolicy( 'index,follow' );
-			$out->setPageTitle( $this->mTitle->getPrefixedText() );
+			$out->setPageTitle( $this->getTitle()->getPrefixedText() );
 		}
 
 		if ( $this->video->exists() ) {
@@ -131,7 +131,7 @@ class VideoPage extends Article {
 		if ( $count > $limit ) {
 			$out->addWikiMsg(
 				'video-more-links-to-video',
-				$this->mTitle->getPrefixedDBkey()
+				$this->getTitle()->getPrefixedDBkey()
 			);
 		}
 	}

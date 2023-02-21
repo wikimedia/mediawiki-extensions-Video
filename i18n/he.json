@@ -1,6 +1,31 @@
 {
 	"@metadata": {
-		"authors": []
+		"authors": [
+			"Amire80"
+		]
 	},
+	"addvideo": "הוספת סרט",
+	"newvideos": "סרטים חדשים",
+	"unusedvideos": "סרטים שאינם בשימוש",
+	"video-upload-new-version": "העלאת גרסה חדשה של הסרט הזה",
+	"video-newvideos-showfrom": "הצגת סרטים חדשים החל מ־$2, $1",
+	"video-newvideos-list-text": "להלן רשימה של {{PLURAL:$1|סרט אחד|$1 סרטים}}.",
+	"video-addvideo-watchlist": "הוספת הסרט הזה לרשימת המעקב שלי",
+	"video-addvideo-title": "הוספת סרט",
+	"video-addvideo-dest": "הוסף סרט למשך $1",
+	"video-addvideo-button": "הוספת סרט",
+	"video-addvideo-title-label": "כותרת הסרט:",
+	"video-addvideo-embed-label": "קוד או כתובת אתר להטבעה:",
+	"video-no-videos": "אין סרטים חדשים.",
+	"log-name-video": "יומן וידאו",
+	"log-description-video": "זהו יומן של סרטים שנוספו ועדכונים לסרטים קיימים.",
+	"logentry-video-add": "$1 {{GENDER:$1|הוסיף|הוסיפה}} את הסרט $3",
+	"logentry-video-update": "$1 {{GENDER:$1|עדכן|עדכנה}} את הסרט $3",
+	"category-video-header": "סרטים בקטגוריה \"$1\"",
+	"video-novideo-linktext": "להוסיף אותו",
+	"video-embed": "הטבעה",
+	"video-history": "היסטוריית הסרט",
+	"video-revert": "שחזור",
+	"video-category-name": "סרטים",
 	"video-showhidebots": "($1 בוטים)"
 }

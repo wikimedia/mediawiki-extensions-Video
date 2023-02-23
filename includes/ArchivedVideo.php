@@ -24,6 +24,10 @@
  * @date 22 September 2014
  */
 
+use MediaWiki\MediaWikiServices;
+use MediaWiki\Permissions\Authority;
+use MediaWiki\User\UserIdentity;
+
 /**
  * Class representing a row of the 'oldvideo' table
  *
@@ -66,8 +70,8 @@ class ArchivedVideo extends ArchivedFile {
 	/** @var string Upload description */
 	private $description;
 
-	/** @var int Actor ID of uploader */
-	private $actor;
+	/** @var UserIdentity|null Uploader */
+	private $user;
 
 	/** @var string|null Time of upload */
 	private $timestamp;
@@ -113,7 +117,7 @@ class ArchivedVideo extends ArchivedFile {
 		$this->mime = 'unknown/unknown';
 		$this->media_type = '';
 		$this->description = '';
-		$this->actor = 0;
+		$this->user = null;
 		$this->timestamp = null;
 		$this->deleted = 0;
 		$this->dataLoaded = false;
@@ -227,7 +231,10 @@ class ArchivedVideo extends ArchivedFile {
 		$this->archive_name = $row->ov_archive_name;
 		$this->mime = 'video/x-flv'; // @todo FIXME/CHECKME: is hard-coding the minor MIME type like this OK?
 		$this->media_type = 'VIDEO';
-		$this->actor = $row->ov_actor;
+
+		$this->user = MediaWikiServices::getInstance()
+			->getUserFactory()->newFromActorId( $row->ov_actor );
+
 		$this->timestamp = $row->ov_timestamp;
 		$this->url = $row->ov_url;
 	}
@@ -241,18 +248,6 @@ class ArchivedVideo extends ArchivedFile {
 		$this->load();
 
 		return $this->url;
-	}
-
-	/**
-	 * Return the actor ID of the uploader.
-	 * This is a custom method
-	 *
-	 * @return int
-	 */
-	public function getRawActor() {
-		$this->load();
-
-		return $this->actor;
 	}
 
 	/**
@@ -344,7 +339,7 @@ class ArchivedVideo extends ArchivedFile {
 	/**
 	 * @return bool False for documents which aren't multipage documents
 	 */
-	function pageCount() {
+	public function pageCount() {
 		return false;
 	}
 
@@ -364,9 +359,31 @@ class ArchivedVideo extends ArchivedFile {
 	 *
 	 * @return string
 	 */
-	function getSha1() {
+	public function getSha1() {
 		$this->load();
 
 		return $this->sha1;
+	}
+
+	/**
+	 * @since 1.37
+	 * @stable to override
+	 * @param int $audience One of:
+	 *   File::FOR_PUBLIC       to be displayed to all users
+	 *   File::FOR_THIS_USER    to be displayed to the given user
+	 *   File::RAW              get the description regardless of permissions
+	 * @param Authority|null $performer to check for, only if FOR_THIS_USER is
+	 *   passed to the $audience parameter
+	 * @return UserIdentity|null
+	 */
+	public function getUploader( int $audience = self::FOR_PUBLIC, Authority $performer = null ): ?UserIdentity {
+		$this->load();
+		if ( $audience === self::FOR_PUBLIC && $this->isDeleted( File::DELETED_USER ) ) {
+			return null;
+		} elseif ( $audience === self::FOR_THIS_USER && !$this->userCan( File::DELETED_USER, $performer ) ) {
+			return null;
+		} else {
+			return $this->user;
+		}
 	}
 }

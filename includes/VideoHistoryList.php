@@ -3,19 +3,19 @@
 use MediaWiki\MediaWikiServices;
 
 class VideoHistoryList {
-	function beginVideoHistoryList() {
+	public function beginVideoHistoryList() {
 		$s = "\n" .
 			Xml::element( 'h2', [ 'id' => 'filehistory' ], wfMessage( 'video-history' )->plain() ) .
 			"\n<p>" . wfMessage( 'video-histlegend' )->parse() . "</p>\n" . '<ul class="special">';
 		return $s;
 	}
 
-	function endVideoHistoryList() {
+	public function endVideoHistoryList() {
 		$s = "</ul>\n";
 		return $s;
 	}
 
-	function videoHistoryLine( $isCur, $timestamp, $video, $actor_id, $url, $type, $title ) {
+	public function videoHistoryLine( $isCur, $timestamp, $video, $actor_id, $url, $type, $title ) {
 		$services = MediaWikiServices::getInstance();
 		$context = RequestContext::getMain();
 		$lang = $context->getLanguage();
@@ -54,14 +54,9 @@ class VideoHistoryList {
 		$url = htmlspecialchars( $url );
 
 		$s = "<li>({$rlink}) <a href=\"{$url}\" title=\"{$style}\">{$datetime}</a> . . ({$type}) . . {$userlink}";
-
-		if ( method_exists( $services, 'getCommentFormatter' ) ) {
-			// MW 1.38+
-			$s .= $services->getCommentFormatter()->formatBlock( /*$description*/'', $title );
-		} else {
-			$s .= Linker::commentBlock( /*$description*/'', $title );
-		}
+		$s .= $services->getCommentFormatter()->formatBlock( /*$description*/'', $title );
 		$s .= "</li>\n";
+
 		return $s;
 	}
 

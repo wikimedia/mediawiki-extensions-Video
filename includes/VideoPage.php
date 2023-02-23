@@ -77,7 +77,7 @@ class VideoPage extends Article {
 	/**
 	 * Display pages linking to that video on the video page.
 	 */
-	function videoLinks() {
+	public function videoLinks() {
 		$out = $this->getContext()->getOutput();
 
 		$limit = 100;
@@ -151,7 +151,7 @@ class VideoPage extends Article {
 		<table cellpadding="0" cellspacing="2" border="0">
 			<tr>
 				<td>
-					<b>' . wfMessage( 'video-embed' )->escaped() . '</b>
+					<b>' . $this->getContext()->msg( 'video-embed' )->escaped() . '</b>
 				</td>
 				<td>
 				<form name="embed_video" action="">
@@ -168,7 +168,7 @@ class VideoPage extends Article {
 	 * If the page we've just displayed is in the "Video" namespace,
 	 * we follow it with an upload history of the video and its usage.
 	 */
-	function videoHistory() {
+	public function videoHistory() {
 		$line = $this->video->nextHistoryLine();
 
 		if ( $line ) {
@@ -213,7 +213,7 @@ class VideoPage extends Article {
 	 * Print out the reupload link at the bottom of a video page for privileged
 	 * users.
 	 */
-	function uploadLinksBox() {
+	public function uploadLinksBox() {
 		$out = $this->getContext()->getOutput();
 		$out->addHTML( '<br /><ul>' );
 
@@ -222,6 +222,7 @@ class VideoPage extends Article {
 			$ulink = MediaWikiServices::getInstance()->getLinkRenderer()->makeLink(
 				SpecialPage::getTitleFor( 'AddVideo' ),
 				$this->getContext()->msg( 'video-upload-new-version' )->text(),
+				[],
 				[
 					'wpTitle' => $this->video->getName(),
 					'forReUpload' => 1,

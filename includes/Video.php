@@ -1,6 +1,7 @@
 <?php
 
 use MediaWiki\MediaWikiServices;
+use Wikimedia\Rdbms\IResultWrapper;
 
 class Video {
 
@@ -75,7 +76,7 @@ class Video {
 	protected $context;
 
 	/**
-	 * @var \Wikimedia\Rdbms\IResultWrapper
+	 * @var IResultWrapper
 	 */
 	private $historyRes;
 
@@ -117,6 +118,7 @@ class Video {
 		if ( !is_object( $title ) ) {
 			throw new MWException( 'Video constructor given bogus title.' );
 		}
+
 		$this->title =& $title;
 		$this->name = $title->getDBkey();
 		$this->context = $context;
@@ -179,14 +181,14 @@ class Video {
 		if ( $dbw->affectedRows() === 0 ) {
 			$logAction = 'update';
 
-			// Clear cache
-			$key = $this->getCacheKey();
-			MediaWikiServices::getInstance()->getMainWANObjectCache()->delete( $key );
+			// Clear the cache
+			$this->clearCache();
 
 			// Collision, this is an update of a video
 			// Insert previous contents into oldvideo
 			$dbw->insertSelect(
-				'oldvideo', 'video',
+				'oldvideo',
+				'video',
 				[
 					'ov_name' => 'video_name',
 					'ov_archive_name' => $dbw->addQuotes( gmdate( 'YmdHis' ) . '!' . $this->getName() ),
@@ -217,21 +219,13 @@ class Video {
 			);
 		}
 
+		$services = MediaWikiServices::getInstance();
+
 		$descTitle = $this->getTitle();
-		if ( method_exists( MediaWikiServices::class, 'getWikiPageFactory' ) ) {
-			// MW 1.36+
-			$page = MediaWikiServices::getInstance()->getWikiPageFactory()->newFromTitle( $descTitle );
-		} else {
-			$page = WikiPage::factory( $descTitle );
-		}
-		if ( method_exists( MediaWikiServices::class, 'getWatchlistManager' ) ) {
-			// MediaWiki 1.36+
-			$watchlistManager = MediaWikiServices::getInstance()->getWatchlistManager();
-			$watch = $watch || $watchlistManager->isWatched( $user, $descTitle );
-		} else {
-			// @phan-suppress-next-line PhanUndeclaredMethod
-			$watch = $watch || $user->isWatched( $descTitle );
-		}
+		$page = $services->getWikiPageFactory()->newFromTitle( $descTitle );
+
+		$watchlistManager = $services->getWatchlistManager();
+		$watch = $watch || $watchlistManager->isWatched( $user, $descTitle );
 
 		// Get the localized category name
 		$videoCategoryName = wfMessage( 'video-category-name' )->inContentLanguage()->text();
@@ -248,7 +242,7 @@ class Video {
 			foreach ( $categories_array as $ctg ) {
 				$ctg = trim( $ctg );
 				if ( $ctg ) {
-					$catName = MediaWikiServices::getInstance()->getContentLanguage()->getNsText( NS_CATEGORY );
+					$catName = $services->getContentLanguage()->getNsText( NS_CATEGORY );
 					$tag = "[[{$catName}:{$ctg}]]";
 					if ( strpos( $categoryWikiText, $tag ) === false ) {
 						$categoryWikiText .= "\n{$tag}";
@@ -264,33 +258,16 @@ class Video {
 		} else {
 			// New video; create the description page.
 			// Suppress the recent changes bc it will appear in the log/video
-			if ( method_exists( $page, 'doUserEditContent' ) ) {
-				// MW 1.36+
-				$page->doUserEditContent(
-					ContentHandler::makeContent( $categoryWikiText, $page->getTitle() ),
-					$user,
-					'',
-					EDIT_SUPPRESS_RC
-				);
-			} else {
-				// @phan-suppress-next-line PhanUndeclaredMethod
-				$page->doEditContent(
-					ContentHandler::makeContent( $categoryWikiText, $page->getTitle() ),
-					'',
-					EDIT_SUPPRESS_RC
-				);
-			}
+			$page->doUserEditContent(
+				ContentHandler::makeContent( $categoryWikiText, $page->getTitle() ),
+				$user,
+				'',
+				EDIT_SUPPRESS_RC
+			);
 		}
 
 		if ( $watch ) {
-			if ( method_exists( MediaWikiServices::class, 'getWatchlistManager' ) ) {
-				// MediaWiki 1.36+
-				$watchlistManager = MediaWikiServices::getInstance()->getWatchlistManager();
-				$watchlistManager->addWatch( $user, $descTitle );
-			} else {
-				// @phan-suppress-next-line PhanUndeclaredMethod
-				$user->addWatch( $descTitle );
-			}
+			$watchlistManager->addWatch( $user, $descTitle );
 		}
 
 		// Add the log entry
@@ -336,8 +313,6 @@ class Video {
 	 * Save the video data to cache
 	 */
 	private function saveToCache() {
-		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
-		$key = $this->getCacheKey();
 		if ( $this->exists() ) {
 			$cachedValues = [
 				'url' => $this->url,
@@ -345,12 +320,24 @@ class Video {
 				'actor' => $this->submitter_actor,
 				'create_date' => $this->create_date
 			];
-			$cache->set( $key, $cachedValues, 60 * 60 * 24 * 7 ); // A week
+
+			$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
+
+			// Set cache for one week
+			$cache->set( $this->getCacheKey(), $cachedValues, 60 * 60 * 24 * 7 );
 		} else {
 			// However we should clear them, so they aren't leftover
 			// if we've deleted the file.
-			$cache->delete( $key );
+			$this->clearCache();
 		}
+	}
+
+	/**
+	 * Clear the video data from cache
+	 */
+	public function clearCache() {
+		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
+		$cache->delete( $this->getCacheKey() );
 	}
 
 	/**
@@ -362,19 +349,22 @@ class Video {
 		// memcached does not like spaces, so replace 'em with an underscore
 		$safeVideoName = str_replace( ' ', '_', $this->getName() );
 		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
+
 		return $cache->makeKey( 'video', 'page', $safeVideoName );
 	}
 
 	/**
 	 * Load video from the database
 	 */
-	function loadFromDB() {
+	public function loadFromDB() {
 		$dbr = wfGetDB( DB_PRIMARY );
 
 		$row = $dbr->selectRow(
 			'video',
 			[
-				'video_url', 'video_type', 'video_actor',
+				'video_url',
+				'video_type',
+				'video_actor',
 				'video_timestamp'
 			],
 			[ 'video_name' => $this->name ],
@@ -396,7 +386,7 @@ class Video {
 	/**
 	 * Load video metadata from cache or database, unless it's already loaded.
 	 */
-	function load() {
+	public function load() {
 		if ( !$this->dataLoaded ) {
 			if ( !$this->loadFromCache() ) {
 				$this->loadFromDB();

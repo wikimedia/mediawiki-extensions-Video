@@ -20,7 +20,7 @@ class NewVideosPager extends RangeChronologicalPager {
 	 * @param IContextSource $context
 	 * @param FormOptions $opts
 	 */
-	function __construct( IContextSource $context, FormOptions $opts ) {
+	public function __construct( IContextSource $context, FormOptions $opts ) {
 		parent::__construct( $context );
 
 		$this->opts = $opts;
@@ -42,7 +42,7 @@ class NewVideosPager extends RangeChronologicalPager {
 	 * @return void
 	 */
 	// @phan-suppress-next-line PhanParamSignatureMismatch Phan likes to complain because parent returns a value & we don't
-	function formatRow( $row ) {
+	public function formatRow( $row ) {
 		$name = $row->video_name;
 		$user = User::newFromActorId( $row->video_actor );
 
@@ -62,7 +62,7 @@ class NewVideosPager extends RangeChronologicalPager {
 		);
 	}
 
-	function getQueryInfo() {
+	public function getQueryInfo() {
 		$opts = $this->opts;
 		$conds = $jconds = [];
 		$tables = [ 'video' ];
@@ -78,14 +78,8 @@ class NewVideosPager extends RangeChronologicalPager {
 		}
 
 		if ( $opts->getValue( 'hidebots' ) ) {
-			if ( method_exists( MediaWikiServices::class, 'getGroupPermissionsLookup' ) ) {
-				// MediaWiki 1.36+
-				$groupsWithBotPermission = MediaWikiServices::getInstance()->getGroupPermissionsLookup()
-					->getGroupsWithPermission( 'bot' );
-			} else {
-				$groupsWithBotPermission = MediaWikiServices::getInstance()->getPermissionManager()
-					->getGroupsWithPermission( 'bot' );
-			}
+			$groupsWithBotPermission = MediaWikiServices::getInstance()->getGroupPermissionsLookup()
+				->getGroupsWithPermission( 'bot' );
 
 			if ( count( $groupsWithBotPermission ) ) {
 				$dbr = wfGetDB( DB_REPLICA );
@@ -159,11 +153,11 @@ class NewVideosPager extends RangeChronologicalPager {
 		return $query;
 	}
 
-	function getIndexField() {
+	public function getIndexField() {
 		return 'video_timestamp';
 	}
 
-	function getStartBody() {
+	public function getStartBody() {
 		if ( !$this->gallery ) {
 			$this->gallery = new VideoGallery();
 		}
@@ -171,11 +165,11 @@ class NewVideosPager extends RangeChronologicalPager {
 		return '';
 	}
 
-	function getEndBody() {
+	public function getEndBody() {
 		return $this->gallery->toHTML();
 	}
 
-	function getShownVideosCount() {
+	public function getShownVideosCount() {
 		return $this->gallery->count();
 	}
 }

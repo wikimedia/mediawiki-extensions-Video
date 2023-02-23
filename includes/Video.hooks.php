@@ -1,4 +1,9 @@
 <?php
+
+use MediaWiki\MediaWikiServices;
+use MediaWiki\Page\ProperPageIdentity;
+use MediaWiki\Permissions\Authority;
+
 /**
  * Class that contains all Video extension's hooked functions.
  * All functions are naturally public and static (what were you expecting?).
@@ -17,7 +22,7 @@ class VideoHooks {
 	 * @param StripState $strip_state [unused]
 	 */
 	public static function videoTag( $parser, &$text, $strip_state ) {
-		$contLang = MediaWiki\MediaWikiServices::getInstance()->getContentLanguage();
+		$contLang = MediaWikiServices::getInstance()->getContentLanguage();
 		$localizedVideoName = $contLang->getNsText( NS_VIDEO );
 		// Fallback code...is this needed?
 		if ( $localizedVideoName === false ) {
@@ -76,22 +81,20 @@ class VideoHooks {
 	 *
 	 * @param Title $title Title object for the current page
 	 * @param Article &$article Article object for the current page
-	 * @return void
+	 * @param IContextSource $context
 	 */
-	public static function videoFromTitle( $title, &$article ) {
-		global $wgRequest;
-
+	public static function onArticleFromTitle( $title, &$article, $context ) {
 		if ( $title->getNamespace() === NS_VIDEO ) {
-			if ( $wgRequest->getVal( 'action' ) === 'edit' ) {
+			if ( $context->getRequest()->getRawVal( 'action' ) === 'edit' ) {
 				$addTitle = SpecialPage::getTitleFor( 'AddVideo' );
-				$video = Video::newFromName( $title->getText(), RequestContext::getMain() );
+				$video = Video::newFromName( $title->getText(), $context );
 				if ( !$video->exists() ) {
-					global $wgOut;
-					$wgOut->redirect(
+					$context->getOutput()->redirect(
 						$addTitle->getFullURL( 'wpTitle=' . $video->getName() )
 					);
 				}
 			}
+
 			$article = new VideoPage( $title );
 		} elseif ( $title->inNamespace( NS_CATEGORY ) ) {
 			// For grep: this category is what initializes an instance of CategoryWithVideoViewer
@@ -171,91 +174,179 @@ class VideoHooks {
 	 * Called on video deletion; this is the main logic for deleting videos.
 	 * There is no logic related to video deletion on the VideoPage class.
 	 *
-	 * @param Article $articleObj Instance of Article or its subclass
-	 * @param User $user Current User object
-	 * @param string $reason Reason for the deletion [unused]
-	 * @param string $error Error message, if any [unused]
-	 * @return void
+	 * @param ProperPageIdentity $page
+	 * @param Authority $deleter
+	 * @param string $reason
+	 * @param StatusValue $status
+	 * @param bool $suppress
 	 */
-	public static function onVideoDelete( $articleObj, $user, $reason, $error ) {
-		if ( $articleObj->getTitle()->getNamespace() === NS_VIDEO ) {
-			global $wgRequest;
+	public static function onPageDelete(
+		ProperPageIdentity $page,
+		Authority $deleter,
+		string $reason,
+		StatusValue $status,
+		bool $suppress
+	) {
+		if ( $page->getNamespace() !== NS_VIDEO ) {
+			return;
+		}
 
-			$context = ( method_exists( $articleObj, 'getContext' ) ? $articleObj->getContext() : RequestContext::getMain() );
-			$videoObj = new Video( $articleObj->getTitle(), $context );
-			$videoName = $videoObj->getName();
-			$oldVideo = $wgRequest->getVal( 'wpOldVideo', '' );
-			$where = [
-				'video_name' => $videoName
-			];
-			/*
-			BEWARE! THIS DOES NOT WORK HOW YOU WOULD THINK IT DOES...
-			IT GENERATES INVALID SQL LIKE video_name = \'(Ayumi_Hamasaki_-_Ladies_Night) OR (Video:Ayumi Hamasaki - Ladies Night)\'
-			AND GENERALLY CAUSES THINGS TO EXPLODE!
-			$where = [
-				'video_name' => $dbw->makeList( [
-					$articleObj->getTitle()->getDBkey(),
-					$articleObj->getTitle()->getPrefixedText()
-				], LIST_OR )
-			];
-			*/
-			if ( !empty( $oldVideo ) ) {
-				$where['video_timestamp'] = $oldVideo;
-			}
+		$title = MediaWikiServices::getInstance()->getWikiPageFactory()
+			->newFromTitle( $page )->getTitle();
 
-			$dbw = wfGetDB( DB_PRIMARY );
-			// Delicious copypasta from Article.php, function doDeleteArticle()
-			// with some modifications
-			$archiveName = gmdate( 'YmdHis' ) . "!{$videoName}";
-			if ( !empty( $videoName ) ) {
-				$dbw->startAtomic( __METHOD__ );
-				$dbw->insertSelect(
-					'oldvideo',
-					'video',
-					[
-						'ov_name' => 'video_name',
-						'ov_archive_name' => $dbw->addQuotes( $archiveName ),
-						'ov_url' => 'video_url',
-						'ov_type' => 'video_type',
-						'ov_actor' => 'video_actor',
-						'ov_timestamp' => 'video_timestamp'
-					],
-					$where,
-					__METHOD__
-				);
+		$context = RequestContext::getMain();
+		$videoObj = new Video( $title, $context );
+		$videoName = $videoObj->getName();
+		$oldVideo = $context->getRequest()->getVal( 'wpOldVideo', '' );
+		$where = [
+			'video_name' => $videoName
+		];
+		/*
+		BEWARE! THIS DOES NOT WORK HOW YOU WOULD THINK IT DOES...
+		IT GENERATES INVALID SQL LIKE video_name = \'(Ayumi_Hamasaki_-_Ladies_Night) OR (Video:Ayumi Hamasaki - Ladies Night)\'
+		AND GENERALLY CAUSES THINGS TO EXPLODE!
+		$where = [
+			'video_name' => $dbw->makeList( [
+				$page->getDBkey(),
+				$title->getPrefixedText()
+			], LIST_OR )
+		];
+		*/
+		if ( !empty( $oldVideo ) ) {
+			$where['video_timestamp'] = $oldVideo;
+		}
 
-				// Now that it's safely backed up, delete it
-				$dbw->delete(
-					'video',
-					$where,
-					__METHOD__
-				);
+		$dbw = wfGetDB( DB_PRIMARY );
+		// Delicious copypasta from Article.php, function doDeleteArticle()
+		// with some modifications
+		$archiveName = gmdate( 'YmdHis' ) . "!{$videoName}";
+		if ( !empty( $videoName ) ) {
+			$dbw->startAtomic( __METHOD__ );
+			$dbw->insertSelect(
+				'oldvideo',
+				'video',
+				[
+					'ov_name' => 'video_name',
+					'ov_archive_name' => $dbw->addQuotes( $archiveName ),
+					'ov_url' => 'video_url',
+					'ov_type' => 'video_type',
+					'ov_actor' => 'video_actor',
+					'ov_timestamp' => 'video_timestamp'
+				],
+				$where,
+				__METHOD__
+			);
 
-				$dbw->endAtomic( __METHOD__ );
-			}
+			// Now that it's safely backed up, delete it
+			$dbw->delete(
+				'video',
+				$where,
+				__METHOD__
+			);
 
-			// Purge caches
-			// None of these help, the video is still displayed on pages where
-			// it was used until someone edits or does ?action=purge :-(
-			/*
-			$articleObj->getTitle()->invalidateCache();
-			$articleObj->getTitle()->purgeSquid();
-			$articleObj->doPurge();
-			MediaWiki\MediaWikiServices::getInstance()->getMainWANObjectCache()->delete( $videoObj->getCacheKey() );
-			*/
+			$dbw->endAtomic( __METHOD__ );
+
+			$videoObj->clearCache();
 		}
 	}
 
 	/**
-	 * Use VideoPageArchive class to properly restore deleted Video pages.
+	 * Called on video undeletion; this is the main logic for undeleting videos.
+	 * There is no logic related to video undeletion on the VideoPage class.
+	 *
+	 * @param ProperPageIdentity $page
+	 * @param Authority $performer
+	 * @param string $reason
+	 * @param bool $unsuppress
+	 * @param array $timestamps
+	 * @param array $fileVersions
+	 * @param StatusValue $status
+	 */
+	public static function onPageUndelete(
+		ProperPageIdentity $page,
+		Authority $performer,
+		string $reason,
+		bool $unsuppress,
+		array $timestamps,
+		array $fileVersions,
+		StatusValue $status
+	) {
+		// We currently restore only whole deleted videos, a restore link from
+		// log could take us here...
+		if ( $page->exists() || $page->getNamespace() !== NS_VIDEO ) {
+			return;
+		}
+
+		$dbw = wfGetDB( DB_PRIMARY );
+
+		$result = $dbw->select(
+			'oldvideo',
+			'*',
+			[ 'ov_name' => $page->getDBkey() ],
+			__METHOD__,
+			[ 'ORDER BY' => 'ov_timestamp DESC' ]
+		);
+
+		$insertBatch = [];
+		$insertCurrent = false;
+		$archiveName = '';
+		$first = true;
+
+		foreach ( $result as $row ) {
+			if ( $first ) {
+				// this is our new current revision
+				$insertCurrent = [
+					'video_name' => $row->ov_name,
+					'video_url' => $row->ov_url,
+					'video_type' => $row->ov_type,
+					'video_actor' => $row->ov_actor,
+					'video_timestamp' => $row->ov_timestamp
+				];
+			} else {
+				// older revisions, they could be even elder current ones from ancient deletions
+				$insertBatch = [
+					'ov_name' => $row->ov_name,
+					'ov_archive_name' => $archiveName,
+					'ov_url' => $row->ov_url,
+					'ov_type' => $row->ov_type,
+					'ov_actor' => $row->ov_actor,
+					'ov_timestamp' => $row->ov_timestamp
+				];
+			}
+
+			$first = false;
+		}
+
+		unset( $result );
+
+		if ( $insertCurrent ) {
+			$dbw->insert( 'video', $insertCurrent, __METHOD__ );
+			// At this point there are two entries for our video, in both tables,
+			// even if the video had only one (video) history entry.
+			// We need to delete the oldvideo entry here so that "duplicate"
+			// entries won't show up under "Video History" on the appropriate Video:
+			// page.
+			$dbw->delete( 'oldvideo', [ 'ov_name' => $page->getDBkey() ], __METHOD__ );
+		}
+
+		if ( $insertBatch ) {
+			$dbw->insert( 'oldvideo', $insertBatch, __METHOD__ );
+		}
+	}
+
+	/**
+	 * Use VideoPageArchive class to properly list files using VideoPageArchive::listFiles().
 	 * Standard PageArchive allows only to restore the wiki page, not the
 	 * associated video.
 	 *
-	 * @param PageArchive|VideoPageArchive &$archive PageArchive object or a child class
+	 * @param PageArchive &$archive PageArchive object
 	 * @param Title $title Title for the current page that we're about to
 	 *                     undelete or view
+	 * @phpcs:disable MediaWiki.NamingConventions.LowerCamelFunctionsName.FunctionName
 	 */
-	public static function specialUndeleteSwitchArchive( &$archive, $title ) {
+	public static function onUndeleteForm__showHistory( &$archive, $title ) {
+		// phpcs:enable MediaWiki.NamingConventions.LowerCamelFunctionsName.FunctionName
+
 		if ( $title->getNamespace() === NS_VIDEO ) {
 			$archive = new VideoPageArchive( $title );
 		}
@@ -334,9 +425,9 @@ class VideoHooks {
 	 * Hook to add Special:UnusedVideos to the list generated by QueryPage::getPages.
 	 * Used by the maintenance script updateSpecialPages.
 	 *
-	 * @param array[] &$queryPages
+	 * @param array[] &$qp List of QueryPages
 	 */
-	public static function onwgQueryPages( &$queryPages ) {
-		$queryPages[] = [ 'SpecialUnusedVideos', 'UnusedVideos' ];
+	public static function onWgQueryPages( &$qp ) {
+		$qp[] = [ SpecialUnusedVideos::class, 'UnusedVideos' ];
 	}
 }

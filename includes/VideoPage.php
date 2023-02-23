@@ -65,8 +65,7 @@ class VideoPage extends Article {
 				[],
 				[ 'wpTitle' => $this->video->getName() ]
 			);
-			// @phan-suppress-next-line SecurityCheck-XSS Yes, the message allows raw HTML and needs to be properly fixed one day
-			$out->addHTML( $ctx->msg( 'video-novideo', $link )->text() );
+			$out->addHTML( $ctx->msg( 'video-novideo' )->rawParams( $link )->escaped() );
 
 			$out->addWikiTextAsInterface( '== ' . $ctx->msg( 'video-links' )->escaped() . " ==\n" );
 			$this->videoLinks();

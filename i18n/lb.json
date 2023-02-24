@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Les Meloures",
-			"Robby"
+			"Robby",
+			"Volvox"
 		]
 	},
 	"addvideo": "Video derbäisetzen",
@@ -30,7 +31,7 @@
 	"video-category-name": "Videoen",
 	"video-links": "Video-Linken",
 	"video-links-to-video": "Dës {{PLURAL:$1|Säit linkt|Säite linken}} op dëse Video:",
-	"video-no-links-to-video": "Et gëtt Keng Säiten déi op dëse Video linken.",
+	"video-no-links-to-video": "Et gëtt Keng Säiten, déi op dëse Video verlinken.",
 	"video-showhidebots": "($1 Botten)",
 	"video-hidebots": "Vu Botten eropgeluede Fichiere verstoppen"
 }

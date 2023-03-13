@@ -1,6 +1,8 @@
 {
 	"@metadata": {
-		"authors": []
+		"authors": [
+			"Pacha Tchernof"
+		]
 	},
-	"video-showhidebots": "($1 ראָבאָטן)"
+	"video-showhidebots": "($1 באָטס)"
 }

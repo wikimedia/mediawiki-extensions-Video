@@ -1313,11 +1313,11 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			$pageLink = htmlspecialchars( $this->getLanguage()->userTimeAndDate( $ts, $user ) );
 		}
 		$userLink = $this->getFileUser( $file );
-		$data = $this->msg( 'widthheight' )->numParams( $row->fa_width, $row->fa_height )->text();
+		$data = $this->msg( 'widthheight' )->numParams( $row->fa_width, $row->fa_height )->escaped();
 		$bytes = $this->msg( 'parentheses' )
-			->plaintextParams( $this->msg( 'nbytes' )->numParams( $row->fa_size )->text() )
-			->plain();
-		$data = htmlspecialchars( $data . ' ' . $bytes );
+			->params( $this->msg( 'nbytes' )->numParams( $row->fa_size )->text() )
+			->escaped();
+		$data .= ' ' . $bytes;
 		$comment = $this->getFileComment( $file );
 
 		// Add show/hide deletion links if available

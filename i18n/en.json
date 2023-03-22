@@ -11,7 +11,7 @@
 	"unusedvideos": "Unused videos",
 	"video-upload-new-version": "Upload a new version of this video",
 	"video-newvideos-showfrom": "Show new videos starting from $2, $1",
-	"video-newvideos-list-text": "Below is a list of <strong>$1</strong> {{PLURAL:$1|video|videos}}.",
+	"video-newvideos-list-text": "Below is a list of '''$1''' {{PLURAL:$1|video|videos}}.",
 	"video-addvideo-watchlist": "Add this video to my watchlist",
 	"video-addvideo-title": "Add video",
 	"video-addvideo-dest": "Add video for $1",

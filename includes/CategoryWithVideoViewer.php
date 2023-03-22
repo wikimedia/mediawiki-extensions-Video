@@ -55,8 +55,8 @@ class CategoryWithVideoViewer extends CategoryViewer {
 			return "<div id=\"mw-category-media\">\n" . '<h2>' .
 				wfMessage(
 					'category-video-header',
-					htmlspecialchars( $this->title->getText() )
-				)->text() . "</h2>\n" .
+					$this->title->getText()
+				)->escaped() . "</h2>\n" .
 				wfMessage(
 					'category-video-count',
 					$this->videogallery->count()

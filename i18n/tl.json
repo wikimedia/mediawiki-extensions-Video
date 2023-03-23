@@ -6,7 +6,7 @@
 	},
 	"addvideo": "Karagdagang Video",
 	"video-upload-new-version": "MagUpload ng panibagong bersyon nitong bidyo",
-	"video-newvideos-list-text": "Ang mga sumusunod na lathalang <strong>$1</strong>{{PLURAL:$1|video|videos}}.",
+	"video-newvideos-list-text": "Ang mga sumusunod na lathalang '''$1'''{{PLURAL:$1|video|videos}}.",
 	"video-addvideo-dest": "Karagdagang Bidyo para sa/kay $1",
 	"video-revert": "Karagdagang link",
 	"video-showhidebots": "($1 mga ''bot'')"

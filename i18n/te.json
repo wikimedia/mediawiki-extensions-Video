@@ -9,7 +9,7 @@
 	"unusedvideos": "ఉపయోగించని వీడియోలు",
 	"video-upload-new-version": "ఈ వీడియోకు కొత్త వెర్షన్ను ఎక్కించండి",
 	"video-newvideos-showfrom": "$2, $1 తో మొదలుపెట్టి కొత్త వీడియోలను చూపించు",
-	"video-newvideos-list-text": "కింద <strong>$1</strong> {{PLURAL:$1|వీడియో|వీడియోల}} జాబితా ఉంది.",
+	"video-newvideos-list-text": "కింద '''$1''' {{PLURAL:$1|వీడియో|వీడియోల}} జాబితా ఉంది.",
 	"video-addvideo-watchlist": "ఈ వీడియోను నా వీక్షణజాబితాకు చేర్చు",
 	"video-addvideo-title": "వీడియోను చేర్చండి",
 	"video-addvideo-dest": "$1 కోసం వీడియోను చేర్చండి",

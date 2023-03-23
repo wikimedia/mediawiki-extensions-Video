@@ -10,7 +10,7 @@
 	"unusedvideos": "Ubrukte videoer",
 	"video-upload-new-version": "Last opp en ny versjon av denne videoen",
 	"video-newvideos-showfrom": "Vis nye videoer fra og med $2 $1",
-	"video-newvideos-list-text": "Nedenfor er en liste over <strong>$1</strong> {{PLURAL:$1|video|videoer}}.",
+	"video-newvideos-list-text": "Nedenfor er en liste over '''$1''' {{PLURAL:$1|video|videoer}}.",
 	"video-addvideo-watchlist": "Legg til denne videoen i overvåkningslisten min",
 	"video-addvideo-title": "Legg til video",
 	"video-addvideo-dest": "Lagt til video for $1",

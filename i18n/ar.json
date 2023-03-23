@@ -12,7 +12,7 @@
 	"unusedvideos": "فيدوهات غير مستخدمة",
 	"video-upload-new-version": "رفع نسخة جديدة من هذا الفيديو",
 	"video-newvideos-showfrom": "عرض مقاطع فيديو جديدة تبدأ من $2، $1",
-	"video-newvideos-list-text": "في ما يلي قائمة <strong>$1</strong> {{PLURAL:$1|الفيديو|مقاطع الفيديو}}.",
+	"video-newvideos-list-text": "في ما يلي قائمة '''$1''' {{PLURAL:$1|الفيديو|مقاطع الفيديو}}.",
 	"video-addvideo-watchlist": "أضف هذا الفيديو إلى قائمة مراقبتي",
 	"video-addvideo-title": "أضف فيديو",
 	"video-addvideo-dest": "أضف فيديو لـ$1",

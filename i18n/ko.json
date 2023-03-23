@@ -10,7 +10,7 @@
 	"unusedvideos": "사용하지 않는 동영상",
 	"video-upload-new-version": "이 동영상의 새로운 버전을 올리기",
 	"video-newvideos-showfrom": "$1 $2부터 시작하는 새 동영상 보기",
-	"video-newvideos-list-text": "{{PLURAL:$1|동영상}} <strong>$1</strong>개의 목록입니다.",
+	"video-newvideos-list-text": "{{PLURAL:$1|동영상}} '''$1'''개의 목록입니다.",
 	"video-addvideo-watchlist": "이 동영상을 주시문서 목록에 추가하기",
 	"video-addvideo-title": "동영상 추가",
 	"video-addvideo-dest": "$1에 대한 동영상 추가",

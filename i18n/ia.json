@@ -11,7 +11,7 @@
 	"unusedvideos": "Videos non usate",
 	"video-upload-new-version": "Incargar un nove version de iste video",
 	"video-newvideos-showfrom": "Monstrar nove videos a partir del $1 a $2",
-	"video-newvideos-list-text": "Infra es un lista de <strong>$1</strong> video{{PLURAL:$1||s}}.",
+	"video-newvideos-list-text": "Infra es un lista de '''$1''' video{{PLURAL:$1||s}}.",
 	"video-addvideo-watchlist": "Adder iste video a mi observatorio",
 	"video-addvideo-title": "Adder video",
 	"video-addvideo-dest": "Adder video pro $1",

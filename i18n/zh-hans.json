@@ -11,7 +11,7 @@
 	"unusedvideos": "未使用视频",
 	"video-upload-new-version": "上传此视频的新版本",
 	"video-newvideos-showfrom": "显示从$1 $2开始的新视频",
-	"video-newvideos-list-text": "以下是<strong>$1</strong>个{{PLURAL:$1|视频}}列表。",
+	"video-newvideos-list-text": "以下是'''$1'''个{{PLURAL:$1|视频}}列表。",
 	"video-addvideo-watchlist": "添加此视频至我的监视列表",
 	"video-addvideo-title": "添加视频",
 	"video-addvideo-dest": "添加用于$1的视频",

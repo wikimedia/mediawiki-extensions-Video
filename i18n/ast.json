@@ -10,7 +10,7 @@
 	"unusedvideos": "Videos ensin utilizar",
 	"video-upload-new-version": "Xubir una versión nueva d'esti videu",
 	"video-newvideos-showfrom": "Amosar videos nuevos empezando dende $2, $1",
-	"video-newvideos-list-text": "Debaxo hai una llista de <strong>$1</strong> {{PLURAL:$1|videu|videos}}.",
+	"video-newvideos-list-text": "Debaxo hai una llista de '''$1''' {{PLURAL:$1|videu|videos}}.",
 	"video-addvideo-watchlist": "Amestar esti videu a la llista de siguimientu",
 	"video-addvideo-title": "Añadir videu",
 	"video-addvideo-dest": "Añadir videu pa $1",

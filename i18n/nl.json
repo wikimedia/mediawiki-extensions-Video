@@ -10,7 +10,7 @@
 	"unusedvideos": "Ongebruikte video's",
 	"video-upload-new-version": "Een nieuwe versie van deze video uploaden",
 	"video-newvideos-showfrom": "Nieuwe video's bekijken vanaf $2, $1",
-	"video-newvideos-list-text": "Hier volgt een lijst met <strong>$1</strong> {{PLURAL:$1|video|video's}}.",
+	"video-newvideos-list-text": "Hier volgt een lijst met '''$1''' {{PLURAL:$1|video|video's}}.",
 	"video-addvideo-watchlist": "Video aan de volglijst toevoegen",
 	"video-addvideo-title": "Video toevoegen",
 	"video-addvideo-dest": "Video toevoegen voor $1",

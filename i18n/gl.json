@@ -13,7 +13,7 @@
 	"unusedvideos": "Vídeos sen uso",
 	"video-upload-new-version": "Cargar unha nova versión deste vídeo",
 	"video-newvideos-showfrom": "Amosar os novos vídeos comezando polo $1 ás $2",
-	"video-newvideos-list-text": "A continuación móstrase unha lista de <strong>$1</strong> {{PLURAL:$1|vídeo|vídeos}}.",
+	"video-newvideos-list-text": "A continuación móstrase unha lista de '''$1''' {{PLURAL:$1|vídeo|vídeos}}.",
 	"video-addvideo-watchlist": "Engadir este vídeo á miña lista de vixilancia",
 	"video-addvideo-title": "Engadir vídeo",
 	"video-addvideo-dest": "Engadir vídeo para $1",

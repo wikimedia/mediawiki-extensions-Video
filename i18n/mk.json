@@ -10,7 +10,7 @@
 	"unusedvideos": "Неискористени видеа",
 	"video-upload-new-version": "Подигни нова верзија на видеово",
 	"video-newvideos-showfrom": "Прикажи нови видеа почнувајќи од $2, $1",
-	"video-newvideos-list-text": "Следи список на <strong>$1</strong> {{PLURAL:$1|видео|видеа}}.",
+	"video-newvideos-list-text": "Следи список на '''$1''' {{PLURAL:$1|видео|видеа}}.",
 	"video-addvideo-watchlist": "Додај го видеово во набљудуваните",
 	"video-addvideo-title": "Додај видео",
 	"video-addvideo-dest": "Додај видео за $1",

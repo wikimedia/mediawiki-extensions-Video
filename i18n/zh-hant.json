@@ -12,7 +12,7 @@
 	"unusedvideos": "未使用的影片",
 	"video-upload-new-version": "上傳此影片的新版本",
 	"video-newvideos-showfrom": "顯示自 $1 $2 以來的新影片",
-	"video-newvideos-list-text": "以下為 <strong>$1</strong> {{PLURAL:$1| 個影片| 個影片}}清單",
+	"video-newvideos-list-text": "以下為 '''$1''' {{PLURAL:$1| 個影片| 個影片}}清單",
 	"video-addvideo-watchlist": "加入此影片至我的監視清單",
 	"video-addvideo-title": "添加影片",
 	"video-addvideo-dest": "添加用於 $1 的影片",

@@ -10,7 +10,7 @@
 	"unusedvideos": "Oanvända videor",
 	"video-upload-new-version": "Ladda upp en ny version av denna video",
 	"video-newvideos-showfrom": "Visa nya videor från och med kl. $2 den $1",
-	"video-newvideos-list-text": "Nedan finns en lista med <strong>$1</strong> {{PLURAL:$1|video|videor}}.",
+	"video-newvideos-list-text": "Nedan finns en lista med '''$1''' {{PLURAL:$1|video|videor}}.",
 	"video-addvideo-watchlist": "Lägg till denna video i min bevakningslista",
 	"video-addvideo-title": "Lägg till video",
 	"video-addvideo-dest": "Lägg till video för $1",

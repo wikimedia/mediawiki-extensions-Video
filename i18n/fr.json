@@ -14,7 +14,7 @@
 	"unusedvideos": "Vidéos non utilisées",
 	"video-upload-new-version": "Importer une nouvelle version de cette vidéo",
 	"video-newvideos-showfrom": "Afficher les nouvelles vidéos à partir du $1 à $2",
-	"video-newvideos-list-text": "Voici une liste de <strong>$1</strong> vidéo{{PLURAL:$1||s}}.",
+	"video-newvideos-list-text": "Voici une liste de '''$1''' vidéo{{PLURAL:$1||s}}.",
 	"video-addvideo-watchlist": "Ajouter cette vidéo à ma liste de suivi",
 	"video-addvideo-title": "Ajouter vidéo",
 	"video-addvideo-dest": "Ajouter vidéo pour $1",

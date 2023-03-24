@@ -9,7 +9,7 @@
 	"unusedvideos": "סרטים שאינם בשימוש",
 	"video-upload-new-version": "העלאת גרסה חדשה של הסרט הזה",
 	"video-newvideos-showfrom": "הצגת סרטים חדשים החל מ־$2, $1",
-	"video-newvideos-list-text": "להלן רשימה של {{PLURAL:$1|סרט אחד|$1 סרטים}}.",
+	"video-newvideos-list-text": "להלן רשימה של {{PLURAL:$1|סרטים|{{PLURAL:$1|$1}} סרטים}}.",
 	"video-addvideo-watchlist": "הוספת הסרט הזה לרשימת המעקב שלי",
 	"video-addvideo-title": "הוספת סרט",
 	"video-addvideo-dest": "הוסף סרט למשך $1",

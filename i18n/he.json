@@ -4,6 +4,7 @@
 			"Amire80"
 		]
 	},
+	"video-desc": "אפשרות להוסיף מרחב שמות וידאו חדש עבור מדיה שאפשר להטביע באתרים נתמכים",
 	"addvideo": "הוספת סרט",
 	"newvideos": "סרטים חדשים",
 	"unusedvideos": "סרטים שאינם בשימוש",
@@ -14,6 +15,7 @@
 	"video-addvideo-title": "הוספת סרט",
 	"video-addvideo-dest": "הוסף סרט למשך $1",
 	"video-addvideo-button": "הוספת סרט",
+	"video-addvideo-instructions": "קל להוסיף סרטון לאתר {{SITENAME}}.\nצריך פשוט להדביק את קוד הטבעת הסרטון ''או'' את כתובת ה־URL של הסרטון בטופס הבא, להוסיף לסרטון שם וללחוץ על כפתור \"{{int:video -addvideo-button}}\".\nאם ברצונך להטביע את הסרטון בדף, נא להשתמש בקוד הבא: '''<nowiki>[[</nowiki>{{ns:video}}:Video Title<nowiki>]]</nowiki>'''.\nאפשר להוסיף סרטון מהספקים הבאים:\n{{int:video-provider-list}}\n===דוגמה לקוד הטבעת וידאו===\nזוהי קוד לדוגמה שמטביע וידאו מיוטיוב:\n\n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">\n<nowiki><object width=\"425\" height=\"355\">\n<param name=\"movie\" value=\"http://www.youtube.com/v/hUcFWPgB8oY\"></param>\n<param name=\"wmode\" value=\"transparent\"></param>\n<embed src=\"http://www.youtube.com/v/hUcFWPgB8oY\" type=\"application/x-shockwave-flash\"\nwmode=\"transparent\" width=\"425\" height=\"355\"></embed>\n</object></nowiki>\n</pre>\n\n===דוגמה לכתובת URL של סרטון===\nלהלן דוגמה לכתובת URL של סרטון מיוטיוב:\n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">http://www.youtube.com/watch?v=hUcFWPgB8oY</pre>",
 	"video-addvideo-title-label": "כותרת הסרט:",
 	"video-addvideo-embed-label": "קוד או כתובת אתר להטבעה:",
 	"video-no-videos": "אין סרטים חדשים.",

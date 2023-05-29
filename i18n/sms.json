@@ -18,6 +18,7 @@
 	"category-video-count": "Tän kategoeriast {{PLURAL:$1|lij õhtt video|lie $1 video|lie $1 videod}}.",
 	"video-novideo-linktext": "tõn lââʹzzted",
 	"video-history": "Video historia",
+	"video-histlegend": "Čiʹlǧǧtõs: ({{int:cur}}) = Tät lij ođđsumus video, ({{int:video-revert}}) = maaccât vuäʹmm versiooʹje.\n<br /><i>Čuålkkal peiʹvvmeäʹr, jõs haaʹlääk vueiʹnned mii leäi video-URL tâʹl.</i>.",
 	"video-revert-success": "Kååʹmtum ääiʹjab versiooʹje.",
 	"video-revert-legend": "Maaccât ääiʹjab versio videost",
 	"video-category-name": "Video",

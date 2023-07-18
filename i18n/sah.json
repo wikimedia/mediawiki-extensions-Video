@@ -1,6 +1,8 @@
 {
 	"@metadata": {
-		"authors": []
+		"authors": [
+			"Lifeway"
+		]
 	},
-	"video-showhidebots": "($1 робот)"
+	"video-showhidebots": "($1 бот)"
 }

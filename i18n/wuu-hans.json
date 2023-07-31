@@ -1,6 +1,8 @@
 {
 	"@metadata": {
-		"authors": []
+		"authors": [
+			"Winston Sung"
+		]
 	},
 	"video-showhidebots": "（$1机器人）"
 }

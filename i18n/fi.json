@@ -12,7 +12,7 @@
 	"unusedvideos": "Käyttämättömät videot",
 	"video-upload-new-version": "Tallenna uusi versio tästä videosta",
 	"video-newvideos-showfrom": "Näytä uudet videot alkaen $1 kello $2",
-	"video-newvideos-list-text": "Alla on {{PLURAL:$1|1 video|$1 videoa}} lajiteltuna <strong>$2</strong>.",
+	"video-newvideos-list-text": "Alla on luetteloituna '''$1''' {{PLURAL:$1|video|videoa}}.",
 	"video-addvideo-watchlist": "Lisää tämä video tarkkailulistalleni",
 	"video-addvideo-title": "Lisää video",
 	"video-addvideo-dest": "Lisää uusi versio videosta $1",

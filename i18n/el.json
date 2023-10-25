@@ -4,7 +4,8 @@
 			"KATRINE1992",
 			"NikosLikomitros",
 			"Nikosgranturismogt",
-			"Protnet"
+			"Protnet",
+			"McDutchie"
 		]
 	},
 	"video-desc": "Επιτρέπει το διάστημα για εγγραφή ονόματος νέου Βίντεο για τα μέσα που εισάγονται σε υπάρχοντες φακέλλους",
@@ -28,7 +29,7 @@
 	"log-description-video": "Υπάρχουν συνδεδεμένα βίντεο και ενημερώσεις στα τρέχοντα βίντεο.",
 	"logentry-video-add": "$1 βίντεο που προστέθηκε $3",
 	"logentry-video-update": "$1 ενημερωμένο βίντεο $3",
-	"category-video-header": "Βίντεο της κατηγορίας ''$1''",
+	"category-video-header": "Βίντεο της κατηγορίας \"$1\"",
 	"category-video-count": "Υπάρχει ένα βίντεο {{PLURAL: $1|είναι ένα videojare $1 videos}} σε αυτήν την κατηγορία.",
 	"video-novideo-linktext": "προσθέστε το",
 	"video-novideo": "Δε υπάρχει βίντεο με αυτό το όνομα, μπορείτε $1.",

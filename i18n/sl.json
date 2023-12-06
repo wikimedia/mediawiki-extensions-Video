@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Eleassar"
+			"Eleassar",
+			"Upwinxp"
 		]
 	},
 	"video-desc": "Omogoča nov imenski prostor Video za vdelane predstavnosti na podprtih spletnih mestih",
@@ -24,7 +25,7 @@
 	"log-name-video": "Dnevnik videov",
 	"log-description-video": "To je dnevnik dodanih videov in posodobitev obstoječih videov.",
 	"logentry-video-add": "$1 je dodal_a video $3",
-	"logentry-video-update": "$1 je posodobil_a video $3",
+	"logentry-video-update": "$1 je posodobil/a video $3",
 	"category-video-header": "Videi v kategoriji »$1«",
 	"category-video-count": "V tej kategoriji {{PLURAL:$1|je že en video|sta že dva videa|so že $1 videi|je že $1 videov}}.",
 	"video-novideo-linktext": "dodate",

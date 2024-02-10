@@ -212,7 +212,7 @@ class VideoHooks {
 			], LIST_OR )
 		];
 		*/
-		if ( !empty( $oldVideo ) ) {
+		if ( $oldVideo ) {
 			$where['video_timestamp'] = $oldVideo;
 		}
 
@@ -220,7 +220,7 @@ class VideoHooks {
 		// Delicious copypasta from Article.php, function doDeleteArticle()
 		// with some modifications
 		$archiveName = gmdate( 'YmdHis' ) . "!{$videoName}";
-		if ( !empty( $videoName ) ) {
+		if ( $videoName ) {
 			$dbw->startAtomic( __METHOD__ );
 			$dbw->insertSelect(
 				'oldvideo',

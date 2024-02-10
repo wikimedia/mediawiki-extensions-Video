@@ -29,7 +29,7 @@ class VideoGalleryPopulateHooks {
 		$category = ( isset( $args['category'] ) ) ? $args['category'] : '';
 		$limit = ( isset( $args['limit'] ) ) ? intval( $args['limit'] ) : 10;
 
-		if ( empty( $category ) ) {
+		if ( !$category ) {
 			return '';
 		}
 

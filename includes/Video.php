@@ -289,7 +289,7 @@ class Video {
 		$key = $this->getCacheKey();
 		$data = MediaWikiServices::getInstance()->getMainWANObjectCache()->get( $key );
 
-		if ( !empty( $data ) && is_array( $data ) ) {
+		if ( is_array( $data ) && $data ) {
 			$this->url = $data['url'];
 			$this->type = $data['type'];
 			$this->submitter_actor = $data['actor'];
@@ -615,7 +615,7 @@ class Video {
 	public function nextHistoryLine() {
 		$dbr = wfGetDB( DB_REPLICA );
 
-		if ( empty( $this->historyLine ) ) { // called for the first time, return line from cur
+		if ( !$this->historyLine ) { // called for the first time, return line from cur
 			$this->historyRes = $dbr->select(
 				'video',
 				[

@@ -112,7 +112,7 @@ class VideoGallery {
 	 * @return bool True if the gallery contains no videos
 	 */
 	function isEmpty() {
-		return empty( $this->mVideos );
+		return $this->mVideos === [];
 	}
 
 	/**

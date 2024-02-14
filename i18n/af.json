@@ -1,6 +1,9 @@
 {
 	"@metadata": {
-		"authors": []
+		"authors": [
+			"Rooiratel"
+		]
 	},
+	"video-revert-success": "Teruggerol na vorige weergawe.",
 	"video-showhidebots": "($1 robotte)"
 }

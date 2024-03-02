@@ -55,7 +55,7 @@ class CategoryWithVideoViewer extends CategoryViewer {
 			return "<div id=\"mw-category-media\">\n" . '<h2>' .
 				wfMessage(
 					'category-video-header',
-					$this->title->getText()
+					$this->getTitle()->getText()
 				)->escaped() . "</h2>\n" .
 				wfMessage(
 					'category-video-count',
@@ -114,7 +114,7 @@ class CategoryWithVideoViewer extends CategoryViewer {
 					'page_is_redirect', 'cl_sortkey', 'cat_id', 'cat_title',
 					'cat_subcats', 'cat_pages', 'cat_files',
 					'cl_sortkey_prefix', 'cl_collation' ],
-				array_merge( [ 'cl_to' => $this->title->getDBkey() ], $extraConds ),
+				array_merge( [ 'cl_to' => $this->getTitle()->getDBkey() ], $extraConds ),
 				__METHOD__,
 				[
 					'USE INDEX' => [ 'categorylinks' => 'cl_sortkey' ],

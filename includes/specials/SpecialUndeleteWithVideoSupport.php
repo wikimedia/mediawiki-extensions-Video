@@ -1178,7 +1178,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 	protected function formatRevisionRow( $row, $earliestLiveTime, $remaining ) {
 		$revRecord = $this->revisionStore->newRevisionFromArchiveRow(
 				$row,
-				RevisionStore::READ_NORMAL,
+				IDBAccessObject::READ_NORMAL,
 				$this->mTargetObj
 			);
 

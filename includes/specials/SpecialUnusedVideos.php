@@ -25,6 +25,8 @@ class SpecialUnusedVideos extends QueryPage {
 	 * @param IResultWrapper $res Result pointer
 	 * @param int $num Number of available result rows
 	 * @param int $offset Paging offset
+	 * @suppress PhanParamSignatureMismatch This is just a documentation/MW version mismatch thing,
+	 * not a real issue and the suppression can be removed once we support&require a 1.4x series MW
 	 */
 	protected function outputResults( $out, $skin, $dbr, $res, $num, $offset ) {
 		if ( $num > 0 ) {

@@ -18,7 +18,7 @@ Also allows functionality for Video Galleries (similar to <gallery>) and
 showing Videos in category pages.
 
 ==2. Requirements==
-The '''Video Namespace''' extension requires MediaWiki 1.35.0 or greater.
+The '''Video Namespace''' extension requires MediaWiki 1.39.0 or greater.
 
 ==3. Installing Video Extension==
 Installing the Video extension is very easy if you have shell (SSH) access to
@@ -69,9 +69,7 @@ participated in the development of WikiaVideo extension, which was forked from
 this extension.
 
 Przemek Piotrowski <ppiotr@wikia-inc.com> wrote the YouTube extension, from
-which a lot of code for various different video providers was extracted. Thanks
-to him, we can embed media from Archive.org, Gametrailers.com, GoGreenTube.com
-and WeGame.com.
+which a lot of code for various different video providers was extracted.
 
 Jack Phoenix performed code cleanup and wrote the code for deleting videos and
 improved the undeletion code, ported a bunch of providers from the YouTube

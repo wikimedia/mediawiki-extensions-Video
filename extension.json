@@ -1,6 +1,6 @@
 {
 	"name": "Video",
-	"version": "1.9.2",
+	"version": "1.9.3",
 	"author": [
 		"David Pean",
 		"Jack Phoenix",
@@ -67,7 +67,6 @@
 		"BlipTVVideoProvider": "includes/providers/BlipTVVideo.php",
 		"DailyMotionVideoProvider": "includes/providers/DailyMotionVideo.php",
 		"BaseVideoProvider": "includes/providers/BaseVideoProvider.php",
-		"GametrailersVideoProvider": "includes/providers/GametrailersVideo.php",
 		"HuluVideoProvider": "includes/providers/HuluVideo.php",
 		"MetaCafeVideoProvider": "includes/providers/MetaCafeVideo.php",
 		"MovieClipsVideoProvider": "includes/providers/MovieClipsVideo.php",
@@ -76,7 +75,6 @@
 		"SouthParkStudiosVideoProvider": "includes/providers/SouthParkStudiosVideo.php",
 		"ViddlerVideoProvider": "includes/providers/ViddlerVideo.php",
 		"VimeoVideoProvider": "includes/providers/VimeoVideo.php",
-		"WeGameVideoProvider": "includes/providers/WeGameVideo.php",
 		"YouTubeVideoProvider": "includes/providers/YouTubeVideo.php",
 		"VideoCategoryPage": "includes/VideoCategoryPage.php",
 		"VideoPage": "includes/VideoPage.php",

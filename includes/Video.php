@@ -88,7 +88,6 @@ class Video {
 	private static $providers = [
 		'bliptv' => BlipTVVideoProvider::class,
 		'dailymotion' => DailyMotionVideoProvider::class,
-		'gametrailers' => GametrailersVideoProvider::class,
 		'hulu' => HuluVideoProvider::class,
 		'metacafe' => MetaCafeVideoProvider::class,
 		'movieclips' => MovieClipsVideoProvider::class,
@@ -97,7 +96,6 @@ class Video {
 		'youtube' => YouTubeVideoProvider::class,
 		'viddler' => ViddlerVideoProvider::class,
 		'vimeo' => VimeoVideoProvider::class,
-		'wegame' => WeGameVideoProvider::class,
 	];
 
 	/**

@@ -252,7 +252,8 @@ class Video {
 		if ( $descTitle->exists() ) {
 			# Invalidate the cache for the description page
 			$descTitle->invalidateCache();
-			$descTitle->purgeSquid();
+			$htmlCache = $services->getHtmlCacheUpdater();
+			$htmlCache->purgeTitleUrls( $descTitle, $htmlCache::PURGE_INTENT_TXROUND_REFLECTED );
 		} else {
 			// New video; create the description page.
 			// Suppress the recent changes bc it will appear in the log/video

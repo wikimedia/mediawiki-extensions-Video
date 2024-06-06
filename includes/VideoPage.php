@@ -183,7 +183,7 @@ class VideoPage extends Article {
 					$this->getTitle()
 				);
 
-			// phpcs:ignore MediaWiki.ControlStructures.AssignmentInControlStructures.AssignmentInControlStructures
+			// phpcs:ignore Generic.CodeAnalysis.AssignmentInCondition
 			while ( $line = $this->video->nextHistoryLine() ) {
 				$s .= $list->videoHistoryLine(
 					false,

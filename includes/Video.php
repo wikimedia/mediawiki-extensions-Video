@@ -535,17 +535,6 @@ class Video {
 	}
 
 	/**
-	 * Returns if $haystack ends with $needle
-	 *
-	 * @param string $haystack
-	 * @param string $needle
-	 * @return bool
-	 */
-	protected static function endsWith( $haystack, $needle ) {
-		return ( substr( $haystack, ( strlen( $needle ) * -1 ) ) === $needle );
-	}
-
-	/**
 	 * Figure out the provider's name (lowercased) from a given URL.
 	 *
 	 * @param string $url URL to check
@@ -561,7 +550,7 @@ class Video {
 
 		self::getDomainsForProviders();
 		foreach ( self::$providerDomains as $domain => $provider ) {
-			if ( self::endsWith( $host, $domain ) ) {
+			if ( str_ends_with( $host, $domain ) ) {
 				return $provider;
 			}
 		}

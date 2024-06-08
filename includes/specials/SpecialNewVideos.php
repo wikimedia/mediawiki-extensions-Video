@@ -177,7 +177,7 @@ class NewVideos extends IncludableSpecialPage {
 	public function setTopText( $lt ) {
 		$message = $this->msg( 'video-newvideos-list-text', $lt )->inContentLanguage();
 		if ( !$message->isDisabled() ) {
-			$contLang = MediaWiki\MediaWikiServices::getInstance()->getContentLanguage();
+			$contLang = $this->getContentLanguage();
 			$this->getOutput()->addWikiTextAsContent(
 				Html::rawElement( 'div',
 					[ 'lang' => $contLang->getHtmlCode(), 'dir' => $contLang->getDir() ],

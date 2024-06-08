@@ -6,7 +6,7 @@
  * @file
  */
 
-use MediaWiki\MediaWikiServices;
+use MediaWiki\User\UserOptionsManager;
 
 class AddVideo extends FormSpecialPage {
 	/**
@@ -16,8 +16,13 @@ class AddVideo extends FormSpecialPage {
 	 */
 	protected $video;
 
-	public function __construct() {
+	private UserOptionsManager $userOptionsManager;
+
+	public function __construct(
+		UserOptionsManager $userOptionsManager
+	) {
 		parent::__construct( 'AddVideo' /*class*/, 'addvideo' /*restriction*/ );
+		$this->userOptionsManager = $userOptionsManager;
 	}
 
 	public function doesWrites() {
@@ -168,7 +173,7 @@ class AddVideo extends FormSpecialPage {
 			'Watch' => [
 				'type' => 'check',
 				'label-message' => 'video-addvideo-watchlist',
-				'default' => MediaWikiServices::getInstance()->getUserOptionsManager()
+				'default' => $this->userOptionsManager
 					->getOption( $this->getUser(), 'watchdefault' ),
 			],
 		];

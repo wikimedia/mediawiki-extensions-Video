@@ -16,7 +16,12 @@
 	"descriptionmsg": "video-desc",
 	"type": "other",
 	"SpecialPages": {
-		"AddVideo": "AddVideo",
+		"AddVideo": {
+			"class": "AddVideo",
+			"services": [
+				"UserOptionsManager"
+			]
+		},
 		"NewVideos": "NewVideos",
 		"UnusedVideos": "SpecialUnusedVideos",
 		"Undelete": {

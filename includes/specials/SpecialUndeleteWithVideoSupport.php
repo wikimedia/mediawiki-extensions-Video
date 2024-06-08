@@ -335,9 +335,9 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 
 		$this->addHelpLink( 'Help:Undelete' );
 		if ( $this->mAllowed ) {
-			$out->setPageTitle( $this->msg( 'undeletepage' )->text() );
+			$out->setPageTitleMsg( $this->msg( 'undeletepage' ) );
 		} else {
-			$out->setPageTitle( $this->msg( 'viewdeletedpage' )->text() );
+			$out->setPageTitleMsg( $this->msg( 'viewdeletedpage' ) );
 		}
 
 		$this->getSkin()->setRelevantTitle( $this->mTargetObj );
@@ -421,7 +421,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 
 	private function showSearchForm() {
 		$out = $this->getOutput();
-		$out->setPageTitle( $this->msg( 'undelete-search-title' )->text() );
+		$out->setPageTitleMsg( $this->msg( 'undelete-search-title' ) );
 		$fuzzySearch = $this->getRequest()->getVal( 'fuzzy', '1' );
 
 		$out->enableOOUI();
@@ -1520,7 +1520,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			->undeleteIfAllowed( $this->mComment );
 
 		if ( !$status->isGood() ) {
-			$out->setPageTitle( $this->msg( 'undelete-error' )->text() );
+			$out->setPageTitleMsg( $this->msg( 'undelete-error' ) );
 			$out->wrapWikiTextAsInterface(
 				'error',
 				Status::wrap( $status )->getWikiText(
@@ -1537,7 +1537,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 
 		if ( $restoredRevs === 0 && $restoredFiles === 0 ) {
 			// TODO Should use a different message here
-			$out->setPageTitle( $this->msg( 'undelete-error' )->text() );
+			$out->setPageTitleMsg( $this->msg( 'undelete-error' ) );
 		} else {
 			if ( $status->getValue()[UndeletePage::FILES_RESTORED] !== 0 ) {
 				$this->getHookRunner()->onFileUndeleteComplete(

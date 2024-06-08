@@ -35,7 +35,7 @@ class NewVideos extends IncludableSpecialPage {
 		$out = $this->getOutput();
 		$lang = $this->getLanguage();
 
-		$out->setPageTitle( $this->msg( 'newvideos' )->text() );
+		$out->setPageTitleMsg( $this->msg( 'newvideos' ) );
 
 		$opts = new FormOptions();
 

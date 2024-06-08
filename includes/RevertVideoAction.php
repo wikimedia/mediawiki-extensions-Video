@@ -113,7 +113,7 @@ class RevertVideoAction extends FormAction {
 	 */
 	public function onSuccess() {
 		$out = $this->getOutput();
-		$out->setPageTitle( $this->msg( 'actioncomplete' )->escaped() );
+		$out->setPageTitleMsg( $this->msg( 'actioncomplete' ) );
 		$out->setRobotPolicy( 'noindex,nofollow' );
 		$out->addHTML( $this->msg( 'video-revert-success' )->escaped() );
 

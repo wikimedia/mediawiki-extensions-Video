@@ -7,6 +7,8 @@
  * @ingroup Extensions
  */
 
+use MediaWiki\MediaWikiServices;
+
 class VideoGalleryPopulateHooks {
 
 	/**
@@ -51,7 +53,7 @@ class VideoGalleryPopulateHooks {
 			$params['LIMIT'] = $limit;
 		}
 
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbr = MediaWikiServices::getInstance()->getConnectionProvider()->getReplicaDatabase();
 		$res = $dbr->select(
 			[ 'page', 'categorylinks' ],
 			'page_title',

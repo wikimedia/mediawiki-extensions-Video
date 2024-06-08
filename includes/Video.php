@@ -152,7 +152,7 @@ class Video {
 	 */
 	public function addVideo( $url, $type, $categories, $watch = false ) {
 		$user = $this->context->getUser();
-		$dbw = wfGetDB( DB_PRIMARY );
+		$dbw = MediaWikiServices::getInstance()->getConnectionProvider()->getPrimaryDatabase();
 
 		$now = $dbw->timestamp();
 
@@ -356,7 +356,7 @@ class Video {
 	 * Load video from the database
 	 */
 	public function loadFromDB() {
-		$dbr = wfGetDB( DB_PRIMARY );
+		$dbr = MediaWikiServices::getInstance()->getConnectionProvider()->getPrimaryDatabase();
 
 		$row = $dbr->selectRow(
 			'video',
@@ -601,7 +601,7 @@ class Video {
 	 * @return stdClass|false
 	 */
 	public function nextHistoryLine() {
-		$dbr = wfGetDB( DB_REPLICA );
+		$dbr = MediaWikiServices::getInstance()->getConnectionProvider()->getReplicaDatabase();
 
 		if ( !$this->historyLine ) { // called for the first time, return line from cur
 			$this->historyRes = $dbr->select(

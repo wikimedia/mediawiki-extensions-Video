@@ -7,6 +7,8 @@ use MediaWiki\MainConfigNames;
  * This is initialized for every category page by the VideoCategoryPage class,
  * which in turn is fired up by VideoHooks::videoFromTitle function in Video.hooks.php.
  */
+use MediaWiki\MediaWikiServices;
+
 class CategoryWithVideoViewer extends CategoryViewer {
 
 	/** @var VideoGallery */
@@ -83,7 +85,7 @@ class CategoryWithVideoViewer extends CategoryViewer {
 	}
 
 	function doCategoryQuery() {
-		$dbr = wfGetDB( DB_REPLICA, 'category' );
+		$dbr = MediaWikiServices::getInstance()->getConnectionProvider()->getReplicaDatabase( false, 'category' );
 
 		$this->nextPage = [
 			'page' => null,

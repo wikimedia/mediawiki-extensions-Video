@@ -45,7 +45,7 @@ class MigrateOldVideoUserColumnsToActor extends LoggedUpdateMaintenance {
 	 * @return bool True to log the update as done
 	 */
 	protected function doDBUpdates() {
-		$dbw = $this->getDB( DB_PRIMARY );
+		$dbw = $this->getPrimaryDB();
 		$dbw->query(
 			"UPDATE {$dbw->tableName( 'video' )}
 			SET video_actor=(SELECT actor_id

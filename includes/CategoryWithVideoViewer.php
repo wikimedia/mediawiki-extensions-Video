@@ -1,4 +1,7 @@
 <?php
+
+use MediaWiki\MainConfigNames;
+
 /**
  * This is like a normal CategoryViewer, except that it supports videos.
  * This is initialized for every category page by the VideoCategoryPage class,
@@ -26,9 +29,8 @@ class CategoryWithVideoViewer extends CategoryViewer {
 	 * @return string HTML output
 	 */
 	function getHTML() {
-		global $wgOut, $wgCategoryMagicGallery;
-
-		$this->showGallery = $wgCategoryMagicGallery && !$wgOut->mNoGallery;
+		$this->showGallery = $this->getConfig()->get( MainConfigNames::CategoryMagicGallery )
+			&& !$this->getOutput()->mNoGallery;
 
 		$this->clearCategoryState();
 		$this->doCategoryQuery();

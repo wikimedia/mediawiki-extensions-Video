@@ -39,9 +39,8 @@ class NewVideosPager extends RangeChronologicalPager {
 
 	/**
 	 * @param stdClass|array $row Row from the video table
-	 * @return void
+	 * @return string
 	 */
-	// @phan-suppress-next-line PhanParamSignatureMismatch Phan likes to complain because parent returns a value & we don't
 	public function formatRow( $row ) {
 		$name = $row->video_name;
 		$user = User::newFromActorId( $row->video_actor );
@@ -60,6 +59,7 @@ class NewVideosPager extends RangeChronologicalPager {
 			. htmlspecialchars( $time )
 			. "</i><br />\n"
 		);
+		return '';
 	}
 
 	public function getQueryInfo() {

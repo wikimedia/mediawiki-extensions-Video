@@ -55,11 +55,11 @@ class CategoryWithVideoViewer extends CategoryViewer {
 	function getVideoSection() {
 		if ( !$this->videogallery->isEmpty() ) {
 			return "<div id=\"mw-category-media\">\n" . '<h2>' .
-				wfMessage(
+				$this->msg(
 					'category-video-header',
 					$this->getTitle()->getText()
 				)->escaped() . "</h2>\n" .
-				wfMessage(
+				$this->msg(
 					'category-video-count',
 					$this->videogallery->count()
 				)->parse() . $this->videogallery->toHTML() . "\n</div>";

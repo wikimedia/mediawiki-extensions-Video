@@ -61,8 +61,8 @@ class RevertVideoAction extends FormAction {
 	}
 
 	protected function alterForm( HTMLForm $form ) {
-		$form->setWrapperLegend( wfMessage( 'video-revert-legend' )->escaped() );
-		$form->setSubmitText( wfMessage( 'filerevert-submit' )->escaped() );
+		$form->setWrapperLegend( $this->msg( 'video-revert-legend' )->escaped() );
+		$form->setSubmitText( $this->msg( 'filerevert-submit' )->escaped() );
 		$form->addHiddenField( 'oldvideo', $this->getRequest()->getText( 'oldvideo' ) );
 	}
 
@@ -80,7 +80,7 @@ class RevertVideoAction extends FormAction {
 				'type' => 'info',
 				'vertical-label' => true,
 				'raw' => true,
-				'default' => wfMessage( 'video-revert-intro', $this->getTitle()->getText(),
+				'default' => $this->msg( 'video-revert-intro', $this->getTitle()->getText(),
 					$this->getLanguage()->date( $timestamp, true ), $this->getLanguage()->time( $timestamp, true ),
 					$this->oldvideo->ov_url )->parse()
 			],
@@ -111,16 +111,16 @@ class RevertVideoAction extends FormAction {
 	 */
 	public function onSuccess() {
 		$out = $this->getOutput();
-		$out->setPageTitle( wfMessage( 'actioncomplete' )->escaped() );
+		$out->setPageTitle( $this->msg( 'actioncomplete' )->escaped() );
 		$out->setRobotPolicy( 'noindex,nofollow' );
-		$out->addHTML( wfMessage( 'video-revert-success' )->escaped() );
+		$out->addHTML( $this->msg( 'video-revert-success' )->escaped() );
 
 		$descTitle = $this->video->getTitle();
 		$out->returnToMain( null, $descTitle->getPrefixedText() );
 	}
 
 	protected function getPageTitle() {
-		return wfMessage( 'filerevert', $this->getTitle()->getText() )->escaped();
+		return $this->msg( 'filerevert', $this->getTitle()->getText() )->escaped();
 	}
 
 	protected function getDescription() {

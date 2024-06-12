@@ -60,7 +60,7 @@ class VideoPage extends Article {
 		} else {
 			// Video doesn't exist, so give a link allowing user to add one with this name
 			$title = SpecialPage::getTitleFor( 'AddVideo' );
-			$link = MediaWikiServices::getInstance()->getLinkRenderer()->makeKnownLink(
+			$link = $this->linkRenderer->makeKnownLink(
 				$title,
 				$ctx->msg( 'video-novideo-linktext' )->plain(),
 				[],
@@ -115,8 +115,6 @@ class VideoPage extends Article {
 		$out->addWikiMsg( 'video-links-to-video', $count );
 		$out->addHTML( '<ul class="mw-imagepage-linktoimage">' . "\n" );
 
-		$linkRenderer = MediaWikiServices::getInstance()->getLinkRenderer();
-
 		$count = 0;
 		foreach ( $res as $s ) {
 			$count++;
@@ -124,7 +122,7 @@ class VideoPage extends Article {
 				// We have not yet reached the extra one that tells us there is
 				// more to fetch
 				$name = Title::makeTitle( $s->page_namespace, $s->page_title );
-				$link = $linkRenderer->makeKnownLink( $name );
+				$link = $this->linkRenderer->makeKnownLink( $name );
 				$out->addHTML( "<li>{$link}</li>\n" );
 			}
 		}
@@ -222,7 +220,7 @@ class VideoPage extends Article {
 
 		// "Upload a new version of this video" link
 		if ( $this->getContext()->getUser()->isAllowed( 'reupload' ) ) {
-			$ulink = MediaWikiServices::getInstance()->getLinkRenderer()->makeLink(
+			$ulink = $this->linkRenderer->makeLink(
 				SpecialPage::getTitleFor( 'AddVideo' ),
 				$this->getContext()->msg( 'video-upload-new-version' )->text(),
 				[],

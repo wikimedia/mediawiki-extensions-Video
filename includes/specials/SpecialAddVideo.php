@@ -40,9 +40,9 @@ class AddVideo extends FormSpecialPage {
 
 	/**
 	 * Add pre-text to the form
-	 * @return string HTML which will be sent to $form->addPreText()
+	 * @return string HTML which will be sent to $form->addPreHtml()
 	 */
-	protected function preText() {
+	protected function preHtml() {
 		$this->getOutput()->addModuleStyles( 'ext.video' );
 
 		return '';
@@ -53,7 +53,7 @@ class AddVideo extends FormSpecialPage {
 	 * @param HTMLForm $form
 	 */
 	protected function alterForm( HTMLForm $form ) {
-		$form->setIntro( $this->msg( 'video-addvideo-instructions' )->parse() );
+		$form->setPreHtml( $this->msg( 'video-addvideo-instructions' )->parse() );
 		$form->setWrapperLegend( $this->msg( 'video-addvideo-title' )->plain() );
 		$form->setSubmitText( $this->msg( 'video-addvideo-button' )->plain() );
 

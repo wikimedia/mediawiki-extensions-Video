@@ -1,6 +1,12 @@
 {
 	"@metadata": {
-		"authors": []
+		"authors": [
+			"Jack Phoenix"
+		]
 	},
+	"addvideo": "Lisa video",
+	"newvideos": "Uued videod",
+	"unusedvideos": "Kasutamata videod",
+	"video-addvideo-title": "Lisa video",
 	"video-showhidebots": "($1 robotite kaastööd)"
 }

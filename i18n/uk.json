@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Piramidion",
-			"Ignatgg"
+			"Ignatgg",
+			"Amire80"
 		]
 	},
 	"video-desc": "Дає можливість створення нового простору назв «Відео:» для вбудовування медіафайлів на підтримуваних веб-сайтах",
@@ -11,7 +12,7 @@
 	"unusedvideos": "Невикористовувані відео",
 	"video-upload-new-version": "Завантажити нову версію цього відео",
 	"video-newvideos-showfrom": "Показати нові відео, починаючи з $2, $1",
-	"video-newvideos-list-text": "Нижче наведено список ''' $1 ''' {{PLURAL:$1| відео|відео}}.",
+	"video-newvideos-list-text": "Нижче подано список з '''$1''' {{PLURAL:$1|відео}}.",
 	"video-addvideo-watchlist": "Додати це відео до мого списку спостереження",
 	"video-addvideo-title": "Додати відео",
 	"video-addvideo-dest": "Додати відео для $1",

@@ -34,7 +34,7 @@ class HuluVideoProvider extends BaseVideoProvider {
 		}
 
 		$apiUrl = 'http://www.hulu.com/api/oembed.json?url=' . urlencode( $url );
-		$apiResult = MediaWikiServices::getInstance()->getHttpRequestFactory()->get( $apiUrl );
+		$apiResult = MediaWikiServices::getInstance()->getHttpRequestFactory()->get( $apiUrl, [], __METHOD__ );
 
 		if ( $apiResult === null ) {
 			return null;

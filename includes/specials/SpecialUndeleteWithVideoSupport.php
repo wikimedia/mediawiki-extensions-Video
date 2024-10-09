@@ -46,7 +46,7 @@ use MediaWiki\Revision\SlotRecord;
 use MediaWiki\Storage\NameTableAccessException;
 use MediaWiki\Storage\NameTableStore;
 use MediaWiki\User\UserOptionsLookup;
-use Wikimedia\Rdbms\IConnectionProvider;
+use Wikimedia\Rdbms\ILoadBalancer;
 use Wikimedia\Rdbms\IResultWrapper;
 
 /**
@@ -111,8 +111,8 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 	/** @var LocalRepo */
 	private $localRepo;
 
-	/** @var IConnectionProvider */
-	private $dbProvider;
+	/** @var ILoadBalancer */
+	private $loadBalancer;
 
 	/** @var UserOptionsLookup */
 	private $userOptionsLookup;
@@ -140,7 +140,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 	 * @param NameTableStore $changeTagDefStore
 	 * @param LinkBatchFactory $linkBatchFactory
 	 * @param RepoGroup $repoGroup
-	 * @param IConnectionProvider $dbProvider
+	 * @param ILoadBalancer $loadBalancer
 	 * @param UserOptionsLookup $userOptionsLookup
 	 * @param WikiPageFactory $wikiPageFactory
 	 * @param SearchEngineFactory $searchEngineFactory
@@ -156,7 +156,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		NameTableStore $changeTagDefStore,
 		LinkBatchFactory $linkBatchFactory,
 		RepoGroup $repoGroup,
-		IConnectionProvider $dbProvider,
+		ILoadBalancer $loadBalancer,
 		UserOptionsLookup $userOptionsLookup,
 		WikiPageFactory $wikiPageFactory,
 		SearchEngineFactory $searchEngineFactory,
@@ -172,7 +172,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		$this->changeTagDefStore = $changeTagDefStore;
 		$this->linkBatchFactory = $linkBatchFactory;
 		$this->localRepo = $repoGroup->getLocalRepo();
-		$this->dbProvider = $dbProvider;
+		$this->loadBalancer = $loadBalancer;
 		$this->userOptionsLookup = $userOptionsLookup;
 		$this->wikiPageFactory = $wikiPageFactory;
 		$this->searchEngineFactory = $searchEngineFactory;
@@ -834,7 +834,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 
 		$minor = $revRecord->isMinor() ? ChangesList::flag( 'minor' ) : '';
 
-		$dbr = $this->dbProvider->getReplicaDatabase();
+		$dbr = $this->loadBalancer->getConnection( DB_REPLICA );
 		$tagIds = $dbr->selectFieldValues(
 			'change_tag',
 			'ct_tag_id',

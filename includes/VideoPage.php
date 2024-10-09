@@ -81,7 +81,7 @@ class VideoPage extends Article {
 
 		$limit = 100;
 
-		$dbr = MediaWikiServices::getInstance()->getConnectionProvider()->getReplicaDatabase();
+		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
 
 		// WikiaVideo used the imagelinks table here because that extension
 		// adds everything into core (archive, filearchive, imagelinks, etc.)

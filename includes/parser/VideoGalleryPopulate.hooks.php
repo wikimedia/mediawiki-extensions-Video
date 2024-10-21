@@ -15,7 +15,7 @@ class VideoGalleryPopulateHooks {
 	 * @param Parser $parser
 	 */
 	public static function onParserFirstCallInit( $parser ) {
-		$parser->setHook( 'videogallerypopulate', [ __CLASS__, 'renderVideoGalleryPopulate' ] );
+		$parser->setHook( 'videogallerypopulate', [ self::class, 'renderVideoGalleryPopulate' ] );
 	}
 
 	/**

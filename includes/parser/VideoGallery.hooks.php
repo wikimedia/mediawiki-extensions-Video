@@ -12,7 +12,7 @@ class VideoGalleryHooks {
 	 * @param Parser $parser
 	 */
 	public static function onParserFirstCallInit( $parser ) {
-		$parser->setHook( 'videogallery', [ __CLASS__, 'renderVideoGallery' ] );
+		$parser->setHook( 'videogallery', [ self::class, 'renderVideoGallery' ] );
 	}
 
 	/**

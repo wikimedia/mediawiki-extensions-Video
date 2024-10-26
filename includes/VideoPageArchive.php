@@ -19,7 +19,7 @@ class VideoPageArchive extends PageArchive {
 	 * @return IResultWrapper
 	 */
 	public function listFiles() {
-		$dbr = MediaWikiServices::getInstance()->getConnectionProvider()->getReplicaDatabase();
+		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
 		$res = $dbr->select(
 			'oldvideo',
 			[

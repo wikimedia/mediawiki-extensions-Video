@@ -89,7 +89,6 @@ class Video {
 		'bliptv' => BlipTVVideoProvider::class,
 		'dailymotion' => DailyMotionVideoProvider::class,
 		'hulu' => HuluVideoProvider::class,
-		'metacafe' => MetaCafeVideoProvider::class,
 		'movieclips' => MovieClipsVideoProvider::class,
 		'myvideo' => MyVideoVideoProvider::class,
 		'southparkstudios' => SouthParkStudiosVideoProvider::class,

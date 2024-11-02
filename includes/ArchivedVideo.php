@@ -376,7 +376,7 @@ class ArchivedVideo extends ArchivedFile {
 	 *   passed to the $audience parameter
 	 * @return UserIdentity|null
 	 */
-	public function getUploader( int $audience = self::FOR_PUBLIC, Authority $performer = null ): ?UserIdentity {
+	public function getUploader( int $audience = self::FOR_PUBLIC, ?Authority $performer = null ): ?UserIdentity {
 		$this->load();
 		if ( $audience === self::FOR_PUBLIC && $this->isDeleted( File::DELETED_USER ) ) {
 			return null;

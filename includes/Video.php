@@ -81,7 +81,7 @@ class Video {
 	/**
 	 * Array of providers codes to classes
 	 *
-	 * @var string[]
+	 * @var array<string,class-string<BaseVideoProvider>>
 	 */
 	private static array $providers = [
 		'bliptv' => BlipTVVideoProvider::class,
@@ -400,17 +400,11 @@ class Video {
 		return strip_tags( $this->url );
 	}
 
-	/**
-	 * Return the type of this video
-	 */
 	public function getType(): string {
 		$this->load();
 		return $this->type;
 	}
 
-	/**
-	 * @return bool True if the Video exists
-	 */
 	public function exists(): bool {
 		$this->load();
 		return $this->exists;
@@ -440,7 +434,7 @@ class Video {
 	 * @return bool True if it is, otherwise false
 	 */
 	public static function isURL( string $code ): bool {
-		return preg_match( '%^(?:http|https|ftp)://(?:www\.)?.*$%i', $code ) ? true : false;
+		return (bool)preg_match( '%^(?:https?|ftp)://(?:www\.)?.*$%i', $code );
 	}
 
 	/**

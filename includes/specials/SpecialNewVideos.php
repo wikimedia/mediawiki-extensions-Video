@@ -32,7 +32,7 @@ class NewVideos extends IncludableSpecialPage {
 	/**
 	 * Show the special page
 	 *
-	 * @param mixed|null $par Parameter passed to the page or null
+	 * @param string|null $par Parameter passed to the page or null
 	 */
 	public function execute( $par ) {
 		$context = new DerivativeContext( $this->getContext() );

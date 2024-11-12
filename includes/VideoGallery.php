@@ -15,8 +15,7 @@ class VideoGallery {
 	/** @var string|null */
 	private $mCaption;
 
-	/** @var Title */
-	private $contextTitle;
+	private ?Title $contextTitle = null;
 
 	private bool $mShowFilename = true;
 
@@ -216,13 +215,9 @@ class VideoGallery {
 
 	/**
 	 * Get the contextual title, if applicable
-	 *
-	 * @return mixed Title or false
 	 */
-	public function getContextTitle() {
-		return is_object( $this->contextTitle ) && $this->contextTitle instanceof Title
-				? $this->contextTitle
-				: false;
+	public function getContextTitle(): ?Title {
+		return $this->contextTitle;
 	}
 
 }

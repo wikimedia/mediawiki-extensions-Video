@@ -74,6 +74,7 @@ class VideoHooks {
 			}
 			return $matches[0];
 		}
+		return '';
 	}
 
 	/**

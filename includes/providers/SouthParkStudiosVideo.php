@@ -1,7 +1,6 @@
 <?php
 
 class SouthParkStudiosVideoProvider extends MTVNetworksVideoProvider {
-	protected $videoRegexId = '#/clips/(\d+)/#';
 
 	public static function getDomains() {
 		return [ 'southparkstudios.com' ];

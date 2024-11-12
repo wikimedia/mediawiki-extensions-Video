@@ -20,10 +20,6 @@ class NewVideosPager extends RangeChronologicalPager {
 	 */
 	protected $opts;
 
-	/**
-	 * @param IContextSource $context
-	 * @param FormOptions $opts
-	 */
 	public function __construct( IContextSource $context, FormOptions $opts ) {
 		parent::__construct( $context );
 

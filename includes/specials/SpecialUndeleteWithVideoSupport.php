@@ -260,7 +260,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			foreach ( $request->getValues() as $key => $val ) {
 				$matches = [];
 				if ( preg_match( '/^ts(\d{14})$/', $key, $matches ) ) {
-					array_push( $timestamps, $matches[1] );
+					$timestamps[] = $matches[1];
 				}
 
 				if ( preg_match( '/^fileid(\d+)$/', $key, $matches ) ) {
@@ -281,7 +281,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 	 * @return bool
 	 */
 	protected function isAllowed( $permission, ?User $user = null ) {
-		$user = $user ?: $this->getUser();
+		$user ??= $this->getUser();
 		$block = $user->getBlock();
 
 		if ( $this->mTargetObj !== null ) {
@@ -512,15 +512,13 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 	 * Generic list of deleted pages
 	 *
 	 * @param IResultWrapper $result
-	 * @return bool
 	 */
-	private function showList( $result ) {
+	private function showList( $result ): void {
 		$out = $this->getOutput();
 
 		if ( $result->numRows() == 0 ) {
 			$out->addWikiMsg( 'undelete-no-results' );
-
-			return false;
+			return;
 		}
 
 		$out->addWikiMsg( 'undeletepagetext', $this->getLanguage()->formatNum( $result->numRows() ) );
@@ -560,8 +558,6 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		}
 		$result->free();
 		$out->addHTML( "</ul>\n" );
-
-		return true;
 	}
 
 	/**
@@ -796,7 +792,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		RevisionRecord $previousRevRecord,
 		RevisionRecord $currentRevRecord
 	) {
-		$currentTitle = Title::newFromLinkTarget( $currentRevRecord->getPageAsLinkTarget() );
+		$currentTitle = Title::newFromPageIdentity( $currentRevRecord->getPage() );
 
 		$diffContext = clone $this->getContext();
 		$diffContext->setTitle( $currentTitle );

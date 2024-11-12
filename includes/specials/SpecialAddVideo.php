@@ -51,7 +51,6 @@ class AddVideo extends FormSpecialPage {
 
 	/**
 	 * Play with the HTMLForm if you need to more substantially
-	 * @param HTMLForm $form
 	 */
 	protected function alterForm( HTMLForm $form ) {
 		$form->setPreHtml( $this->msg( 'video-addvideo-instructions' )->parse() );

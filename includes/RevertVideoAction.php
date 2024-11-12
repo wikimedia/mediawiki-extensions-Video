@@ -96,7 +96,7 @@ class RevertVideoAction extends FormAction {
 	 *
 	 * @suppress PhanUndeclaredProperty
 	 * @param array $data
-	 * @return bool|array True for success, false for didn't-try, array of errors on failure
+	 * @return bool
 	 */
 	public function onSubmit( $data ) {
 		// Record upload and update metadata cache

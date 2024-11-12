@@ -11,11 +11,9 @@ use MediaWiki\Title\Title;
  * This is initialized for every category page by the VideoCategoryPage class,
  * which in turn is fired up by VideoHooks::videoFromTitle function in Video.hooks.php.
  */
-
 class CategoryWithVideoViewer extends CategoryViewer {
 
-	/** @var VideoGallery */
-	private $videogallery;
+	private VideoGallery $videogallery;
 
 	/** @inheritDoc */
 	protected function clearCategoryState() {
@@ -30,7 +28,7 @@ class CategoryWithVideoViewer extends CategoryViewer {
 	}
 
 	/** @inheritDoc */
-	public function getHTML(): string {
+	public function getHTML() {
 		$this->showGallery = $this->getConfig()->get( MainConfigNames::CategoryMagicGallery )
 			&& !$this->getOutput()->mNoGallery;
 
@@ -38,14 +36,12 @@ class CategoryWithVideoViewer extends CategoryViewer {
 		$this->doCategoryQuery();
 		$this->finaliseCategoryState();
 
-		$r = $this->getCategoryTop() .
+		return $this->getCategoryTop() .
 			$this->getSubcategorySection() .
 			$this->getPagesSection() .
 			$this->getImageSection() .
 			$this->getVideoSection() .
 			$this->getCategoryBottom();
-
-		return $r;
 	}
 
 	/**
@@ -72,8 +68,6 @@ class CategoryWithVideoViewer extends CategoryViewer {
 
 	/**
 	 * Add a page in the video namespace
-	 *
-	 * @param Title $title
 	 */
 	private function addVideo( Title $title ): void {
 		$video = new Video( $title, $this->getContext() );

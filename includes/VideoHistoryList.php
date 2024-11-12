@@ -6,15 +6,13 @@ use MediaWiki\MediaWikiServices;
 
 class VideoHistoryList {
 	public function beginVideoHistoryList(): string {
-		$s = "\n" .
+		return "\n" .
 			Xml::element( 'h2', [ 'id' => 'filehistory' ], wfMessage( 'video-history' )->plain() ) .
 			"\n<p>" . wfMessage( 'video-histlegend' )->parse() . "</p>\n" . '<ul class="special">';
-		return $s;
 	}
 
 	public function endVideoHistoryList(): string {
-		$s = "</ul>\n";
-		return $s;
+		return "</ul>\n";
 	}
 
 	/**

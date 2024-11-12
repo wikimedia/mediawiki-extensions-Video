@@ -1,5 +1,6 @@
 <?php
 
+use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
 use Wikimedia\Rdbms\IDatabase;
 use Wikimedia\Rdbms\IResultWrapper;
@@ -52,14 +53,20 @@ class SpecialUnusedVideos extends QueryPage {
 	}
 
 	public function getQueryInfo() {
+		$linksMigration = MediaWikiServices::getInstance()->getLinksMigration();
+		[ , $titleField ] = $linksMigration->getTitleFields( 'pagelinks' );
+		$queryInfo = $linksMigration->getQueryInfo( 'pagelinks', 'pagelinks' );
 		return [
-			'tables' => [ 'video', 'pagelinks' ],
+			'tables' => array_merge( $queryInfo['tables'], [ 'video' ] ),
 			'fields' => [
 				'namespace' => NS_VIDEO,
 				'title' => 'video_name'
 			],
-			'conds' => [ 'pl_title IS NULL' ],
-			'join_conds' => [ 'pagelinks' => [ 'LEFT JOIN', 'pl_title = video_name' ] ]
+			'conds' => [ $titleField . ' IS NULL' ],
+			'join_conds' => array_merge(
+				$queryInfo['joins'],
+				[ 'video' => [ 'RIGHT JOIN', $titleField . ' = video_name' ] ]
+			)
 		];
 	}
 

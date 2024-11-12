@@ -87,14 +87,17 @@ class VideoPage extends Article {
 		// WikiaVideo used the imagelinks table here because that extension
 		// adds everything into core (archive, filearchive, imagelinks, etc.)
 		// tables instead of using its own tables
+		$linksMigration = MediaWikiServices::getInstance()->getLinksMigration();
+		[ $nsField, $titleField ] = $linksMigration->getTitleFields( 'pagelinks' );
+		$queryInfo = $linksMigration->getQueryInfo( 'pagelinks' );
 		$res = $dbr->select(
-			[ 'pagelinks', 'page' ],
+			array_merge( $queryInfo['tables'], [ 'page' ] ),
 			[ 'page_namespace', 'page_title' ],
-			[
-				'pl_namespace' => NS_VIDEO,
-				'pl_title' => $this->getTitle()->getDBkey(),
+			array_merge( reset( $queryInfo['joins'] )[1], [
+				$nsField => NS_VIDEO,
+				$titleField => $this->getTitle()->getDBkey(),
 				'pl_from = page_id',
-			],
+			] ),
 			__METHOD__,
 			[ 'LIMIT' => $limit + 1 ]
 		);

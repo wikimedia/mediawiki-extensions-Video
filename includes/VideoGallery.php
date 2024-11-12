@@ -10,29 +10,26 @@ use MediaWiki\Title\Title;
 
 class VideoGallery {
 	/** @var array[] Pairs of Video objects and a HTML string */
-	private $mVideos = [];
+	private array $mVideos = [];
 
-	/** @var string */
+	/** @var string|null */
 	private $mCaption;
 
 	/** @var Title */
 	private $contextTitle;
 
-	/** @var bool */
-	private $mShowFilename = true;
+	private bool $mShowFilename = true;
 
 	/** @var int How many videos wide should the gallery be? */
-	private $mPerRow = 3;
+	private int $mPerRow = 3;
 
-	private $mWidths = 200;
-	private $mHeights = 200; // How wide/tall each thumbnail should be
+	private int $mWidths = 200;
+	private int $mHeights = 200; // How wide/tall each thumbnail should be
 
 	/**
 	 * Get the caption (as plain text)
-	 *
-	 * @return string
 	 */
-	function getCaption() {
+	public function getCaption(): string {
 		// @phan-suppress-next-line PhanPluginDuplicateConditionalNullCoalescing
 		return ( isset( $this->mCaption ) ) ? $this->mCaption : '';
 	}
@@ -40,19 +37,17 @@ class VideoGallery {
 	/**
 	 * Set the caption (as plain text)
 	 *
-	 * @param string $caption
+	 * @param string $plainText
 	 */
-	function setCaption( $caption ) {
-		$this->mCaption = htmlspecialchars( $caption );
+	public function setCaption( string $plainText ) {
+		$this->mCaption = htmlspecialchars( $plainText );
 	}
 
 	/**
 	 * Set the caption (as HTML)
-	 *
-	 * @param string $caption
 	 */
-	public function setCaptionHtml( $caption ) {
-		$this->mCaption = $caption;
+	public function setCaptionHtml( string $html ) {
+		$this->mCaption = $html;
 	}
 
 	/**
@@ -60,9 +55,9 @@ class VideoGallery {
 	 *
 	 * @param int $num > 0; invalid numbers will be rejected
 	 */
-	public function setPerRow( $num ) {
+	public function setPerRow( int $num ): void {
 		if ( $num > 0 ) {
-			$this->mPerRow = (int)$num;
+			$this->mPerRow = $num;
 		}
 	}
 
@@ -71,9 +66,9 @@ class VideoGallery {
 	 *
 	 * @param int $num > 0; invalid numbers will be ignored
 	 */
-	public function setWidths( $num ) {
+	public function setWidths( int $num ): void {
 		if ( $num > 0 ) {
-			$this->mWidths = (int)$num;
+			$this->mWidths = $num;
 		}
 	}
 
@@ -82,9 +77,9 @@ class VideoGallery {
 	 *
 	 * @param int $num > 0; invalid numbers will be ignored
 	 */
-	public function setHeights( $num ) {
+	public function setHeights( int $num ): void {
 		if ( $num > 0 ) {
-			$this->mHeights = (int)$num;
+			$this->mHeights = $num;
 		}
 	}
 
@@ -94,7 +89,7 @@ class VideoGallery {
 	 * @param Video $video object that is added to the gallery
 	 * @param string $html additional HTML text to be shown. The name and size of the video are always shown.
 	 */
-	function add( $video, $html = '' ) {
+	public function add( $video, $html = '' ): void {
 		$this->mVideos[] = [ &$video, $html ];
 		wfDebug( __METHOD__ . ':' . $video->getName() . "\n" );
 	}
@@ -105,14 +100,14 @@ class VideoGallery {
 	 * @param Video $video object that is added to the gallery
 	 * @param string $html Additional HTML text to be shown. The name and size of the video are always shown.
 	 */
-	function insert( $video, $html = '' ) {
+	public function insert( $video, $html = '' ): void {
 		array_unshift( $this->mVideos, [ &$video, $html ] );
 	}
 
 	/**
 	 * @return bool True if the gallery contains no videos
 	 */
-	function isEmpty() {
+	public function isEmpty(): bool {
 		return $this->mVideos === [];
 	}
 
@@ -122,8 +117,8 @@ class VideoGallery {
 	 *
 	 * @param bool $f Set to false to disable.
 	 */
-	function setShowFilename( $f ) {
-		$this->mShowFilename = ( $f == true );
+	public function setShowFilename( bool $f ): void {
+		$this->mShowFilename = $f;
 	}
 
 	/**
@@ -134,10 +129,8 @@ class VideoGallery {
 	 * - the video name
 	 * - the additional text provided when adding the video
 	 * - the size of the video
-	 *
-	 * @return string
 	 */
-	function toHTML() {
+	public function toHTML(): string {
 		$lang = RequestContext::getMain()->getLanguage();
 		$linkRenderer = MediaWikiServices::getInstance()->getLinkRenderer();
 
@@ -208,7 +201,7 @@ class VideoGallery {
 	/**
 	 * @return int Number of videos in the gallery
 	 */
-	public function count() {
+	public function count(): int {
 		return count( $this->mVideos );
 	}
 
@@ -217,7 +210,7 @@ class VideoGallery {
 	 *
 	 * @param Title $title Contextual title
 	 */
-	public function setContextTitle( $title ) {
+	public function setContextTitle( Title $title ) {
 		$this->contextTitle = $title;
 	}
 

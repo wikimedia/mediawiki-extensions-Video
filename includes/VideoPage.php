@@ -11,19 +11,9 @@ class VideoPage extends Article {
 	private $video;
 
 	/**
-	 * @param Title $title
-	 */
-	public function __construct( $title ) {
-		parent::__construct( $title );
-	}
-
-	/**
 	 * Overridden to return WikiVideoPage
-	 *
-	 * @param Title $title
-	 * @return WikiVideoPage
 	 */
-	protected function newPage( Title $title ) {
+	protected function newPage( Title $title ): WikiVideoPage {
 		return new WikiVideoPage( $title );
 	}
 
@@ -144,9 +134,8 @@ class VideoPage extends Article {
 	 * video on a wiki page.
 	 *
 	 * @return-taint none
-	 * @return string HTML
 	 */
-	public function getEmbedThisTag() {
+	public function getEmbedThisTag(): string {
 		$code = $this->video->getEmbedThisCode();
 		$code = preg_replace( '/[\n\r\t]/', '', $code ); // replace any non-space whitespace with a space
 		$code = str_replace( '_', ' ', $code ); // replace underscores with spaces
@@ -171,7 +160,7 @@ class VideoPage extends Article {
 	 * If the page we've just displayed is in the "Video" namespace,
 	 * we follow it with an upload history of the video and its usage.
 	 */
-	public function videoHistory() {
+	public function videoHistory(): void {
 		$line = $this->video->nextHistoryLine();
 
 		if ( $line ) {
@@ -216,7 +205,7 @@ class VideoPage extends Article {
 	 * Print out the reupload link at the bottom of a video page for privileged
 	 * users.
 	 */
-	public function uploadLinksBox() {
+	public function uploadLinksBox(): void {
 		$out = $this->getContext()->getOutput();
 		$out->addHTML( '<br /><ul>' );
 

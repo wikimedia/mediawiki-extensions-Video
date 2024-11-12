@@ -52,6 +52,7 @@ class SpecialUnusedVideos extends QueryPage {
 		}
 	}
 
+	/** @inheritDoc */
 	public function getQueryInfo() {
 		$linksMigration = MediaWikiServices::getInstance()->getLinksMigration();
 		[ , $titleField ] = $linksMigration->getTitleFields( 'pagelinks' );
@@ -81,14 +82,17 @@ class SpecialUnusedVideos extends QueryPage {
 		return '';
 	}
 
+	/** @inheritDoc */
 	public function isExpensive() {
 		return true;
 	}
 
+	/** @inheritDoc */
 	public function getOrderFields() {
 		return [ 'title' ];
 	}
 
+	/** @inheritDoc */
 	protected function getGroupName() {
 		return 'maintenance';
 	}

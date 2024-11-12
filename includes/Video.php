@@ -9,17 +9,17 @@ class Video {
 	/**
 	 * @var string database key of the video
 	 */
-	public $name;
+	public string $name;
 
 	/**
 	 * @var Title Title object associated with the current Video
 	 */
-	public $title;
+	public Title $title;
 
 	/**
 	 * @var bool does this video exist? True = exists, false = doesn't.
 	 */
-	public $exists;
+	public bool $exists = false;
 
 	/**
 	 * @var int height of the video, is set to 400 in this class'
@@ -64,17 +64,14 @@ class Video {
 	/**
 	 * @var bool has all the metadata been loaded into the cache?
 	 */
-	public $dataLoaded;
+	public bool $dataLoaded = false;
 
 	/**
 	 * @var int history pointer, see nextHistoryLine() for details
 	 */
 	public $historyLine;
 
-	/**
-	 * @var IContextSource
-	 */
-	protected $context;
+	protected IContextSource $context;
 
 	/**
 	 * @var IResultWrapper
@@ -86,7 +83,7 @@ class Video {
 	 *
 	 * @var string[]
 	 */
-	private static $providers = [
+	private static array $providers = [
 		'bliptv' => BlipTVVideoProvider::class,
 		'dailymotion' => DailyMotionVideoProvider::class,
 		'hulu' => HuluVideoProvider::class,
@@ -112,18 +109,13 @@ class Video {
 	 * @param Title $title Title object associated with the Video
 	 * @param IContextSource $context Nearest context object
 	 */
-	public function __construct( $title, IContextSource $context ) {
-		if ( !is_object( $title ) ) {
-			throw new MWException( 'Video constructor given bogus title.' );
-		}
-
+	public function __construct( Title $title, IContextSource $context ) {
 		$this->title =& $title;
 		$this->name = $title->getDBkey();
 		$this->context = $context;
 		$this->height = 400;
 		$this->width = 400;
 		$this->ratio = 1;
-		$this->dataLoaded = false;
 	}
 
 	/**
@@ -133,13 +125,9 @@ class Video {
 	 * @param IContextSource $context Nearest context object
 	 * @return Video|null A Video object on success, null if the title is invalid
 	 */
-	public static function newFromName( $name, IContextSource $context ) {
+	public static function newFromName( $name, IContextSource $context ): ?self {
 		$title = Title::makeTitleSafe( NS_VIDEO, $name );
-		if ( is_object( $title ) ) {
-			return new Video( $title, $context );
-		} else {
-			return null;
-		}
+		return $title ? new Video( $title, $context ) : null;
 	}
 
 	/**
@@ -311,7 +299,7 @@ class Video {
 	/**
 	 * Save the video data to cache
 	 */
-	private function saveToCache() {
+	private function saveToCache(): void {
 		if ( $this->exists() ) {
 			$cachedValues = [
 				'url' => $this->url,
@@ -334,17 +322,15 @@ class Video {
 	/**
 	 * Clear the video data from cache
 	 */
-	public function clearCache() {
+	public function clearCache(): void {
 		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
 		$cache->delete( $this->getCacheKey() );
 	}
 
 	/**
 	 * Get the cache key for the current video.
-	 *
-	 * @return string
 	 */
-	public function getCacheKey() {
+	public function getCacheKey(): string {
 		// memcached does not like spaces, so replace 'em with an underscore
 		$safeVideoName = str_replace( ' ', '_', $this->getName() );
 		$cache = MediaWikiServices::getInstance()->getMainWANObjectCache();
@@ -355,7 +341,7 @@ class Video {
 	/**
 	 * Load video from the database
 	 */
-	public function loadFromDB() {
+	public function loadFromDB(): void {
 		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
 
 		$row = $dbr->selectRow(
@@ -385,7 +371,7 @@ class Video {
 	/**
 	 * Load video metadata from cache or database, unless it's already loaded.
 	 */
-	public function load() {
+	public function load(): void {
 		if ( !$this->dataLoaded ) {
 			if ( !$this->loadFromCache() ) {
 				$this->loadFromDB();
@@ -397,36 +383,27 @@ class Video {
 
 	/**
 	 * Return the name of this video
-	 *
-	 * @return string
 	 */
-	public function getName() {
+	public function getName(): string {
 		return $this->name;
 	}
 
-	/**
-	 * @return Title
-	 */
-	public function getTitle() {
+	public function getTitle(): Title {
 		return $this->title;
 	}
 
 	/**
 	 * Return the URL of this video
-	 *
-	 * @return string
 	 */
-	public function getURL() {
+	public function getURL(): string {
 		$this->load();
 		return strip_tags( $this->url );
 	}
 
 	/**
 	 * Return the type of this video
-	 *
-	 * @return string
 	 */
-	public function getType() {
+	public function getType(): string {
 		$this->load();
 		return $this->type;
 	}
@@ -434,7 +411,7 @@ class Video {
 	/**
 	 * @return bool True if the Video exists
 	 */
-	public function exists() {
+	public function exists(): bool {
 		$this->load();
 		return $this->exists;
 	}
@@ -444,7 +421,7 @@ class Video {
 	 *
 	 * @return string Video embed code
 	 */
-	public function getEmbedCode() {
+	public function getEmbedCode(): string {
 		if ( !isset( self::$providers[$this->type] ) ) {
 			return '';
 		}
@@ -462,7 +439,7 @@ class Video {
 	 * @param string $code
 	 * @return bool True if it is, otherwise false
 	 */
-	public static function isURL( $code ) {
+	public static function isURL( string $code ): bool {
 		return preg_match( '%^(?:http|https|ftp)://(?:www\.)?.*$%i', $code ) ? true : false;
 	}
 
@@ -473,7 +450,7 @@ class Video {
 	 * @param string $code The video's HTML embedding code
 	 * @return string URL of the video
 	 */
-	public static function getURLfromEmbedCode( $code ) {
+	public static function getURLfromEmbedCode( string $code ): string {
 		preg_match(
 			// iframe for YouTube support. Who uses <embed> these days anyway?
 			// It's 2016, get on with the times!
@@ -516,10 +493,8 @@ class Video {
 
 	/**
 	 * Populates the $providerDomains variable
-	 *
-	 * @return void
 	 */
-	protected static function getDomainsForProviders() {
+	protected static function getDomainsForProviders(): void {
 		if ( self::$providerDomains !== null ) {
 			return;
 		}
@@ -541,7 +516,7 @@ class Video {
 	 * @return string Provider name or 'unknown' if we were unable to figure
 	 *                 it out
 	 */
-	public static function getProviderByURL( $url ) {
+	public static function getProviderByURL( string $url ): string {
 		$host = wfParseUrl( $url );
 		if ( !$host ) {
 			return 'unknown';
@@ -558,24 +533,33 @@ class Video {
 		return 'unknown';
 	}
 
-	public function setWidth( $width ) {
+	/**
+	 * @param int $width
+	 */
+	public function setWidth( $width ): void {
 		if ( is_numeric( $width ) ) {
 			$this->width = $width;
 		}
 	}
 
-	public function setHeight( $height ) {
+	/**
+	 * @param int $height
+	 */
+	public function setHeight( $height ): void {
 		if ( is_numeric( $height ) ) {
 			$this->height = $height;
 		}
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getWidth() {
 		return $this->width;
 	}
 
-	public function getHeight() {
-		return floor( $this->getWidth() / $this->ratio );
+	public function getHeight(): int {
+		return (int)floor( $this->getWidth() / $this->ratio );
 		// return $this->height;
 	}
 
@@ -584,7 +568,7 @@ class Video {
 	 *
 	 * @return string Wikitext to insert on a wiki page
 	 */
-	public function getEmbedThisCode() {
+	public function getEmbedThisCode(): string {
 		$videoName = htmlspecialchars( $this->getName(), ENT_QUOTES );
 		return "[[Video:{$videoName}|{$this->getWidth()}px]]";
 		// return "<video name=\"{$this->getName()}\" width=\"{$this->getWidth()}\" height=\"{$this->getHeight()}\"></video>";
@@ -642,7 +626,7 @@ class Video {
 	/**
 	 * Reset the history pointer to the first element of the history
 	 */
-	public function resetHistory() {
+	public function resetHistory(): void {
 		$this->historyLine = 0;
 	}
 

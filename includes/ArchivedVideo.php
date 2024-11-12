@@ -49,7 +49,7 @@ class ArchivedVideo extends ArchivedFile {
 	/** @var int File size in bytes */
 	private $size;
 
-	/** @var int size in bytes */
+	/** @var int Bitdepth */
 	private $bits;
 
 	/** @var int */
@@ -317,7 +317,6 @@ class ArchivedVideo extends ArchivedFile {
 	}
 
 	/**
-	 * Return the bits of the image file, in bytes
 	 * @return int
 	 */
 	public function getBits() {

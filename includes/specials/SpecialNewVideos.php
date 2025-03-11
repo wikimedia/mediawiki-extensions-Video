@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Special:NewVideos - a special page for showing recently added videos
  * Reuses various bits and pieces from SpecialNewimages.php
@@ -6,6 +7,10 @@
  * @file
  * @ingroup Extensions
  */
+
+use MediaWiki\Html\FormOptions;
+use MediaWiki\Html\Html;
+use MediaWiki\Request\DerivativeRequest;
 
 class NewVideos extends IncludableSpecialPage {
 	/** @var FormOptions */

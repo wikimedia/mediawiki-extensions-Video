@@ -1,10 +1,13 @@
 <?php
+
 /**
  * <videogallery> parser hook tag
  *
  * @file
  * @ingroup Extensions
  */
+
+use MediaWiki\Title\Title;
 
 class VideoGalleryHooks {
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Special:AddVideo - special page for adding Videos
  *

@@ -6,6 +6,7 @@
  */
 
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Title\Title;
 
 class VideoGallery {
 	/** @var array[] Pairs of Video objects and a HTML string */

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * <videogallerypopulate> parser hook extension -- display a gallery of all
  * videos in a specific category
@@ -8,6 +9,7 @@
  */
 
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Title\Title;
 
 class VideoGalleryPopulateHooks {
 

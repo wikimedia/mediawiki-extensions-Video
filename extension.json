@@ -10,7 +10,7 @@
 	],
 	"license-name": "GPL-2.0-or-later",
 	"requires": {
-		"MediaWiki": ">= 1.39.0"
+		"MediaWiki": ">= 1.40.0"
 	},
 	"url": "https://www.mediawiki.org/wiki/Extension:Video",
 	"descriptionmsg": "video-desc",
@@ -155,5 +155,5 @@
 			"addvideo": true
 		}
 	},
-	"manifest_version": 1
+	"manifest_version": 2
 }

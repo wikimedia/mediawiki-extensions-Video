@@ -1,13 +1,16 @@
 <?php
 
+use MediaWiki\Category\Category;
+use MediaWiki\Category\CategoryViewer;
 use MediaWiki\MainConfigNames;
+use MediaWiki\MediaWikiServices;
+use MediaWiki\Title\Title;
 
 /**
  * This is like a normal CategoryViewer, except that it supports videos.
  * This is initialized for every category page by the VideoCategoryPage class,
  * which in turn is fired up by VideoHooks::videoFromTitle function in Video.hooks.php.
  */
-use MediaWiki\MediaWikiServices;
 
 class CategoryWithVideoViewer extends CategoryViewer {
 

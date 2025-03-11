@@ -1,8 +1,12 @@
 <?php
+
 /**
  * @ingroup Pager
  */
+
+use MediaWiki\Html\FormOptions;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Title\Title;
 
 class NewVideosPager extends RangeChronologicalPager {
 

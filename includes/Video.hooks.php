@@ -31,7 +31,7 @@ class VideoHooks {
 			$localizedVideoName = 'Video';
 		}
 		$pattern = '@(\[\[' . $localizedVideoName . ':)([^\]]*?)].*?\]@si';
-		$text = preg_replace_callback( $pattern, 'VideoHooks::renderVideo', $text );
+		$text = preg_replace_callback( $pattern, [ self::class, 'renderVideo' ], $text );
 	}
 
 	/**
@@ -112,7 +112,7 @@ class VideoHooks {
 	 * @return void
 	 */
 	public static function onParserFirstCallInit( $parser ) {
-		$parser->setHook( 'video', 'VideoHooks::videoEmbed' );
+		$parser->setHook( 'video', [ self::class, 'videoEmbed' ] );
 	}
 
 	/**

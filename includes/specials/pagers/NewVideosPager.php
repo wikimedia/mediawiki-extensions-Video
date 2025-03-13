@@ -86,7 +86,7 @@ class NewVideosPager extends RangeChronologicalPager {
 				->getGroupsWithPermission( 'bot' );
 
 			if ( count( $groupsWithBotPermission ) ) {
-				$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
+				$dbr = MediaWikiServices::getInstance()->getConnectionProvider()->getReplicaDatabase();
 				$tables[] = 'user_groups';
 				$tables[] = 'actor';
 				$fields[] = 'actor_id';
@@ -132,7 +132,7 @@ class NewVideosPager extends RangeChronologicalPager {
 
 		$likeVal = $opts->getValue( 'wpIlMatch' );
 		if ( $likeVal !== '' && !$this->getConfig()->get( 'MiserMode' ) ) {
-			$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
+			$dbr = MediaWikiServices::getInstance()->getConnectionProvider()->getReplicaDatabase();
 			$likeObj = Title::newFromText( $likeVal );
 			if ( $likeObj instanceof Title ) {
 				$like = $dbr->buildLike(

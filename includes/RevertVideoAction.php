@@ -48,7 +48,7 @@ class RevertVideoAction extends FormAction {
 			throw new ErrorPageError( 'internalerror', 'unexpected', [ 'oldvideo', $oldvideo ] );
 		}
 
-		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
+		$dbr = MediaWikiServices::getInstance()->getConnectionProvider()->getReplicaDatabase();
 		$row = $dbr->selectRow(
 			'oldvideo',
 			[ 'ov_url', 'ov_type', 'ov_timestamp', 'ov_url', 'ov_name' ],

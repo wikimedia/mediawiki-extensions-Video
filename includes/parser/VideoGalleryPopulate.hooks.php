@@ -55,7 +55,7 @@ class VideoGalleryPopulateHooks {
 			$params['LIMIT'] = $limit;
 		}
 
-		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
+		$dbr = MediaWikiServices::getInstance()->getConnectionProvider()->getReplicaDatabase();
 		$res = $dbr->select(
 			[ 'page', 'categorylinks' ],
 			'page_title',

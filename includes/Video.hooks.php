@@ -213,7 +213,7 @@ class VideoHooks {
 			$where['video_timestamp'] = $oldVideo;
 		}
 
-		$dbw = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
+		$dbw = MediaWikiServices::getInstance()->getConnectionProvider()->getPrimaryDatabase();
 		// Delicious copypasta from Article.php, function doDeleteArticle()
 		// with some modifications
 		$archiveName = gmdate( 'YmdHis' ) . "!{$videoName}";
@@ -274,7 +274,7 @@ class VideoHooks {
 			return;
 		}
 
-		$dbw = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_PRIMARY );
+		$dbw = MediaWikiServices::getInstance()->getConnectionProvider()->getPrimaryDatabase();
 
 		$result = $dbw->select(
 			'oldvideo',

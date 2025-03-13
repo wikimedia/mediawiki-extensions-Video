@@ -86,7 +86,7 @@ class CategoryWithVideoViewer extends CategoryViewer {
 
 	/** @inheritDoc */
 	protected function doCategoryQuery() {
-		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA, 'category' );
+		$dbr = MediaWikiServices::getInstance()->getConnectionProvider()->getReplicaDatabase( false, 'category' );
 
 		$this->nextPage = [
 			'page' => null,

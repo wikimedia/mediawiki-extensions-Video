@@ -171,7 +171,7 @@ class ArchivedVideo extends ArchivedFile {
 
 		if ( !$this->title || $this->title->getNamespace() == NS_VIDEO ) {
 			$this->dataLoaded = true; // set it here, to have also true on miss
-			$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA );
+			$dbr = MediaWikiServices::getInstance()->getConnectionProvider()->getReplicaDatabase();
 			$row = $dbr->selectRow(
 				'oldvideo',
 				self::selectFields(),

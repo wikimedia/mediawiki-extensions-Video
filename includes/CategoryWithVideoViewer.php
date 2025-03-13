@@ -17,7 +17,8 @@ class CategoryWithVideoViewer extends CategoryViewer {
 	/** @var VideoGallery */
 	private $videogallery;
 
-	function clearCategoryState() {
+	/** @inheritDoc */
+	protected function clearCategoryState() {
 		$this->articles = [];
 		$this->articles_start_char = [];
 		$this->children = [];
@@ -28,12 +29,8 @@ class CategoryWithVideoViewer extends CategoryViewer {
 		$this->videogallery = new VideoGallery();
 	}
 
-	/**
-	 * Format the category data list.
-	 *
-	 * @return string HTML output
-	 */
-	function getHTML() {
+	/** @inheritDoc */
+	public function getHTML(): string {
 		$this->showGallery = $this->getConfig()->get( MainConfigNames::CategoryMagicGallery )
 			&& !$this->getOutput()->mNoGallery;
 
@@ -57,7 +54,7 @@ class CategoryWithVideoViewer extends CategoryViewer {
 	 *
 	 * @return string HTML when there are videos on the category
 	 */
-	function getVideoSection() {
+	private function getVideoSection(): string {
 		if ( !$this->videogallery->isEmpty() ) {
 			return "<div id=\"mw-category-media\">\n" . '<h2>' .
 				$this->msg(
@@ -78,7 +75,7 @@ class CategoryWithVideoViewer extends CategoryViewer {
 	 *
 	 * @param Title $title
 	 */
-	private function addVideo( Title $title ) {
+	private function addVideo( Title $title ): void {
 		$video = new Video( $title, $this->getContext() );
 		if ( $this->flip ) {
 			$this->videogallery->insert( $video );
@@ -87,7 +84,8 @@ class CategoryWithVideoViewer extends CategoryViewer {
 		}
 	}
 
-	function doCategoryQuery() {
+	/** @inheritDoc */
+	protected function doCategoryQuery() {
 		$dbr = MediaWikiServices::getInstance()->getDBLoadBalancer()->getConnection( DB_REPLICA, 'category' );
 
 		$this->nextPage = [

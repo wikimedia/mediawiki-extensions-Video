@@ -60,19 +60,30 @@ use Wikimedia\Rdbms\IResultWrapper;
  * @ingroup SpecialPage
  */
 class SpecialUndeleteWithVideoSupport extends SpecialPage {
+
+	/** @var string|null */
 	private $mAction;
+	/** @var string|null */
 	private $mTarget;
+	/** @var string */
 	private $mTimestamp;
+	/** @var bool */
 	private $mRestore;
+	/** @var bool */
 	private $mRevdel;
+	/** @var bool */
 	private $mInvert;
+	/** @var string|null */
 	private $mFilename;
 	/** @var string[] */
 	private $mTargetTimestamp = [];
+	/** @var bool */
 	private $mAllowed;
+	/** @var bool */
 	private $mCanView;
 	/** @var string */
 	private $mComment = '';
+	/** @var string|null */
 	private $mToken;
 	/** @var bool|null */
 	private $mPreview;
@@ -282,6 +293,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		}
 	}
 
+	/** @inheritDoc */
 	public function userCanExecute( User $user ) {
 		return $this->isAllowed( $this->mRestriction, $user );
 	}
@@ -312,6 +324,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		}
 	}
 
+	/** @inheritDoc */
 	public function execute( $par ) {
 		$this->useTransactionalTimeLimit();
 
@@ -1179,6 +1192,12 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		return true;
 	}
 
+	/**
+	 * @param stdClass $row
+	 * @param string|null $earliestLiveTime
+	 * @param int $remaining
+	 * @return string
+	 */
 	protected function formatRevisionRow( $row, $earliestLiveTime, $remaining ) {
 		$revRecord = $this->revisionStore->newRevisionFromArchiveRow(
 				$row,
@@ -1565,6 +1584,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		return $this->prefixSearchString( $search, $limit, $offset, $this->searchEngineFactory );
 	}
 
+	/** @inheritDoc */
 	protected function getGroupName() {
 		return 'pagetools';
 	}

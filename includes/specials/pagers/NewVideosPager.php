@@ -66,7 +66,7 @@ class NewVideosPager extends RangeChronologicalPager {
 		return '';
 	}
 
-	public function getQueryInfo() {
+	public function getQueryInfo(): array {
 		$opts = $this->opts;
 		$conds = $jconds = [];
 		$tables = [ 'video' ];
@@ -157,11 +157,11 @@ class NewVideosPager extends RangeChronologicalPager {
 		return $query;
 	}
 
-	public function getIndexField() {
+	public function getIndexField(): string {
 		return 'video_timestamp';
 	}
 
-	public function getStartBody() {
+	public function getStartBody(): string {
 		if ( !$this->gallery ) {
 			$this->gallery = new VideoGallery();
 		}
@@ -169,11 +169,11 @@ class NewVideosPager extends RangeChronologicalPager {
 		return '';
 	}
 
-	public function getEndBody() {
+	public function getEndBody(): string {
 		return $this->gallery->toHTML();
 	}
 
-	public function getShownVideosCount() {
+	public function getShownVideosCount(): int {
 		return $this->gallery->count();
 	}
 }

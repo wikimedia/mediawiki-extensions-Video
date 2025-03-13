@@ -100,7 +100,11 @@ class RevertVideoAction extends FormAction {
 	 */
 	public function onSubmit( $data ) {
 		// Record upload and update metadata cache
-		$this->video = Video::newFromName( $this->oldvideo->ov_name, $this->getContext() );
+		$video = Video::newFromName( $this->oldvideo->ov_name, $this->getContext() );
+		if ( !$video ) {
+			return false;
+		}
+		$this->video = $video;
 		$this->video->addVideo( $this->oldvideo->ov_url, $this->oldvideo->ov_type, '' );
 
 		return true;
@@ -121,10 +125,12 @@ class RevertVideoAction extends FormAction {
 		$out->returnToMain( null, $descTitle->getPrefixedText() );
 	}
 
+	/** @inheritDoc */
 	protected function getPageTitle() {
 		return $this->msg( 'filerevert', $this->getTitle()->getText() )->escaped();
 	}
 
+	/** @inheritDoc */
 	protected function getDescription() {
 		$this->getOutput()->addBacklinkSubtitle( $this->getTitle() );
 		return '';

@@ -211,7 +211,7 @@ class ArchivedVideo extends ArchivedFile {
 	 * Fields in the oldvideo table
 	 * @return array
 	 */
-	static function selectFields() {
+	private static function selectFields() {
 		return [
 			'ov_name',
 			'ov_archive_name',

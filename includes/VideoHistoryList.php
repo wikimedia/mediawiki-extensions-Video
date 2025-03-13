@@ -1,22 +1,33 @@
 <?php
 
 use MediaWiki\Linker\Linker;
+use MediaWiki\Linker\LinkTarget;
 use MediaWiki\MediaWikiServices;
 
 class VideoHistoryList {
-	public function beginVideoHistoryList() {
+	public function beginVideoHistoryList(): string {
 		$s = "\n" .
 			Xml::element( 'h2', [ 'id' => 'filehistory' ], wfMessage( 'video-history' )->plain() ) .
 			"\n<p>" . wfMessage( 'video-histlegend' )->parse() . "</p>\n" . '<ul class="special">';
 		return $s;
 	}
 
-	public function endVideoHistoryList() {
+	public function endVideoHistoryList(): string {
 		$s = "</ul>\n";
 		return $s;
 	}
 
-	public function videoHistoryLine( $isCur, $timestamp, $video, $actor_id, $url, $type, $title ) {
+	/**
+	 * @param bool $isCur
+	 * @param string $timestamp
+	 * @param string $video
+	 * @param int $actor_id
+	 * @param string $url
+	 * @param string $type
+	 * @param LinkTarget $title
+	 * @return string
+	 */
+	public function videoHistoryLine( bool $isCur, $timestamp, $video, $actor_id, $url, $type, $title ): string {
 		$services = MediaWikiServices::getInstance();
 		$context = RequestContext::getMain();
 		$lang = $context->getLanguage();

@@ -120,7 +120,7 @@ class AddVideo extends FormSpecialPage {
 	public function validateTitleField( $value, $allData ) {
 		$video = Video::newFromName( $value, $this->getContext() );
 
-		if ( $video === null || !( $video instanceof Video ) ) {
+		if ( !$video ) {
 			return $this->msg( 'badtitle' )->plain();
 		}
 

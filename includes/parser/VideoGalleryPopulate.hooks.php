@@ -76,7 +76,9 @@ class VideoGalleryPopulateHooks {
 
 		foreach ( $res as $row ) {
 			$video = Video::newFromName( $row->page_title, RequestContext::getMain() );
-			$gallery->add( $video );
+			if ( $video ) {
+				$gallery->add( $video );
+			}
 		}
 
 		return $gallery->toHTML();

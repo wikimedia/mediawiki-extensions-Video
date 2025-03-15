@@ -29,8 +29,7 @@ class VideoGallery {
 	 * Get the caption (as plain text)
 	 */
 	public function getCaption(): string {
-		// @phan-suppress-next-line PhanPluginDuplicateConditionalNullCoalescing
-		return ( isset( $this->mCaption ) ) ? $this->mCaption : '';
+		return $this->mCaption ?? '';
 	}
 
 	/**

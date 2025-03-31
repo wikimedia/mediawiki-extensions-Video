@@ -30,7 +30,7 @@ class CategoryWithVideoViewer extends CategoryViewer {
 	/** @inheritDoc */
 	public function getHTML() {
 		$this->showGallery = $this->getConfig()->get( MainConfigNames::CategoryMagicGallery )
-			&& !$this->getOutput()->mNoGallery;
+			&& !$this->getOutput()->getNoGallery();
 
 		$this->clearCategoryState();
 		$this->doCategoryQuery();

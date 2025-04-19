@@ -1,6 +1,7 @@
 <?php
 
 use MediaWiki\MediaWikiServices;
+use MediaWiki\SpecialPage\SpecialPage;
 use MediaWiki\Title\Title;
 
 class VideoPage extends Article {
@@ -72,12 +73,13 @@ class VideoPage extends Article {
 
 		$limit = 100;
 
-		$dbr = MediaWikiServices::getInstance()->getConnectionProvider()->getReplicaDatabase();
+		$services = MediaWikiServices::getInstance();
+		$dbr = $services->getConnectionProvider()->getReplicaDatabase();
 
 		// WikiaVideo used the imagelinks table here because that extension
 		// adds everything into core (archive, filearchive, imagelinks, etc.)
 		// tables instead of using its own tables
-		$linksMigration = MediaWikiServices::getInstance()->getLinksMigration();
+		$linksMigration = $services->getLinksMigration();
 		[ $nsField, $titleField ] = $linksMigration->getTitleFields( 'pagelinks' );
 		$queryInfo = $linksMigration->getQueryInfo( 'pagelinks' );
 		$res = $dbr->select(

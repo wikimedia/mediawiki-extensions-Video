@@ -2,8 +2,6 @@
 
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
-use Wikimedia\Rdbms\IDatabase;
-use Wikimedia\Rdbms\IResultWrapper;
 
 /**
  * Special:UnusedVideos - a special page for unused videos
@@ -12,23 +10,13 @@ use Wikimedia\Rdbms\IResultWrapper;
  * @file
  * @ingroup Extensions
  */
-class SpecialUnusedVideos extends QueryPage {
+class SpecialUnusedVideos extends MediaWiki\SpecialPage\QueryPage {
 	public function __construct() {
 		parent::__construct( 'UnusedVideos' );
 	}
 
 	/**
-	 * Format and output report results using the given information plus
-	 * OutputPage
-	 *
-	 * @param OutputPage $out OutputPage to print to
-	 * @param Skin $skin User skin to use [unused]
-	 * @param IDatabase $dbr (read) connection to use
-	 * @param IResultWrapper $res Result pointer
-	 * @param int $num Number of available result rows
-	 * @param int $offset Paging offset
-	 * @suppress PhanParamSignatureMismatch This is just a documentation/MW version mismatch thing,
-	 * not a real issue and the suppression can be removed once we support&require a 1.4x series MW
+	 * @inheritDoc
 	 */
 	protected function outputResults( $out, $skin, $dbr, $res, $num, $offset ) {
 		if ( $num > 0 ) {
@@ -74,7 +62,7 @@ class SpecialUnusedVideos extends QueryPage {
 	/**
 	 * Gotta override this since it's abstract
 	 *
-	 * @param Skin $skin
+	 * @param MediaWiki\Skin\Skin $skin
 	 * @param stdClass $result
 	 * @return string
 	 */

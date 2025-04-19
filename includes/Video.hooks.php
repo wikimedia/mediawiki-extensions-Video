@@ -4,6 +4,7 @@ use MediaWiki\Html\Html;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Page\ProperPageIdentity;
 use MediaWiki\Permissions\Authority;
+use MediaWiki\SpecialPage\SpecialPage;
 use MediaWiki\Title\Title;
 
 /**
@@ -19,9 +20,9 @@ class VideoHooks {
 	 * Convert [[Video:Video Name]] tags to <video/> hook; calls
 	 * VideoHooks::renderVideo to do that.
 	 *
-	 * @param Parser $parser
+	 * @param MediaWiki\Parser\Parser $parser
 	 * @param string &$text Input text to search for [[Video:]] tags
-	 * @param StripState $strip_state [unused]
+	 * @param MediaWiki\Parser\StripState $strip_state [unused]
 	 */
 	public static function videoTag( $parser, &$text, $strip_state ) {
 		$contLang = MediaWikiServices::getInstance()->getContentLanguage();
@@ -109,7 +110,7 @@ class VideoHooks {
 	/**
 	 * Register the new <video> hook with MediaWiki's parser.
 	 *
-	 * @param Parser $parser
+	 * @param MediaWiki\Parser\Parser $parser
 	 * @return void
 	 */
 	public static function onParserFirstCallInit( $parser ) {
@@ -122,7 +123,7 @@ class VideoHooks {
 	 * @param string $input [unused]
 	 * @param array $argv Array of user-supplied arguments; name must be present.
 	 *                     Optional args include width, height and align.
-	 * @param Parser $parser
+	 * @param MediaWiki\Parser\Parser $parser
 	 * @return string Video HTML code suitable for outputting
 	 */
 	public static function videoEmbed( $input, $argv, Parser $parser ) {
@@ -189,8 +190,8 @@ class VideoHooks {
 			return;
 		}
 
-		$title = MediaWikiServices::getInstance()->getWikiPageFactory()
-			->newFromTitle( $page )->getTitle();
+		$services = MediaWikiServices::getInstance();
+		$title = $services->getWikiPageFactory()->newFromTitle( $page )->getTitle();
 
 		$context = RequestContext::getMain();
 		$videoObj = new Video( $title, $context );
@@ -214,7 +215,7 @@ class VideoHooks {
 			$where['video_timestamp'] = $oldVideo;
 		}
 
-		$dbw = MediaWikiServices::getInstance()->getConnectionProvider()->getPrimaryDatabase();
+		$dbw = $services->getConnectionProvider()->getPrimaryDatabase();
 		// Delicious copypasta from Article.php, function doDeleteArticle()
 		// with some modifications
 		$archiveName = gmdate( 'YmdHis' ) . "!{$videoName}";
@@ -353,7 +354,7 @@ class VideoHooks {
 	/**
 	 * Applies the schema changes when the user runs maintenance/update.php.
 	 *
-	 * @param DatabaseUpdater $updater
+	 * @param MediaWiki\Installer\DatabaseUpdater $updater
 	 */
 	public static function onLoadExtensionSchemaUpdates( $updater ) {
 		$dir = __DIR__ . '/../sql';
@@ -400,14 +401,9 @@ class VideoHooks {
 			$db->fieldExists( 'oldvideo', 'ov_user_name', __METHOD__ )
 		) {
 			// 2) populate the columns with correct values
-			// PITFALL WARNING! Do NOT change this to $updater->runMaintenance,
-			// THEY ARE NOT THE SAME THING and this MUST be using addExtensionUpdate
-			// instead for the code to work as desired!
-			// HT Skizzerz
 			$updater->addExtensionUpdate( [
 				'runMaintenance',
-				'MigrateOldVideoUserColumnsToActor',
-				'../maintenance/migrateOldVideoUserColumnsToActor.php'
+				'MigrateOldVideoUserColumnsToActor'
 			] );
 
 			// 3) drop old columns

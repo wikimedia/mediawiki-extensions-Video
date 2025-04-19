@@ -9,7 +9,7 @@
 
 use MediaWiki\User\UserOptionsManager;
 
-class AddVideo extends FormSpecialPage {
+class AddVideo extends MediaWiki\SpecialPage\FormSpecialPage {
 	/**
 	 * New video object created when the title field is validated
 	 *

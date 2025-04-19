@@ -1,6 +1,6 @@
 {
 	"name": "Video",
-	"version": "1.9.4",
+	"version": "1.10",
 	"author": [
 		"David Pean",
 		"Jack Phoenix",
@@ -10,7 +10,7 @@
 	],
 	"license-name": "GPL-2.0-or-later",
 	"requires": {
-		"MediaWiki": ">= 1.42.0"
+		"MediaWiki": ">= 1.43.0"
 	},
 	"url": "https://www.mediawiki.org/wiki/Extension:Video",
 	"descriptionmsg": "video-desc",
@@ -40,7 +40,8 @@
 				"SearchEngineFactory",
 				"UndeletePageFactory",
 				"ArchivedRevisionLookup",
-				"CommentFormatter"
+				"CommentFormatter",
+				"WatchlistManager"
 			]
 		}
 	},
@@ -99,35 +100,19 @@
 		"SpecialUnusedVideos": "includes/specials/SpecialUnusedVideos.php"
 	},
 	"Hooks": {
-		"ArticleFromTitle": [
-			"VideoHooks::onArticleFromTitle"
-		],
-		"ParserBeforeInternalParse": [
-			"VideoHooks::videoTag"
-		],
-		"ParserBeforePreprocess": [
-			"VideoHooks::videoTag"
-		],
+		"ArticleFromTitle": "VideoHooks::onArticleFromTitle",
+		"ParserBeforeInternalParse": "VideoHooks::videoTag",
+		"ParserBeforePreprocess": "VideoHooks::videoTag",
 		"ParserFirstCallInit": [
 			"VideoHooks::onParserFirstCallInit",
 			"VideoGalleryHooks::onParserFirstCallInit",
 			"VideoGalleryPopulateHooks::onParserFirstCallInit"
 		],
-		"PageDelete": [
-			"VideoHooks::onPageDelete"
-		],
-		"PageUndelete": [
-			"VideoHooks::onPageUndelete"
-		],
-		"UndeleteForm::showHistory": [
-			"VideoHooks::onUndeleteForm__showHistory"
-		],
-		"LoadExtensionSchemaUpdates": [
-			"VideoHooks::onLoadExtensionSchemaUpdates"
-		],
-		"wgQueryPages": [
-			"VideoHooks::onWgQueryPages"
-		]
+		"PageDelete": "VideoHooks::onPageDelete",
+		"PageUndelete": "VideoHooks::onPageUndelete",
+		"UndeleteForm::showHistory": "VideoHooks::onUndeleteForm__showHistory",
+		"LoadExtensionSchemaUpdates": "VideoHooks::onLoadExtensionSchemaUpdates",
+		"wgQueryPages": "VideoHooks::onWgQueryPages"
 	},
 	"ResourceFileModulePaths": {
 		"localBasePath": "",

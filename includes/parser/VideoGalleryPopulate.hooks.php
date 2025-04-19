@@ -14,7 +14,7 @@ use MediaWiki\Title\Title;
 class VideoGalleryPopulateHooks {
 
 	/**
-	 * @param Parser $parser
+	 * @param MediaWiki\Parser\Parser $parser
 	 */
 	public static function onParserFirstCallInit( $parser ) {
 		$parser->setHook( 'videogallerypopulate', [ self::class, 'renderVideoGalleryPopulate' ] );
@@ -23,7 +23,7 @@ class VideoGalleryPopulateHooks {
 	/**
 	 * @param string $input
 	 * @param string[] $args
-	 * @param Parser $parser
+	 * @param MediaWiki\Parser\Parser $parser
 	 * @return string
 	 */
 	public static function renderVideoGalleryPopulate( $input, $args, $parser ) {

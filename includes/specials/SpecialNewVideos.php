@@ -10,9 +10,10 @@
 
 use MediaWiki\Html\FormOptions;
 use MediaWiki\Html\Html;
+use MediaWiki\HTMLForm\HTMLForm;
 use MediaWiki\Request\DerivativeRequest;
 
-class NewVideos extends IncludableSpecialPage {
+class NewVideos extends MediaWiki\SpecialPage\IncludableSpecialPage {
 	/** @var FormOptions */
 	protected $opts;
 

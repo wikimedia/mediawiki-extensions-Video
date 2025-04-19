@@ -140,7 +140,8 @@ class Video {
 	 */
 	public function addVideo( $url, $type, $categories, $watch = false ) {
 		$user = $this->context->getUser();
-		$dbw = MediaWikiServices::getInstance()->getConnectionProvider()->getPrimaryDatabase();
+		$services = MediaWikiServices::getInstance();
+		$dbw = $services->getConnectionProvider()->getPrimaryDatabase();
 
 		$now = $dbw->timestamp();
 
@@ -204,8 +205,6 @@ class Video {
 				__METHOD__
 			);
 		}
-
-		$services = MediaWikiServices::getInstance();
 
 		$descTitle = $this->getTitle();
 		$page = $services->getWikiPageFactory()->newFromTitle( $descTitle );
@@ -274,7 +273,8 @@ class Video {
 		$this->dataLoaded = false;
 
 		$key = $this->getCacheKey();
-		$data = MediaWikiServices::getInstance()->getMainWANObjectCache()->get( $key );
+		$services = MediaWikiServices::getInstance();
+		$data = $services->getMainWANObjectCache()->get( $key );
 
 		if ( is_array( $data ) && $data ) {
 			$this->url = $data['url'];
@@ -285,7 +285,7 @@ class Video {
 			$this->exists = true;
 		}
 
-		$stats = MediaWikiServices::getInstance()->getStatsdDataFactory();
+		$stats = $services->getStatsdDataFactory();
 		if ( $this->dataLoaded ) {
 			wfDebug( "Loaded Video:{$this->name} from cache\n" );
 			$stats->increment( 'video_cache_hit' );

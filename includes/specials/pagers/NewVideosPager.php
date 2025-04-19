@@ -43,11 +43,12 @@ class NewVideosPager extends RangeChronologicalPager {
 	 */
 	public function formatRow( $row ) {
 		$name = $row->video_name;
-		$user = User::newFromActorId( $row->video_actor );
+		$services = MediaWikiServices::getInstance();
+		$user = $services->getUserFactory()->newFromActorId( $row->video_actor );
 
 		$title = Title::makeTitle( NS_VIDEO, $name );
 		$video = new Video( $title, $this->getContext() );
-		$ul = MediaWikiServices::getInstance()->getLinkRenderer()->makeLink(
+		$ul = $services->getLinkRenderer()->makeLink(
 			$user->getUserPage(),
 			$user->getName()
 		);
@@ -69,20 +70,22 @@ class NewVideosPager extends RangeChronologicalPager {
 		$fields = [ 'video_name', 'video_url', 'video_actor', 'video_timestamp' ];
 		$options = [];
 
+		$services = MediaWikiServices::getInstance();
+
 		$user = $opts->getValue( 'user' );
 		if ( $user !== '' ) {
-			$userObj = User::newFromName( $user );
+			$userObj = $services->getUserFactory()->newFromName( $user );
 			if ( $userObj ) {
 				$conds['video_actor'] = $userObj->getActorId();
 			}
 		}
 
 		if ( $opts->getValue( 'hidebots' ) ) {
-			$groupsWithBotPermission = MediaWikiServices::getInstance()->getGroupPermissionsLookup()
+			$groupsWithBotPermission = $services->getGroupPermissionsLookup()
 				->getGroupsWithPermission( 'bot' );
 
 			if ( count( $groupsWithBotPermission ) ) {
-				$dbr = MediaWikiServices::getInstance()->getConnectionProvider()->getReplicaDatabase();
+				$dbr = $services->getConnectionProvider()->getReplicaDatabase();
 				$tables[] = 'user_groups';
 				$tables[] = 'actor';
 				$fields[] = 'actor_id';
@@ -128,7 +131,7 @@ class NewVideosPager extends RangeChronologicalPager {
 
 		$likeVal = $opts->getValue( 'wpIlMatch' );
 		if ( $likeVal !== '' && !$this->getConfig()->get( 'MiserMode' ) ) {
-			$dbr = MediaWikiServices::getInstance()->getConnectionProvider()->getReplicaDatabase();
+			$dbr = $services->getConnectionProvider()->getReplicaDatabase();
 			$likeObj = Title::newFromText( $likeVal );
 			if ( $likeObj instanceof Title ) {
 				$like = $dbr->buildLike(

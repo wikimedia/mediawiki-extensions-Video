@@ -12,7 +12,7 @@ use MediaWiki\Title\Title;
 class VideoGalleryHooks {
 
 	/**
-	 * @param Parser $parser
+	 * @param MediaWiki\Parser\Parser $parser
 	 */
 	public static function onParserFirstCallInit( $parser ) {
 		$parser->setHook( 'videogallery', [ self::class, 'renderVideoGallery' ] );
@@ -21,7 +21,7 @@ class VideoGalleryHooks {
 	/**
 	 * @param string $input
 	 * @param string[] $argv
-	 * @param Parser $parser
+	 * @param MediaWiki\Parser\Parser $parser
 	 * @return string
 	 */
 	public static function renderVideoGallery( $input, $argv, $parser ) {

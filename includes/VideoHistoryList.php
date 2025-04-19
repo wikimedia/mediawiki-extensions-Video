@@ -27,6 +27,7 @@ class VideoHistoryList {
 	 */
 	public function videoHistoryLine( bool $isCur, $timestamp, $video, $actor_id, $url, $type, $title ): string {
 		$services = MediaWikiServices::getInstance();
+		$userFactory = $services->getUserFactory();
 		$context = RequestContext::getMain();
 		$lang = $context->getLanguage();
 		$user = $context->getUser();
@@ -36,7 +37,8 @@ class VideoHistoryList {
 		if ( $isCur ) {
 			$rlink = $cur;
 		} else {
-			if ( $user->isRegistered() &&
+			if (
+				$user->isRegistered() &&
 				$services->getPermissionManager()->userCan( 'edit', $user, $title )
 			) {
 				$rlink = $services->getLinkRenderer()->makeKnownLink(
@@ -53,7 +55,7 @@ class VideoHistoryList {
 			}
 		}
 
-		$actor = User::newFromActorId( $actor_id );
+		$actor = $userFactory->newFromActorId( $actor_id );
 		$user_id = $actor->getId();
 		$user_name = $actor->getName();
 		$userlink = Linker::userLink( $user_id, $user_name ) .

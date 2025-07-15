@@ -1,6 +1,23 @@
 {
 	"@metadata": {
-		"authors": []
+		"authors": [
+			"Умар"
+		]
 	},
+	"addvideo": "Видео тӀетоха",
+	"newvideos": "Керла видеош",
+	"unusedvideos": "Лелош йоцу видеош",
+	"video-upload-new-version": "ХӀокху видеон керла верси чуйаккха",
+	"video-addvideo-title": "Видео тӀетоха",
+	"video-addvideo-dest": "Видео тӀетоха $1",
+	"video-addvideo-button": "Видео тӀетоха",
+	"video-addvideo-title-label": "Видеон цӀе:",
+	"video-no-videos": "Керла видеош йац.",
+	"log-name-video": "Видео журнал",
+	"video-novideo-linktext": "тӀетоха и",
+	"video-embed": "Чутоха",
+	"video-history": "Видео истори",
+	"video-category-name": "Видео",
+	"video-links": "Видео-хьажоргаш",
 	"video-showhidebots": "$1 боташ"
 }

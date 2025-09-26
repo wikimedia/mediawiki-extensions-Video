@@ -6,6 +6,7 @@
 
 use MediaWiki\Html\FormOptions;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\RecentChanges\RecentChange;
 use MediaWiki\Title\Title;
 
 class NewVideosPager extends RangeChronologicalPager {
@@ -111,7 +112,7 @@ class NewVideosPager extends RangeChronologicalPager {
 
 		if ( $opts->getValue( 'hidepatrolled' ) ) {
 			$tables[] = 'recentchanges';
-			$conds['rc_type'] = RC_LOG;
+			$conds['rc_source'] = RecentChange::SRC_LOG;
 			$conds['rc_log_type'] = 'upload';
 			$conds['rc_patrolled'] = 0;
 			$conds['rc_namespace'] = NS_FILE;

@@ -128,7 +128,7 @@ class RevertVideoAction extends FormAction {
 
 	/** @inheritDoc */
 	protected function getPageTitle() {
-		return $this->msg( 'filerevert', $this->getTitle()->getText() )->escaped();
+		return $this->msg( 'filerevert', $this->getTitle()->getText() );
 	}
 
 	/** @inheritDoc */

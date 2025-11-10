@@ -970,7 +970,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 						'token' => $user->getEditToken( $key ),
 					] ),
 				],
-				Xml::submitButton( $this->msg( 'undelete-show-file-submit' )->text() )
+				Html::submitButton( $this->msg( 'undelete-show-file-submit' )->text() )
 			)
 		);
 	}
@@ -1405,15 +1405,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		$ts = wfTimestamp( TS_MW, $row->ar_timestamp );
 		// Build checkboxen...
 		if ( $this->mAllowed ) {
-			if ( $this->mInvert ) {
-				if ( in_array( $ts, $this->mTargetTimestamp ) ) {
-					$checkBox = Xml::check( "ts$ts" );
-				} else {
-					$checkBox = Xml::check( "ts$ts", true );
-				}
-			} else {
-				$checkBox = Xml::check( "ts$ts" );
-			}
+			$checkBox = Html::check( "ts$ts", $this->mInvert && !in_array( $ts, $this->mTargetTimestamp ) );
 		} else {
 			$checkBox = '';
 		}
@@ -1502,7 +1494,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			$checkBox = '';
 			if ( $this->mCanView ) { // && $row->fa_storage_key ) {
 				if ( $this->mAllowed ) {
-					$checkBox = Xml::check( 'fileid' ); // . $row->fa_id );
+					$checkBox = Html::check( 'fileid' ); // . $row->fa_id );
 				}
 				$key = rand();// urlencode( $row->fa_storage_key );
 				// @phan-suppress-next-line PhanTypeMismatchArgument
@@ -1524,7 +1516,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		$checkBox = '';
 		if ( $this->mCanView && $row->fa_storage_key ) {
 			if ( $this->mAllowed ) {
-				$checkBox = Xml::check( 'fileid' . $row->fa_id );
+				$checkBox = Html::check( 'fileid' . $row->fa_id );
 			}
 			$key = urlencode( $row->fa_storage_key );
 			$pageLink = $this->getFileLink( $file, $this->getPageTitle(), $ts, $key );

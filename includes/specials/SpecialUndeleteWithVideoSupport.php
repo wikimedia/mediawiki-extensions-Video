@@ -702,7 +702,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 				RevisionRecord::FOR_THIS_USER,
 				$user
 			);
-		} catch ( RevisionAccessException $e ) {
+		} catch ( RevisionAccessException ) {
 			$content = null;
 		}
 
@@ -769,7 +769,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 					// @phan-suppress-next-line PhanTypeMismatchArgumentProbablyReal No clue about this one...
 					'enableSectionEditLinks' => false,
 				] );
-			} catch ( RevisionAccessException $e ) {
+			} catch ( RevisionAccessException ) {
 			}
 		}
 
@@ -907,7 +907,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		foreach ( $tagIds as $tagId ) {
 			try {
 				$tags[] = $this->changeTagDefStore->getName( (int)$tagId );
-			} catch ( NameTableAccessException $exception ) {
+			} catch ( NameTableAccessException ) {
 				continue;
 			}
 		}

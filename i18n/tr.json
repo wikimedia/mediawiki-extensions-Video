@@ -3,7 +3,8 @@
 		"authors": [
 			"BaRaN6161 TURK",
 			"Hedda",
-			"Sayginer"
+			"Sayginer",
+			"SaldırganSincap"
 		]
 	},
 	"video-desc": "Desteklenen sitelere yerleştirilebilir medya için yeni Video ad alanına izin verir",
@@ -12,7 +13,7 @@
 	"unusedvideos": "Kullanılmayan videolar",
 	"video-upload-new-version": "Bu videonun yeni bir sürümünü yükle",
 	"video-newvideos-showfrom": "$2, $1 başlayan yeni videolar göster",
-	"video-newvideos-list-text": "Aşağıda '''$1''' {{PLURAL:$1|video|video}} listesi bulunmaktadır.",
+	"video-newvideos-list-text": "Aşağıda '''$1''' {{PLURAL:$1|video}} listesi bulunmaktadır.",
 	"video-addvideo-watchlist": "Bu videoyu izleme listeme ekle",
 	"video-addvideo-title": "Video ekle",
 	"video-addvideo-dest": "$1 için video ekle",

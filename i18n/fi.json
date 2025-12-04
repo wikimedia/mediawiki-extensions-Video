@@ -4,7 +4,8 @@
 			"01miki10",
 			"Jack Phoenix",
 			"Valtlai",
-			"Valtlait"
+			"Valtlait",
+			"Samoasambia"
 		]
 	},
 	"addvideo": "Lisää video",
@@ -18,7 +19,7 @@
 	"video-addvideo-dest": "Lisää uusi versio videosta $1",
 	"video-addvideo-button": "Lisää video",
 	"video-addvideo-instructions": "Videon lisääminen {{GRAMMAR:illative|{{SITENAME}}}} on helppoa.\nLiitä vain videon upotuskoodi ''tai'' videon URL seuraavaan lomakkeeseen, lisää nimi videolle ja paina ”{{int:video-addvideo-button}}” -painiketta.\nJos haluat upottaa videon sivulle, käytä seuraavaa muotoa: '''<nowiki>[[</nowiki>{{ns:video}}:Videon otsikko<nowiki>]]</nowiki>'''.\nVoit lisätä videoita seuraavista palveluista:\n{{int:video-provider-list}}\n===Esimerkki videon upotuskoodista===\nTämä on esimerkki videon upotuskoodista YouTubesta:\n\n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">\n<nowiki><object width=\"425\" height=\"355\">\n<param name=\"movie\" value=\"http://www.youtube.com/v/hUcFWPgB8oY\"></param>\n<param name=\"wmode\" value=\"transparent\"></param>\n<embed src=\"http://www.youtube.com/v/hUcFWPgB8oY\" type=\"application/x-shockwave-flash\"\nwmode=\"transparent\" width=\"425\" height=\"355\"></embed>\n</object></nowiki>\n</pre>\n\n===Esimerkki videon URL:ista===\nAlapuolella on esimerkki YouTube-videon URL:ista:\n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">http://www.youtube.com/watch?v=hUcFWPgB8oY</pre>",
-	"video-addvideo-invalidcode": "Liittämäsi koodi tai URL on kelvoton. Ole hyvä ja kokeile uudestaan.",
+	"video-addvideo-invalidcode": "Liittämäsi koodi tai URL on kelvoton. Ole hyvä ja kokeile uudelleen.",
 	"video-addvideo-exists": "Videosi otsikko on jo olemassa. Ole hyvä ja valitse toinen otsikko videollesi.",
 	"video-addvideo-title-label": "Videon otsikko:",
 	"video-addvideo-embed-label": "Upotuskoodi tai URL:",

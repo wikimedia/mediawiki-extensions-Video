@@ -35,7 +35,7 @@ class MigrateOldVideoUserColumnsToActor extends MediaWiki\Maintenance\LoggedUpda
 	 *
 	 * @return string
 	 */
-	protected function updateSkippedMessage() {
+	public function updateSkippedMessage() {
 		return 'video and oldvideo tables have already been migrated to use the actor columns.';
 	}
 

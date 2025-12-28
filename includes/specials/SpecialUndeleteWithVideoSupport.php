@@ -71,7 +71,6 @@ use MediaWiki\Title\Title;
 use MediaWiki\User\Options\UserOptionsLookup;
 use MediaWiki\User\User;
 use MediaWiki\Watchlist\WatchlistManager;
-use MediaWiki\Xml\Xml;
 use OOUI\ActionFieldLayout;
 use OOUI\ButtonInputWidget;
 use OOUI\CheckboxInputWidget;
@@ -780,7 +779,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			'@phan-var TextContent $content';
 			// TODO: MCR: make this work for multiple slots
 			// source view for textual content
-			$sourceView = Xml::element( 'textarea', [
+			$sourceView = Html::element( 'textarea', [
 				'readonly' => 'readonly',
 				'cols' => 80,
 				'rows' => 25
@@ -803,20 +802,20 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 
 		$out->addHTML(
 			$sourceView .
-				Xml::openElement( 'div', [
+				Html::openElement( 'div', [
 					'style' => 'clear: both' ] ) .
-				Xml::openElement( 'form', [
+				Html::openElement( 'form', [
 					'method' => 'post',
 					'action' => $this->getPageTitle()->getLocalURL( [ 'action' => 'submit' ] ) ] ) .
-				Xml::element( 'input', [
+				Html::element( 'input', [
 					'type' => 'hidden',
 					'name' => 'target',
 					'value' => $this->mTargetObj->getPrefixedDBkey() ] ) .
-				Xml::element( 'input', [
+				Html::element( 'input', [
 					'type' => 'hidden',
 					'name' => 'timestamp',
 					'value' => $timestamp ] ) .
-				Xml::element( 'input', [
+				Html::element( 'input', [
 					'type' => 'hidden',
 					'name' => 'wpEditToken',
 					'value' => $user->getEditToken() ] ) .
@@ -827,8 +826,8 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 						] )
 					] )
 				) .
-				Xml::closeElement( 'form' ) .
-				Xml::closeElement( 'div' )
+				Html::closeElement( 'form' ) .
+				Html::closeElement( 'div' )
 		);
 	}
 
@@ -1150,12 +1149,12 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 
 		# Show relevant lines from the deletion log:
 		$deleteLogPage = new LogPage( 'delete' );
-		$out->addHTML( Xml::element( 'h2', null, $deleteLogPage->getName()->text() ) . "\n" );
+		$out->addHTML( Html::element( 'h2', [], $deleteLogPage->getName()->text() ) . "\n" );
 		LogEventsList::showLogExtract( $out, 'delete', $this->mTargetObj );
 		# Show relevant lines from the suppression log:
 		$suppressLogPage = new LogPage( 'suppress' );
 		if ( $this->permissionManager->userHasRight( $this->getUser(), 'suppressionlog' ) ) {
-			$out->addHTML( Xml::element( 'h2', null, $suppressLogPage->getName()->text() ) . "\n" );
+			$out->addHTML( Html::element( 'h2', [], $suppressLogPage->getName()->text() ) . "\n" );
 			LogEventsList::showLogExtract( $out, 'suppress', $this->mTargetObj );
 		}
 
@@ -1173,11 +1172,11 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 				$dropdownComment .= "\n" . $this->msg( 'undelete-comment-dropdown-unsuppress' )
 					->page( $this->mTargetObj )->inContentLanguage()->text();
 			}
-			$options = Xml::listDropdownOptions(
+			$options = Html::listDropdownOptions(
 				$dropdownComment,
 				[ 'other' => $this->msg( 'undeletecommentotherlist' )->text() ]
 			);
-			$options = Xml::listDropdownOptionsOoui( $options );
+			$options = Html::listDropdownOptionsOoui( $options );
 
 			$fields[] = new FieldLayout(
 				new DropdownInputWidget( [
@@ -1327,7 +1326,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		}
 
 		$history = '';
-		$history .= Xml::element( 'h2', null, $this->msg( 'history' )->text() ) . "\n";
+		$history .= Html::element( 'h2', [], $this->msg( 'history' )->text() ) . "\n";
 
 		if ( $haveRevisions ) {
 			# Show the page's stored (deleted) history
@@ -1362,7 +1361,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		}
 
 		if ( $haveFiles ) {
-			$history .= Xml::element( 'h2', null, $this->msg( 'filehist' )->text() ) . "\n";
+			$history .= Html::element( 'h2', [], $this->msg( 'filehist' )->text() ) . "\n";
 			$history .= Html::openElement( 'ul', [ 'class' => 'mw-undelete-revlist' ] );
 			foreach ( $files as $row ) {
 				$history .= $this->formatFileRow( $row );
@@ -1478,7 +1477,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			)
 			->escaped();
 
-		return Xml::tags( 'li', $attribs, $revisionRow ) . "\n";
+		return Html::rawElement( 'li', $attribs, $revisionRow ) . "\n";
 	}
 
 	/**

@@ -5,9 +5,12 @@
  */
 
 use MediaWiki\Html\FormOptions;
-use MediaWiki\MediaWikiServices;
+use MediaWiki\Linker\LinkRenderer;
+use MediaWiki\Permissions\GroupPermissionsLookup;
 use MediaWiki\RecentChanges\RecentChange;
 use MediaWiki\Title\Title;
+use MediaWiki\User\UserFactory;
+use Wikimedia\Rdbms\IConnectionProvider;
 
 class NewVideosPager extends RangeChronologicalPager {
 
@@ -16,15 +19,16 @@ class NewVideosPager extends RangeChronologicalPager {
 	 */
 	protected $gallery;
 
-	/**
-	 * @var FormOptions
-	 */
-	protected $opts;
-
-	public function __construct( IContextSource $context, FormOptions $opts ) {
+	public function __construct(
+		private readonly IConnectionProvider $connectionProvider,
+		private readonly GroupPermissionsLookup $groupPermissionsLookup,
+		private readonly LinkRenderer $linkRenderer,
+		private readonly UserFactory $userFactory,
+		IContextSource $context,
+		protected readonly FormOptions $opts,
+	) {
 		parent::__construct( $context );
 
-		$this->opts = $opts;
 		$this->setLimit( $opts->getValue( 'limit' ) );
 
 		$startTimestamp = '';
@@ -44,12 +48,11 @@ class NewVideosPager extends RangeChronologicalPager {
 	 */
 	public function formatRow( $row ) {
 		$name = $row->video_name;
-		$services = MediaWikiServices::getInstance();
-		$user = $services->getUserFactory()->newFromActorId( $row->video_actor );
+		$user = $this->userFactory->newFromActorId( $row->video_actor );
 
 		$title = Title::makeTitle( NS_VIDEO, $name );
 		$video = new Video( $title, $this->getContext() );
-		$ul = $services->getLinkRenderer()->makeLink(
+		$ul = $this->linkRenderer->makeLink(
 			$user->getUserPage(),
 			$user->getName()
 		);
@@ -71,22 +74,20 @@ class NewVideosPager extends RangeChronologicalPager {
 		$fields = [ 'video_name', 'video_url', 'video_actor', 'video_timestamp' ];
 		$options = [];
 
-		$services = MediaWikiServices::getInstance();
-
 		$user = $opts->getValue( 'user' );
 		if ( $user !== '' ) {
-			$userObj = $services->getUserFactory()->newFromName( $user );
+			$userObj = $this->userFactory->newFromName( $user );
 			if ( $userObj ) {
 				$conds['video_actor'] = $userObj->getActorId();
 			}
 		}
 
 		if ( $opts->getValue( 'hidebots' ) ) {
-			$groupsWithBotPermission = $services->getGroupPermissionsLookup()
+			$groupsWithBotPermission = $this->groupPermissionsLookup
 				->getGroupsWithPermission( 'bot' );
 
 			if ( count( $groupsWithBotPermission ) ) {
-				$dbr = $services->getConnectionProvider()->getReplicaDatabase();
+				$dbr = $this->connectionProvider->getReplicaDatabase();
 				$tables[] = 'user_groups';
 				$tables[] = 'actor';
 				$fields[] = 'actor_id';
@@ -132,7 +133,7 @@ class NewVideosPager extends RangeChronologicalPager {
 
 		$likeVal = $opts->getValue( 'wpIlMatch' );
 		if ( $likeVal !== '' && !$this->getConfig()->get( 'MiserMode' ) ) {
-			$dbr = $services->getConnectionProvider()->getReplicaDatabase();
+			$dbr = $this->connectionProvider->getReplicaDatabase();
 			$likeObj = Title::newFromText( $likeVal );
 			if ( $likeObj instanceof Title ) {
 				$like = $dbr->buildLike(

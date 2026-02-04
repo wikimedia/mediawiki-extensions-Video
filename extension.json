@@ -22,8 +22,21 @@
 				"UserOptionsManager"
 			]
 		},
-		"NewVideos": "NewVideos",
-		"UnusedVideos": "SpecialUnusedVideos",
+		"NewVideos": {
+			"class": "NewVideos",
+			"services": [
+				"ConnectionProvider",
+				"GroupPermissionsLookup",
+				"LinkRenderer",
+				"UserFactory"
+			]
+		},
+		"UnusedVideos": {
+			"class": "SpecialUnusedVideos",
+			"services": [
+				"LinksMigration"
+			]
+		},
 		"Undelete": {
 			"class": "SpecialUndeleteWithVideoSupport",
 			"services": [
@@ -35,6 +48,7 @@
 				"LinkBatchFactory",
 				"RepoGroup",
 				"ConnectionProvider",
+				"UserFactory",
 				"UserOptionsLookup",
 				"WikiPageFactory",
 				"SearchEngineFactory",

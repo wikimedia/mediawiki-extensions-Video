@@ -70,6 +70,7 @@ use MediaWiki\Storage\NameTableStore;
 use MediaWiki\Title\Title;
 use MediaWiki\User\Options\UserOptionsLookup;
 use MediaWiki\User\User;
+use MediaWiki\User\UserFactory;
 use MediaWiki\Watchlist\WatchlistManager;
 use OOUI\ActionFieldLayout;
 use OOUI\ButtonInputWidget;
@@ -161,6 +162,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 	private LinkBatchFactory $linkBatchFactory;
 	private LocalRepo $localRepo;
 	private IConnectionProvider $dbProvider;
+	private UserFactory $userFactory;
 	private UserOptionsLookup $userOptionsLookup;
 	private WikiPageFactory $wikiPageFactory;
 	private SearchEngineFactory $searchEngineFactory;
@@ -178,6 +180,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 	 * @param LinkBatchFactory $linkBatchFactory
 	 * @param RepoGroup $repoGroup
 	 * @param IConnectionProvider $dbProvider
+	 * @param UserFactory $userFactory
 	 * @param UserOptionsLookup $userOptionsLookup
 	 * @param WikiPageFactory $wikiPageFactory
 	 * @param SearchEngineFactory $searchEngineFactory
@@ -195,6 +198,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		LinkBatchFactory $linkBatchFactory,
 		RepoGroup $repoGroup,
 		IConnectionProvider $dbProvider,
+		UserFactory $userFactory,
 		UserOptionsLookup $userOptionsLookup,
 		WikiPageFactory $wikiPageFactory,
 		SearchEngineFactory $searchEngineFactory,
@@ -212,6 +216,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		$this->linkBatchFactory = $linkBatchFactory;
 		$this->localRepo = $repoGroup->getLocalRepo();
 		$this->dbProvider = $dbProvider;
+		$this->userFactory = $userFactory;
 		$this->userOptionsLookup = $userOptionsLookup;
 		$this->wikiPageFactory = $wikiPageFactory;
 		$this->searchEngineFactory = $searchEngineFactory;
@@ -1013,7 +1018,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 			// CORE HACK for [[mw:Extension:Video]]
 			// Added the whole if() loop and kept original code inside the else portion
 			if ( isset( $row->ov_actor ) && $row->ov_actor ) {
-				$actor = MediaWiki\MediaWikiServices::getInstance()->getUserFactory()->newFromActorId( $row->ov_actor );
+				$actor = $this->userFactory->newFromActorId( $row->ov_actor );
 				$batch->add( NS_USER, $actor->getName() );
 				$batch->add( NS_USER_TALK, $actor->getName() );
 			} else {

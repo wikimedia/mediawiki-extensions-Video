@@ -1,6 +1,6 @@
 <?php
 
-use MediaWiki\MediaWikiServices;
+use MediaWiki\Linker\LinksMigration;
 use MediaWiki\Title\Title;
 
 /**
@@ -11,7 +11,9 @@ use MediaWiki\Title\Title;
  * @ingroup Extensions
  */
 class SpecialUnusedVideos extends MediaWiki\SpecialPage\QueryPage {
-	public function __construct() {
+	public function __construct(
+		private readonly LinksMigration $linksMigration,
+	) {
 		parent::__construct( 'UnusedVideos' );
 	}
 
@@ -42,9 +44,8 @@ class SpecialUnusedVideos extends MediaWiki\SpecialPage\QueryPage {
 
 	/** @inheritDoc */
 	public function getQueryInfo() {
-		$linksMigration = MediaWikiServices::getInstance()->getLinksMigration();
-		[ , $titleField ] = $linksMigration->getTitleFields( 'pagelinks' );
-		$queryInfo = $linksMigration->getQueryInfo( 'pagelinks', 'pagelinks' );
+		[ , $titleField ] = $this->linksMigration->getTitleFields( 'pagelinks' );
+		$queryInfo = $this->linksMigration->getQueryInfo( 'pagelinks', 'pagelinks' );
 		return [
 			'tables' => array_merge( $queryInfo['tables'], [ 'video' ] ),
 			'fields' => [

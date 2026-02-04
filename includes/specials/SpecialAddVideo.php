@@ -17,13 +17,10 @@ class AddVideo extends MediaWiki\SpecialPage\FormSpecialPage {
 	 */
 	protected $video;
 
-	private UserOptionsManager $userOptionsManager;
-
 	public function __construct(
-		UserOptionsManager $userOptionsManager
+		private readonly UserOptionsManager $userOptionsManager,
 	) {
 		parent::__construct( 'AddVideo' /*class*/, 'addvideo' /*restriction*/ );
-		$this->userOptionsManager = $userOptionsManager;
 	}
 
 	public function doesWrites() {

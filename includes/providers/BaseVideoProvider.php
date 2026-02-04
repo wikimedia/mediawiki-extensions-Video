@@ -3,13 +3,6 @@
 abstract class BaseVideoProvider {
 
 	/**
-	 * Video object for this embed
-	 *
-	 * @var Video
-	 */
-	protected $video;
-
-	/**
 	 * Video ID
 	 *
 	 * @var string
@@ -30,12 +23,9 @@ abstract class BaseVideoProvider {
 	 */
 	protected $embedTemplate = null;
 
-	public function __construct( $video ) {
-		if ( !( $video instanceof Video ) ) {
-			throw new MWException( 'Video Provider constructor given bogus video object.' );
-		}
-
-		$this->video = $video;
+	public function __construct(
+		protected readonly Video $video,
+	) {
 		// TODO: This sucks; fix it
 		$this->video->ratio = $this->getRatio();
 

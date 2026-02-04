@@ -174,8 +174,17 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		private readonly CommentFormatter $commentFormatter,
 		private readonly WatchlistManager $watchlistManager,
 	) {
-		parent::__construct( 'Undelete', 'deletedhistory' );
+		if ( version_compare( MW_VERSION, '1.46', '>=' ) ) {
+			parent::__construct( 'Undelete' );
+		} else {
+			parent::__construct( 'Undelete', 'deletedhistory' );
+		}
 		$this->localRepo = $repoGroup->getLocalRepo();
+	}
+
+	/** @inheritDoc */
+	public function getRestriction(): string {
+		return 'deletedhistory';
 	}
 
 	public function doesWrites() {

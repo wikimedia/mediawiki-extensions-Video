@@ -511,7 +511,7 @@ class Video {
 	 *                 it out
 	 */
 	public static function getProviderByURL( string $url ): string {
-		$host = wfParseUrl( $url );
+		$host = MediaWikiServices::getInstance()->getUrlUtils()->parse( $url );
 		if ( !$host ) {
 			return 'unknown';
 		}

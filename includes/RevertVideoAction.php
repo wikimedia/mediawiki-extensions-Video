@@ -64,8 +64,8 @@ class RevertVideoAction extends FormAction {
 	}
 
 	protected function alterForm( HTMLForm $form ) {
-		$form->setWrapperLegend( $this->msg( 'video-revert-legend' )->escaped() );
-		$form->setSubmitText( $this->msg( 'filerevert-submit' )->escaped() );
+		$form->setWrapperLegend( $this->msg( 'video-revert-legend' )->text() );
+		$form->setSubmitText( $this->msg( 'filerevert-submit' )->text() );
 		$form->addHiddenField( 'oldvideo', $this->getRequest()->getText( 'oldvideo' ) );
 	}
 

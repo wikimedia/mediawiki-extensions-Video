@@ -329,7 +329,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 
 	/** @inheritDoc */
 	public function userCanExecute( User $user ) {
-		return $this->isAllowed( $this->mRestriction, $user );
+		return $this->isAllowed( $this->getRestriction(), $user );
 	}
 
 	/**

@@ -6,6 +6,7 @@
 
 use MediaWiki\Html\FormOptions;
 use MediaWiki\Linker\LinkRenderer;
+use MediaWiki\MainConfigNames;
 use MediaWiki\Permissions\GroupPermissionsLookup;
 use MediaWiki\RecentChanges\RecentChange;
 use MediaWiki\Title\Title;
@@ -132,7 +133,7 @@ class NewVideosPager extends RangeChronologicalPager {
 		}
 
 		$likeVal = $opts->getValue( 'wpIlMatch' );
-		if ( $likeVal !== '' && !$this->getConfig()->get( 'MiserMode' ) ) {
+		if ( $likeVal !== '' && !$this->getConfig()->get( MainConfigNames::MiserMode ) ) {
 			$dbr = $this->connectionProvider->getReplicaDatabase();
 			$likeObj = Title::newFromText( $likeVal );
 			if ( $likeObj instanceof Title ) {

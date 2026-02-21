@@ -12,6 +12,7 @@ use MediaWiki\Html\FormOptions;
 use MediaWiki\Html\Html;
 use MediaWiki\HTMLForm\HTMLForm;
 use MediaWiki\Linker\LinkRenderer;
+use MediaWiki\MainConfigNames;
 use MediaWiki\Permissions\GroupPermissionsLookup;
 use MediaWiki\Request\DerivativeRequest;
 use MediaWiki\User\UserFactory;
@@ -173,7 +174,7 @@ class NewVideos extends MediaWiki\SpecialPage\IncludableSpecialPage {
 			],
 		];
 
-		if ( $this->getConfig()->get( 'MiserMode' ) ) {
+		if ( $this->getConfig()->get( MainConfigNames::MiserMode ) ) {
 			unset( $formDescriptor['wpIlMatch'] );
 		}
 

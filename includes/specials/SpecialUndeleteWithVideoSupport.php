@@ -479,7 +479,7 @@ class SpecialUndeleteWithVideoSupport extends SpecialPage {
 		);
 
 		$out->addHTML(
-			new PanelLayout( [
+			(string)new PanelLayout( [
 				'expanded' => false,
 				'padded' => true,
 				'framed' => true,

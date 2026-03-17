@@ -36,12 +36,10 @@ class CategoryWithVideoViewer extends CategoryViewer {
 		$this->doCategoryQuery();
 		$this->finaliseCategoryState();
 
-		return $this->getCategoryTop() .
-			$this->getSubcategorySection() .
+		return $this->getSubcategorySection() .
 			$this->getPagesSection() .
 			$this->getImageSection() .
-			$this->getVideoSection() .
-			$this->getCategoryBottom();
+			$this->getVideoSection();
 	}
 
 	/**
@@ -98,10 +96,12 @@ class CategoryWithVideoViewer extends CategoryViewer {
 			# the collation in the database differs from the one
 			# set in $wgCategoryCollation, pagination might go totally haywire.
 			$extraConds = [ 'cl_type' => $type ];
-			if ( isset( $this->from[$type] ) && $this->from[$type] !== null ) {
+			// @phan-suppress-next-line PhanTypeModifyImmutableObjectProperty
+			if ( isset( $this->from[$type] ) ) {
 				$extraConds[] = 'cl_sortkey >= '
 					. $dbr->addQuotes( $this->collation->getSortKey( $this->from[$type] ) );
-			} elseif ( isset( $this->until[$type] ) && $this->until[$type] !== null ) {
+			// @phan-suppress-next-line PhanTypeModifyImmutableObjectProperty
+			} elseif ( isset( $this->until[$type] ) ) {
 				$extraConds[] = 'cl_sortkey < '
 					. $dbr->addQuotes( $this->collation->getSortKey( $this->until[$type] ) );
 				$this->flip[$type] = true;

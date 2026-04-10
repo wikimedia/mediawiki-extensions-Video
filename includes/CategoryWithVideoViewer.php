@@ -99,10 +99,12 @@ class CategoryWithVideoViewer extends CategoryViewer {
 			// @phan-suppress-next-line PhanTypeModifyImmutableObjectProperty
 			if ( isset( $this->from[$type] ) ) {
 				$extraConds[] = 'cl_sortkey >= '
+					// @phan-suppress-next-line PhanTypeMismatchArgumentNullable
 					. $dbr->addQuotes( $this->collation->getSortKey( $this->from[$type] ) );
 			// @phan-suppress-next-line PhanTypeModifyImmutableObjectProperty
 			} elseif ( isset( $this->until[$type] ) ) {
 				$extraConds[] = 'cl_sortkey < '
+					// @phan-suppress-next-line PhanTypeMismatchArgumentNullable
 					. $dbr->addQuotes( $this->collation->getSortKey( $this->until[$type] ) );
 				$this->flip[$type] = true;
 			}

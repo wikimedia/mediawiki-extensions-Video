@@ -44,7 +44,7 @@
 	"video-more-links-to-video": "이 동영상이 쓰이고 있는 문서 목록 [[Special:WhatLinksHere/$1|더 보기]].",
 	"video-showhidebots": "(봇을 $1)",
 	"action-addvideo": "외부 서비스의 동영상을 사이트에 추가",
-	"right-addvideo": "외부 서비스의 동영상을 사이트로 추가합니다",
+	"right-addvideo": "외부 서비스의 동영상을 사이트로 추가",
 	"video-hidebots": "봇이 올린 것 숨기기",
 	"unusedvideos-summary": "다음 동영상들은 위키에 추가되었지만 어떤 문서에서도 사용되지 않습니다."
 }

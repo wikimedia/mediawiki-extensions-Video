@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Mainframe98"
+			"Mainframe98",
+			"Siebrand"
 		]
 	},
 	"video-desc": "Voegt een nieuwe Video naamruimte toe voor het invoegen van media van ondersteunde sites",
@@ -19,7 +20,7 @@
 	"video-addvideo-invalidcode": "De ingevoegde code of URL is ongeldig. Probeer het opnieuw.",
 	"video-addvideo-exists": "De titel voor de video bestaat al. Kies een andere titel voor de video.",
 	"video-addvideo-title-label": "Videotitel:",
-	"video-addvideo-embed-label": "Insluitcode of URL:",
+	"video-addvideo-embed-label": "Insluitcode of url:",
 	"video-no-videos": "Geen nieuwe video's.",
 	"log-name-video": "Video logboek",
 	"log-description-video": "Dit is een logboek van alle toegevoegde videos en wijzigingen aan bestaande videos.",

@@ -121,7 +121,7 @@ class Video {
 	/**
 	 * Create a Video object from a video name
 	 *
-	 * @param mixed $name Name of the video, used to create a title object using Title::makeTitleSafe
+	 * @param string $name Name of the video, used to create a title object using Title::makeTitleSafe
 	 * @param IContextSource $context Nearest context object
 	 * @return Video|null A Video object on success, null if the title is invalid
 	 */

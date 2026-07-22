@@ -23,6 +23,7 @@ class AddVideo extends MediaWiki\SpecialPage\FormSpecialPage {
 		if ( version_compare( MW_VERSION, '1.46', '>=' ) ) {
 			parent::__construct( 'AddVideo' );
 		} else {
+			// @phan-suppress-next-line PhanParamTooMany Compat with earlier versions
 			parent::__construct( 'AddVideo', 'addvideo' );
 		}
 	}

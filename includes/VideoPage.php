@@ -85,11 +85,12 @@ class VideoPage extends Article {
 		$res = $dbr->select(
 			array_merge( $queryInfo['tables'], [ 'page' ] ),
 			[ 'page_namespace', 'page_title' ],
-			array_merge( reset( $queryInfo['joins'] )[1], [
+			[
+				...$queryInfo['joins']['linktarget'][1],
 				$nsField => NS_VIDEO,
 				$titleField => $this->getTitle()->getDBkey(),
 				'pl_from = page_id',
-			] ),
+			],
 			__METHOD__,
 			[ 'LIMIT' => $limit + 1 ]
 		);

@@ -4,6 +4,7 @@ use MediaWiki\Category\Category;
 use MediaWiki\Category\CategoryViewer;
 use MediaWiki\MainConfigNames;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Parser\ParserOutputFlags;
 use MediaWiki\Title\Title;
 
 /**
@@ -30,7 +31,7 @@ class CategoryWithVideoViewer extends CategoryViewer {
 	/** @inheritDoc */
 	public function getHTML() {
 		$this->showGallery = $this->getConfig()->get( MainConfigNames::CategoryMagicGallery )
-			&& !$this->getOutput()->getNoGallery();
+			&& !$this->getOutput()->getOutputFlag( ParserOutputFlags::NO_GALLERY );
 
 		$this->clearCategoryState();
 		$this->doCategoryQuery();

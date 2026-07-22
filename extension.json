@@ -55,7 +55,8 @@
 				"UndeletePageFactory",
 				"ArchivedRevisionLookup",
 				"CommentFormatter",
-				"WatchlistManager"
+				"WatchlistManager",
+				"ChangeTagsFormatter"
 			]
 		}
 	},

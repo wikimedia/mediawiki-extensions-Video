@@ -1,5 +1,6 @@
 <?php
 
+use MediaWiki\Context\RequestContext;
 use MediaWiki\Html\Html;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Page\ProperPageIdentity;
@@ -32,7 +33,7 @@ class VideoHooks {
 			$localizedVideoName = 'Video';
 		}
 		$pattern = '@(\[\[' . $localizedVideoName . ':)([^\]]*?)].*?\]@si';
-		$text = preg_replace_callback( $pattern, [ self::class, 'renderVideo' ], $text );
+		$text = preg_replace_callback( $pattern, self::renderVideo( ... ), $text );
 	}
 
 	/**
@@ -45,33 +46,25 @@ class VideoHooks {
 	public static function renderVideo( $matches ) {
 		$name = $matches[2];
 		$params = explode( '|', $name );
-		$video_name = $params[0];
-		$video = Video::newFromName( $video_name, RequestContext::getMain() );
-		$x = 1;
+		$videoName = array_shift( $params );
+		$video = Video::newFromName( $videoName, RequestContext::getMain() );
 
 		foreach ( $params as $param ) {
-			if ( $x > 1 ) {
-				$width_check = preg_match( '/px/i', $param );
-
-				if ( $width_check ) {
-					$width = preg_replace( '/px/i', '', $param );
-				} else {
-					$align = $param;
-				}
+			$param = strtolower( $param );
+			if ( str_contains( $param, 'px' ) ) {
+				$width = str_replace( 'px', '', $param );
+			} else {
+				$align = $param;
 			}
-			$x++;
 		}
 
-		if ( is_object( $video ) ) {
+		if ( $video ) {
 			if ( $video->exists() ) {
-				$widthTag = $alignTag = '';
-				if ( !empty( $width ) ) {
-					$widthTag = " width=\"{$width}\"";
-				}
-				if ( !empty( $align ) ) {
-					$alignTag = " align=\"{$align}\"";
-				}
-				return "<video name=\"{$video->getName()}\"{$widthTag}{$alignTag} />";
+				return Html::element( 'video', [
+					'name' => $video->getName(),
+					'width' => empty( $width ) ? null : $width,
+					'align' => empty( $align ) ? null : $align,
+				] );
 			}
 			return $matches[0];
 		}

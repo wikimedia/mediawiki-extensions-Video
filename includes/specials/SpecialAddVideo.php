@@ -50,7 +50,15 @@ class AddVideo extends MediaWiki\SpecialPage\FormSpecialPage {
 	 * Play with the HTMLForm if you need to more substantially
 	 */
 	protected function alterForm( HTMLForm $form ) {
-		$form->setPreHtml( $this->msg( 'video-addvideo-instructions' )->parse() );
+		$embedCode = '<pre class="video-instructions-pre">
+<nowiki><iframe width="560" height="315" src="https://www.youtube.com/embed/-JnIjpRvgNY"
+title="YouTube video player" frameborder="0"
+allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></nowiki>
+</pre>';
+		$exampleUrl = '<pre class="video-instructions-pre">https://www.youtube.com/embed/-JnIjpRvgNY</pre>';
+
+		$form->setPreHtml( $this->msg( 'video-addvideo-instructions', $embedCode, $exampleUrl )->parse() );
 		$form->setWrapperLegend( $this->msg( 'video-addvideo-title' )->plain() );
 		$form->setSubmitText( $this->msg( 'video-addvideo-button' )->plain() );
 

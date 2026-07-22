@@ -14,3 +14,11 @@
 		padding: 15px;
 	}
 }
+
+.video-instructions-pre {
+	background-color: #F9F9F9;
+	border: 1px dashed #2F6FAB;
+	color: black;
+	line-height: 1.1em;
+	padding: 1em;
+}

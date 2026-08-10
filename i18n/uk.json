@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Ignatgg",
+			"Movses",
 			"Piramidion"
 		]
 	},
@@ -16,7 +17,7 @@
 	"video-addvideo-title": "Додати відео",
 	"video-addvideo-dest": "Додати відео для $1",
 	"video-addvideo-button": "Додати відео",
-	"video-addvideo-instructions": "Додавати відео на сайті {{SITENAME}} — легко.\nПросто вставте код для вбудовування відео ''or'' URL-адресу відео в подану форму, і клацніть кнопку «{{int:video-addvideo-button}}».\nЯкщо Ви хочете вбудувати відео в певну сторінку, скористайтесь таким форматом: '''<nowiki>[[</nowiki>{{ns:video}}:Назва відео<nowiki>]]</nowiki>'''.\nВи можете додавати відеофайли з таких ресурсів:\n{{int:video-provider-list}}\n=== Приклад коду для вбудовування відео ===\nЦе — приклад коду для вбудовування відео з YouTube:\n\n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">\n<nowiki><object width=\"425\" height=\"355\">\n<param name=\"movie\" value=\"http://www.youtube.com/v/hUcFWPgB8oY\"></param>\n<param name=\"wmode\" value=\"transparent\"></param>\n<embed src=\"http://www.youtube.com/v/hUcFWPgB8oY\" type=\"application/x-shockwave-flash\"\nwmode=\"transparent\" width=\"425\" height=\"355\"></embed>\n</object></nowiki>\n</pre>\n\n=== Приклад URL-адреси відео ===\nНижче наведено приклад URL-адреси відеофайлу з YouTube:\n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">http://www.youtube.com/watch?v=hUcFWPgB8oY</pre>",
+	"video-addvideo-instructions": "Додавати відео на сайті {{SITENAME}} — легко.\nПросто вставте код для вбудовування відео ''або'' URL-адресу відео в подану форму, і клацніть кнопку «{{int:video-addvideo-button}}».\nЯкщо ви хочете вбудувати відео в певну сторінку, скористайтесь таким форматом: '''<nowiki>[[</nowiki>{{ns:video}}:Назва відео<nowiki>]]</nowiki>'''.\nВи можете додавати відеофайли з таких ресурсів:\n{{int:video-provider-list}}\n\n=== Приклад коду для вбудовування відео ===\nЦе — приклад коду для вбудовування відео з YouTube:\n\n$1\n\n=== Приклад URL-адреси відео ===\nНижче наведено приклад URL-адреси відеофайлу з YouTube:\n$2",
 	"video-addvideo-invalidcode": "Код або URL-адреса, які Ви вказали, недійсні. Будь ласка, спробуйте ще раз.",
 	"video-addvideo-exists": "Назва Вашого відео вже існує. Будь ласка, оберіть якусь іншу назву для цього відео.",
 	"video-addvideo-title-label": "Назва відео:",

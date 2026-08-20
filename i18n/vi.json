@@ -1,6 +1,48 @@
 {
 	"@metadata": {
-		"authors": []
+		"authors": [
+			"SussyRed2000"
+		]
 	},
-	"video-showhidebots": "($1 robot)"
+	"video-desc": "Cho phép không gian tên Video mới cho phương tiện có thể nhúng trên các trang web được hỗ trợ",
+	"addvideo": "Thêm video",
+	"newvideos": "Video mới",
+	"unusedvideos": "Video chưa sử dụng",
+	"video-upload-new-version": "Tải lên một phiên bản mới của video này",
+	"video-newvideos-showfrom": "Hiển thị video mới bắt đầu từ $2, $1",
+	"video-newvideos-list-text": "Dưới đây là một danh sách các {{PLURAL:$1|video}} '''$1'''.",
+	"video-addvideo-watchlist": "Thêm video này vào danh sách theo dõi của tôi",
+	"video-addvideo-title": "Thêm video",
+	"video-addvideo-dest": "Thêm video cho $1",
+	"video-addvideo-button": "Thêm video",
+	"video-addvideo-invalidcode": "Bạn đã dán vào mã hay URL không hợp lệ. Vui lòng thử lại.",
+	"video-addvideo-exists": "Tiêu đề cho video của bạn đã tồn tại. Vui lòng chọn một tiêu đề khác cho video.",
+	"video-addvideo-title-label": "Tiêu đề video:",
+	"video-addvideo-embed-label": "Nhúng mã hoặc URL:",
+	"video-no-videos": "Không có video mới.",
+	"log-name-video": "Nhật trình video",
+	"log-description-video": "Đây là một nhật trình các video được thêm và các cập nhật đến video có sẵn.",
+	"logentry-video-add": "$1 đã thêm video $3",
+	"logentry-video-update": "$1 đã cập nhật video $3",
+	"category-video-header": "Video trong thể loại \"$1\"",
+	"category-video-count": "{{PLURAL:$1|Có một video|Có $1 video}} trong thể loại này.",
+	"video-novideo-linktext": "thêm nó",
+	"video-novideo": "Không có video nào có tên này, bạn có thể $1.",
+	"video-embed": "Nhúng",
+	"video-history": "Lịch sử video",
+	"video-revert": "phục hồi",
+	"video-histlegend": "Chú thích: ({{int:cur}}) = đây là video hiện tại, ({{int:video-revert}}) = phục hồi lại phiên bản cũ.\n<br /><i>Nhấn vào ngày để xem URL video vào ngày đó</i>.",
+	"video-revert-success": "Đã phục hồi lại phiên bản trước đó.",
+	"video-revert-legend": "Phục hồi video",
+	"video-revert-intro": "Bạn sắp phục hồi video '''[[:{{ns:video}}:$1|$1]]''' về lại [$4 phiên bản kể từ $3, $2].",
+	"video-category-name": "Video",
+	"video-links": "Liên kết video",
+	"video-links-to-video": "{{PLURAL:$1|Trang|$1 trang}} sau liên kết đến video này:",
+	"video-no-links-to-video": "Không có trang nào liên kết đến video này.",
+	"video-more-links-to-video": "Xem [[Special:WhatLinksHere/$1|thêm liên kết]] đến video này.",
+	"video-showhidebots": "($1 bot)",
+	"action-addvideo": "Thêm video từ các dịch vụ bên ngoài vào trang web",
+	"right-addvideo": "Thêm video từ các dịch vụ bên ngoài vào trang web",
+	"video-hidebots": "Ẩn các video do bot tải lên",
+	"unusedvideos-summary": "Các video sau đã được thêm vào wiki nhưng chưa được sử dụng trên trang nào."
 }

@@ -3,7 +3,8 @@
 		"authors": [
 			"Chrumps",
 			"Rail",
-			"Railfail536"
+			"Railfail536",
+			"PanWor"
 		]
 	},
 	"addvideo": "Dodaj film",
@@ -16,7 +17,7 @@
 	"video-addvideo-title": "Dodaj film",
 	"video-addvideo-dest": "Dodaj film do $1",
 	"video-addvideo-button": "Dodaj film",
-	"video-addvideo-exists": "Nazwa dla twojego filmu już istnieje. Proszę wybierz inną nazwę dla filmu.",
+	"video-addvideo-exists": "Nazwa dla Twojego filmu już istnieje. Wybierz inną nazwę dla filmu.",
 	"video-addvideo-title-label": "Nazwa filmu:",
 	"video-addvideo-embed-label": "Osadź kod lub adres URL:",
 	"video-no-videos": "Nie znaleziono nowych filmów.",

@@ -2,13 +2,15 @@
 
 use MediaWiki\HTMLForm\HTMLForm;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\User\User;
+use Wikimedia\Rdbms\IResultWrapper;
 
 class RevertVideoAction extends FormAction {
 
 	/**
 	 * Row from the oldvideo table for the revision to revert to
 	 *
-	 * @var Wikimedia\Rdbms\IResultWrapper
+	 * @var IResultWrapper
 	 */
 	protected $oldvideo;
 

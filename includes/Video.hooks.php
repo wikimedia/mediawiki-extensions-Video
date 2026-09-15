@@ -1,9 +1,13 @@
 <?php
 
+use MediaWiki\Context\IContextSource;
 use MediaWiki\Context\RequestContext;
 use MediaWiki\Html\Html;
+use MediaWiki\Installer\DatabaseUpdater;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Page\ProperPageIdentity;
+use MediaWiki\Parser\Parser;
+use MediaWiki\Parser\StripState;
 use MediaWiki\Permissions\Authority;
 use MediaWiki\SpecialPage\SpecialPage;
 use MediaWiki\Title\Title;
@@ -21,9 +25,9 @@ class VideoHooks {
 	 * Convert [[Video:Video Name]] tags to <video/> hook; calls
 	 * VideoHooks::renderVideo to do that.
 	 *
-	 * @param MediaWiki\Parser\Parser $parser
+	 * @param Parser $parser
 	 * @param string &$text Input text to search for [[Video:]] tags
-	 * @param MediaWiki\Parser\StripState $strip_state [unused]
+	 * @param StripState $strip_state [unused]
 	 */
 	public static function videoTag( $parser, &$text, $strip_state ) {
 		$contLang = MediaWikiServices::getInstance()->getContentLanguage();
@@ -103,7 +107,7 @@ class VideoHooks {
 	/**
 	 * Register the new <video> hook with MediaWiki's parser.
 	 *
-	 * @param MediaWiki\Parser\Parser $parser
+	 * @param Parser $parser
 	 * @return void
 	 */
 	public static function onParserFirstCallInit( $parser ) {
@@ -116,7 +120,7 @@ class VideoHooks {
 	 * @param string $input [unused]
 	 * @param array $argv Array of user-supplied arguments; name must be present.
 	 *                     Optional args include width, height and align.
-	 * @param MediaWiki\Parser\Parser $parser
+	 * @param Parser $parser
 	 * @return string Video HTML code suitable for outputting
 	 */
 	public static function videoEmbed( $input, $argv, Parser $parser ) {
@@ -347,7 +351,7 @@ class VideoHooks {
 	/**
 	 * Applies the schema changes when the user runs maintenance/update.php.
 	 *
-	 * @param MediaWiki\Installer\DatabaseUpdater $updater
+	 * @param DatabaseUpdater $updater
 	 */
 	public static function onLoadExtensionSchemaUpdates( $updater ) {
 		$dir = __DIR__ . '/../sql';

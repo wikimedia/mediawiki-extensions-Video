@@ -1,5 +1,6 @@
 <?php
 
+use MediaWiki\Context\IContextSource;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
 use Wikimedia\Rdbms\IResultWrapper;

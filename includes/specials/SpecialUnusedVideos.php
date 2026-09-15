@@ -63,7 +63,7 @@ class SpecialUnusedVideos extends MediaWiki\SpecialPage\QueryPage {
 	/**
 	 * Gotta override this since it's abstract
 	 *
-	 * @param MediaWiki\Skin\Skin $skin
+	 * @param Skin $skin
 	 * @param stdClass $result
 	 * @return string
 	 */

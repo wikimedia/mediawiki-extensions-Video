@@ -8,13 +8,15 @@
  * @ingroup Extensions
  */
 
+use MediaWiki\Context\RequestContext;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Parser\Parser;
 use MediaWiki\Title\Title;
 
 class VideoGalleryPopulateHooks {
 
 	/**
-	 * @param MediaWiki\Parser\Parser $parser
+	 * @param Parser $parser
 	 */
 	public static function onParserFirstCallInit( $parser ) {
 		$parser->setHook( 'videogallerypopulate', [ self::class, 'renderVideoGalleryPopulate' ] );
@@ -23,7 +25,7 @@ class VideoGalleryPopulateHooks {
 	/**
 	 * @param string $input
 	 * @param string[] $args
-	 * @param MediaWiki\Parser\Parser $parser
+	 * @param Parser $parser
 	 * @return string
 	 */
 	public static function renderVideoGalleryPopulate( $input, $args, $parser ) {

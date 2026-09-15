@@ -7,12 +7,14 @@
  * @ingroup Extensions
  */
 
+use MediaWiki\Context\RequestContext;
+use MediaWiki\Parser\Parser;
 use MediaWiki\Title\Title;
 
 class VideoGalleryHooks {
 
 	/**
-	 * @param MediaWiki\Parser\Parser $parser
+	 * @param Parser $parser
 	 */
 	public static function onParserFirstCallInit( $parser ) {
 		$parser->setHook( 'videogallery', [ self::class, 'renderVideoGallery' ] );
@@ -21,7 +23,7 @@ class VideoGalleryHooks {
 	/**
 	 * @param string $input
 	 * @param string[] $argv
-	 * @param MediaWiki\Parser\Parser $parser
+	 * @param Parser $parser
 	 * @return string
 	 */
 	public static function renderVideoGallery( $input, $argv, $parser ) {

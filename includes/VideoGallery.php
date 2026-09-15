@@ -5,6 +5,7 @@
  * Add videos to the gallery using add(), then render that list to HTML using toHTML().
  */
 
+use MediaWiki\Context\RequestContext;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
 

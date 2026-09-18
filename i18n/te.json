@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Chaduvari"
+			"Chaduvari",
+			"Jack Phoenix"
 		]
 	},
 	"addvideo": "వీడియోను చేర్చండి",
@@ -14,7 +15,7 @@
 	"video-addvideo-title": "వీడియోను చేర్చండి",
 	"video-addvideo-dest": "$1 కోసం వీడియోను చేర్చండి",
 	"video-addvideo-button": "వీడియోను చేర్చు",
-	"video-addvideo-instructions": "{{SITENAME}} లో వీడియోను చేర్చడం తేలిక.\nకింది ఫారం లోకి వీడియోను ఇమిడ్చే కోడ్‌ను గాని ''లేదా'' వీడియో URL ను గానీ చేర్చి, వీడియోకు పేరు పెట్టి, \"{{int:video-addvideo-button}}\" బొత్తాన్ని నొక్కండి.\nకింది ఫార్మాటును వాడి పేజీలో వీడియోను చేర్చాలనుకుంటే: '''<nowiki>[[</nowiki>{{ns:video}}:వీడియో శీర్షిక<nowiki>]]</nowiki>'''.\nకింది ప్రొవైడర్ల నుండి వీడియోను చేర్చవచ్చు:\n{{int:video-provider-list}}\n===వీడియో ఇమిడ్చే కోడ్ ఉదాహరణలు===\nYouTube లోని వీడియోను ఇమిడ్చే కోడ్ ఉదాహరణ ఇది:\n\n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">\n<nowiki><object width=\"425\" height=\"355\">\n<param name=\"movie\" value=\"http://www.youtube.com/v/hUcFWPgB8oY\"></param>\n<param name=\"wmode\" value=\"transparent\"></param>\n<embed src=\"http://www.youtube.com/v/hUcFWPgB8oY\" type=\"application/x-shockwave-flash\"\nwmode=\"transparent\" width=\"425\" height=\"355\"></embed>\n</object></nowiki>\n</pre>\n\n===వీడియో URL ఉదాహరణ===\nYouTube లోని వీడియో URL కు ఉదాహరణ ఇది:\n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">http://www.youtube.com/watch?v=hUcFWPgB8oY</pre>",
+	"video-addvideo-instructions": "{{SITENAME}} లో వీడియోను చేర్చడం తేలిక.\nకింది ఫారం లోకి వీడియోను ఇమిడ్చే కోడ్‌ను గాని ''లేదా'' వీడియో URL ను గానీ చేర్చి, వీడియోకు పేరు పెట్టి, \"{{int:video-addvideo-button}}\" బొత్తాన్ని నొక్కండి.\nకింది ఫార్మాటును వాడి పేజీలో వీడియోను చేర్చాలనుకుంటే: '''<nowiki>[[</nowiki>{{ns:video}}:వీడియో శీర్షిక<nowiki>]]</nowiki>'''.\nకింది ప్రొవైడర్ల నుండి వీడియోను చేర్చవచ్చు:\n{{int:video-provider-list}}\n===వీడియో ఇమిడ్చే కోడ్ ఉదాహరణలు===\nYouTube లోని వీడియోను ఇమిడ్చే కోడ్ ఉదాహరణ ఇది:\n\n$1\n\n===వీడియో URL ఉదాహరణ===\nYouTube లోని వీడియో URL కు ఉదాహరణ ఇది:\n$2",
 	"video-addvideo-invalidcode": "మీరిచ్చిన URL కోడ్ చెల్లనిది. మళ్ళీ ప్రయత్నించండి.",
 	"video-addvideo-exists": "మీ వీడియో శీర్షిక ఈసరికే ఉంది. మరేదైనా శీర్షికను ఎంచుకోండి.",
 	"video-addvideo-title-label": "వీడియో శీర్షిక:",

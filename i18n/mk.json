@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Bjankuloski06"
+			"Bjankuloski06",
+			"Jack Phoenix"
 		]
 	},
 	"video-desc": "Овозможува нов именски простор „Видео“ за вметнување на снимки на поддржани мрежни места",
@@ -15,7 +16,7 @@
 	"video-addvideo-title": "Додај видео",
 	"video-addvideo-dest": "Додај видео за $1",
 	"video-addvideo-button": "Додај видео",
-	"video-addvideo-instructions": "Ставањето видеа на {{SITENAME}} е лесно.\nСамо прекопирајте го видеовметнувачкиот код ''или'' неговото URL во следниов образец, ставете му име на видеото, па притиснете на копчето „{{int:video-addvideo-button}}“.\nАко сакате да видеото да го вметнете во страница, користете го следниов формат: '''<nowiki>[[</nowiki>{{ns:video}}:Наслов на видеото<nowiki>]]</nowiki>'''.\nМожете да ставате видеа од следниве добавувачи:\n{{int:video-provider-list}}\n===Пример за видеовметнувачки код===\nОва е пример за вметнувачки код на видео од YouTube:\n\n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">\n<nowiki><object width=\"425\" height=\"355\">\n<param name=\"movie\" value=\"http://www.youtube.com/v/hUcFWPgB8oY\"></param>\n<param name=\"wmode\" value=\"transparent\"></param>\n<embed src=\"http://www.youtube.com/v/hUcFWPgB8oY\" type=\"application/x-shockwave-flash\"\nwmode=\"transparent\" width=\"425\" height=\"355\"></embed>\n</object></nowiki>\n</pre>\n\n===Пример за URL на видео===\nПодолу е наведен пример за URL на видео од YouTube:\n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">http://www.youtube.com/watch?v=hUcFWPgB8oY</pre>",
+	"video-addvideo-instructions": "Ставањето видеа на {{SITENAME}} е лесно.\nСамо прекопирајте го видеовметнувачкиот код ''или'' неговото URL во следниов образец, ставете му име на видеото, па притиснете на копчето „{{int:video-addvideo-button}}“.\nАко сакате да видеото да го вметнете во страница, користете го следниов формат: '''<nowiki>[[</nowiki>{{ns:video}}:Наслов на видеото<nowiki>]]</nowiki>'''.\nМожете да ставате видеа од следниве добавувачи:\n{{int:video-provider-list}}\n===Пример за видеовметнувачки код===\nОва е пример за вметнувачки код на видео од YouTube:\n\n$1\n\n===Пример за URL на видео===\nПодолу е наведен пример за URL на видео од YouTube:\n$2",
 	"video-addvideo-invalidcode": "Прекопиравте неважечки код или URL. Обидете се повторно.",
 	"video-addvideo-exists": "Веќе постои видео со ваков наслов. Изберете друг.",
 	"video-addvideo-title-label": "Наслов на видеото:",

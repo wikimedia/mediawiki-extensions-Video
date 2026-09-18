@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Eleassar",
+			"Jack Phoenix",
 			"Upwinxp"
 		]
 	},
@@ -16,7 +17,7 @@
 	"video-addvideo-title": "Dodaj video",
 	"video-addvideo-dest": "Dodaj video za $1",
 	"video-addvideo-button": "Dodaj video",
-	"video-addvideo-instructions": "Dodajanje videoposnetka v {{SITENAME}} je preprosto.\nPrilepite kodo za vdelavo videoposnetka ''ali'' URL videoposnetka v naslednji obrazec, dodajte ime za videoposnetek in pritisnite gumb »{{int:video -addvideo-button}}«.\nČe želite videoposnetek vdelati na stran, uporabite naslednji zapis: '''<nowiki>[[</nowiki>{{ns:video}}:Naslov videa<nowiki>]]</nowiki>'''.\nDodate lahko video naslednjih ponudnikov:\n{{int:video-provider-list}}\n===Zgled kode za vdelavo videa===\nTo je zgled kode za vdelavo videa iz YouTuba:\n\n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">\n<nowiki><object width=\"425\" height=\"355\">\n<param name=\"movie\" value=\"http://www.youtube.com/v/hUcFWPgB8oY\"></param>\n<param name=\"wmode\" value=\"transparent\"></param>\n<embed src=\"http://www.youtube.com/v/hUcFWPgB8oY\" type=\"application/x-shockwave-flash\"\nwmode=\"transparent\" width=\"425\" height=\"355\"></embed>\n</object></nowiki>\n</pre>\n\n===Zgled URL-ja videoposnetka===\nTo je zgled URL-ja videa iz YouTuba:\n<pre style=\"background-color: #F9F9F9; border: 1px dashed #2F6FAB; color: black; line-height: 1.1em; padding: 1em;\">http://www.youtube.com/watch?v=hUcFWPgB8oY</pre>",
+	"video-addvideo-instructions": "Dodajanje videoposnetka v {{SITENAME}} je preprosto.\nPrilepite kodo za vdelavo videoposnetka ''ali'' URL videoposnetka v naslednji obrazec, dodajte ime za videoposnetek in pritisnite gumb »{{int:video -addvideo-button}}«.\nČe želite videoposnetek vdelati na stran, uporabite naslednji zapis: '''<nowiki>[[</nowiki>{{ns:video}}:Naslov videa<nowiki>]]</nowiki>'''.\nDodate lahko video naslednjih ponudnikov:\n{{int:video-provider-list}}\n===Zgled kode za vdelavo videa===\nTo je zgled kode za vdelavo videa iz YouTuba:\n\n$1\n\n===Zgled URL-ja videoposnetka===\nTo je zgled URL-ja videa iz YouTuba:\n$2",
 	"video-addvideo-invalidcode": "Koda ali URL, ki ste ga prilepili, ni veljaven. Prosimo, poskusite znova.",
 	"video-addvideo-exists": "Video s takim naslovom že obstaja. Izberite drug naslov za video.",
 	"video-addvideo-title-label": "Naslov videa:",

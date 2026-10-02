@@ -130,8 +130,9 @@ referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></nowi
 	 * @param string $value User-supplied video name passed to Video::newFromName()
 	 * @param array $allData Unused
 	 * @return bool|string Error message on failure, bool true on success
+	 * @suppress PhanUnusedPrivateMethodParameter Used as callback with fix signature
 	 */
-	public function validateTitleField( $value, $allData ) {
+	private function validateTitleField( $value, $allData ) {
 		$video = Video::newFromName( $value, $this->getContext() );
 
 		if ( !$video ) {
@@ -176,14 +177,14 @@ referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></nowi
 				'label-message' => 'video-addvideo-title-label',
 				'size' => '30',
 				'required' => true,
-				'validation-callback' => [ $this, 'validateTitleField' ],
+				'validation-callback' => $this->validateTitleField( ... ),
 			],
 			'Video' => [
 				'type' => 'textarea',
 				'label-message' => 'video-addvideo-embed-label',
 				'rows' => '5',
 				'required' => true,
-				'validation-callback' => [ $this, 'validateVideoField' ],
+				'validation-callback' => $this->validateVideoField( ... ),
 			],
 			'Watch' => [
 				'type' => 'check',

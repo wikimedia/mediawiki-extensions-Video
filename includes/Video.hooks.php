@@ -111,7 +111,7 @@ class VideoHooks {
 	 * @return void
 	 */
 	public static function onParserFirstCallInit( $parser ) {
-		$parser->setHook( 'video', [ self::class, 'videoEmbed' ] );
+		$parser->setHook( 'video', self::videoEmbed( ... ) );
 	}
 
 	/**
@@ -122,8 +122,9 @@ class VideoHooks {
 	 *                     Optional args include width, height and align.
 	 * @param Parser $parser
 	 * @return string Video HTML code suitable for outputting
+	 * @suppress PhanUnusedPrivateMethodParameter Used as callback with fix signature
 	 */
-	public static function videoEmbed( $input, $argv, Parser $parser ) {
+	private static function videoEmbed( $input, $argv, Parser $parser ) {
 		$video_name = $argv['name'];
 		if ( !$video_name ) {
 			return '';

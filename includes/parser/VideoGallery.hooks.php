@@ -17,7 +17,7 @@ class VideoGalleryHooks {
 	 * @param Parser $parser
 	 */
 	public static function onParserFirstCallInit( $parser ) {
-		$parser->setHook( 'videogallery', [ self::class, 'renderVideoGallery' ] );
+		$parser->setHook( 'videogallery', self::renderVideoGallery( ... ) );
 	}
 
 	/**
@@ -26,7 +26,7 @@ class VideoGalleryHooks {
 	 * @param Parser $parser
 	 * @return string
 	 */
-	public static function renderVideoGallery( $input, $argv, $parser ) {
+	private static function renderVideoGallery( $input, $argv, $parser ) {
 		$vg = new VideoGallery();
 		$vg->setContextTitle( $parser->getTitle() );
 		$vg->setShowFilename( true );

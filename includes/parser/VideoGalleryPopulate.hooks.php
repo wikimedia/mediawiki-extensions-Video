@@ -19,7 +19,7 @@ class VideoGalleryPopulateHooks {
 	 * @param Parser $parser
 	 */
 	public static function onParserFirstCallInit( $parser ) {
-		$parser->setHook( 'videogallerypopulate', [ self::class, 'renderVideoGalleryPopulate' ] );
+		$parser->setHook( 'videogallerypopulate', self::renderVideoGalleryPopulate( ... ) );
 	}
 
 	/**
@@ -27,8 +27,9 @@ class VideoGalleryPopulateHooks {
 	 * @param string[] $args
 	 * @param Parser $parser
 	 * @return string
+	 * @suppress PhanUnusedPrivateMethodParameter Used as callback with fix signature
 	 */
-	public static function renderVideoGalleryPopulate( $input, $args, $parser ) {
+	private static function renderVideoGalleryPopulate( $input, $args, $parser ) {
 		$parser->getOutput()->updateCacheExpiry( 0 );
 
 		// @phan-suppress-next-line PhanPluginDuplicateConditionalNullCoalescing

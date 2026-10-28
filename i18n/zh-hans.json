@@ -3,7 +3,8 @@
 		"authors": [
 			"Liuxinyu970226",
 			"Ouclie",
-			"Xiplus"
+			"Xiplus",
+			"Anterdc99"
 		]
 	},
 	"video-desc": "允许新视频命名空间用于在受支持网站上的可嵌入媒体",
@@ -17,7 +18,7 @@
 	"video-addvideo-title": "添加视频",
 	"video-addvideo-dest": "添加用于$1的视频",
 	"video-addvideo-button": "添加视频",
-	"video-addvideo-instructions": "向{{SITENAME}}添加视频非常简单！只需将视频嵌入代码或视频URL粘贴到以下表单中，为视频命名，然后点击“{{int:video-addvideo-button}}”按钮即可。如果您想将视频嵌入到页面中，请使用以下格式：<nowiki>[[</nowiki> {{ns:video}}:视频标题<nowiki>]]</nowiki> '''。\n您可以从以下提供商添加视频：\n{{int:video-provider-list}}\n===视频嵌入代码示例===\n以下是来自YouTube的视频嵌入代码示例：\n\n$1\n\n===视频URL示例===\n以下是来自YouTube的视频URL示例：\n\n$2",
+	"video-addvideo-instructions": "向{{SITENAME}}添加视频非常简单！只需将视频嵌入代码或视频URL粘贴到以下表单中，为视频命名，然后点击“{{int:video-addvideo-button}}”按钮即可。如果您想将视频嵌入到页面中，请使用以下格式：<nowiki>[[</nowiki> {{ns:video}}:视频标题<nowiki>]]</nowiki> '''。\n您可以从以下提供商添加视频：\n{{int:video-provider-list}}\n===视频嵌入代码示例===\n以下是来自YouTube的视频嵌入代码示例：\n\n$1\n\n===视频URL示例===\n以下是来自YouTube的视频URL示例：\n$2",
 	"video-addvideo-invalidcode": "您粘贴的代码或URL无效。请重试。",
 	"video-addvideo-exists": "您的视频标题已存在。请选择另一个视频标题。",
 	"video-addvideo-title-label": "视频标题：",

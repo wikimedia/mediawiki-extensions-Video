@@ -15,6 +15,7 @@
 	"video-upload-new-version": "Like [[MediaWiki:Uploadnewversion-linktext]], but \"file\" changed to \"video\".",
 	"video-newvideos-showfrom": "Like [[MediaWiki:Sp-newimages-showfrom]], but \"file\" changed to \"video\".",
 	"video-newvideos-list-text": "Like [[MediaWiki:Imagelisttext]], but \"file\" changed to \"video\".",
+	"video-newvideos-label": "Caption of the filter editbox on [[Special:NewVideos]], used as label for filtering videos by name (or part of a name).",
 	"video-addvideo-watchlist": "Like [[MediaWiki:Watchthisupload]], just reworded for clarity and \"file\" changed to \"video\".",
 	"video-addvideo-title": "Used as title for a legend",
 	"video-addvideo-dest": "Used as subtitle",

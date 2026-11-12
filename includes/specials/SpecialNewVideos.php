@@ -134,7 +134,7 @@ class NewVideos extends MediaWiki\SpecialPage\IncludableSpecialPage {
 		$formDescriptor = [
 			'wpIlMatch' => [
 				'type' => 'text',
-				'label-message' => 'newimages-label',
+				'label-message' => 'video-newvideos-label',
 				'name' => 'wpIlMatch',
 			],
 			'user' => [

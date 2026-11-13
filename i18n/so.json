@@ -11,6 +11,7 @@
 	"video-upload-new-version": "Soo geli nooc cusub oo fiidiyowgan ah",
 	"video-newvideos-showfrom": "Muuji fiidiyowyada cusub laga bilaabo $2, $1",
 	"video-newvideos-list-text": "Hoos waxaa ku qoran liiska '''$1''' {{PLURAL:$1|fiidiyow|fiidiyowyada}}.",
+	"video-newvideos-label": "Magaca fiidyowga (ama qayb ka mid ah):",
 	"video-addvideo-watchlist": "Ku dar fiidiyowgan liiskayga la socodka",
 	"video-addvideo-title": "Ku dar fiidiyow",
 	"video-addvideo-dest": "Ku dar fiidiyowga $1",

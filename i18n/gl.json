@@ -15,6 +15,7 @@
 	"video-upload-new-version": "Subir unha nova versión deste vídeo",
 	"video-newvideos-showfrom": "Amosar os novos vídeos comezando polo $1 ás $2",
 	"video-newvideos-list-text": "A continuación móstrase unha lista {{PLURAL:$1|'''dun''' vídeo|de '''$1''' vídeos}}.",
+	"video-newvideos-label": "Nome do vídeo (ou unha parte del):",
 	"video-addvideo-watchlist": "Engadir este vídeo á miña lista de vixilancia",
 	"video-addvideo-title": "Engadir un vídeo",
 	"video-addvideo-dest": "Engadir un vídeo para «$1»",

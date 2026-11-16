@@ -13,6 +13,7 @@
 	"video-upload-new-version": "Naloži novo različico tega videa",
 	"video-newvideos-showfrom": "Prikaži nove videe od $1 naprej, ob $2",
 	"video-newvideos-list-text": "Prikazujem seznam '''$1''' {{PLURAL:$1|videa|videov}}.",
+	"video-newvideos-label": "Ime videa (ali del imena):",
 	"video-addvideo-watchlist": "Dodaj ta video na moj nadzorni seznam",
 	"video-addvideo-title": "Dodaj video",
 	"video-addvideo-dest": "Dodaj video za $1",

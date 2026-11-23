@@ -13,6 +13,7 @@
 	"video-upload-new-version": "Załaduj nowszą wersję tego filmu",
 	"video-newvideos-showfrom": "Pokaż nowe filmy począwszy od $2, $1",
 	"video-newvideos-list-text": "Poniżej na liście {{PLURAL:$1|znajduje|znajdują|znajduje}} się $1 {{PLURAL:$1|film|filmy|filmów}}.",
+	"video-newvideos-label": "Nazwa wideo (lub jego części):",
 	"video-addvideo-watchlist": "Dodaj ten film do obserwowanych",
 	"video-addvideo-title": "Dodaj film",
 	"video-addvideo-dest": "Dodaj film do $1",
